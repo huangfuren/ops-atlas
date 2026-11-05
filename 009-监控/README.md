@@ -10,7 +10,7 @@
 监控板块分两层：**本 README 是监控领域的全局视角**，`prometheus/` 子目录是 Prometheus 工具的深入。
 
 ```
-09-监控/
+009-监控/
 ├── README.md                ← 你在这里：监控全景与选型
 └── prometheus/              ← Prometheus 工具深入
     ├── README.md

@@ -11,22 +11,22 @@
 
 | 层 | 板块 | 册数 | 回答的问题 | 入口 |
 | --- | --- | --- | --- | --- |
-| **地基** | [01 Linux](01-Linux/README.md) | 001~010 + A/B | 一台 Linux 机器怎么管好、坏了从哪查 | [README](01-Linux/README.md) |
-| | [02 网络](02-网络/README.md) | 001~009 | 包能不能到、连接建不建得起来、慢在哪 | [README](02-网络/README.md) |
-| **中间件** | [03 数据库](03-数据库/README.md) | 000~009 | 数据怎么存、怎么查得快、坏了怎么救 | [README](03-数据库/README.md) |
-| | [08 消息队列](08-消息队列/README.md) | 000~004 | RabbitMQ/Kafka 怎么管、堆积丢失怎么治 | [README](08-消息队列/README.md) |
-| **平台与交付** | [05 容器](05-容器/README.md) | 000~009 | Docker 与 K8s 怎么跑、怎么编排、怎么排障 | [README](05-容器/README.md) |
-| | [06 CICD](06-CICD/README.md) | 000~009 | 提交到上线的流水线怎么搭、怎么排错 | [README](06-CICD/README.md) |
-| | [07 接入层](07-接入层/README.md) | 000~008 | 流量第一跳（Nginx/HAProxy）怎么配怎么救 | [README](07-接入层/README.md) |
-| **可观测** | [09 监控](09-监控/README.md) | 001~008 | 指标怎么采、怎么看、怎么告警、规模大怎么办 | [README](09-监控/README.md) |
-| | [10 日志](10-日志/README.md) | 000~006 | EFK/Loki：日志怎么收、怎么查、怎么治 | [README](10-日志/README.md) |
-| | [11 链路](11-链路/README.md) | 000~006 | OTel/Jaeger/Tempo：跨服务调用怎么还原 | [README](11-链路/README.md) |
-| **方法与语言** | [04 Python](04-Python/README.md) | 000~006 | 运维实战脚本与胶水自动化 | [README](04-Python/README.md) |
-| | [12 Go](12-Go/README.md) | 000~004 | Go 语言基础到生产事故复盘 | [README](12-Go/README.md) |
-| | [13 SRE](13-SRE/README.md) | 000~004 | SLO、待命、复盘、toil 治理的机制 | [README](13-SRE/README.md) |
+| **地基** | [001 Linux](001-Linux/README.md) | 001~010 + A/B | 一台 Linux 机器怎么管好、坏了从哪查 | [README](001-Linux/README.md) |
+| | [002 网络](002-网络/README.md) | 001~009 | 包能不能到、连接建不建得起来、慢在哪 | [README](002-网络/README.md) |
+| **中间件** | [003 数据库](003-数据库/README.md) | 000~009 | 数据怎么存、怎么查得快、坏了怎么救 | [README](003-数据库/README.md) |
+| | [008 消息队列](008-消息队列/README.md) | 000~004 | RabbitMQ/Kafka 怎么管、堆积丢失怎么治 | [README](008-消息队列/README.md) |
+| **平台与交付** | [005 容器](005-容器/README.md) | 000~009 | Docker 与 K8s 怎么跑、怎么编排、怎么排障 | [README](005-容器/README.md) |
+| | [006 CICD](006-CICD/README.md) | 000~009 | 提交到上线的流水线怎么搭、怎么排错 | [README](006-CICD/README.md) |
+| | [007 接入层](007-接入层/README.md) | 000~008 | 流量第一跳（Nginx/HAProxy）怎么配怎么救 | [README](007-接入层/README.md) |
+| **可观测** | [009 监控](009-监控/README.md) | 001~008 | 指标怎么采、怎么看、怎么告警、规模大怎么办 | [README](009-监控/README.md) |
+| | [010 日志](010-日志/README.md) | 000~006 | EFK/Loki：日志怎么收、怎么查、怎么治 | [README](010-日志/README.md) |
+| | [011 链路](011-链路/README.md) | 000~006 | OTel/Jaeger/Tempo：跨服务调用怎么还原 | [README](011-链路/README.md) |
+| **方法与语言** | [004 Python](004-Python/README.md) | 000~006 | 运维实战脚本与胶水自动化 | [README](004-Python/README.md) |
+| | [012 Go](012-Go/README.md) | 000~004 | Go 语言基础到生产事故复盘 | [README](012-Go/README.md) |
+| | [013 SRE](013-SRE/README.md) | 000~004 | SLO、待命、复盘、toil 治理的机制 | [README](013-SRE/README.md) |
 
 > 每个板块自带 **README 导航**（体系总览/阅读约定/边界）、**00 术语表**（术语·缩写·易混对·症状反查）与**统一体例的分册**。  
-> **目录前缀 01~13 = 建议学习顺序**（依据下节五阶段路径）；本表按主题分层，所以序号在层内不连续——如数据库属中间件层，学习上排在第二阶段。
+> **目录前缀 001~013 = 建议学习顺序**（依据下节五阶段路径）；本表按主题分层，所以序号在层内不连续——如数据库属中间件层，学习上排在第二阶段。
 
 ---
 
@@ -45,7 +45,7 @@
 第五阶段 · 方法收口    SRE 000~004 · 各板块排错册/剧本 · Linux 009
 ```
 
-原则：**每一阶段的地基都在前一阶段**——容器前的 cgroup 在 Linux 002，CICD 前的脚本在 Linux 008，SLO 前的指标在监控。跳阶段读会缺一层直觉。**目录前缀 01~13 就是这条路线的板块顺序。**
+原则：**每一阶段的地基都在前一阶段**——容器前的 cgroup 在 Linux 002，CICD 前的脚本在 Linux 008，SLO 前的指标在监控。跳阶段读会缺一层直觉。**目录前缀 001~013 就是这条路线的板块顺序。**
 
 ---
 
@@ -114,4 +114,4 @@
 
 ---
 
-**从 [01-Linux/README.md](01-Linux/README.md) 开始**，或按上方地图直达任一板块。
+**从 [001-Linux/README.md](001-Linux/README.md) 开始**，或按上方地图直达任一板块。

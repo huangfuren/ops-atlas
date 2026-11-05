@@ -43,7 +43,7 @@
 ## 目录
 
 ```plain
-13-SRE/
+013-SRE/
 ├── README.md
 ├── 00-术语表.md
 ├── 000-SRE全貌.md
