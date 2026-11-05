@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Ansible 变量优先级：五层阶梯，上层覆盖下层</title>
+  <desc>同名变量按优先级裁决，工程上最常打交道的五层从高到低：命令行 extra vars 最高用于救急与演练，play vars 其次，host_vars 是单机差异，group_vars 是组与环境的真实值，role defaults 最低是 role 作者给的兜底。纪律是 defaults 放可调参数、group_vars 放环境真实值、-e 只救急。ansible-inventory --host 一条命令看某台机器的变量最终值。</desc>
+
+  <rect width="680" height="350" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">变量优先级五层：同名时上层覆盖下层</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">疑案当场结案</text>
+
+  <defs>
+    <marker id="e5Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 阶梯：从高到低 -->
+  <rect x="40" y="52" width="240" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="56" y="70" font-size="9" font-weight="600" fill="#7A4A12">① extra vars（-e 命令行）</text>
+  <text x="56" y="85" font-size="7.4" fill="#7A4A12">最高 · 临时压过一切 —— 只用于救急与演练</text>
+
+  <rect x="120" y="100" width="240" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="136" y="118" font-size="9" font-weight="600" fill="#1F4468">② play vars（play 里的 vars 段）</text>
+  <text x="136" y="133" font-size="7.4" fill="#4A4945">play 级固定值，少用</text>
+
+  <rect x="200" y="148" width="240" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="216" y="166" font-size="9" font-weight="600" fill="#1F4468">③ host_vars/web-1.yaml</text>
+  <text x="216" y="181" font-size="7.4" fill="#4A4945">单机差异（特殊机器的例外值）</text>
+
+  <rect x="280" y="196" width="240" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="296" y="214" font-size="9" font-weight="600" fill="#1D5A45">④ group_vars/prod.yaml</text>
+  <text x="296" y="229" font-size="7.4" fill="#1D5A45">环境与组的真实值 —— 主要配置位置</text>
+
+  <rect x="360" y="244" width="240" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="376" y="262" font-size="9" font-weight="600" fill="#4A4945">⑤ role defaults（defaults/main.yml）</text>
+  <text x="376" y="277" font-size="7.4" fill="#8C8980">最低 · role 作者的兜底 —— 放可调参数</text>
+
+  <!-- 覆盖箭头 -->
+  <line x1="284" y1="72" x2="360" y2="118" stroke="#A9A69C" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="364" y1="120" x2="440" y2="166" stroke="#A9A69C" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="444" y1="168" x2="520" y2="214" stroke="#A9A69C" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="524" y1="216" x2="600" y2="262" stroke="#A9A69C" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="470" y="148" font-size="7.6" font-weight="600" fill="#8C8980" text-anchor="middle">同名 → 上层胜</text>
+
+  <!-- 右侧验证 -->
+  <rect x="524" y="52" width="120" height="80" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="584" y="74" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">疑案结案工具</text>
+  <text x="584" y="92" font-size="7.4" fill="#4A4945" text-anchor="middle">ansible-inventory</text>
+  <text x="584" y="106" font-size="7.4" fill="#4A4945" text-anchor="middle">--host web-1</text>
+  <text x="584" y="122" font-size="7.2" fill="#8C8980" text-anchor="middle">看变量最终值</text>
+
+  <rect x="40" y="298" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="317" font-size="8.2" fill="#7A4A12">纪律：真实值进 group_vars（进 Git），-e 不当配置手段——否则"这台机器为什么不一样"永远查不清（005 §5.10）</text>
+</svg>

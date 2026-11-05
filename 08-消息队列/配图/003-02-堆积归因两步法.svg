@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="680" height="370" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>堆积归因两步法：先判假活，再比速率，最后才扩容</title>
+  <desc>堆积的第一步是看消费速率是否归零或趋零：归零是假活，消费者进程在但被下游阻塞，修下游即恢复；第二步比较生产与消费速率曲线：生产跳升是突增，要治上游并评估下游容量；消费长期低于生产是能力问题，按手段阶梯处理：修阻塞、提效率、扩消费者、扩分区有顺序代价、降级需要业务签字。毒丸消息进死信。</desc>
+
+  <rect width="680" height="370" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">堆积归因两步法：不归因的扩容是浪费</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">毒丸另走死信（3.6）</text>
+
+  <defs>
+    <marker id="m3bBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 起点 -->
+  <rect x="40" y="50" width="190" height="36" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
+  <text x="135" y="72" font-size="8.8" font-weight="600" fill="#7A322B" text-anchor="middle">堆积：lag / 队列深度持续涨</text>
+
+  <line x1="230" y1="68" x2="254" y2="68" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3bBlue)"/>
+
+  <!-- 第一步 -->
+  <rect x="258" y="50" width="220" height="36" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="368" y="72" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">第一步：消费速率归零/趋零？</text>
+
+  <!-- 假活分支 -->
+  <line x1="478" y1="68" x2="500" y2="68" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3bBlue)"/>
+  <text x="489" y="60" font-size="7.2" fill="#1D5A45" text-anchor="middle">是</text>
+  <rect x="504" y="44" width="140" height="48" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="574" y="62" font-size="8" font-weight="600" fill="#1b5e20" text-anchor="middle">假活：消费者被下游阻塞</text>
+  <text x="574" y="78" font-size="7.2" fill="#1b5e20" text-anchor="middle">DB 慢 / 外部 API 挂 → 修下游</text>
+
+  <!-- 否 -->
+  <line x1="368" y1="86" x2="368" y2="102" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3bBlue)"/>
+  <text x="376" y="98" font-size="7.2" fill="#8C8980">否 ↓</text>
+
+  <!-- 第二步 -->
+  <rect x="258" y="106" width="220" height="36" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="368" y="128" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">第二步：生产 vs 消费速率对比</text>
+
+  <!-- 分支：突增 -->
+  <line x1="258" y1="142" x2="170" y2="160" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3bBlue)"/>
+  <rect x="40" y="164" width="270" height="70" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="54" y="184" font-size="8.4" font-weight="600" fill="#7A4A12">生产速率跳升 = 突增</text>
+  <text x="54" y="202" font-size="7.6" fill="#7A4A12">来源：大促 · 上游重试风暴 · 新业务上线</text>
+  <text x="54" y="218" font-size="7.6" fill="#1D5A45">动作：治上游（限流/修重试）+ 评估下游容量</text>
+
+  <!-- 分支：能力不足 -->
+  <line x1="368" y1="142" x2="368" y2="160" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3bBlue)"/>
+  <rect x="372" y="164" width="272" height="70" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="386" y="184" font-size="8.4" font-weight="600" fill="#7A4A12">消费长期低于生产 = 能力问题</text>
+  <text x="386" y="202" font-size="7.6" fill="#7A4A12">手段阶梯（按代价从小到大）：</text>
+  <text x="386" y="218" font-size="7.6" fill="#1D5A45">修阻塞 → 提效率 → 扩消费者 → 扩分区⚠ → 降级</text>
+
+  <!-- 阶梯注记 -->
+  <rect x="40" y="248" width="604" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="268" font-size="8.2" font-weight="600" fill="#4A4945">手段阶梯细节（3.4）</text>
+  <text x="52" y="284" font-size="7.6" fill="#4A4945">RabbitMQ：扩消费者直接生效；Kafka：受分区数上限约束（6 分区最多 6 并发）——扩分区 ⚠️ 破坏 key 顺序（003 §3.5）</text>
+  <text x="52" y="296" font-size="7.4" fill="#8C8980">扩容同时评估下游（数据库/接口）承受力——把 MQ 的压力转给数据库只是换爆炸地点</text>
+
+  <rect x="40" y="312" width="604" height="30" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="331" font-size="8.2" fill="#7A322B">毒丸消息卡住消费：不是能力问题——N 次失败进死信队列（3.6），扩容无效</text>
+
+  <text x="32" y="362" font-size="9" fill="#8C8980">两步法的价值：先归因再动手——毒丸引起的堆积扩一百个消费者也没用，突增引起的堆积修上游比扩容便宜。</text>
+</svg>

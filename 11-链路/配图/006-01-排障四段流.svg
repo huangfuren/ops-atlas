@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>链路排障四段流：从告警到 span 归因</title>
+  <desc>告警确认是哪个服务哪个接口的 P99 涨了；通过 exemplar 或日志里的 trace_id 打开慢 trace；瀑布图找关键路径——最长的那条 span 链；读最慢 span 的属性归因到下游，分别转数据库、接入层、外部依赖对应册取证。与指标日志联动：spanmetrics 出 RED 指标，日志带 trace_id。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">链路排障四段流：从告警到归因</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">每段有明确出口</text>
+
+  <defs>
+    <marker id="h6Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- ① 告警 -->
+  <rect x="40" y="52" width="604" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="56" y="74" font-size="9" font-weight="600" fill="#1F4468">① 告警确认（「监控」04）—— 哪个服务、哪个接口、P99 涨到多少</text>
+  <text x="56" y="94" font-size="7.6" fill="#4A4945">RED 指标来自 spanmetrics（003 §3.1）——链路与指标同源</text>
+  <text x="470" y="94" font-size="7.4" fill="#8C8980">出口：服务名 + 时间点</text>
+
+  <line x1="340" y1="108" x2="340" y2="122" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h6Blue)"/>
+  <text x="348" y="120" font-size="7" fill="#1D5A45">exemplar / 日志 trace_id</text>
+
+  <!-- ② 跳 trace -->
+  <rect x="40" y="126" width="604" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="56" y="148" font-size="9" font-weight="600" fill="#1F4468">② 打开慢 trace（本册 003/005）</text>
+  <text x="56" y="168" font-size="7.6" fill="#4A4945">Grafana Explore / Jaeger UI / Tempo TraceQL —— 按 exemplar 的 trace_id 还原</text>
+  <text x="470" y="168" font-size="7.4" fill="#8C8980">出口：瀑布图</text>
+
+  <line x1="340" y1="182" x2="340" y2="196" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h6Blue)"/>
+  <text x="348" y="194" font-size="7" fill="#1D5A45">读法三步</text>
+
+  <!-- ③ 瀑布 -->
+  <rect x="40" y="200" width="604" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="56" y="222" font-size="9" font-weight="600" fill="#7A4A12">③ 读瀑布（6.2）—— 关键路径在哪？</text>
+  <text x="56" y="240" font-size="7.8" fill="#7A4A12">① root 总耗时与用户感受对齐　② 沿最长链找关键路径　③ 找空隙（未埋点段/排队）</text>
+  <text x="56" y="258" font-size="7.8" font-weight="600" fill="#7A322B">本例：支付 CLIENT span 2.8s（db.statement 指向库存锁等待）</text>
+  <text x="470" y="250" font-size="7.4" fill="#8C8980">出口：最慢 span 的属性</text>
+
+  <line x1="340" y1="276" x2="340" y2="290" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h6Blue)"/>
+
+  <!-- ④ 归因 -->
+  <rect x="40" y="294" width="604" height="42" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="56" y="312" font-size="9" font-weight="600" fill="#1D5A45">④ 归因（6.3）—— 转「数据库」007（锁等待）/「接入层」007（上游超时）/外部依赖治理</text>
+  <text x="56" y="328" font-size="7.6" fill="#1D5A45">error span 的属性要带全归因信息（error.type / 下游地址）——开发侧埋点义务（006 §6.3）</text>
+
+  <text x="32" y="356" font-size="9" fill="#8C8980">与「日志」联动：trace_id 搜上下文日志，互证"链路说的"与"业务日志说的"（004 §4.4）。</text>
+</svg>

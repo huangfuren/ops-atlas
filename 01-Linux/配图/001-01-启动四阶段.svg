@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" width="680" height="424" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>启动链的四个阶段与 initramfs 的作用</title>
+  <desc>上行是从按电源到出现登录提示符的四个阶段：固件自检并找引导器、GRUB2 读配置加载内核与 initramfs、内核初始化硬件并挂根分区、systemd 作为 PID 1 按依赖拉起服务进入 target。每段下方红色条是这一段坏掉时屏幕上的样子，据此可以判断该救哪一级（红条上方的括号说明这条规律适用于四段）。下行解释阶段三为什么需要 initramfs：挂根分区要先有文件系统驱动，而驱动模块本身放在根分区里，两者互为前提形成死锁，内存盘就是把驱动提前放进内存来打破它。</desc>
+
+  <rect width="680" height="424" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">启动链：从按电源到登录提示符只有四段</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">卡在哪级，救哪级</text>
+
+  <defs>
+    <marker id="arrAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="arrPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9C8ACB"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <!-- ================= 四段主链 ================= -->
+
+  <!-- ① 固件 -->
+  <rect x="40" y="52" width="138" height="104" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <circle cx="58" cy="70" r="9" fill="#6BAF95"/>
+  <text x="58" y="73.5" font-size="9.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">1</text>
+  <text x="74" y="75" font-size="12" font-weight="600" fill="#1D5A45">固件</text>
+  <text x="52" y="94" font-size="8.4" fill="#1D5A45">UEFI / BIOS</text>
+  <line x1="50" y1="102" x2="168" y2="102" stroke="#6BAF95" stroke-width="0.6" opacity="0.6"/>
+  <text x="52" y="118" font-size="8.6" fill="#1D5A45">自检硬件</text>
+  <text x="52" y="132" font-size="8.6" fill="#1D5A45">按启动顺序</text>
+  <text x="52" y="146" font-size="8.6" fill="#1D5A45">找引导器</text>
+
+  <!-- ② GRUB -->
+  <rect x="194" y="52" width="138" height="104" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <circle cx="212" cy="70" r="9" fill="#D9A458"/>
+  <text x="212" y="73.5" font-size="9.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">2</text>
+  <text x="228" y="75" font-size="12" font-weight="600" fill="#7A4A12">引导器</text>
+  <text x="206" y="94" font-size="8.4" fill="#7A4A12">GRUB2</text>
+  <line x1="204" y1="102" x2="322" y2="102" stroke="#D9A458" stroke-width="0.6" opacity="0.6"/>
+  <text x="206" y="118" font-size="8.6" fill="#7A4A12">读 grub.cfg</text>
+  <text x="206" y="132" font-size="8.6" fill="#7A4A12">加载内核 vmlinuz</text>
+  <text x="206" y="146" font-size="8.6" fill="#7A4A12">加载 initramfs</text>
+
+  <!-- ③ 内核 -->
+  <rect x="348" y="52" width="138" height="104" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <circle cx="366" cy="70" r="9" fill="#7FA6D0"/>
+  <text x="366" y="73.5" font-size="9.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">3</text>
+  <text x="382" y="75" font-size="12" font-weight="600" fill="#1F4468">内核</text>
+  <text x="360" y="94" font-size="8.4" fill="#1F4468">vmlinuz + 内存盘</text>
+  <line x1="358" y1="102" x2="476" y2="102" stroke="#7FA6D0" stroke-width="0.6" opacity="0.6"/>
+  <text x="360" y="118" font-size="8.6" fill="#1F4468">初始化硬件</text>
+  <text x="360" y="132" font-size="8.6" fill="#1F4468">挂上根分区</text>
+  <text x="360" y="146" font-size="8.6" fill="#1F4468">启动 PID 1</text>
+
+  <!-- ④ systemd -->
+  <rect x="502" y="52" width="138" height="104" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <circle cx="520" cy="70" r="9" fill="#9C8ACB"/>
+  <text x="520" y="73.5" font-size="9.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">4</text>
+  <text x="536" y="75" font-size="12" font-weight="600" fill="#46337A">用户态</text>
+  <text x="514" y="94" font-size="8.4" fill="#46337A">systemd（PID 1）</text>
+  <line x1="512" y1="102" x2="630" y2="102" stroke="#9C8ACB" stroke-width="0.6" opacity="0.6"/>
+  <text x="514" y="118" font-size="8.6" fill="#46337A">读 unit 依赖</text>
+  <text x="514" y="132" font-size="8.6" fill="#46337A">并行拉起服务</text>
+  <text x="514" y="146" font-size="8.6" fill="#46337A">进入 target</text>
+
+  <!-- 段间箭头 -->
+  <line x1="180" y1="104" x2="190" y2="104" stroke="#D9A458" stroke-width="1.2" marker-end="url(#arrAmber)"/>
+  <line x1="334" y1="104" x2="344" y2="104" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#arrBlue)"/>
+  <line x1="488" y1="104" x2="498" y2="104" stroke="#9C8ACB" stroke-width="1.2" marker-end="url(#arrPurple)"/>
+
+  <!-- ================= 失败表现条 ================= -->
+  <text x="340" y="172" font-size="8.2" fill="#8C8980" text-anchor="middle">四段坏掉时，屏幕最后分别停在这里 ↓</text>
+  <rect x="40" y="182" width="138" height="46" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="50" y="200" font-size="8.4" fill="#7A322B">无输出、卡 logo</text>
+  <text x="50" y="216" font-size="8.4" fill="#7A322B">no bootable device</text>
+
+  <rect x="194" y="182" width="138" height="46" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="204" y="200" font-size="8.4" fill="#7A322B">grub&gt; / rescue&gt;</text>
+  <text x="204" y="216" font-size="8.4" fill="#7A322B">unknown filesystem</text>
+
+  <rect x="348" y="182" width="138" height="46" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="358" y="200" font-size="8.4" fill="#7A322B">滚屏后 panic</text>
+  <text x="358" y="216" font-size="8.4" fill="#7A322B">停在 dracut:/#</text>
+
+  <rect x="502" y="182" width="138" height="46" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="512" y="200" font-size="8.4" fill="#7A322B">A start job is running</text>
+  <text x="512" y="216" font-size="8.4" fill="#7A322B">emergency mode</text>
+
+  <!-- ================= initramfs 区 ================= -->
+  <line x1="32" y1="238" x2="648" y2="238" stroke="#E8E6DE" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <text x="40" y="258" font-size="10.5" font-weight="600" fill="#2B2A27">阶段③的进阶：为什么必须有一个内存盘</text>
+
+  <rect x="40" y="268" width="240" height="48" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="286" font-size="9.5" font-weight="600" fill="#1F4468">想挂上根分区</text>
+  <text x="52" y="302" font-size="8.4" fill="#1F4468">得先有 ext4 / LVM / RAID 驱动</text>
+
+  <line x1="282" y1="284" x2="316" y2="284" stroke="#D2948C" stroke-width="1.1" marker-end="url(#arrRed)"/>
+  <line x1="316" y1="300" x2="282" y2="300" stroke="#D2948C" stroke-width="1.1" marker-end="url(#arrRed)"/>
+
+  <rect x="320" y="268" width="240" height="48" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="332" y="286" font-size="9.5" font-weight="600" fill="#1F4468">驱动又放在哪里</text>
+  <text x="332" y="302" font-size="8.4" fill="#1F4468">/lib/modules —— 在根分区里</text>
+
+  <text x="40" y="334" font-size="8.6" fill="#7A322B">互相等对方先就位，这就是死锁 —— 光靠内核自己走不过去。</text>
+
+  <rect x="40" y="346" width="600" height="44" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="52" y="364" font-size="9.5" font-weight="600" fill="#1D5A45">initramfs 打破它</text>
+  <text x="52" y="380" font-size="8.8" fill="#1D5A45">把驱动先装进一个内存盘，用它挂上根分区，再 switch_root 把根切过去。</text>
+
+  <text x="32" y="410" font-size="9" fill="#8C8980">内存盘由 dracut / mkinitrd 生成，换内核或改 LVM、RAID 配置后必须跟着重建 —— 这是它最常见的失效原因。</text>
+</svg>

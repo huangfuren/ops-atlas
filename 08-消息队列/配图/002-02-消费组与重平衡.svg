@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>消费者组与重平衡：分配机制与风暴循环</title>
+  <desc>左侧是正常态：topic 六个分区被消费组的三个消费者分摊，每个消费者负责两个分区，一个分区同组内只归一个消费者。右侧是重平衡的三大诱因：单批处理超过最大轮询间隔、心跳超时、成员上下线。重平衡风暴的循环是：处理超时被判死亡、分区分给他人、它处理完提交又把自己拉回组、再次重平衡。治理是缩小单批处理量并给足轮询间隔。</desc>
+
+  <rect width="680" height="380" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">消费者组：一个分区，同组只归一个消费者</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">重平衡 = 全组暂停</text>
+
+  <defs>
+    <marker id="m2bBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 分区行 -->
+  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#4A4945">topic orders（6 分区）× 消费者组（3 消费者）</text>
+
+  <rect x="40" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="85" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P0</text>
+  <rect x="138" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="183" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P1</text>
+  <rect x="236" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="281" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P2</text>
+  <rect x="334" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="379" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P3</text>
+  <rect x="432" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="477" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P4</text>
+  <rect x="530" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="575" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P5</text>
+
+  <!-- 分配线 -->
+  <line x1="85" y1="100" x2="130" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+  <line x1="183" y1="100" x2="130" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+  <line x1="281" y1="100" x2="340" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+  <line x1="379" y1="100" x2="340" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+  <line x1="477" y1="100" x2="550" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+  <line x1="575" y1="100" x2="550" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+
+  <rect x="90" y="132" width="86" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="133" y="151" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">consumer-1</text>
+  <rect x="297" y="132" width="86" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="340" y="151" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">consumer-2</text>
+  <rect x="507" y="132" width="86" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="550" y="151" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">consumer-3</text>
+
+  <text x="40" y="182" font-size="8" fill="#8C8980">分区数 = 组内最大并行度：6 分区最多 6 个消费者并行；消费实例多于分区数的会闲置。</text>
+
+  <!-- 重平衡 -->
+  <text x="40" y="212" font-size="9.5" font-weight="600" fill="#7A322B">重平衡：三大诱因与风暴循环</text>
+
+  <rect x="40" y="224" width="290" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="54" y="244" font-size="8.2" font-weight="600" fill="#7A322B">诱因一：单批处理超 max.poll.interval</text>
+  <text x="54" y="260" font-size="7.4" fill="#7A322B">被判死亡 → 重平衡 → 分区分给他人</text>
+  <text x="54" y="274" font-size="7.4" fill="#7A322B">→ 它处理完再提交 → 又把自己拉回组 → 循环</text>
+
+  <rect x="346" y="224" width="298" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="360" y="244" font-size="8.2" font-weight="600" fill="#7A322B">诱因二/三：心跳超时 · 成员上下线</text>
+  <text x="360" y="260" font-size="7.4" fill="#7A322B">session.timeout 内没心跳 = 死亡；</text>
+  <text x="360" y="274" font-size="7.4" fill="#7A322B">发布扩容/实例崩溃都会触发重分配</text>
+
+  <rect x="40" y="292" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="311" font-size="8.2" fill="#7A4A12">治理：缩小 max.poll.records（单批更少）+ 给足 max.poll.interval —— 让单批处理时间永远小于上限（002 §2.7 第 3 坑）</text>
+
+  <text x="32" y="346" font-size="9" fill="#8C8980">观测：消费组 lag 用 kafka-consumer-groups.sh --describe 或 kafka-exporter 进「监控」——lag 持续增长即堆积（003 §3.3）。</text>
+  <text x="32" y="366" font-size="9" fill="#8C8980">offset 提交：先提交后处理会丢消息，处理完再提交会重复——重复靠消费端幂等兜底（003 §3.2）。</text>
+</svg>

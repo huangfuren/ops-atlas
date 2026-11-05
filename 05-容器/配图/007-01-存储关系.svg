@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>K8s 存储对象关系：Pod 挂 PVC，PVC 绑 PV，StorageClass 动态供给</title>
+  <desc>Pod 通过 volumeMount 引用 PVC，PVC 是使用者的申请单声明容量与访问模式，PV 是真实的存储资源。PVC 声明 storageClassName 后由 StorageClass 模板自动创建对应的 PV，即动态供给。访问模式 RWO 表示单节点读写，回收策略决定 PVC 删除后 PV 保留还是联动删除。</desc>
+
+  <rect width="680" height="350" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">存储对象关系：申请与供给分离</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">Pod 只认 PVC</text>
+
+  <defs>
+    <marker id="d7Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="d7Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- Pod -->
+  <rect x="40" y="70" width="170" height="90" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="125" y="94" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">Pod（使用者）</text>
+  <text x="125" y="112" font-size="7.6" fill="#1D5A45" text-anchor="middle">volumeMounts:</text>
+  <text x="125" y="128" font-size="7.6" fill="#1D5A45" text-anchor="middle">claimName: app-data</text>
+  <text x="125" y="146" font-size="7.2" fill="#8C8980" text-anchor="middle">重调度后 PVC 跟着走</text>
+
+  <line x1="212" y1="115" x2="256" y2="115" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#d7Blue)"/>
+  <text x="234" y="106" font-size="7.4" fill="#8C8980" text-anchor="middle">挂载</text>
+
+  <!-- PVC -->
+  <rect x="260" y="70" width="180" height="90" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="350" y="94" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">PVC · app-data（申请单）</text>
+  <text x="350" y="112" font-size="7.6" fill="#1F4468" text-anchor="middle">requests: 50Gi</text>
+  <text x="350" y="128" font-size="7.6" fill="#1F4468" text-anchor="middle">accessModes: RWO</text>
+  <text x="350" y="146" font-size="7.2" fill="#8C8980" text-anchor="middle">RWO = 单节点读写（云盘常态）</text>
+
+  <line x1="442" y1="115" x2="486" y2="115" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#d7Blue)"/>
+  <text x="464" y="106" font-size="7.4" fill="#8C8980" text-anchor="middle">绑定</text>
+
+  <!-- PV -->
+  <rect x="490" y="70" width="154" height="90" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="567" y="94" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">PV（存储资源）</text>
+  <text x="567" y="112" font-size="7.6" fill="#7A4A12" text-anchor="middle">云盘 / NFS 目录</text>
+  <text x="567" y="128" font-size="7.6" fill="#7A4A12" text-anchor="middle">reclaimPolicy:</text>
+  <text x="567" y="144" font-size="7.6" fill="#7A4A12" text-anchor="middle">Retain / Delete</text>
+
+  <!-- StorageClass -->
+  <rect x="260" y="196" width="384" height="66" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="452" y="218" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">StorageClass（供货模板）—— kubectl get sc</text>
+  <text x="452" y="236" font-size="7.6" fill="#4A4945" text-anchor="middle">provisioner（CSI 驱动）· reclaimPolicy · volumeBindingMode</text>
+  <text x="452" y="252" font-size="7.4" fill="#8C8980" text-anchor="middle">WaitForFirstConsumer：等 Pod 落定再建盘，多可用区自动对齐</text>
+
+  <line x1="452" y1="196" x2="567" y2="164" stroke="#D9A458" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#d7Amber)"/>
+  <text x="530" y="182" font-size="7.4" fill="#7A4A12" text-anchor="middle">动态创建</text>
+  <line x1="350" y1="160" x2="350" y2="196" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#d7Amber)"/>
+  <text x="358" y="182" font-size="7.4" fill="#7A4A12">storageClassName: fast-ssd</text>
+
+  <rect x="40" y="278" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="297" font-size="8.2" fill="#7A4A12">纪律：生产数据的类必须 Retain（或复核默认值）——「顺手删了没人要的 PVC，云盘跟着没了」是缺位时的经典事故</text>
+
+  <text x="32" y="336" font-size="9" fill="#8C8980">多副本应用配 RWO 盘：第二个副本永远 Pending——用 RWX 存储或每副本独立 PVC（StatefulSet 的 volumeClaimTemplates，007 §7.8）。</text>
+</svg>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="680" height="240" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>TSDB 生命周期</title>
+  <desc>样本写入 Head Block（蓝色，内存约两小时），同时并行写 WAL（琥珀色，用于崩溃恢复）；Head 定期落盘为不可变的持久 Block（紫色），后台 compaction 合并成更大的块，最终按保留期整块删除（赭色）。</desc>
+
+  <defs>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B0A9C9"/>
+    </marker>
+    <marker id="a4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="240" fill="#FFFFFF"/>
+  <text x="40" y="28" font-size="13" font-weight="500" fill="#2B2A27">TSDB 生命周期：从内存到删除</text>
+  <text x="640" y="28" font-size="9.5" fill="#9A9791" text-anchor="end">蓝 = 内存 · 紫 = 磁盘 · 赭 = 已删除</text>
+
+  <g stroke-width="1">
+    <rect x="40" y="58" width="180" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <rect x="250" y="58" width="180" height="72" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
+    <rect x="460" y="58" width="180" height="72" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+  </g>
+  <g font-size="11" font-weight="500">
+    <text x="54" y="80" fill="#1F4468">Head Block（内存）</text>
+    <text x="264" y="80" fill="#46337A">持久 Block</text>
+    <text x="474" y="80" fill="#7A322B">保留期清理</text>
+  </g>
+  <g font-size="8.5" fill="#5A6570">
+    <text x="54" y="98">最近约 2 小时的数据</text>
+    <text x="54" y="114">内存占用主战场</text>
+
+    <text x="264" y="98">每 2h 落盘，不可变</text>
+    <text x="264" y="114">后台 compaction 合并</text>
+
+    <text x="474" y="98">整块删除</text>
+    <text x="474" y="114">时间 / 大小先到先算</text>
+  </g>
+
+  <g stroke-width="1" marker-end="url(#a4)">
+    <line x1="220" y1="94" x2="248" y2="94" stroke="#9C8ACB"/>
+    <line x1="430" y1="94" x2="458" y2="94" stroke="#D2948C" marker-end="url(#a4b)"/>
+  </g>
+
+  <line x1="130" y1="132" x2="130" y2="150" stroke="#D9A458" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="140" y="145" font-size="7.5" fill="#8A6B3C">与 Head 并行写，不是先后</text>
+  <rect x="40" y="152" width="180" height="58" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="54" y="172" font-size="10.5" font-weight="500" fill="#7A4A12">WAL 预写日志</text>
+  <text x="54" y="188" font-size="8.5" fill="#8A6B3C">128MB 分段 · 最少 3 段</text>
+  <text x="54" y="202" font-size="8.5" fill="#8A6B3C">崩溃后从最近的检查点重放</text>
+
+  <rect x="250" y="152" width="390" height="58" rx="3" fill="#F8F6F1" stroke="#DCD9CE" stroke-width="0.8"/>
+  <text x="264" y="172" font-size="9.5" fill="#4A4945">块合并：2h → 6h → 18h → … 上限为保留期的 10% 或 31 天，取小者</text>
+  <text x="264" y="188" font-size="9.5" fill="#4A4945">「保留 15 天」不精确：块必须整体过期，清理在后台进行，最多再等 2 小时</text>
+  <text x="264" y="202" font-size="8.5" fill="#9A9791">删 series 只写 tombstones，数据不会立即消失，磁盘空间也不立刻释放</text>
+
+  <text x="40" y="230" font-size="9" fill="#9A9791">磁盘布局：data/01BK.../{chunks,index,tombstones,meta.json} + chunks_head/ + wal/</text>
+</svg>

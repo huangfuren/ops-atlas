@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>头部采样 vs 尾部采样：决策时机决定盲区</title>
+  <desc>头部采样在入口掷骰子，决策时不知道这单会不会出错——错误率千分之一的服务，采样率十分之一时错误 trace 被留下的概率只有十分之一，这是盲区。尾部采样在 Gateway 收齐整棵 trace 后再决策，错误全留、慢的全留，代价是缓存与算力。生产组合：概率保底加尾部优化。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">头部采样 vs 尾部采样：决策时机决定盲区</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">位置：SDK / Gateway</text>
+
+  <defs>
+    <marker id="h5Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 头部采样 -->
+  <rect x="40" y="52" width="294" height="118" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="74" font-size="9" font-weight="600" fill="#4A4945">头部采样（SDK / Agent 入口）</text>
+  <rect x="54" y="84" width="120" height="22" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="114" y="99" font-size="7.4" font-weight="600" fill="#1F4468" text-anchor="middle">掷骰子 10% 保留</text>
+  <text x="54" y="122" font-size="7.6" fill="#1D5A45">✓ 极简：无缓存、上游丢=全链路省</text>
+  <text x="54" y="138" font-size="7.6" fill="#1D5A45">✓ parent-based：整棵树一致</text>
+  <text x="54" y="156" font-size="7.6" fill="#7A322B">✗ 盲区：故障 trace 被骰子丢掉</text>
+
+  <!-- 尾部采样 -->
+  <rect x="350" y="52" width="294" height="118" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="364" y="74" font-size="9" font-weight="600" fill="#4A4945">尾部采样（Gateway，收齐再决策）</text>
+  <rect x="364" y="84" width="130" height="22" rx="2" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="429" y="99" font-size="7.4" font-weight="600" fill="#1b5e20" text-anchor="middle">错误全留 · 慢的全留</text>
+  <text x="364" y="122" font-size="7.6" fill="#1D5A45">✓ 证据密度最高，策略可组合</text>
+  <text x="364" y="138" font-size="7.6" fill="#1D5A45">✓ 决策依据：status / latency / 概率</text>
+  <text x="364" y="156" font-size="7.6" fill="#7A322B">✗ 代价：Gateway 缓存 + decision_wait</text>
+
+  <!-- 组合 -->
+  <rect x="40" y="184" width="604" height="56" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="54" y="204" font-size="8.6" font-weight="600" fill="#1b5e20">生产组合：概率保底（全服务 1–10%）+ 尾部优化（ERROR 全留 · 超 SLO 全留 · 安静服务保底）</text>
+  <text x="54" y="222" font-size="7.6" fill="#1b5e20">部署：尾部采样器在 Gateway 的 tail_sampling processor（002 §2.4），Agent 层不放</text>
+
+  <!-- 策略速览 -->
+  <text x="40" y="266" font-size="9.5" font-weight="600" fill="#4A4945">尾部策略速览（tail_sampling policies）</text>
+  <rect x="40" y="276" width="604" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="294" font-size="7.8" font-family="Consolas,Menlo,monospace" fill="#2B2A27">status_code: [ERROR] ｜ latency: threshold_ms 1000 ｜ probabilistic: 5%</text>
+  <text x="54" y="314" font-size="7.6" fill="#8C8980">decision_wait 要大于业务最大链路跨度——含异步 MQ 的分钟级跨度要专门评估（005 §5.6 第 3 坑）</text>
+
+  <text x="32" y="352" font-size="9" fill="#8C8980">成本核算：日 span 数 × 采样率 × 平均大小 × 保留天数——采样率与保留期是两个独立旋钮（005 §5.5）。</text>
+</svg>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>被动 vs 主动健康检查：坏后端多久被发现</title>
+  <desc>上条时间线是 Nginx 开源版的被动检查：t0 后端坏掉后要等真实请求撞上失败，低流量下凑满 max_fails 次数很慢，摘除后还要等 fail_timeout 到期才试探恢复。下条时间线是 HAProxy 的主动检查：每 2 秒探测一次，连续 3 次失败约 6 秒即摘除，恢复也由探测确认。定时巡诊与等患者上门是两者的本质差异。</desc>
+
+  <rect width="680" height="400" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">坏后端多久被发现？被动 vs 主动</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">定时巡诊 vs 等患者上门</text>
+
+  <defs>
+    <marker id="f3Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+    <marker id="f3Green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1D5A45"/>
+    </marker>
+  </defs>
+
+  <!-- 上：被动 -->
+  <text x="40" y="58" font-size="9.5" font-weight="600" fill="#4A4945">Nginx 开源版 · 被动（max_fails=3, fail_timeout=30s，低流量场景）</text>
+  <line x1="60" y1="90" x2="640" y2="90" stroke="#CFCCC2" stroke-width="1.5"/>
+  <circle cx="80" cy="90" r="5" fill="#D2948C"/>
+  <text x="80" y="112" font-size="7.4" fill="#7A322B" text-anchor="middle">t0 后端 B 坏</text>
+  <circle cx="230" cy="90" r="5" fill="#D2948C"/>
+  <text x="230" y="112" font-size="7.4" fill="#7A322B" text-anchor="middle">+20s 请求1 fail</text>
+  <circle cx="380" cy="90" r="5" fill="#D2948C"/>
+  <text x="380" y="112" font-size="7.4" fill="#7A322B" text-anchor="middle">+50s 请求2 fail</text>
+  <circle cx="530" cy="90" r="5" fill="#D2948C"/>
+  <text x="530" y="112" font-size="7.4" fill="#7A322B" text-anchor="middle">+80s 请求3 fail</text>
+  <rect x="560" y="72" width="80" height="22" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="600" y="87" font-size="7.6" font-weight="600" fill="#7A322B" text-anchor="middle">才摘除</text>
+  <text x="40" y="140" font-size="8" fill="#7A322B">期间一半请求打在坏机器上；摘除满 30s 后放一个请求试探，恢复感知同样慢（003 §3.3）</text>
+  <text x="40" y="158" font-size="8" fill="#8C8980">只有连接失败/超时计失败——后端返回 500 不算，业务级异常要靠监控兜底（003 §3.9）</text>
+
+  <line x1="32" y1="176" x2="648" y2="176" stroke="#EDEAE2" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- 下：主动 -->
+  <text x="40" y="200" font-size="9.5" font-weight="600" fill="#1D5A45">HAProxy · 主动（check inter 2s fall 3 rise 2）</text>
+  <line x1="60" y1="232" x2="640" y2="232" stroke="#CFCCC2" stroke-width="1.5"/>
+  <circle cx="80" cy="232" r="5" fill="#D2948C"/>
+  <text x="80" y="254" font-size="7.4" fill="#7A322B" text-anchor="middle">t0 后端 B 坏</text>
+  <circle cx="180" cy="232" r="5" fill="#D2948C"/>
+  <text x="180" y="254" font-size="7.4" fill="#7A322B" text-anchor="middle">+2s 探测 fail</text>
+  <circle cx="280" cy="232" r="5" fill="#D2948C"/>
+  <text x="280" y="254" font-size="7.4" fill="#7A322B" text-anchor="middle">+4s fail</text>
+  <circle cx="380" cy="232" r="5" fill="#D2948C"/>
+  <text x="380" y="254" font-size="7.4" fill="#7A322B" text-anchor="middle">+6s fail（fall=3）</text>
+  <rect x="420" y="214" width="90" height="22" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="465" y="229" font-size="7.6" font-weight="600" fill="#7A322B" text-anchor="middle">≈6s 即摘除</text>
+  <circle cx="540" cy="232" r="5" fill="#1D5A45"/>
+  <text x="540" y="254" font-size="7.4" fill="#1D5A45" text-anchor="middle">rise=2 探测确认恢复</text>
+  <text x="40" y="282" font-size="8" fill="#1D5A45">用户几乎不撞坏机器；option httpchk GET /healthz 探进程自身，不挂外部依赖（否则依赖抖动全后端摘除）</text>
+
+  <!-- 结论 -->
+  <rect x="40" y="306" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="326" font-size="8.4" font-weight="600" fill="#7A4A12">选型逻辑：已做高可用（008）就直接 HAProxy 顶在前面；不引入新组件时，先评估"快速 fail_timeout 的被动"够不够</text>
+  <text x="52" y="344" font-size="7.8" fill="#7A4A12">能力缺口不等于必须补齐——补齐的运维成本（编译模块/多养组件）要一起算（003 §3.7）</text>
+
+  <text x="32" y="384" font-size="9" fill="#8C8980">两种机制都只认"实例死活"，业务级健康（接口 500 率）永远靠应用层与监控——别指望 LB 替你发现业务 bug。</text>
+</svg>

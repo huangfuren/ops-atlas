@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>权限判定的三步比对，以及路径上每一级目录都需要 x 位</title>
+  <desc>上半部分是内核判权的顺序：先比 euid 与文件属主，命中就只用属主那三位；否则比进程的组与文件属组，命中就只用属组那三位；再不然才用其他人那三位。任何一步命中就结束，权限不叠加，所以属主位是 --- 时属组位写着 rwx 也没用。下半部分是一条路径的逐级权限：每一级目录都要有 x 才能进入下一级，team 目录对其他人没有 x，所以后面的文件权限再大也访问不到，这就是 namei -l 要逐级看的原因。</desc>
+
+  <rect width="680" height="440" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">权限判定：三个身份依次比对，命中即停</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">权限不叠加</text>
+
+  <defs>
+    <marker id="a4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a4Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① 三组位不叠加：谁先命中就只听谁那三位，那三位里有对应权限位才放行</text>
+
+  <!-- 第 1 步 -->
+  <circle cx="52" cy="96" r="9" fill="#7FA6D0"/>
+  <text x="52" y="99" font-size="8.4" fill="#FFFFFF" text-anchor="middle">1</text>
+  <rect x="72" y="70" width="280" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="86" y="90" font-size="9.6" font-weight="600" fill="#1F4468">euid 等于文件属主？</text>
+  <text x="86" y="108" font-size="7.8" fill="#1F4468">四个 UID 里，判权只用 effective 那个</text>
+  <line x1="354" y1="96" x2="370" y2="96" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a4Blue)"/>
+  <rect x="372" y="70" width="276" height="52" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="386" y="90" font-size="9.6" font-weight="600" fill="#1F4468">只看「属主」那三位</text>
+  <text x="386" y="108" font-size="7.8" fill="#1F4468">属主位是 --- 就拒绝，属组写着 rwx 也没用</text>
+
+  <line x1="52" y1="106" x2="52" y2="157" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a4Blue)"/>
+  <text x="60" y="135" font-size="7.4" fill="#8C8980">否</text>
+
+  <!-- 第 2 步 -->
+  <circle cx="52" cy="168" r="9" fill="#7FA6D0"/>
+  <text x="52" y="171" font-size="8.4" fill="#FFFFFF" text-anchor="middle">2</text>
+  <rect x="72" y="142" width="280" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="86" y="162" font-size="9.6" font-weight="600" fill="#1F4468">进程的组里有文件属组？</text>
+  <text x="86" y="180" font-size="7.8" fill="#1F4468">主组加附加组，只在文件这一个属组上比</text>
+  <line x1="354" y1="168" x2="370" y2="168" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a4Blue)"/>
+  <rect x="372" y="142" width="276" height="52" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="386" y="162" font-size="9.6" font-weight="600" fill="#1F4468">只看「属组」那三位</text>
+  <text x="386" y="180" font-size="7.8" fill="#1F4468">不在这个组，才继续往第三步走</text>
+
+  <line x1="52" y1="178" x2="52" y2="229" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a4Blue)"/>
+  <text x="60" y="207" font-size="7.4" fill="#8C8980">否</text>
+
+  <!-- 第 3 步 -->
+  <circle cx="52" cy="240" r="9" fill="#7FA6D0"/>
+  <text x="52" y="243" font-size="8.4" fill="#FFFFFF" text-anchor="middle">3</text>
+  <rect x="72" y="214" width="280" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="86" y="234" font-size="9.6" font-weight="600" fill="#1F4468">剩下的一律算「其他人」</text>
+  <text x="86" y="252" font-size="7.8" fill="#1F4468">不需要条件，走到这里就用它判</text>
+  <line x1="354" y1="240" x2="370" y2="240" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a4Blue)"/>
+  <rect x="372" y="214" width="276" height="52" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="386" y="234" font-size="9.6" font-weight="600" fill="#1F4468">只看「其他人」那三位</text>
+  <text x="386" y="252" font-size="7.8" fill="#1F4468">root 例外：读写无视，执行仍要一个 x</text>
+
+  <text x="32" y="292" font-size="9.5" font-weight="600" fill="#4A4945">② 路径上每一级都要有 x —— namei -l 就是逐级看这个</text>
+
+  <!-- 路径链 -->
+  <rect x="36" y="306" width="104" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="88" y="324" font-size="9.4" font-weight="600" fill="#4A4945" text-anchor="middle">/</text>
+  <text x="88" y="339" font-size="7.4" fill="#4A4945" text-anchor="middle">drwxr-xr-x</text>
+  <text x="88" y="351" font-size="7" fill="#8C8980" text-anchor="middle">root root</text>
+
+  <rect x="162" y="306" width="104" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="214" y="324" font-size="9.4" font-weight="600" fill="#4A4945" text-anchor="middle">srv</text>
+  <text x="214" y="339" font-size="7.4" fill="#4A4945" text-anchor="middle">drwxr-xr-x</text>
+  <text x="214" y="351" font-size="7" fill="#8C8980" text-anchor="middle">root root</text>
+
+  <rect x="288" y="306" width="104" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="340" y="324" font-size="9.4" font-weight="600" fill="#4A4945" text-anchor="middle">share</text>
+  <text x="340" y="339" font-size="7.4" fill="#4A4945" text-anchor="middle">drwxrwsr-x</text>
+  <text x="340" y="351" font-size="7" fill="#8C8980" text-anchor="middle">root devteam</text>
+
+  <rect x="414" y="306" width="104" height="52" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.4"/>
+  <text x="466" y="324" font-size="9.4" font-weight="600" fill="#7A322B" text-anchor="middle">team</text>
+  <text x="466" y="339" font-size="7.4" fill="#7A322B" text-anchor="middle">drwxr-x---</text>
+  <text x="466" y="351" font-size="7" fill="#7A322B" text-anchor="middle">其他人没有 x</text>
+
+  <rect x="540" y="306" width="104" height="52" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="592" y="324" font-size="8.6" font-weight="600" fill="#46337A" text-anchor="middle">report.csv</text>
+  <text x="592" y="339" font-size="7.4" fill="#46337A" text-anchor="middle">-rw-rw-r--</text>
+  <text x="592" y="351" font-size="7" fill="#8C8980" text-anchor="middle">alice devteam</text>
+
+  <line x1="142" y1="332" x2="160" y2="332" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a4Blue)"/>
+  <line x1="268" y1="332" x2="286" y2="332" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a4Blue)"/>
+  <line x1="394" y1="332" x2="412" y2="332" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a4Blue)"/>
+  <line x1="520" y1="332" x2="538" y2="332" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a4Red)"/>
+  <text x="529" y="370" font-size="7.6" font-weight="600" fill="#7A322B" text-anchor="middle">进不去</text>
+
+  <text x="32" y="390" font-size="9" fill="#8C8980">断在 team 这一级：不在 devteam 组的人，report.csv 开到 777 也读不到。</text>
+  <text x="32" y="406" font-size="9" fill="#8C8980">所以「某人访问不了某个文件」的第一条命令是 namei -l，不是 ls -l。</text>
+  <text x="32" y="426" font-size="9" fill="#8C8980">这三步是 DAC 的全部规则；DAC 之外还有一道 SELinux 的门，见 3.11 与配图 03-02。</text>
+</svg>

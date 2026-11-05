@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 540" width="680" height="540">
+  <title>状态码的责任划分与 502/503/504 判据</title>
+  <desc>上半部分按 1xx 到 5xx 列出责任方与首查方向，下半部分给出用 upstream 变量区分 502、503、504 的三条判据。</desc>
+  <rect width="680" height="540" fill="#FFFFFF"/>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">状态码：先看是谁的责任，再看是几</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">4xx 不代表「不是我们的问题」</text>
+
+    <text x="56" y="52" font-size="8" fill="#8A8880">类别</text>
+    <text x="110" y="52" font-size="8" fill="#8A8880">含义</text>
+    <text x="210" y="52" font-size="8" fill="#8A8880">责任方</text>
+    <text x="300" y="52" font-size="8" fill="#8A8880">运维首查方向</text>
+
+    <rect x="40" y="58" width="600" height="36" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="56" y="81" font-size="10.5" font-weight="600" fill="#8A8880">1xx</text>
+    <text x="110" y="81" font-size="9.5" fill="#6B6A65">信息</text>
+    <text x="210" y="81" font-size="9.5" fill="#8A8880">—</text>
+    <text x="300" y="81" font-size="9" fill="#6B6A65">极少见，忽略</text>
+
+    <rect x="40" y="98" width="600" height="36" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="56" y="121" font-size="10.5" font-weight="600" fill="#4A4945">2xx</text>
+    <text x="110" y="121" font-size="9.5" fill="#4A4945">成功</text>
+    <text x="210" y="121" font-size="9.5" fill="#8A8880">—</text>
+    <text x="300" y="121" font-size="9" fill="#6B6A65">正常</text>
+
+    <rect x="40" y="138" width="600" height="36" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="56" y="161" font-size="10.5" font-weight="600" fill="#4A4945">3xx</text>
+    <text x="110" y="161" font-size="9.5" fill="#4A4945">重定向</text>
+    <rect x="208" y="147" width="60" height="18" rx="9" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="238" y="160" font-size="8.5" fill="#4A4945" text-anchor="middle">配置方</text>
+    <text x="300" y="161" font-size="9" fill="#6B6A65">跳转目标；301 会被浏览器永久缓存</text>
+
+    <rect x="40" y="178" width="600" height="36" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="56" y="201" font-size="10.5" font-weight="600" fill="#14584A">4xx</text>
+    <text x="110" y="201" font-size="9.5" fill="#4A4945">客户端错</text>
+    <rect x="208" y="187" width="60" height="18" rx="9" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="238" y="200" font-size="8.5" fill="#14584A" text-anchor="middle">请求方</text>
+    <text x="300" y="201" font-size="9" fill="#6B6A65">参数、权限、体积、路径（400/401/403/404/413）</text>
+
+    <rect x="40" y="218" width="600" height="36" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="56" y="241" font-size="10.5" font-weight="600" fill="#7A4A12">5xx</text>
+    <text x="110" y="241" font-size="9.5" fill="#4A4945">服务端错</text>
+    <rect x="208" y="227" width="60" height="18" rx="9" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="238" y="240" font-size="8.5" fill="#7A4A12" text-anchor="middle">服务方</text>
+    <text x="300" y="241" font-size="9" fill="#6B6A65">应用、上游、超时（500/502/503/504）</text>
+
+    <text x="40" y="286" font-size="11" font-weight="600" fill="#2C2C2A">5xx 了，谁的锅？三个变量定责</text>
+    <text x="330" y="286" font-size="8.5" fill="#8A8880">判据取自 Nginx 日志的 $upstream_*</text>
+
+    <rect x="40" y="300" width="290" height="44" rx="3" fill="#FFFFFF" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="52" y="320" font-size="8.5" fill="#4A4945">$upstream_status 为空</text>
+    <text x="52" y="335" font-size="8.5" fill="#4A4945">且 $upstream_response_time 为空</text>
+    <rect x="344" y="308" width="66" height="28" rx="3" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="377" y="326" font-size="9.5" font-weight="600" fill="#7A4A12" text-anchor="middle">502/503</text>
+    <text x="426" y="318" font-size="9" fill="#2C2C2A">根本没连上：上游不在、端口不通、</text>
+    <text x="426" y="333" font-size="9" fill="#6B6A65">或连上就被关掉（上游崩溃 / OOM）</text>
+
+    <rect x="40" y="360" width="290" height="44" rx="3" fill="#FFFFFF" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="52" y="380" font-size="8.5" fill="#4A4945">$upstream_status 有值</text>
+    <text x="52" y="395" font-size="8.5" fill="#4A4945">且它也是 5xx</text>
+    <rect x="344" y="368" width="66" height="28" rx="3" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="377" y="386" font-size="9.5" font-weight="600" fill="#7A4A12" text-anchor="middle">上游 5xx</text>
+    <text x="426" y="378" font-size="9" fill="#2C2C2A">上游自己也出错了，请求确实到达了</text>
+    <text x="426" y="393" font-size="9" fill="#6B6A65">往上查应用日志，不是网关的问题</text>
+
+    <rect x="40" y="420" width="290" height="44" rx="3" fill="#FFFFFF" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="52" y="440" font-size="8.5" fill="#4A4945">$upstream_addr 有值、status 为空</text>
+    <text x="52" y="455" font-size="8.5" fill="#4A4945">而 urt 有值</text>
+    <rect x="344" y="428" width="66" height="28" rx="3" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="377" y="446" font-size="9.5" font-weight="600" fill="#7A4A12" text-anchor="middle">504</text>
+    <text x="426" y="438" font-size="9" fill="#2C2C2A">连上了、请求发出去了、没等到应答</text>
+    <text x="426" y="453" font-size="9" fill="#6B6A65">查慢 SQL、死锁、GC、上游限流</text>
+
+    <rect x="40" y="484" width="600" height="44" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="504" font-size="9.8" fill="#2C2C2A">一句话：502 说了胡话，503 不在家，504 不应答。</text>
+    <text x="56" y="520" font-size="9.8" fill="#6B6A65">日志里加上 us / urt 两个字段，这三个码才分得清——否则只能互相推诿。</text>
+  </g>
+</svg>

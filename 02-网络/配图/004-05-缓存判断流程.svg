@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" width="680" height="500">
+  <title>HTTP 缓存的三级判断与验证流程</title>
+  <desc>从左到右依次判断有没有缓存、是否过期、是否需要向服务端验证，四项结果分别对应回源、直接用、304 与 200；底部为 max-age、no-cache、no-store 的差别。</desc>
+  <rect width="680" height="500" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ar5c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
+    </marker>
+  </defs>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">缓存：先看有没有，再看过没过期，最后才回源</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">4.6 · 只有第 4 种情况要传 body</text>
+
+    <rect x="56" y="64" width="204" height="42" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="158" y="90" font-size="10" fill="#2C2C2A" text-anchor="middle">本地有缓存吗？</text>
+    <rect x="56" y="150" width="204" height="42" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="158" y="176" font-size="10" fill="#2C2C2A" text-anchor="middle">还在 max-age 内吗？</text>
+    <rect x="56" y="236" width="204" height="42" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="158" y="256" font-size="10" fill="#2C2C2A" text-anchor="middle">带 If-None-Match 去验证</text>
+    <text x="158" y="270" font-size="8" fill="#8A8880" text-anchor="middle">（If-Modified-Since 同理）</text>
+
+    <rect x="320" y="64" width="300" height="42" rx="3" fill="#FFFFFF" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="334" y="84" font-size="9.5" font-weight="600" fill="#2C2C2A">回源请求，200 完整下载</text>
+    <text x="334" y="98" font-size="8" fill="#8A8880">最慢：DNS、TCP、TLS 都要再走一遍</text>
+
+    <rect x="320" y="150" width="300" height="42" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="334" y="170" font-size="9.5" font-weight="600" fill="#14584A">直接用本地缓存，0 请求</text>
+    <text x="334" y="184" font-size="8" fill="#3F7F6D">强缓存命中，一个字节都不发</text>
+
+    <rect x="320" y="236" width="300" height="42" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="334" y="256" font-size="9.5" font-weight="600" fill="#2C2C2A">304 Not Modified</text>
+    <text x="334" y="270" font-size="8" fill="#6B6A65">没有 body，只回来一行头——所以看起来很快</text>
+
+    <rect x="320" y="300" width="300" height="42" rx="3" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="334" y="320" font-size="9.5" font-weight="600" fill="#7A4A12">200 + 新内容</text>
+    <text x="334" y="334" font-size="8" fill="#8A6A3A">重新下载，同时刷新缓存</text>
+
+    <g stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar5c)">
+      <path d="M260,85 L314,85"/>
+      <path d="M158,106 L158,144"/>
+      <path d="M260,171 L314,171"/>
+      <path d="M158,192 L158,230"/>
+      <path d="M260,257 L314,257"/>
+      <path d="M158,278 L158,321 L314,321"/>
+    </g>
+    <g font-size="8" fill="#6B6A65">
+      <text x="290" y="78" text-anchor="middle">没有</text>
+      <text x="166" y="128">有</text>
+      <text x="290" y="164" text-anchor="middle">是</text>
+      <text x="166" y="214">已过期</text>
+      <text x="290" y="250" text-anchor="middle">没变</text>
+      <text x="166" y="300">变了</text>
+    </g>
+
+    <text x="40" y="366" font-size="9" fill="#8A8880">三条指令的区别（最高频的误解在这里）</text>
+    <g stroke-width="0.8">
+      <rect x="40" y="374" width="190" height="50" rx="3" fill="#F8F6F1" stroke="#C9C6BC"/>
+      <rect x="240" y="374" width="190" height="50" rx="3" fill="#F8F6F1" stroke="#C9C6BC"/>
+      <rect x="440" y="374" width="190" height="50" rx="3" fill="#FAEEDA" stroke="#C08A3E"/>
+    </g>
+    <text x="54" y="394" font-size="10" font-weight="600" fill="#2C2C2A">max-age=N</text>
+    <text x="54" y="410" font-size="8.5" fill="#6B6A65">相对过期时间，N 秒内不发请求</text>
+    <text x="254" y="394" font-size="10" font-weight="600" fill="#2C2C2A">no-cache</text>
+    <text x="254" y="410" font-size="8.5" fill="#6B6A65">可以存，但每次用前必须验证</text>
+    <text x="454" y="394" font-size="10" font-weight="600" fill="#7A4A12">no-store</text>
+    <text x="454" y="410" font-size="8.5" fill="#8A6A3A">连存都不许存，敏感数据用这个</text>
+
+    <rect x="40" y="440" width="600" height="46" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="460" font-size="9.8" fill="#2C2C2A">no-cache ≠ no-store：前者是「存了但不放心，每次问一句」，后者是「不许存」。</text>
+    <text x="56" y="478" font-size="9.8" fill="#6B6A65">标准配法：HTML 用 no-cache，静态资源文件名带 hash 且长缓存——发版后 URL 变了，用户自然拿到新文件。</text>
+  </g>
+</svg>

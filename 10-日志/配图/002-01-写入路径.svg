@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>ES 写入路径：refresh 让数据可搜，translog 保不丢，merge 真正释放空间</title>
+  <desc>一条日志写入后走两条路：一条进内存缓冲，默认一秒 refresh 刷成可搜索的段——这就是近实时的来源；另一条同步写 translog 事务日志，崩溃后凭它恢复未刷盘的数据。段在后台合并成大段，标记删除的文档在合并时才真正物理消失。日志集群常把 refresh 调到 30 秒换写入吞吐。</desc>
+
+  <rect width="680" height="340" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">ES 写入路径：两条路 + 一次合并</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">近实时 ≈ 1 秒</text>
+
+  <defs>
+    <marker id="g2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="g2Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- 写入 -->
+  <rect x="40" y="60" width="120" height="90" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="100" y="96" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">写入</text>
+  <text x="100" y="114" font-size="7.4" fill="#8C8980" text-anchor="middle">一条日志</text>
+  <text x="100" y="130" font-size="7.4" fill="#8C8980" text-anchor="middle">（JSON 文档）</text>
+
+  <!-- 上路：buffer → refresh → segment -->
+  <rect x="200" y="52" width="150" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="275" y="70" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">内存缓冲 buffer</text>
+  <text x="275" y="85" font-size="7.2" fill="#4A4945" text-anchor="middle">不可搜</text>
+  <line x1="352" y1="72" x2="396" y2="72" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g2Blue)"/>
+  <text x="374" y="64" font-size="7" fill="#1F4468" text-anchor="middle">refresh 1s</text>
+  <rect x="400" y="52" width="160" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="480" y="70" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">段 segment —— 可搜索</text>
+  <text x="480" y="85" font-size="7.2" fill="#1D5A45" text-anchor="middle">这就是「近实时」的来源</text>
+
+  <!-- 下路：translog -->
+  <rect x="200" y="116" width="150" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="275" y="134" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">translog 事务日志</text>
+  <text x="275" y="149" font-size="7.2" fill="#7A4A12" text-anchor="middle">写即落盘 · 崩溃恢复凭据</text>
+  <line x1="275" y1="92" x2="275" y2="114" stroke="#7FA6D0" stroke-width="1" marker-end="url(#g2Blue)"/>
+  <line x1="352" y1="136" x2="396" y2="136" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g2Amber)"/>
+  <text x="374" y="128" font-size="7" fill="#7A4A12" text-anchor="middle">崩溃恢复</text>
+  <rect x="400" y="116" width="160" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="480" y="134" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">重放恢复未刷盘数据</text>
+  <text x="480" y="149" font-size="7.2" fill="#8C8980" text-anchor="middle">「不丢」的凭据，别关</text>
+
+  <line x1="100" y1="150" x2="100" y2="200" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g2Blue)"/>
+  <text x="108" y="180" font-size="7.2" fill="#8C8980">段在磁盘上</text>
+
+  <!-- merge -->
+  <rect x="40" y="204" width="150" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="115" y="222" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">段 segment…</text>
+  <text x="115" y="237" font-size="7.2" fill="#8C8980" text-anchor="middle">含标记删除的文档</text>
+  <line x1="192" y1="224" x2="238" y2="224" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g2Blue)"/>
+  <text x="215" y="216" font-size="7" fill="#1F4468" text-anchor="middle">后台 merge</text>
+  <rect x="242" y="204" width="180" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="332" y="222" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">大段</text>
+  <text x="332" y="237" font-size="7.2" fill="#1D5A45" text-anchor="middle">删除的文档在此真正消失</text>
+
+  <!-- 日志场景注记 -->
+  <rect x="40" y="262" width="604" height="42" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="281" font-size="8.2" fill="#7A4A12">日志场景优化：refresh 调到 30s —— 写入吞吐显著提升，代价是查询延迟变大（日志要吞吐不要毫秒可见）</text>
+  <text x="52" y="296" font-size="7.6" fill="#7A4A12">「删了索引磁盘还是满」的答案之一：空间在后台 merge 时才释放（002 §2.9 第 7 坑）</text>
+
+  <text x="32" y="330" font-size="9" fill="#8C8980">别拿 ES 当实时告警源：refresh 延迟 + 查询成本——ERROR 计数应由应用直接打指标走「监控」链路（000 §0.5）。</text>
+</svg>

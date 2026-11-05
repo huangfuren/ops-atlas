@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>一条请求的入口旅程：五跳到应用，每跳的职责与断点</title>
+  <desc>用户在浏览器敲下域名后经过五跳：DNS 把域名解析成 IP，CDN 就近返回静态资源，负载均衡持有公网 IP 做四层分流，网关 Nginx 做七层治理包括 TLS 终止、域名路径路由、限流与灰度，最后到达应用集群。右侧标注每一跳断掉时的现象。接入层的五大职能集中在第四跳。</desc>
+
+  <rect width="680" height="420" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">入口旅程：五跳到应用</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">接入层 = 第 4 跳</text>
+
+  <defs>
+    <marker id="c0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- ① DNS -->
+  <rect x="40" y="52" width="260" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="70" font-size="9" font-weight="600" fill="#4A4945">① DNS</text>
+  <text x="54" y="85" font-size="7.6" fill="#8C8980">域名 → IP</text>
+  <text x="324" y="70" font-size="7.8" fill="#7A322B">断了：解析不到 / TTL 未过期</text>
+  <text x="324" y="85" font-size="7.4" fill="#8C8980">「网络」003</text>
+  <line x1="170" y1="92" x2="170" y2="108" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+
+  <!-- ② CDN -->
+  <rect x="40" y="112" width="260" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="130" font-size="9" font-weight="600" fill="#4A4945">② CDN</text>
+  <text x="54" y="145" font-size="7.6" fill="#8C8980">就近返回静态；动态回源</text>
+  <text x="324" y="130" font-size="7.8" fill="#7A322B">断了：部分资源慢/失败</text>
+  <text x="324" y="145" font-size="7.4" fill="#8C8980">真实 IP 链从这里开始（005 §5.6）</text>
+  <line x1="170" y1="152" x2="170" y2="168" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+
+  <!-- ③ LB -->
+  <rect x="40" y="172" width="260" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="190" font-size="9" font-weight="600" fill="#1F4468">③ 负载均衡（云 LB / LVS）</text>
+  <text x="54" y="205" font-size="7.6" fill="#4A4945">公网 IP 持有者 · 四层分流</text>
+  <text x="324" y="190" font-size="7.8" fill="#7A322B">断了：全站不可达</text>
+  <text x="324" y="205" font-size="7.4" fill="#8C8980">原理「网络」006</text>
+  <line x1="170" y1="212" x2="170" y2="228" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+
+  <!-- ④ 网关 -->
+  <rect x="40" y="232" width="260" height="70" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="54" y="252" font-size="9" font-weight="600" fill="#7A4A12">④ 网关（Nginx / HAProxy）★</text>
+  <text x="54" y="268" font-size="7.6" fill="#7A4A12">七层治理：</text>
+  <text x="54" y="284" font-size="7.6" fill="#7A4A12">TLS 终止 · 域名路径路由 · 限流 · 灰度 · 日志</text>
+  <text x="324" y="252" font-size="7.8" fill="#7A322B">断了：全站 502/503</text>
+  <text x="324" y="267" font-size="7.4" fill="#8C8980">高可用：008 双机热备</text>
+  <text x="324" y="282" font-size="7.4" fill="#8C8980">取证：007 手册</text>
+  <line x1="170" y1="302" x2="170" y2="318" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+
+  <!-- ⑤ 应用 -->
+  <rect x="40" y="322" width="260" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="54" y="340" font-size="9" font-weight="600" fill="#1D5A45">⑤ 应用集群（虚机 / K8s Pod）</text>
+  <text x="54" y="355" font-size="7.6" fill="#1D5A45">业务真正在这跑</text>
+  <text x="324" y="340" font-size="7.8" fill="#7A322B">断了：500 / 单实例错误</text>
+  <text x="324" y="355" font-size="7.4" fill="#8C8980">K8s 场景：「容器」006 六跳图</text>
+
+  <!-- 底部 -->
+  <rect x="40" y="374" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="393" font-size="8.2" fill="#7A4A12">五大职能全在第 ④ 跳：转发（002/003）· TLS 卸载（004）· 防护（005）· 灰度（003 §3.8）· 观测（005/007）</text>
+</svg>

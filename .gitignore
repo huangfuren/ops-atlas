@@ -1,0 +1,12 @@
+# 配图渲染 PNG 自检存档（SVG 源图 GitHub 网页可直接预览，不入库）
+**/_render/
+
+# 点开头的目录不入库（AI 协作层 .agents/ 等，仅本地保留）
+.*/
+
+# 本地临时区（草稿/调研素材，随时可清空，不公开）
+tmp/
+
+# Windows 系统文件
+Thumbs.db
+desktop.ini

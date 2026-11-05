@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 612" width="680" height="612">
+  <title>四次挥手的报文与时序</title>
+  <desc>客户端与服务端两条时间轴，四个报文完成关闭：FIN、ACK、FIN、ACK；中间半关闭期间服务端仍可发送剩余数据，客户端最后在 TIME_WAIT 等 2MSL。</desc>
+  <rect width="680" height="612" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
+    </marker>
+    <marker id="ar3g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9A978D"/>
+    </marker>
+  </defs>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">四次挥手：两个方向各自关闭，所以是四次</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">谁先发 FIN，谁在结束时背 TIME_WAIT</text>
+
+    <rect x="140" y="46" width="120" height="30" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="200" y="66" font-size="11.5" font-weight="600" fill="#2C2C2A" text-anchor="middle">客户端</text>
+    <rect x="420" y="46" width="120" height="30" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="480" y="66" font-size="11.5" font-weight="600" fill="#2C2C2A" text-anchor="middle">服务端</text>
+
+    <line x1="200" y1="76" x2="200" y2="492" stroke="#D5D2C8" stroke-width="1"/>
+    <line x1="480" y1="76" x2="480" y2="492" stroke="#D5D2C8" stroke-width="1"/>
+
+    <text x="95" y="94" font-size="8.5" fill="#8A8880" text-anchor="middle">本端状态</text>
+    <text x="585" y="94" font-size="8.5" fill="#8A8880" text-anchor="middle">对端状态</text>
+
+    <path d="M200,110 L470,125" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar3)"/>
+    <text x="340" y="102" font-size="10.5" fill="#2C2C2A" text-anchor="middle">① FIN   seq=u</text>
+    <rect x="49" y="137" width="92" height="22" rx="11" fill="#E1F5EE"/>
+    <text x="95" y="152" font-size="9.5" fill="#14584A" text-anchor="middle">FIN_WAIT_1</text>
+
+    <path d="M480,182 L214,197" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar3)"/>
+    <text x="340" y="174" font-size="10.5" fill="#2C2C2A" text-anchor="middle">② ACK   ack=u+1</text>
+    <rect x="539" y="157" width="92" height="22" rx="11" fill="#FAEEDA"/>
+    <text x="585" y="172" font-size="9.5" fill="#7A4A12" text-anchor="middle">CLOSE_WAIT</text>
+
+    <rect x="49" y="211" width="92" height="22" rx="11" fill="#E1F5EE"/>
+    <text x="95" y="226" font-size="9.5" fill="#14584A" text-anchor="middle">FIN_WAIT_2</text>
+
+    <path d="M478,252 L216,266" stroke="#9A978D" stroke-width="1" stroke-dasharray="3 3" fill="none" marker-end="url(#ar3g)"/>
+    <text x="340" y="244" font-size="9.5" fill="#6B6A65" text-anchor="middle">服务端继续发剩余数据（半关闭：客户端停发但仍可收）</text>
+
+    <path d="M480,306 L214,321" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar3)"/>
+    <text x="340" y="298" font-size="10.5" fill="#2C2C2A" text-anchor="middle">③ FIN   seq=w  ack=u+1</text>
+    <rect x="539" y="343" width="92" height="22" rx="11" fill="#FAEEDA"/>
+    <text x="585" y="358" font-size="9.5" fill="#7A4A12" text-anchor="middle">LAST_ACK</text>
+
+    <path d="M200,368 L470,383" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar3)"/>
+    <text x="340" y="360" font-size="10.5" fill="#2C2C2A" text-anchor="middle">④ ACK   ack=w+1</text>
+
+    <rect x="49" y="399" width="92" height="22" rx="11" fill="#E1F5EE"/>
+    <text x="95" y="414" font-size="9.5" fill="#14584A" text-anchor="middle">TIME_WAIT</text>
+    <rect x="539" y="399" width="92" height="22" rx="11" fill="#F1EFE8"/>
+    <text x="585" y="414" font-size="9.5" fill="#4A4945" text-anchor="middle">CLOSED</text>
+
+    <rect x="196" y="424" width="8" height="60" fill="#E1F5EE"/>
+    <line x1="200" y1="424" x2="200" y2="484" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="216" y="450" font-size="9" fill="#14584A">等 2MSL（Linux 约 60 秒）</text>
+    <text x="216" y="466" font-size="8.5" fill="#8A8880">这段时间里旧连接的迟到包才会全部过期</text>
+
+    <rect x="49" y="491" width="92" height="22" rx="11" fill="#F1EFE8"/>
+    <text x="95" y="506" font-size="9.5" fill="#4A4945" text-anchor="middle">CLOSED</text>
+
+    <rect x="40" y="534" width="600" height="58" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="556" font-size="9.8" fill="#2C2C2A">服务端恰好没有数据要发时，②③ 会合并成一个 FIN+ACK，抓包里只有三步——这是正常现象，不是异常。</text>
+    <text x="56" y="576" font-size="9.8" fill="#6B6A65">全双工意味着两个方向独立关闭：发 FIN 只代表「我不发了」，不代表「我不收了」。</text>
+  </g>
+</svg>

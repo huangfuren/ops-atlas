@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>多阶段构建：编译阶段怎么脏都行，运行阶段只带产物</title>
+  <desc>左侧 build 阶段基于 golang 镜像约 250MB，装着整套工具链，唯一使命是产出二进制；右侧 runtime 阶段从干净的 alpine 起步，只拷贝二进制进来，成品约 12MB。下方体积对比条显示单阶段与多阶段的差距。中间的 COPY --from 是两个阶段之间唯一传递的东西。</desc>
+
+  <rect width="680" height="340" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">多阶段构建：250MB 进，12MB 出</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">工具链不进最终镜像</text>
+
+  <defs>
+    <marker id="d2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 阶段 1 -->
+  <rect x="40" y="52" width="240" height="120" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="54" y="74" font-size="9.5" font-weight="600" fill="#1F4468">阶段 1 · build</text>
+  <text x="54" y="92" font-size="8" fill="#1F4468">FROM golang:1.22-alpine（~250MB）</text>
+  <text x="54" y="110" font-size="7.6" fill="#4A4945">内容：源码 + 工具链 + 构建缓存</text>
+  <text x="54" y="128" font-size="7.6" fill="#4A4945">使命：产出 /bin/app —— 仅此而已</text>
+  <text x="54" y="150" font-size="7.6" fill="#8C8980">怎么脏都行：测试依赖、调试符号都留下</text>
+
+  <!-- 中间传递 -->
+  <line x1="284" y1="100" x2="384" y2="100" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#d2Blue)"/>
+  <text x="334" y="90" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">COPY --from=build</text>
+  <text x="334" y="116" font-size="7.2" fill="#8C8980" text-anchor="middle">只拷 /bin/app</text>
+
+  <!-- 阶段 2 -->
+  <rect x="390" y="52" width="250" height="120" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.4"/>
+  <text x="404" y="74" font-size="9.5" font-weight="600" fill="#1D5A45">阶段 2 · runtime</text>
+  <text x="404" y="92" font-size="8" fill="#1D5A45">FROM alpine:3.19（~7MB）</text>
+  <text x="404" y="110" font-size="7.6" fill="#1D5A45">内容：/bin/app + CA 证书（如需出站）</text>
+  <text x="404" y="128" font-size="7.6" fill="#1D5A45">没有：工具链 · 源码 · 构建缓存</text>
+  <text x="404" y="150" font-size="7.6" fill="#8C8980">攻击面与分发成本同步下降</text>
+
+  <!-- 体积对比条 -->
+  <text x="40" y="204" font-size="9.5" font-weight="600" fill="#4A4945">体积对比（同一条流水线的两种写法）</text>
+  <text x="40" y="226" font-size="8" fill="#7A322B">单阶段（在 golang 镜像里直接跑）</text>
+  <rect x="250" y="216" width="394" height="14" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="0.8"/>
+  <text x="560" y="227" font-size="7.4" fill="#7A322B">250MB+</text>
+  <text x="40" y="256" font-size="8" fill="#1D5A45">多阶段（本图方案）</text>
+  <rect x="250" y="246" width="20" height="14" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="278" y="257" font-size="7.4" fill="#1D5A45">≈12MB（alpine 基座 7MB + 二进制）</text>
+
+  <rect x="40" y="280" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="299" font-size="8.2" fill="#7A4A12">编译阶段怎么脏都行，运行阶段只带产物——CI 里的测试阶段可以作为第三段插在中间（008 §8.4）</text>
+
+  <text x="32" y="330" font-size="9" fill="#8C8980">静态二进制可再进一步：FROM scratch 连 alpine 都不要——代价是没有 sh、没有 CA 证书，需自带（002 §2.6）。</text>
+</svg>

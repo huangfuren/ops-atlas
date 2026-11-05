@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" width="680" height="410" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>切片三要素：指针 + len + cap，append 与共享陷阱的根源</title>
+  <desc>切片本身不存数据，只是切片头三个字段：指针指向底层数组、len 是长度、cap 是容量。append 时容量够就原地写入，容量不够就分配新数组搬家。下方对比两个陷阱：子切片与原切片共享同一底层数组，改一个另一个也变；append 容量不够后指向新数组，两者从此无关。</desc>
+
+  <rect width="680" height="410" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">切片三要素：头 + 底层数组——append 与共享陷阱的根源</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">002 §4.2 · 003 §3.1</text>
+
+  <defs>
+    <marker id="g2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="g2Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+    <marker id="g2Green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6BAF95"/>
+    </marker>
+  </defs>
+
+  <!-- 面板 A：切片头与底层数组 -->
+  <rect x="20" y="44" width="640" height="160" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="40" y="64" font-size="7.6" fill="#4A4945">append 后 len 2→3：容量够 → 原地写入不重新分配；容量不够 → 分配新数组搬家（见下）</text>
+
+  <rect x="40" y="74" width="180" height="112" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="130" y="94" font-size="9.5" font-weight="600" fill="#1F4468" text-anchor="middle">切片头 slice header</text>
+  <rect x="52" y="104" width="156" height="22" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="130" y="119" font-size="7.6" fill="#4A4945" text-anchor="middle">ptr ── 指向底层数组</text>
+  <rect x="52" y="130" width="156" height="22" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="130" y="145" font-size="7.6" fill="#4A4945" text-anchor="middle">len = 3（长度）</text>
+  <rect x="52" y="156" width="156" height="22" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="130" y="171" font-size="7.6" fill="#4A4945" text-anchor="middle">cap = 5（容量）</text>
+
+  <line x1="222" y1="115" x2="324" y2="115" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g2Blue)"/>
+  <text x="272" y="108" font-size="7" fill="#8C8980" text-anchor="middle">ptr</text>
+
+  <!-- 底层数组 5 格 -->
+  <rect x="330" y="94" width="52" height="42" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="356" y="120" font-size="9" fill="#2B2A27" text-anchor="middle">0</text>
+  <rect x="384" y="94" width="52" height="42" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="410" y="120" font-size="9" fill="#2B2A27" text-anchor="middle">0</text>
+  <rect x="438" y="94" width="52" height="42" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="464" y="120" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">3</text>
+  <rect x="492" y="94" width="52" height="42" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="518" y="120" font-size="9" fill="#8C8980" text-anchor="middle">·</text>
+  <rect x="546" y="94" width="52" height="42" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="572" y="120" font-size="9" fill="#8C8980" text-anchor="middle">·</text>
+  <text x="356" y="150" font-size="7" fill="#8C8980" text-anchor="middle">0</text>
+  <text x="410" y="150" font-size="7" fill="#8C8980" text-anchor="middle">1</text>
+  <text x="464" y="150" font-size="7" fill="#8C8980" text-anchor="middle">2</text>
+  <text x="518" y="150" font-size="7" fill="#8C8980" text-anchor="middle">3</text>
+  <text x="572" y="150" font-size="7" fill="#8C8980" text-anchor="middle">4</text>
+
+  <path d="M330,88 L330,82 L490,82 L490,88" fill="none" stroke="#6BAF95" stroke-width="1"/>
+  <text x="410" y="78" font-size="7" fill="#1D5A45" text-anchor="middle">len 3</text>
+  <path d="M330,162 L330,168 L598,168 L598,162" fill="none" stroke="#D9A458" stroke-width="1"/>
+  <text x="464" y="181" font-size="7" fill="#7A4A12" text-anchor="middle">cap 5 · 点格 = 容量内未写入</text>
+
+  <!-- 面板 B：两个陷阱 -->
+  <rect x="20" y="216" width="640" height="160" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+
+  <rect x="40" y="232" width="296" height="112" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="188" y="252" font-size="9" font-weight="600" fill="#7A322B" text-anchor="middle">陷阱 A：子切片与原切片共享底层数组</text>
+  <text x="52" y="270" font-size="7.6" fill="#7A322B">b := a[0:2]（len2 cap3）→ b[0] = 99</text>
+  <rect x="56" y="282" width="36" height="18" rx="2" fill="#FFFFFF" stroke="#D2948C" stroke-width="0.8"/>
+  <text x="74" y="295" font-size="7.6" fill="#7A322B" text-anchor="middle">a</text>
+  <rect x="56" y="306" width="36" height="18" rx="2" fill="#FFFFFF" stroke="#D2948C" stroke-width="0.8"/>
+  <text x="74" y="319" font-size="7.6" fill="#7A322B" text-anchor="middle">b</text>
+  <rect x="180" y="288" width="120" height="30" rx="2" fill="#FFFFFF" stroke="#D2948C" stroke-width="0.8"/>
+  <text x="240" y="307" font-size="7.6" fill="#7A322B" text-anchor="middle">[ 99 2 3 ] 同一块内存</text>
+  <line x1="94" y1="291" x2="176" y2="297" stroke="#D2948C" stroke-width="1" marker-end="url(#g2Red)"/>
+  <line x1="94" y1="315" x2="176" y2="307" stroke="#D2948C" stroke-width="1" marker-end="url(#g2Red)"/>
+  <text x="52" y="336" font-size="7.6" font-weight="600" fill="#7A322B">改 b[0]，a[0] 也变——一个数组两个头</text>
+
+  <rect x="352" y="232" width="292" height="112" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="498" y="252" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">append 容量不够 → 搬新家，从此无关</text>
+  <text x="364" y="270" font-size="7.6" fill="#1D5A45">b = append(b, 100)（cap 不够）→ 新数组</text>
+  <rect x="368" y="282" width="36" height="18" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="386" y="295" font-size="7.6" fill="#1D5A45" text-anchor="middle">a</text>
+  <rect x="368" y="306" width="36" height="18" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="386" y="319" font-size="7.6" fill="#1D5A45" text-anchor="middle">b</text>
+  <rect x="470" y="280" width="110" height="22" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="525" y="295" font-size="7.4" fill="#1D5A45" text-anchor="middle">[ 99 2 3 ] 旧</text>
+  <rect x="470" y="304" width="110" height="22" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="525" y="319" font-size="7.2" fill="#1D5A45" text-anchor="middle">[ 99 2 3 100 · ] 新分配</text>
+  <line x1="406" y1="291" x2="466" y2="290" stroke="#6BAF95" stroke-width="1" marker-end="url(#g2Green)"/>
+  <line x1="406" y1="315" x2="466" y2="315" stroke="#6BAF95" stroke-width="1" marker-end="url(#g2Green)"/>
+  <text x="364" y="336" font-size="7.6" font-weight="600" fill="#1D5A45">b[0]=88 不再影响 a——指向已分开</text>
+
+  <rect x="40" y="348" width="604" height="24" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="364" font-size="8" font-weight="600" fill="#7A4A12">预分配：知道容量就写 make([]int, 0, n)——省掉反复搬家拷贝（扩容规则见 003 §3.1）</text>
+
+  <text x="32" y="398" font-size="9" fill="#8C8980">切片头不存数据——len/cap 与共享、扩容的所有行为都由这三个字段决定。</text>
+</svg>

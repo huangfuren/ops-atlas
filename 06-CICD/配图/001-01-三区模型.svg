@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" width="680" height="250" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Git 三区模型：工作区、暂存区、仓库、远端之间的搬运</title>
+  <desc>四个区从左到右：工作区是正在编辑的文件，git add 把改动搬进暂存区决定这次提交什么，git commit 把暂存区定格为快照进本地仓库，git push 同步到远端。反向：restore 丢弃工作区改动，reset 退回提交，pull 拉取远端更新。git status 是三区之间的透视镜。</desc>
+
+  <rect width="680" height="250" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">三区模型：每条命令都在搬运文件</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">status 是透视镜</text>
+
+  <defs>
+    <marker id="b1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="b1Gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#A9A69C"/>
+    </marker>
+  </defs>
+
+  <!-- 四个区 -->
+  <rect x="40" y="64" width="124" height="60" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="102" y="88" font-size="9.5" font-weight="600" fill="#4A4945" text-anchor="middle">工作区</text>
+  <text x="102" y="104" font-size="7.4" fill="#8C8980" text-anchor="middle">正在编辑</text>
+
+  <rect x="196" y="64" width="124" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="258" y="88" font-size="9.5" font-weight="600" fill="#1F4468" text-anchor="middle">暂存区</text>
+  <text x="258" y="104" font-size="7.4" fill="#4A4945" text-anchor="middle">这次提交什么</text>
+
+  <rect x="352" y="64" width="124" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="414" y="88" font-size="9.5" font-weight="600" fill="#1F4468" text-anchor="middle">本地仓库</text>
+  <text x="414" y="104" font-size="7.4" fill="#4A4945" text-anchor="middle">提交历史（快照链）</text>
+
+  <rect x="508" y="64" width="124" height="60" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="570" y="88" font-size="9.5" font-weight="600" fill="#1D5A45" text-anchor="middle">远端仓库</text>
+  <text x="570" y="104" font-size="7.4" fill="#1D5A45" text-anchor="middle">GitLab / GitHub</text>
+
+  <!-- 正向箭头 -->
+  <line x1="168" y1="86" x2="192" y2="86" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#b1Blue)"/>
+  <text x="180" y="78" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">add</text>
+  <line x1="324" y1="86" x2="348" y2="86" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#b1Blue)"/>
+  <text x="336" y="78" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">commit</text>
+  <line x1="480" y1="86" x2="504" y2="86" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#b1Blue)"/>
+  <text x="492" y="78" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">push</text>
+
+  <!-- 反向箭头 -->
+  <line x1="196" y1="150" x2="172" y2="150" stroke="#A9A69C" stroke-width="1" marker-end="url(#b1Gray)"/>
+  <text x="184" y="164" font-size="7.2" fill="#8C8980" text-anchor="middle">restore</text>
+  <line x1="352" y1="150" x2="328" y2="150" stroke="#A9A69C" stroke-width="1" marker-end="url(#b1Gray)"/>
+  <text x="340" y="164" font-size="7.2" fill="#8C8980" text-anchor="middle">reset</text>
+  <line x1="508" y1="150" x2="484" y2="150" stroke="#A9A69C" stroke-width="1" marker-end="url(#b1Gray)"/>
+  <text x="496" y="164" font-size="7.2" fill="#8C8980" text-anchor="middle">pull / fetch</text>
+
+  <text x="32" y="196" font-size="9" fill="#8C8980">暂存区的价值：按逻辑分批 add，让每个提交原子化——回退时切得开，别用 commit -a 一把梭（001 §1.11）。</text>
+  <text x="32" y="216" font-size="9" fill="#8C8980">commit 记录快照而非差异；分支是指针（41 字节），建分支零成本——一切合并与 rebase 都在快照链上发生。</text>
+  <text x="32" y="236" font-size="9" fill="#8C8980">detached HEAD 状态下改代码切走即丢——先 switch -c 建分支再动手。</text>
+</svg>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400">
+  <title>用 curl 的五个时间字段拆开一次请求的耗时</title>
+  <desc>一条时间轴按 DNS、TCP、TLS、服务端思考、传输五段切分，五个刻度分别对应 curl 的 time_namelookup、time_connect、time_appconnect、time_starttransfer、time_total。</desc>
+  <rect width="680" height="400" fill="#FFFFFF"/>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">一条命令拆开耗时：五个数，五段责任</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">curl -w · 4.8</text>
+
+    <g stroke="#C9C6BC" stroke-width="0.8">
+      <line x1="165" y1="112" x2="165" y2="120"/>
+      <line x1="245" y1="112" x2="245" y2="120"/>
+      <line x1="345" y1="112" x2="345" y2="120"/>
+      <line x1="480" y1="112" x2="480" y2="120"/>
+      <line x1="620" y1="112" x2="620" y2="120"/>
+    </g>
+    <g font-size="8" fill="#8A8880" text-anchor="start">
+      <text x="165" y="112" transform="rotate(-40 165 112)">time_namelookup</text>
+      <text x="245" y="112" transform="rotate(-40 245 112)">time_connect</text>
+      <text x="345" y="112" transform="rotate(-40 345 112)">time_appconnect</text>
+      <text x="480" y="112" transform="rotate(-40 480 112)">time_starttransfer</text>
+      <text x="620" y="112" transform="rotate(-40 620 112)">time_total</text>
+    </g>
+
+    <g stroke-width="0.8">
+      <rect x="100" y="120" width="65" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
+      <rect x="165" y="120" width="80" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
+      <rect x="245" y="120" width="100" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
+      <rect x="345" y="120" width="135" height="32" fill="#FAEEDA" stroke="#C08A3E"/>
+      <rect x="480" y="120" width="140" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="132" y="139" font-size="8.5" fill="#4A4945">DNS</text>
+      <text x="205" y="139" font-size="8.5" fill="#4A4945">TCP</text>
+      <text x="295" y="139" font-size="8.5" fill="#4A4945">TLS</text>
+      <text x="412" y="139" font-size="8.5" font-weight="600" fill="#7A4A12">服务端思考</text>
+      <text x="550" y="139" font-size="8.5" fill="#4A4945">传输响应体</text>
+    </g>
+    <g text-anchor="middle" font-size="8" fill="#8A8880">
+      <text x="132" y="172">&gt; 200ms 即慢</text>
+      <text x="205" y="172">RTT 高 / 拥塞</text>
+      <text x="295" y="172">&gt; 300ms 即慢</text>
+      <text x="412" y="172" fill="#7A4A12">最该关注</text>
+      <text x="550" y="172">大 / 带宽不足</text>
+    </g>
+
+    <text x="40" y="216" font-size="9.5" fill="#4A4945">五个字段都是「从 t0 起算」的累计值，段耗时要用后一个减前一个：</text>
+    <text x="40" y="234" font-size="9" fill="#6B6A65">dns = namelookup　　tcp = connect − dns　　tls = appconnect − tcp　　ttfb = starttransfer − tls　　down = total − ttfb</text>
+
+    <rect x="40" y="252" width="600" height="64" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="274" font-size="9.8" fill="#2C2C2A">ttfb − tls 就是「服务端思考时间」：算这一个数，就能把「慢」劈成两半——一半网络与握手，一半服务端自己。</text>
+    <text x="56" y="292" font-size="9.8" fill="#6B6A65">再往里拆一层看 rt 与 urt：rt 大而 urt 小 → 慢在 Nginx 或客户端链路；rt ≈ urt 都大 → 慢在后端。</text>
+    <text x="56" y="310" font-size="9.8" fill="#6B6A65">urt 为「-」→ 请求根本没到上游；大量 499 → 后端太慢，用户等不及先走了。</text>
+
+    <text x="40" y="344" font-size="9" fill="#8A8880">判读顺序：先看 dns 是否超 200ms，再看 tcp − dns 是否明显偏大，最后看 ttfb − tls —— 绝大多数「慢」落在最后一格。</text>
+    <text x="40" y="362" font-size="9" fill="#8A8880">code=5xx 时不是性能问题，回到状态码那张图定责。</text>
+  </g>
+</svg>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 412" width="680" height="412">
+  <title>请求报文与响应报文的四个部分</title>
+  <desc>左右并列展示请求与响应：起始行、头部、空行、体四段结构完全相同，起始行拆成方法/路径/版本与版本/状态码/原因短语。</desc>
+  <rect width="680" height="412" fill="#FFFFFF"/>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">请求与响应：同一种结构，四个部分</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">空行是头与体的分界，缺了整条报文都会解析错</text>
+
+    <text x="90" y="52" font-size="11" font-weight="600" fill="#2C2C2A">请求 · 4.2.1</text>
+    <text x="400" y="52" font-size="11" font-weight="600" fill="#2C2C2A">响应 · 4.2.2</text>
+
+    <text x="82" y="84" font-size="8.5" fill="#6B6A65" text-anchor="end">起始行</text>
+    <text x="392" y="84" font-size="8.5" fill="#6B6A65" text-anchor="end">起始行</text>
+    <text x="82" y="140" font-size="8.5" fill="#6B6A65" text-anchor="end">头部</text>
+    <text x="392" y="140" font-size="8.5" fill="#6B6A65" text-anchor="end">头部</text>
+    <text x="82" y="247" font-size="8.5" fill="#6B6A65" text-anchor="end">空行</text>
+    <text x="392" y="247" font-size="8.5" fill="#6B6A65" text-anchor="end">空行</text>
+    <text x="82" y="288" font-size="8.5" fill="#6B6A65" text-anchor="end">体</text>
+    <text x="392" y="288" font-size="8.5" fill="#6B6A65" text-anchor="end">体</text>
+
+    <rect x="90" y="62" width="56" height="34" rx="2" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="118" y="83" font-size="8.5" fill="#7A4A12" text-anchor="middle">GET</text>
+    <rect x="154" y="62" width="112" height="34" rx="2" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="210" y="83" font-size="8" fill="#14584A" text-anchor="middle">/index.html?from=nav</text>
+    <rect x="274" y="62" width="56" height="34" rx="2" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="302" y="83" font-size="8" fill="#4A4945" text-anchor="middle">HTTP/1.1</text>
+    <text x="118" y="110" font-size="7.5" fill="#8A8880" text-anchor="middle">方法</text>
+    <text x="210" y="110" font-size="7.5" fill="#8A8880" text-anchor="middle">路径 + 查询串</text>
+    <text x="302" y="110" font-size="7.5" fill="#8A8880" text-anchor="middle">版本</text>
+
+    <rect x="400" y="62" width="76" height="34" rx="2" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="438" y="83" font-size="8" fill="#4A4945" text-anchor="middle">HTTP/1.1</text>
+    <rect x="484" y="62" width="52" height="34" rx="2" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="510" y="83" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">200</text>
+    <rect x="544" y="62" width="52" height="34" rx="2" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="570" y="83" font-size="8.5" fill="#14584A" text-anchor="middle">OK</text>
+    <text x="438" y="110" font-size="7.5" fill="#8A8880" text-anchor="middle">版本</text>
+    <text x="510" y="110" font-size="7.5" fill="#8A8880" text-anchor="middle">状态码</text>
+    <text x="570" y="110" font-size="7.5" fill="#8A8880" text-anchor="middle">原因短语</text>
+
+    <rect x="90" y="120" width="240" height="108" rx="2" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <g font-size="8.5" fill="#4A4945">
+      <text x="100" y="140">Host: www.example.com</text>
+      <text x="100" y="158">User-Agent: Mozilla/5.0 (Windows NT 10.0)</text>
+      <text x="100" y="176">Accept: text/html,application/xhtml+xml</text>
+      <text x="100" y="194">Accept-Encoding: gzip, br</text>
+      <text x="100" y="212">Cookie: session_id=abc123</text>
+    </g>
+
+    <rect x="400" y="120" width="240" height="108" rx="2" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <g font-size="8.5" fill="#4A4945">
+      <text x="410" y="140">Server: nginx/1.24.0</text>
+      <text x="410" y="158">Content-Type: text/html; charset=UTF-8</text>
+      <text x="410" y="176">Content-Length: 3456</text>
+      <text x="410" y="194">Cache-Control: max-age=3600</text>
+      <text x="410" y="212">Set-Cookie: session_id=abc123</text>
+    </g>
+
+    <rect x="90" y="234" width="240" height="18" rx="2" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="100" y="247" font-size="8" fill="#7A4A12">（空行）</text>
+    <text x="322" y="247" font-size="7.5" fill="#7A4A12" text-anchor="end">必须有：头与体的分界</text>
+
+    <rect x="400" y="234" width="240" height="18" rx="2" fill="#FAEEDA" stroke="#C08A3E" stroke-width="0.8"/>
+    <text x="410" y="247" font-size="8" fill="#7A4A12">（空行）</text>
+    <text x="632" y="247" font-size="7.5" fill="#7A4A12" text-anchor="end">之后才是响应体</text>
+
+    <rect x="90" y="258" width="240" height="48" rx="2" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="100" y="287" font-size="8.5" fill="#4A4945">（GET 通常为空；POST / PUT 放提交内容）</text>
+
+    <rect x="400" y="258" width="240" height="48" rx="2" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="410" y="287" font-size="8.5" fill="#4A4945">&lt;html&gt;...&lt;/html&gt;</text>
+
+    <rect x="40" y="330" width="600" height="66" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="352" font-size="9.8" fill="#2C2C2A">起始行回答「要什么」，头部回答「我是谁、接受什么格式」，体才是数据本身。</text>
+    <text x="56" y="370" font-size="9.8" fill="#6B6A65">头部是排查主战场，按用途分六类：请求上下文、认证、内容协商、缓存、连接、安全（4.2.3）。</text>
+    <text x="56" y="388" font-size="9.8" fill="#6B6A65">看到没见过的头，先归类再查字段——比背字段名有用。</text>
+  </g>
+</svg>

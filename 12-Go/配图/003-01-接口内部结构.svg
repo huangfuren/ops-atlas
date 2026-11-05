@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 390" width="680" height="390" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>接口值的内部结构：两个指针——nil 接口陷阱的根源</title>
+  <desc>接口值在内存里是两个指针：eface 空接口是类型信息加数据指针，iface 非空接口是 itab 加数据指针，itab 内含接口类型、动态类型和方法表。右侧解释经典陷阱：nil 指针赋给接口后接口不等于 nil，因为类型信息已就位只有数据指针为空，此时调用方法会 panic。规则是判 nil 要类型和数据都为 nil，函数返回 error 时绝不返回具体类型的 nil 指针。</desc>
+
+  <rect width="680" height="390" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">接口值的内部结构：两个指针——nil 接口陷阱的根源</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">003 §2.1</text>
+
+  <defs>
+    <marker id="g3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 左：两个指针 -->
+  <rect x="20" y="44" width="330" height="250" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="40" y="66" font-size="9.5" font-weight="600" fill="#2B2A27">接口值 = 两个指针</text>
+
+  <rect x="40" y="76" width="290" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="185" y="96" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">eface——空接口（interface{} / any）</text>
+  <text x="185" y="114" font-size="7.6" fill="#4A4945" text-anchor="middle">_type 类型信息 ｜ data 数据指针</text>
+
+  <rect x="40" y="138" width="290" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="185" y="158" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">iface——非空接口（io.Writer 等）</text>
+  <text x="185" y="176" font-size="7.6" fill="#4A4945" text-anchor="middle">itab ｜ data 数据指针</text>
+
+  <line x1="185" y1="190" x2="185" y2="202" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g3Blue)"/>
+
+  <rect x="40" y="206" width="290" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="185" y="222" font-size="8.8" font-weight="600" fill="#7A4A12" text-anchor="middle">itab 放大</text>
+  <text x="52" y="240" font-size="7.6" fill="#7A4A12">inter——接口类型（静态，编译期已知）</text>
+  <text x="52" y="256" font-size="7.6" fill="#7A4A12">_type——动态类型（运行时实际类型）</text>
+  <text x="52" y="272" font-size="7.6" fill="#7A4A12">fun——方法表 → 动态派发查这里</text>
+
+  <!-- 右：typed nil 陷阱 -->
+  <rect x="366" y="44" width="294" height="250" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="380" y="66" font-size="9.5" font-weight="600" fill="#2B2A27">经典陷阱：typed nil</text>
+
+  <rect x="380" y="76" width="266" height="104" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="392" y="96" font-size="7.8" fill="#7A322B">✗  var p *bytes.Buffer = nil</text>
+  <text x="392" y="112" font-size="7.8" fill="#7A322B">　  var w io.Writer = p</text>
+  <text x="392" y="132" font-size="9" font-weight="600" fill="#7A322B">w == nil → false！</text>
+  <text x="392" y="150" font-size="7.4" fill="#7A322B">itab 里类型信息已就位，只是 data 为 nil</text>
+  <text x="392" y="166" font-size="7.4" fill="#7A322B">此时 w 调方法 → panic</text>
+
+  <rect x="380" y="192" width="266" height="96" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="392" y="212" font-size="7.8" font-weight="600" fill="#1D5A45">✓ 判 nil：类型 + 数据指针都为 nil</text>
+  <text x="392" y="232" font-size="7.6" fill="#1D5A45">❌ bad：var e *MyErr = nil; return e</text>
+  <text x="392" y="248" font-size="7.6" fill="#1D5A45">✓ good：return nil</text>
+  <text x="392" y="268" font-size="7.4" font-weight="600" fill="#1D5A45">推论：error 返回值绝不返回具体类型 nil 指针</text>
+
+  <!-- 底部结论 -->
+  <rect x="20" y="310" width="640" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="326" font-size="8" font-weight="600" fill="#7A4A12">接口是两个指针，不是一个值——方法调用走 itab 方法表（动态派发），类型断言查 _type。</text>
+  <text x="32" y="338" font-size="7.2" fill="#7A4A12">这就是 002 §7 接口「鸭子类型」在运行时的真实形状。</text>
+
+  <text x="32" y="372" font-size="9" fill="#8C8980">nil 接口陷阱的根源：接口非 nil 只看 itab/类型——typed nil 带着类型信息上路。</text>
+</svg>

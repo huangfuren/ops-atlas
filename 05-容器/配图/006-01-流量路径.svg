@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" width="680" height="470" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>外部流量的完整路径：六跳每一跳断了是什么现象</title>
+  <desc>用户请求从浏览器出发经过六跳：DNS 解析域名、云负载均衡转发、Ingress Controller 按域名路径路由并终止 TLS、Service 按 Endpoints 选 Pod、Pod 里的应用响应。右侧标注每一跳断掉时的现象与排查入口，自下而上逐跳验证是网络排障的方法。</desc>
+
+  <rect width="680" height="470" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">外部流量六跳：每一跳断了是什么现象</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">自下而上逐跳验证</text>
+
+  <defs>
+    <marker id="a6Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 列头 -->
+  <text x="44" y="56" font-size="8" fill="#8C8980">跳</text>
+  <text x="150" y="56" font-size="8" fill="#8C8980">经过什么</text>
+  <text x="452" y="56" font-size="8" fill="#8C8980">断了的现象 / 查哪</text>
+
+  <!-- ① 用户 -->
+  <circle cx="56" cy="90" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="93" font-size="8.4" fill="#1F4468" text-anchor="middle">1</text>
+  <text x="72" y="94" font-size="9" font-weight="600" fill="#1F4468">用户浏览器</text>
+  <text x="150" y="88" font-size="8.2" font-weight="600" fill="#2B2A27">发起 https://app.example.com</text>
+  <text x="150" y="102" font-size="7.4" fill="#4A4945">目标：拿到响应</text>
+  <text x="452" y="94" font-size="7.8" fill="#7A322B">报错先分清：DNS 错 / 连接错 / HTTP 错</text>
+  <line x1="40" y1="112" x2="644" y2="112" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- ② DNS -->
+  <circle cx="56" cy="134" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="137" font-size="8.4" fill="#1F4468" text-anchor="middle">2</text>
+  <text x="72" y="138" font-size="9" font-weight="600" fill="#1F4468">DNS</text>
+  <text x="150" y="132" font-size="8.2" font-weight="600" fill="#2B2A27">域名 → LB 公网 IP</text>
+  <text x="150" y="146" font-size="7.4" fill="#4A4945">「网络」003</text>
+  <text x="452" y="138" font-size="7.8" fill="#7A322B">解析不到 → 云 DNS / TTL 未过期</text>
+  <line x1="40" y1="156" x2="644" y2="156" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- ③ 云LB -->
+  <circle cx="56" cy="178" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="181" font-size="8.4" fill="#1F4468" text-anchor="middle">3</text>
+  <text x="72" y="182" font-size="9" font-weight="600" fill="#1F4468">云负载均衡</text>
+  <text x="150" y="176" font-size="8.2" font-weight="600" fill="#2B2A27">公网 IP 持有者，四层分流</text>
+  <text x="150" y="190" font-size="7.4" fill="#4A4945">后端指向 ingress-nginx</text>
+  <text x="452" y="182" font-size="7.8" fill="#7A322B">504 在 LB → LB 到 Controller 不通</text>
+  <line x1="40" y1="200" x2="644" y2="200" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- ④ Ingress -->
+  <circle cx="56" cy="222" r="9" fill="#FFFFFF" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="56" y="225" font-size="8.4" fill="#7A4A12" text-anchor="middle">4</text>
+  <text x="72" y="226" font-size="9" font-weight="600" fill="#7A4A12">Ingress Controller</text>
+  <text x="150" y="220" font-size="8.2" font-weight="600" fill="#7A4A12">按 host + path 匹配规则，终止 TLS</text>
+  <text x="150" y="234" font-size="7.4" fill="#7A4A12">本质是 Nginx + 自动生成配置</text>
+  <text x="452" y="226" font-size="7.8" fill="#7A322B">404 → 规则没写对 / Controller 没装</text>
+  <line x1="40" y1="244" x2="644" y2="244" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- ⑤ Service -->
+  <circle cx="56" cy="266" r="9" fill="#FFFFFF" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="56" y="269" font-size="8.4" fill="#7A4A12" text-anchor="middle">5</text>
+  <text x="72" y="270" font-size="9" font-weight="600" fill="#7A4A12">Service</text>
+  <text x="150" y="264" font-size="8.2" font-weight="600" fill="#7A4A12">ClusterIP 转发规则（虚拟 IP）</text>
+  <text x="150" y="278" font-size="7.4" fill="#7A4A12">从 Endpoints 选一个就绪 Pod</text>
+  <text x="452" y="270" font-size="7.8" fill="#7A322B">503 → Endpoints 空：label/探针（6.5）</text>
+  <line x1="40" y1="288" x2="644" y2="288" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- ⑥ Pod -->
+  <circle cx="56" cy="310" r="9" fill="#FFFFFF" stroke="#1D5A45" stroke-width="1.4"/>
+  <text x="56" y="313" font-size="8.4" fill="#1D5A45" text-anchor="middle">6</text>
+  <text x="72" y="314" font-size="9" font-weight="600" fill="#1D5A45">Pod（应用）</text>
+  <text x="150" y="308" font-size="8.2" font-weight="600" fill="#1D5A45">容器 :8080 响应</text>
+  <text x="150" y="322" font-size="7.4" fill="#4A4945">readiness 不过就不接流量（008 §8.4）</text>
+  <text x="452" y="314" font-size="7.8" fill="#7A322B">500 → 应用日志（009 三板斧）</text>
+  <line x1="40" y1="332" x2="644" y2="332" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- 底部结论 -->
+  <rect x="40" y="348" width="604" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="368" font-size="8.6" font-weight="600" fill="#7A4A12">排障纪律：每一跳都有验证命令——nslookup 验 2、curl IP 验 3、get ingress 验 4、get endpoints 验 5</text>
+  <text x="52" y="388" font-size="7.8" fill="#7A4A12">ping 不通 Service 不是故障：ClusterIP 是转发规则的目的地址，没有进程监听 ICMP（6.10）</text>
+
+  <text x="32" y="424" font-size="9" fill="#8C8980">逐跳断点对照是 009 故障剧本 1 号（全站 502/503）的标准取证路径；协议封装细节在「网络」008。</text>
+  <text x="32" y="448" font-size="9" fill="#8C8980">K8s 没有端口映射层：Pod IP 直接可达，稳定入口全靠 Service 的虚拟 IP——这是与 Docker 单机网络的本质差异。</text>
+</svg>

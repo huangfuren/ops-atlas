@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>镜像分层与 overlay2：只读层叠加可写层，写时复制到 upperdir</title>
+  <desc>左侧是容器视角的层叠：最上面的可写层是容器独有，下面三层只读镜像层从上到下是应用代码、依赖、基础镜像。右侧是宿主 overlay2 的目录映射：merged 是容器看到的视图，diff 是可写层实体，lowerdir 是镜像只读层且被多个容器共享。读取从上往下穿透，首次写入把文件拷到 diff 再改；删除只读层文件只是放遮罩不释放空间。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">镜像分层与 overlay2：读穿透，写拷贝</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">可写层随容器删</text>
+
+  <defs>
+    <marker id="a1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a1Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+    <marker id="a1AmberS" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M10,0 L0,5 L10,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- 左：容器视角 -->
+  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#4A4945">容器视角：只读层 + 可写层</text>
+
+  <rect x="56" y="66" width="200" height="38" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="68" y="83" font-size="8.6" font-weight="600" fill="#7A4A12">可写层（容器独有）</text>
+  <text x="68" y="97" font-size="7.4" fill="#7A4A12">thin layer —— rm 容器即消失</text>
+
+  <rect x="56" y="110" width="200" height="38" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="68" y="127" font-size="8.6" font-weight="600" fill="#1F4468">只读层 ③ 应用代码</text>
+  <text x="68" y="141" font-size="7.4" fill="#4A4945">COPY 产物</text>
+
+  <rect x="56" y="154" width="200" height="38" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="68" y="171" font-size="8.6" font-weight="600" fill="#1F4468">只读层 ② 依赖</text>
+  <text x="68" y="185" font-size="7.4" fill="#4A4945">go mod / apk add</text>
+
+  <rect x="56" y="198" width="200" height="38" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="68" y="215" font-size="8.6" font-weight="600" fill="#1F4468">只读层 ① 基础镜像</text>
+  <text x="68" y="229" font-size="7.4" fill="#4A4945">alpine —— 多容器共享同一份</text>
+
+  <!-- 读/写箭头 -->
+  <text x="270" y="89" font-size="7.6" font-weight="600" fill="#D9A458">写 → copy-up</text>
+  <line x1="268" y1="85" x2="268" y2="216" stroke="#D9A458" stroke-width="1.2" marker-end="url(#a1Amber)" marker-start="url(#a1AmberS)"/>
+  <text x="270" y="150" font-size="7.6" font-weight="600" fill="#1F4468">读 → 穿透</text>
+  <text x="270" y="164" font-size="7" fill="#8C8980">（双向箭头）</text>
+
+  <!-- 右：宿主 overlay2 -->
+  <text x="356" y="56" font-size="9.5" font-weight="600" fill="#4A4945">宿主视角：overlay2 目录</text>
+
+  <rect x="372" y="66" width="260" height="38" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="384" y="83" font-size="8.6" font-weight="600" fill="#4A4945">merged/ —— 视图</text>
+  <text x="384" y="97" font-size="7.4" fill="#8C8980">容器内 / 看到的就是它，不占双份空间</text>
+
+  <rect x="372" y="110" width="260" height="38" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="384" y="127" font-size="8.6" font-weight="600" fill="#7A4A12">diff/ —— 可写层实体</text>
+  <text x="384" y="141" font-size="7.4" fill="#7A4A12">取证：du -sh 看容器偷偷写了多少</text>
+
+  <rect x="372" y="154" width="260" height="38" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="384" y="171" font-size="8.6" font-weight="600" fill="#1F4468">lower/ —— 镜像只读层</text>
+  <text x="384" y="185" font-size="7.4" fill="#4A4945">容器 B 挂同一份 → 磁盘只存一份</text>
+
+  <line x1="502" y1="104" x2="502" y2="110" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a1Blue)"/>
+  <line x1="502" y1="148" x2="502" y2="154" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a1Blue)"/>
+
+  <!-- 底部结论 -->
+  <rect x="40" y="252" width="604" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="272" font-size="8.6" font-weight="600" fill="#7A4A12">写时复制（COW）：首写把整个文件从下层拷到 diff 再改——改过的文件此后都在可写层</text>
+  <text x="52" y="292" font-size="7.8" fill="#7A4A12">删下层文件 = 在 diff 放遮罩（whiteout），下层原文件还在——删文件不释放镜像层空间</text>
+
+  <text x="32" y="342" font-size="9" fill="#8C8980">因此：数据库等持续大写负载必须用卷（003），可写层只放日志尾巴与临时文件；取证路径见 001 §1.3。</text>
+</svg>

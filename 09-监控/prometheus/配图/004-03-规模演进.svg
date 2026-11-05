@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>部署拓扑的四档规模演进</title>
+  <desc>L1 单机适用于五十万 series 以下；L2 双实例靠同配置冗余；L3 分片需要全局查询层；L4 联邦只上卷预聚合结果。紫色由浅到深表示量级递增，柱高不代表性能。</desc>
+
+  <rect width="680" height="330" fill="#FFFFFF"/>
+  <text x="40" y="28" font-size="13" font-weight="500" fill="#2B2A27">四档拓扑：不是能力等级，是量级门槛</text>
+  <text x="640" y="28" font-size="9.5" fill="#9A9791" text-anchor="end">颜色越深，series 量级越大</text>
+
+  <g font-size="9.5" font-weight="500" text-anchor="middle">
+    <text x="110" y="182" fill="#6B5C8E">&lt; 50 万 series</text>
+    <text x="265" y="137" fill="#5D4B85">50–200 万</text>
+    <text x="420" y="92" fill="#4E3C78">200–1000 万</text>
+    <text x="575" y="47" fill="#3B2B60">&gt; 1000 万</text>
+  </g>
+
+  <g stroke-width="1">
+    <rect x="40" y="190" width="140" height="60" rx="3" fill="#E4DEF2" stroke="#A192C6"/>
+    <rect x="195" y="145" width="140" height="105" rx="3" fill="#D9D0EE" stroke="#9A87C2"/>
+    <rect x="350" y="100" width="140" height="150" rx="3" fill="#CDBFE8" stroke="#8E77BB"/>
+    <rect x="505" y="55" width="140" height="195" rx="3" fill="#C0ACE2" stroke="#8168B0"/>
+  </g>
+  <g stroke-width="3" stroke-linecap="round">
+    <line x1="46" y1="195" x2="174" y2="195" stroke="#A192C6"/>
+    <line x1="201" y1="150" x2="329" y2="150" stroke="#9A87C2"/>
+    <line x1="356" y1="105" x2="484" y2="105" stroke="#8E77BB"/>
+    <line x1="511" y1="60" x2="639" y2="60" stroke="#8168B0"/>
+  </g>
+
+  <line x1="30" y1="250" x2="650" y2="250" stroke="#CFCCC2" stroke-width="1"/>
+
+  <g font-size="11.5" font-weight="500" text-anchor="middle">
+    <text x="110" y="270" fill="#2B2A27">L1 单机</text>
+    <text x="265" y="270" fill="#2B2A27">L2 双实例</text>
+    <text x="420" y="270" fill="#2B2A27">L3 分片</text>
+    <text x="575" y="270" fill="#2B2A27">L4 联邦</text>
+  </g>
+  <g fill="#6B6A65" font-size="9" text-anchor="middle">
+    <text x="110" y="287">1 Prom + 1 AM</text>
+    <text x="265" y="287">2 Prom 各抓全量</text>
+    <text x="420" y="287">hashmod + 全局查询</text>
+    <text x="575" y="287">边缘 + 上卷</text>
+  </g>
+
+  <text x="40" y="312" font-size="9" fill="#9A9791">先解决基数，再换拓扑。L1→L2 只是加了冗余，真正的门槛在 L3：分片后 sum() 必须上移到查询层。</text>
+</svg>

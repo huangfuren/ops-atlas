@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>SRE 方法论齿轮：定承诺 → 值守 → 变强 → 减琐事 → 循环</title>
+  <desc>四件机制构成循环齿轮：定承诺建立 SLO 与错误预算，为值守与发布提供裁决依据；值守阶段告警可行动、应急有指挥；故障之后进入无指责复盘，产出带认领人和死线的行动项；行动项的一部分指向减琐事的自动化，自动化反过来改进 SLO 度量，齿轮转动。成熟度诊断四问：有没有承诺、值守有没有纪律、故障有没有产出行动项、行动项是否在消灭琐事。</desc>
+
+  <rect width="680" height="400" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">SRE 方法论齿轮：四件机制循环起来</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">每个故障让系统变强一点</text>
+
+  <defs>
+    <marker id="s0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 中心 -->
+  <circle cx="310" cy="196" r="52" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="310" y="190" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">每个故障</text>
+  <text x="310" y="206" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">让系统变强一点</text>
+
+  <!-- ① 定承诺 -->
+  <rect x="60" y="60" width="170" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="145" y="82" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">① 定承诺（001）</text>
+  <text x="145" y="100" font-size="7.6" fill="#1F4468" text-anchor="middle">SLI / SLO / 错误预算</text>
+  <text x="145" y="116" font-size="7.2" fill="#8C8980" text-anchor="middle">预算烧完 → 停发布</text>
+
+  <!-- ② 值守 -->
+  <rect x="390" y="60" width="170" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="475" y="82" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">② 值守（002）</text>
+  <text x="475" y="100" font-size="7.6" fill="#1F4468" text-anchor="middle">on-call · IC/CL/COM</text>
+  <text x="475" y="116" font-size="7.2" fill="#8C8980" text-anchor="middle">告警可行动 · 升级有链</text>
+
+  <!-- ③ 变强 -->
+  <rect x="390" y="266" width="170" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="475" y="288" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">③ 变强（003）</text>
+  <text x="475" y="306" font-size="7.6" fill="#1F4468" text-anchor="middle">无指责复盘 · 行动项</text>
+  <text x="475" y="322" font-size="7.2" fill="#8C8980" text-anchor="middle">认领人 + 死线 + 验证</text>
+
+  <!-- ④ 减琐事 -->
+  <rect x="60" y="266" width="170" height="66" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="145" y="288" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">④ 减琐事（004）</text>
+  <text x="145" y="306" font-size="7.6" fill="#1D5A45" text-anchor="middle">toil 配额 · 自动化</text>
+  <text x="145" y="322" font-size="7.2" fill="#8C8980" text-anchor="middle">幂等安全带</text>
+
+  <!-- 循环箭头 -->
+  <line x1="232" y1="93" x2="386" y2="93" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
+  <text x="310" y="86" font-size="7.2" fill="#8C8980" text-anchor="middle">告警与度量就绪</text>
+  <line x1="475" y1="130" x2="475" y2="262" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
+  <text x="483" y="200" font-size="7.2" fill="#8C8980">故障处置完成</text>
+  <line x1="386" y1="299" x2="234" y2="299" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
+  <text x="310" y="292" font-size="7.2" fill="#8C8980" text-anchor="middle">行动项两类去向</text>
+  <line x1="145" y1="262" x2="145" y2="130" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
+  <text x="153" y="200" font-size="7.2" fill="#8C8980">自动化改进度量</text>
+
+  <!-- 右侧成熟度四问 -->
+  <rect x="440" y="200" width="0" height="0" fill="none"/>
+  <text x="60" y="364" font-size="9" fill="#8C8980">成熟度四问：有没有承诺？值守有没有纪律？故障有没有产出行动项？行动项是不是在消灭琐事？——四问全「无」，还在传统运维阶段。</text>
+  <text x="60" y="384" font-size="9" fill="#8C8980">数据源：SLO 的每个度量都是监控查询（「监控」04）；取证的原始材料在日志（「日志」006）。</text>
+</svg>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 458" width="680" height="458" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>GMP 调度器：M 必须绑 P 才能执行 G，work stealing 自动均衡</title>
+  <desc>G 是 goroutine，M 是操作系统线程，P 是持有本地运行队列的逻辑处理器。新 goroutine 优先进当前 P 的本地队列，满了转一半到全局队列；M 绑定一个 P 取 G 执行，本地队列空了先偷其他 P 的一半（work stealing），再取全局队列，再从 netpoll 取，都没有则 M 休眠。sysmon 检测到 G 运行超过 10 毫秒会发信号强制让出。</desc>
+
+  <rect width="680" height="458" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">GMP 调度器：M 必须绑 P 才能执行 G，work stealing 自动均衡</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">004 §1.1–1.3</text>
+
+  <defs>
+    <marker id="g4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="g4Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+    <marker id="g4Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+    <marker id="g4Purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9C8ACB"/>
+    </marker>
+  </defs>
+
+  <!-- 顶行：新G / 全局队列 / netpoll -->
+  <rect x="30" y="48" width="120" height="54" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="90" y="70" font-size="8.4" font-weight="600" fill="#2B2A27" text-anchor="middle">新 goroutine</text>
+  <text x="90" y="86" font-size="7" fill="#8C8980" text-anchor="middle">优先进当前 P 本地</text>
+
+  <rect x="250" y="48" width="190" height="54" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="345" y="70" font-size="8.8" font-weight="600" fill="#7A4A12" text-anchor="middle">全局队列 global runq</text>
+  <text x="345" y="86" font-size="7" fill="#7A4A12" text-anchor="middle">本地满→转一半进来；偷不到→来取</text>
+
+  <rect x="530" y="48" width="120" height="54" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="590" y="70" font-size="8.8" font-weight="600" fill="#46337A" text-anchor="middle">netpoll</text>
+  <text x="590" y="86" font-size="7" fill="#46337A" text-anchor="middle">网络就绪唤醒的 G</text>
+
+  <!-- 三个 P 列 -->
+  <rect x="40" y="150" width="160" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="120" y="167" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">P · 本地队列（256）</text>
+  <rect x="52" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="67" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="86" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="101" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="120" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="135" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="154" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+
+  <rect x="260" y="150" width="160" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="340" y="167" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">P · 本地队列（256）</text>
+  <rect x="272" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="287" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="306" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="321" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="340" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="355" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="374" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="389" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+
+  <rect x="480" y="150" width="160" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="560" y="167" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">P · 本地队列（256）</text>
+  <rect x="492" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="507" y="192" font-size="8" fill="#1F4468" text-anchor="middle">G</text>
+  <rect x="526" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <rect x="560" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <rect x="594" y="176" width="30" height="24" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+
+  <!-- M 行 -->
+  <rect x="40" y="240" width="160" height="48" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="120" y="258" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">M · OS 线程</text>
+  <rect x="80" y="265" width="80" height="16" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="120" y="277" font-size="7.2" fill="#1D5A45" text-anchor="middle">运行 G</text>
+
+  <rect x="260" y="240" width="160" height="48" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="340" y="258" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">M · OS 线程</text>
+  <rect x="300" y="265" width="80" height="16" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="340" y="277" font-size="7.2" fill="#1D5A45" text-anchor="middle">运行 G</text>
+
+  <rect x="480" y="240" width="160" height="48" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="560" y="258" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">M · OS 线程</text>
+  <rect x="520" y="265" width="80" height="16" rx="2" fill="#FFFFFF" stroke="#6BAF95" stroke-width="0.8"/>
+  <text x="560" y="277" font-size="7.2" fill="#1D5A45" text-anchor="middle">运行 G</text>
+
+  <!-- 绑定线 -->
+  <line x1="120" y1="216" x2="120" y2="238" stroke="#2B2A27" stroke-width="1.4"/>
+  <text x="126" y="231" font-size="6.8" fill="#8C8980">绑</text>
+  <line x1="340" y1="216" x2="340" y2="238" stroke="#2B2A27" stroke-width="1.4"/>
+  <text x="346" y="231" font-size="6.8" fill="#8C8980">绑</text>
+  <line x1="560" y1="216" x2="560" y2="238" stroke="#2B2A27" stroke-width="1.4"/>
+  <text x="566" y="231" font-size="6.8" fill="#8C8980">绑</text>
+
+  <!-- 箭头：新G→P1；P1满→全局；全局→P2；netpoll→P3；P2偷→P1 -->
+  <line x1="98" y1="102" x2="115" y2="146" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g4Blue)"/>
+  <line x1="202" y1="146" x2="250" y2="90" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g4Amber)"/>
+  <text x="196" y="108" font-size="6.8" fill="#7A4A12">本地满·转一半</text>
+  <line x1="340" y1="102" x2="340" y2="146" stroke="#D9A458" stroke-width="1" marker-end="url(#g4Amber)"/>
+  <line x1="588" y1="102" x2="562" y2="146" stroke="#9C8ACB" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g4Purple)"/>
+  <line x1="256" y1="160" x2="204" y2="160" stroke="#D2948C" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#g4Red)"/>
+  <text x="230" y="140" font-size="7" font-weight="600" fill="#7A322B" text-anchor="middle">★ 本地空 → 偷一半</text>
+
+  <!-- 取 G 顺序 -->
+  <rect x="40" y="302" width="600" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="318" font-size="8" fill="#4A4945">M 取 G 顺序：① 本地队列 → ② 偷其他 P 的一半 → ③ 全局队列 → ④ netpoll</text>
+  <text x="52" y="330" font-size="7.4" fill="#8C8980">⑤ 都没有 → M 休眠（线程挂起），P 归还空闲池等待复用</text>
+
+  <!-- 抢占 -->
+  <rect x="40" y="346" width="600" height="32" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="366" font-size="8" font-weight="600" fill="#7A4A12">★ 抢占：sysmon 发现 G 运行超过 10ms → 发 SIGURG 强制让出（Go 1.14+ 异步抢占）——for{} 死循环不再饿死同 P 的 G</text>
+
+  <!-- 硬约束 -->
+  <rect x="40" y="388" width="600" height="32" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="408" font-size="8" font-weight="600" fill="#1F4468">硬约束：M 必须绑一个 P 才能执行 G → 真正并行的 G 上限 = P 数 = GOMAXPROCS（默认 = CPU 核数，容器里按 limit 设，见 §1.4）</text>
+
+  <text x="32" y="446" font-size="9" fill="#8C8980">几万到几百万个 G，几十个 M 转起来——队列 + work stealing 把负载均衡内建进运行时，不用配线程池。</text>
+</svg>

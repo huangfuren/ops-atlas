@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>OTel 三信号与 Span 解剖</title>
+  <desc>左侧是 OTel 的三信号统一：traces、metrics、logs 共用一套 Resource 与 OTLP 传输。右侧是一个 span 的解剖卡片：trace_id 十六字节、span_id 八字节、parent 指向父节点、SpanKind 标注类型、status 标注成败、attributes 携带属性。语义约定规定标准字段名，自造字段等于放弃生态。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">OTel：三信号统一，span 是链路的原子</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">service.name 必配</text>
+
+  <defs>
+    <marker id="h1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 左：三信号 -->
+  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#4A4945">三信号 · 一套标准</text>
+  <rect x="40" y="66" width="270" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="88" font-size="8.2" font-weight="600" fill="#1F4468">traces —— 本套主角：调用树</text>
+  <rect x="40" y="104" width="270" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="126" font-size="8.2" font-weight="600" fill="#1F4468">metrics —— 「监控」册的指标</text>
+  <rect x="40" y="142" width="270" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="164" font-size="8.2" font-weight="600" fill="#1F4468">logs —— 「日志」册的日志</text>
+
+  <rect x="40" y="186" width="270" height="60" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="206" font-size="8.2" font-weight="600" fill="#4A4945">统一于：</text>
+  <text x="54" y="222" font-size="7.8" fill="#4A4945">Resource（service.name 等，一次配置）</text>
+  <text x="54" y="237" font-size="7.8" fill="#4A4945">OTLP 协议（gRPC / HTTP）</text>
+
+  <!-- 右：span 解剖 -->
+  <text x="380" y="56" font-size="9.5" font-weight="600" fill="#4A4945">Span 解剖</text>
+  <rect x="380" y="66" width="264" height="180" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="394" y="88" font-size="8.2" font-weight="600" fill="#7A4A12">trace_id   4bf9…4736（16 字节，全树共享）</text>
+  <text x="394" y="106" font-size="8.2" font-weight="600" fill="#7A4A12">span_id    00f067aa0ba9（8 字节，本节点）</text>
+  <text x="394" y="124" font-size="8.2" fill="#7A4A12">parent     上一个 span_id（空=root）</text>
+  <text x="394" y="142" font-size="8.2" font-weight="600" fill="#7A4A12">kind       SERVER / CLIENT / …</text>
+  <text x="394" y="160" font-size="8.2" font-weight="600" fill="#7A4A12">status     Unset / Ok / Error ★</text>
+  <text x="394" y="178" font-size="8.2" fill="#7A4A12">attributes http.method=POST …</text>
+  <text x="394" y="196" font-size="8.2" fill="#7A4A12">起止时间   精确到毫秒</text>
+  <text x="394" y="222" font-size="7.4" fill="#8C8980">status=Error 是尾部采样与</text>
+  <text x="394" y="236" font-size="7.4" fill="#8C8980">错误率指标的关键信号（005 §5.3）</text>
+
+  <line x1="314" y1="156" x2="376" y2="156" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h1Blue)"/>
+
+  <!-- 底部 -->
+  <rect x="40" y="262" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="282" font-size="8.4" font-weight="600" fill="#7A4A12">语义约定（semantic conventions）：字段名用标准名——http.request.method 而非自造 method</text>
+  <text x="52" y="297" font-size="7.6" fill="#7A4A12">理由：后端服务图、协议推断、现成面板全按标准名识别——自造=放弃生态（001 §1.4）</text>
+
+  <text x="32" y="334" font-size="9" fill="#8C8980">service.name 缺失的后果：后端全是 unknown_service——链路正常工作但归组全错（001 §1.6 第 1 坑）。</text>
+  <text x="32" y="350" font-size="9" fill="#8C8980">Resource 是进程级配置，改它要重启——上线前核对是最便宜的时机。</text>
+</svg>

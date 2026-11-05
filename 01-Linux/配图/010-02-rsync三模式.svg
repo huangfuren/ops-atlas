@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 336" width="680" height="336" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>rsync 三种模式：协议一样，只是建立连接的方式不同</title>
+  <desc>三条通道：本地模式同一台机器不走网络，靠文件系统权限，写法 rsync -a /src/ /dst/；remote shell 走 ssh 加密、端口 22、系统账号或密钥，是主力用法，写法 rsync -a /src/ u@h:/dst/；daemon 走 TCP 873 明文传输，用 rsyncd.secrets 里独立于系统的一套账号，写法 rsync -a /src/ u@h::mod/。底部强调冒号陷阱：h:/path 与 h::mod 是两个世界，写错一个冒号，报错长得像密码错误，其实是连接方式错了。</desc>
+
+  <rect width="680" height="336" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">rsync 三种模式：协议一样，连接方式不同</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">: 与 :: 是两个世界</text>
+
+  <defs>
+    <marker id="a10Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a10Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- ① 本地 -->
+  <text x="40" y="86" font-size="9.5" font-weight="600" fill="#4A4945">① 本地</text>
+  <text x="40" y="101" font-size="7.6" fill="#8C8980">同一台机器</text>
+  <rect x="215" y="77" width="115" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="272" y="98" font-size="8.4" font-weight="600" fill="#2B2A27" text-anchor="middle">本机 /src/</text>
+  <line x1="335" y1="94" x2="498" y2="94" stroke="#CFCCC2" stroke-width="1.2"/>
+  <text x="416" y="86" font-size="8" fill="#4A4945" text-anchor="middle">不走网络 · 文件系统权限</text>
+  <text x="416" y="127" font-size="7.6" fill="#8C8980" text-anchor="middle">rsync -a /src/ /dst/</text>
+  <rect x="505" y="77" width="115" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="562" y="98" font-size="8.4" font-weight="600" fill="#2B2A27" text-anchor="middle">本机 /dst/</text>
+
+  <!-- ② remote shell -->
+  <text x="40" y="152" font-size="9.5" font-weight="600" fill="#1F4468">② remote shell</text>
+  <text x="40" y="167" font-size="7.6" fill="#1D5A45">★ 主力用法</text>
+  <text x="40" y="181" font-size="7.6" fill="#8C8980">跨机 · 加密 · 免服务</text>
+  <rect x="215" y="143" width="115" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="272" y="164" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">源机 /src/</text>
+  <line x1="335" y1="160" x2="498" y2="160" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#a10Blue)"/>
+  <text x="416" y="152" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">ssh 加密 · 端口 22 · 系统账号</text>
+  <text x="416" y="193" font-size="7.6" fill="#2B2A27" text-anchor="middle">rsync -a /src/ u@h:/dst/</text>
+  <rect x="505" y="143" width="115" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="562" y="164" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">目标机 /dst/</text>
+
+  <!-- ③ daemon -->
+  <text x="40" y="218" font-size="9.5" font-weight="600" fill="#7A4A12">③ daemon</text>
+  <text x="40" y="233" font-size="7.6" fill="#7A4A12">rsyncd.secrets 认证</text>
+  <text x="40" y="247" font-size="7.6" fill="#8C8980">独立于系统的一套账号</text>
+  <rect x="215" y="209" width="115" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="272" y="230" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">源机 /src/</text>
+  <line x1="335" y1="226" x2="498" y2="226" stroke="#D9A458" stroke-width="1.4" marker-end="url(#a10Amber)"/>
+  <text x="416" y="218" font-size="8" font-weight="600" fill="#7A4A12" text-anchor="middle">TCP 873 · 明文传输</text>
+  <text x="416" y="259" font-size="7.6" fill="#2B2A27" text-anchor="middle">rsync -a /src/ u@h::mod/</text>
+  <rect x="505" y="209" width="115" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="562" y="230" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">目标机 module/</text>
+
+  <!-- 冒号陷阱 -->
+  <rect x="40" y="258" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="276" font-size="8.2" font-weight="600" fill="#7A4A12">h:/path 走 ssh（22 · 系统账号）；h::mod 走 daemon（873 · rsyncd 账号）——一个冒号之差，两个世界</text>
+  <text x="52" y="292" font-size="7.6" fill="#7A4A12">写错冒号，报错长得像密码错误——先查连接方式，再查密码</text>
+
+  <text x="32" y="324" font-size="9" fill="#8C8980">三种模式跑的是同一个 rsync 协议，参数通用——除了「怎么建立连接」，其余只学一遍。</text>
+</svg>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>trace 贯通：上下文随 HTTP 与 MQ 头传播，断链即排查</title>
+  <desc>网关生成 trace_id 并开启第一个 SERVER span，向下游发起 HTTP 调用时 SDK 自动写 W3C traceparent 头，订单服务读到后成为子 span 并继续向下游传播；MQ 场景上下文写进消息头，消费侧生成 CONSUMER span 并用 span link 关联生产侧。四个高频断点：网关重写丢头、客户端未埋点、自研客户端不注入、下游自造 trace_id。</desc>
+
+  <rect width="680" height="380" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">trace 贯通：头随请求走，树随 span 长</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">断链 = 四个高频断点</text>
+
+  <defs>
+    <marker id="h4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="h4Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- 链路 -->
+  <rect x="40" y="56" width="140" height="46" rx="3" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.2"/>
+  <text x="110" y="76" font-size="8.6" font-weight="600" fill="#37474F" text-anchor="middle">网关</text>
+  <text x="110" y="92" font-size="7.2" fill="#8C8980" text-anchor="middle">生成 trace_id + root span</text>
+
+  <rect x="220" y="56" width="140" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="290" y="76" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">订单服务</text>
+  <text x="290" y="92" font-size="7.2" fill="#8C8980" text-anchor="middle">SERVER span（子）</text>
+
+  <rect x="400" y="56" width="120" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="460" y="76" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">支付服务</text>
+  <text x="460" y="92" font-size="7.2" fill="#8C8980" text-anchor="middle">SERVER span（孙）</text>
+
+  <rect x="544" y="56" width="100" height="46" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="594" y="76" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">MySQL</text>
+  <text x="594" y="92" font-size="7.2" fill="#1D5A45" text-anchor="middle">CLIENT span</text>
+
+  <line x1="180" y1="79" x2="216" y2="79" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h4Blue)"/>
+  <line x1="360" y1="79" x2="396" y2="79" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h4Blue)"/>
+  <line x1="520" y1="79" x2="540" y2="79" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h4Blue)"/>
+
+  <!-- 传播头标注 -->
+  <text x="180" y="118" font-size="7.2" fill="#1F4468">traceparent: 00-4bf9…4736-<tspan font-weight="600">网关spanid</tspan>-01</text>
+  <text x="360" y="118" font-size="7.2" fill="#1F4468">traceparent: 00-4bf9…4736-<tspan font-weight="600">订单spanid</tspan>-01</text>
+
+  <!-- MQ 异步分支 -->
+  <rect x="220" y="150" width="140" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="290" y="168" font-size="8" font-weight="600" fill="#7A4A12" text-anchor="middle">MQ（下单事件）</text>
+  <text x="290" y="182" font-size="7" fill="#7A4A12" text-anchor="middle">消息头携带上下文</text>
+
+  <rect x="400" y="150" width="140" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="470" y="168" font-size="8" font-weight="600" fill="#4A4945" text-anchor="middle">积分服务 CONSUMER</text>
+  <text x="470" y="182" font-size="7" fill="#8C8980" text-anchor="middle">span link 关联生产侧</text>
+
+  <line x1="290" y1="102" x2="290" y2="148" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#h4Amber)"/>
+  <line x1="360" y1="170" x2="396" y2="170" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#h4Amber)"/>
+  <text x="378" y="162" font-size="6.8" fill="#8C8980" text-anchor="middle">异步消费</text>
+
+  <!-- 断链四断点 -->
+  <text x="40" y="216" font-size="9.5" font-weight="600" fill="#7A322B">四个高频断点（004 §4.5）</text>
+  <rect x="40" y="228" width="604" height="76" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="248" font-size="8" font-weight="600" fill="#4A4945">① 网关转发重写请求时丢 traceparent　② 调用库未开 instrumentation</text>
+  <text x="54" y="266" font-size="8" font-weight="600" fill="#4A4945">③ 自研 MQ 客户端不注入消息头　④ 下游服务自造新 trace_id</text>
+  <text x="54" y="290" font-size="7.6" fill="#8C8980">通用排查：断点两侧各打一次上下文（上游发出时的头 / 下游收到的头）——缺失或不一致的位置就是答案</text>
+
+  <!-- 底部 -->
+  <rect x="40" y="316" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="335" font-size="8.2" fill="#7A4A12">日志互跳：埋点 SDK 把当前 trace_id 注入日志——告警 → 日志 → trace 一键贯通（004 §4.4）</text>
+
+  <text x="32" y="366" font-size="9" fill="#8C8980">验收命令：在断点两侧各打一次上下文。多 SDK 冲突（两个 tracer 都想管）也表现为断链——确认全局只有一个 provider。</text>
+</svg>

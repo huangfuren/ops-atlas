@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>自动化三级阶梯：流程化 → 脚本化 → 平台化，幂等是安全带</title>
+  <desc>三级阶梯从左到右升高：第一级流程化把隐含步骤写成检查单，换人执行结果一致；第二级脚本化把重复步骤写成幂等的剧本与流水线，中断可重跑；第三级平台化组合成自助系统，使用者不需要懂内部步骤。每一级的完成标志各不相同，跳级得到的是快速混乱。右侧是幂等安全带的四条工程要求。</desc>
+
+  <rect width="680" height="340" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">自动化三级：不跳级，每级有完成标志</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">幂等是安全带</text>
+
+  <defs>
+    <marker id="s4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 三级阶梯 -->
+  <rect x="40" y="180" width="190" height="80" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="135" y="204" font-size="9.5" font-weight="600" fill="#1F4468" text-anchor="middle">① 流程化</text>
+  <text x="135" y="222" font-size="7.6" fill="#4A4945" text-anchor="middle">隐含步骤 → 检查单/文档</text>
+  <text x="135" y="238" font-size="7.4" font-weight="600" fill="#1D5A45" text-anchor="middle">标志：换人执行结果一致</text>
+  <text x="135" y="254" font-size="7" fill="#8C8980" text-anchor="middle">例：发布检查单（CICD 007）</text>
+
+  <rect x="245" y="120" width="190" height="140" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="340" y="144" font-size="9.5" font-weight="600" fill="#1F4468" text-anchor="middle">② 脚本化</text>
+  <text x="340" y="162" font-size="7.6" fill="#4A4945" text-anchor="middle">重复步骤 → 幂等剧本/流水线</text>
+  <text x="340" y="178" font-size="7.4" font-weight="600" fill="#1D5A45" text-anchor="middle">标志：中断可重跑，二遍全 ok</text>
+  <text x="340" y="194" font-size="7" fill="#8C8980" text-anchor="middle">例：Ansible playbook（004/005）</text>
+  <text x="340" y="210" font-size="7" fill="#8C8980" text-anchor="middle">Jenkinsfile（002）</text>
+  <line x1="232" y1="196" x2="243" y2="188" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s4Blue)"/>
+
+  <rect x="450" y="60" width="190" height="200" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.4"/>
+  <text x="545" y="84" font-size="9.5" font-weight="600" fill="#1D5A45" text-anchor="middle">③ 平台化</text>
+  <text x="545" y="102" font-size="7.6" fill="#1D5A45" text-anchor="middle">脚本组合成自助系统</text>
+  <text x="545" y="118" font-size="7.6" fill="#1D5A45" text-anchor="middle">一键发布 · 自愈 · 审批内嵌</text>
+  <text x="545" y="134" font-size="7.4" font-weight="600" fill="#1D5A45" text-anchor="middle">标志：使用者不懂内部也能用</text>
+  <text x="545" y="150" font-size="7" fill="#8C8980" text-anchor="middle">例：流水线+审批+回滚（008）</text>
+  <text x="545" y="166" font-size="7" fill="#8C8980" text-anchor="middle">判据：每周多次使用才值得建</text>
+  <line x1="437" y1="136" x2="448" y2="128" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s4Blue)"/>
+
+  <!-- 跳级警告 -->
+  <rect x="40" y="52" width="170" height="100" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="125" y="76" font-size="8.8" font-weight="600" fill="#7A322B" text-anchor="middle">✗ 跳级 = 快速混乱</text>
+  <text x="52" y="96" font-size="7.4" fill="#7A322B">流程没想清楚就写脚本：</text>
+  <text x="52" y="112" font-size="7.4" fill="#7A322B">自动化的混乱传播更快、</text>
+  <text x="52" y="128" font-size="7.4" fill="#7A322B">更难归因——先纸上想通</text>
+
+  <!-- 幂等安全带 -->
+  <rect x="40" y="274" width="604" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="292" font-size="8.2" font-weight="600" fill="#7A4A12">幂等安全带四条：脚本幂等（模块优先）· 危险操作有确认闸 · 执行留审计日志 · 自动化自身进监控</text>
+  <text x="52" y="307" font-size="7.6" fill="#7A4A12">「重跑不出事」——CICD 004 §4.7 / 005 §5.8 的机制在本册收拢为规范（004 §4.4）</text>
+
+  <text x="32" y="330" font-size="9" fill="#8C8980">立项算术：10 分钟琐事 × 每天 × 250 天 = 41 小时/年 ≈ 一个全职周——toil 审计表是自动化立项陈述的第一页（004 §4.2）。</text>
+</svg>

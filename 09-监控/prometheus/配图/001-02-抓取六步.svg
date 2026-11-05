@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>一次抓取的六个步骤</title>
+  <desc>六个步骤分属三个阶段：抓取前（青色，服务发现与 relabel）、抓取中（蓝色，HTTP GET 与解析）、入库（紫色，metric relabel 与写 WAL）。其中第 2 步与第 5 步是仅有的两个可改写环节，用琥珀色数字标出。</desc>
+
+  <rect width="680" height="420" fill="#FFFFFF"/>
+  <text x="40" y="30" font-size="13" font-weight="500" fill="#2B2A27">一次抓取发生了什么</text>
+
+  <circle cx="524" cy="24" r="6" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="536" y="28" font-size="8.5" fill="#7A4A12">琥珀 = 可改写（仅 ② ⑤）</text>
+
+  <!-- 阶段一：抓取前 -->
+  <rect x="24" y="52" width="632" height="106" rx="4" fill="#F2FAF7" stroke="#D3E9DF" stroke-width="0.8"/>
+  <!-- 阶段二：抓取中 -->
+  <rect x="24" y="160" width="632" height="106" rx="4" fill="#F2F7FC" stroke="#D3E0F0" stroke-width="0.8"/>
+  <!-- 阶段三：入库 -->
+  <rect x="24" y="268" width="632" height="110" rx="4" fill="#F6F3FC" stroke="#DFD5F0" stroke-width="0.8"/>
+
+  <!-- ① -->
+  <rect x="32" y="58" width="4" height="44" rx="2" fill="#6BAF95"/>
+  <circle cx="58" cy="80" r="11" fill="#FFFFFF" stroke="#C3CBD4" stroke-width="1"/>
+  <text x="58" y="84" font-size="10.5" fill="#5A6570" text-anchor="middle">1</text>
+  <text x="82" y="76" font-size="12" font-weight="500" fill="#173D30">服务发现产出目标列表</text>
+  <text x="82" y="92" font-size="9.5" fill="#6B6A65">static / file / consul / k8s —— 每个目标是一组 label，含 __address__ 等内部标签</text>
+  <text x="648" y="80" font-size="9" fill="#1D5A45" text-anchor="end">抓取前</text>
+
+  <!-- ② -->
+  <rect x="32" y="112" width="4" height="44" rx="2" fill="#D9A458"/>
+  <circle cx="58" cy="134" r="11" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="58" y="138" font-size="10.5" font-weight="500" fill="#7A4A12" text-anchor="middle">2</text>
+  <text x="82" y="130" font-size="12" font-weight="500" fill="#173D30">relabel_configs 改写目标</text>
+  <text x="82" y="146" font-size="9.5" fill="#6B6A65">抓取前决定「抓不抓、抓哪里」—— keep / drop 整个目标，或改 __address__</text>
+  <text x="648" y="134" font-size="9" fill="#1D5A45" text-anchor="end">抓取前</text>
+
+  <!-- ③ -->
+  <rect x="32" y="166" width="4" height="44" rx="2" fill="#7FA6D0"/>
+  <circle cx="58" cy="188" r="11" fill="#FFFFFF" stroke="#C3CBD4" stroke-width="1"/>
+  <text x="58" y="192" font-size="10.5" fill="#5A6570" text-anchor="middle">3</text>
+  <text x="82" y="184" font-size="12" font-weight="500" fill="#1F4468">HTTP GET</text>
+  <text x="82" y="200" font-size="9.5" fill="#6B6A65">请求 scheme://__address__ + metrics_path，默认超时 scrape_timeout = 10s</text>
+  <text x="648" y="188" font-size="9" fill="#1F4468" text-anchor="end">抓取中</text>
+
+  <!-- ④ -->
+  <rect x="32" y="220" width="4" height="44" rx="2" fill="#7FA6D0"/>
+  <circle cx="58" cy="242" r="11" fill="#FFFFFF" stroke="#C3CBD4" stroke-width="1"/>
+  <text x="58" y="246" font-size="10.5" fill="#5A6570" text-anchor="middle">4</text>
+  <text x="82" y="238" font-size="12" font-weight="500" fill="#1F4468">解析并注入目标标签</text>
+  <text x="82" y="254" font-size="9.5" fill="#6B6A65">解析文本 / OpenMetrics 格式，注入 job、instance；此时 __* 标签仍然存在</text>
+  <text x="648" y="242" font-size="9" fill="#1F4468" text-anchor="end">抓取中</text>
+
+  <!-- ⑤ -->
+  <rect x="32" y="274" width="4" height="44" rx="2" fill="#D9A458"/>
+  <circle cx="58" cy="296" r="11" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="58" y="300" font-size="10.5" font-weight="500" fill="#7A4A12" text-anchor="middle">5</text>
+  <text x="82" y="292" font-size="12" font-weight="500" fill="#46337A">metric_relabel_configs 改写样本</text>
+  <text x="82" y="308" font-size="9.5" fill="#6B6A65">入库前决定「存不存、删哪个 label」—— 降基数的最后一道闸</text>
+  <text x="648" y="296" font-size="9" fill="#46337A" text-anchor="end">入库前</text>
+
+  <!-- ⑥ -->
+  <rect x="32" y="328" width="4" height="44" rx="2" fill="#9C8ACB"/>
+  <circle cx="58" cy="350" r="11" fill="#FFFFFF" stroke="#C3CBD4" stroke-width="1"/>
+  <text x="58" y="354" font-size="10.5" fill="#5A6570" text-anchor="middle">6</text>
+  <text x="82" y="346" font-size="12" font-weight="500" fill="#46337A">写 WAL 与 Head</text>
+  <text x="82" y="362" font-size="9.5" fill="#6B6A65">同时记录 up、scrape_duration_seconds、scrape_samples_scraped 等自监控指标</text>
+  <text x="648" y="350" font-size="9" fill="#46337A" text-anchor="end">入库</text>
+
+  <line x1="40" y1="390" x2="640" y2="390" stroke="#DCD9CE" stroke-width="0.8"/>
+  <text x="40" y="408" font-size="9.5" fill="#6B6A65">六步里只有 ② 和 ⑤ 能改变数据：② 改的是「哪个目标」，⑤ 改的是「哪些样本」。其余四步只负责搬运。</text>
+</svg>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>X-Forwarded-For 链与 realip：伪造值永远排在真实 IP 左边</title>
+  <desc>攻击者自带伪造的 XFF 头 1.2.3.4，CDN 收到连接后把真实客户端 IP 203.0.113.5 追加到链上，内网 LB 再追加 CDN 节点地址，Nginx 侧收到完整四段链。realip 模块开启 recursive 后从右往左剔除可信段（内网 LB、CDN），停在第一个不可信地址——恰好是被 CDN 追加的真实客户端 IP，伪造值在更左边永远轮不到。</desc>
+
+  <rect width="680" height="400" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">XFF 链：逐跳追加，realip 取「第一个不可信」</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">recursive on 的意义</text>
+
+  <defs>
+    <marker id="f2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 四跳横向链 -->
+  <rect x="40" y="60" width="120" height="54" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
+  <text x="100" y="80" font-size="8.4" font-weight="600" fill="#7A322B" text-anchor="middle">攻击者</text>
+  <text x="100" y="96" font-size="7.2" fill="#7A322B" text-anchor="middle">真实 IP 203.0.113.5</text>
+
+  <rect x="200" y="60" width="120" height="54" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="260" y="80" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">CDN</text>
+  <text x="260" y="96" font-size="7.2" fill="#4A4945" text-anchor="middle">追加：203.0.113.5</text>
+
+  <rect x="360" y="60" width="120" height="54" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="420" y="80" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">内网 LB</text>
+  <text x="420" y="96" font-size="7.2" fill="#4A4945" text-anchor="middle">追加：104.16.1.1</text>
+
+  <rect x="520" y="60" width="120" height="54" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="580" y="80" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">Nginx</text>
+  <text x="580" y="96" font-size="7.2" fill="#7A4A12" text-anchor="middle">realip 模块</text>
+
+  <line x1="160" y1="87" x2="196" y2="87" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#f2Blue)"/>
+  <line x1="320" y1="87" x2="356" y2="87" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#f2Blue)"/>
+  <line x1="480" y1="87" x2="516" y2="87" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#f2Blue)"/>
+
+  <!-- XFF 链演变 -->
+  <text x="40" y="150" font-size="9.5" font-weight="600" fill="#4A4945">XFF 链的演变（每跳追加收包来源）</text>
+  <text x="40" y="174" font-size="8.4" fill="#7A322B">攻击者发出：</text>
+  <text x="150" y="174" font-size="8.4" font-family="Consolas,Menlo,monospace" fill="#7A322B">X-Forwarded-For: 1.2.3.4（伪造）</text>
+  <text x="40" y="196" font-size="8.4" fill="#2B2A27">经 CDN 后：</text>
+  <text x="150" y="196" font-size="8.4" font-family="Consolas,Menlo,monospace" fill="#2B2A27">1.2.3.4, 203.0.113.5</text>
+  <text x="40" y="218" font-size="8.4" fill="#2B2A27">经 LB 后：</text>
+  <text x="150" y="218" font-size="8.4" font-family="Consolas,Menlo,monospace" fill="#2B2A27">1.2.3.4, 203.0.113.5, 104.16.1.1</text>
+
+  <!-- realip 判定 -->
+  <rect x="40" y="240" width="604" height="86" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="54" y="262" font-size="8.6" font-weight="600" fill="#1b5e20">Nginx 侧 realip：set_real_ip_from = {10.0.0.0/8, 104.16.0.0/13}，recursive on</text>
+  <text x="54" y="282" font-size="8.2" fill="#1b5e20">从右往左剔除可信段：10.0.0.1 ✓剔除 → 104.16.1.1 ✓剔除 → 203.0.113.5 ✗停</text>
+  <text x="54" y="304" font-size="8.6" font-weight="600" fill="#1b5e20">结果：$remote_addr = 203.0.113.5（真实客户端）——伪造的 1.2.3.4 在更左边，永远轮不到</text>
+
+  <!-- 可信段警示 -->
+  <rect x="40" y="338" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="357" font-size="8.2" fill="#7A4A12">可信段清单必须与真实架构一致（CDN 官方网段 + 自己的 LB）——把不可信来源加进 set_real_ip_from = 限流风控被绕过</text>
+
+  <text x="32" y="390" font-size="9" fill="#8C8980">限流键（005 §5.4）、allow/deny（005 §5.8）用的 $remote_addr 都依赖这一步——CDN 后面不配 realip，白名单形同虚设。</text>
+</svg>

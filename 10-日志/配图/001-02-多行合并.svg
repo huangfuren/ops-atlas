@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>多行合并：把异常栈并回一条事件的四件套</title>
+  <desc>左侧是没配 multiline 的下场：一条 Java 异常栈被按行拆成四条独立事件，上下文全毁。右侧是配好后的效果：四行并成一条完整事件。四件套的语义：pattern 定义什么样子是一條新日志的开头（日期开头），negate 取反表示不匹配的就是续行，match after 把续行并入上一条之后，timeout 五秒防止最后一条悬空不发。</desc>
+
+  <rect width="680" height="330" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">multiline：一条异常栈 = 一条事件</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">四件套缺一不可</text>
+
+  <!-- 左：未配 -->
+  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#7A322B">✗ 没配 multiline：栈被拆碎</text>
+  <rect x="40" y="66" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="83" font-size="7.6" fill="#7A322B">事件1：2026-11-01 ERROR 下单失败</text>
+  <rect x="40" y="96" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="113" font-size="7.6" fill="#7A322B">事件2：java.lang.RuntimeException: 库存不足</text>
+  <rect x="40" y="126" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="143" font-size="7.6" fill="#7A322B">事件3：  at com.shop.OrderService.run(Order.java:42)</text>
+  <rect x="40" y="156" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="173" font-size="7.6" fill="#7A322B">事件4：  at …（上下文全毁）</text>
+
+  <!-- 右：配好 -->
+  <text x="370" y="56" font-size="9.5" font-weight="600" fill="#1D5A45">✓ 配好四件套：并成一条</text>
+  <rect x="370" y="66" width="274" height="116" rx="2" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="382" y="86" font-size="7.6" fill="#1b5e20">事件1：2026-11-01 ERROR 下单失败</text>
+  <text x="382" y="104" font-size="7.6" fill="#1b5e20">  java.lang.RuntimeException: 库存不足</text>
+  <text x="382" y="122" font-size="7.6" fill="#1b5e20">    at com.shop.OrderService.run(…:42)</text>
+  <text x="382" y="140" font-size="7.6" fill="#1b5e20">    at …（完整栈，可搜可读）</text>
+  <text x="382" y="164" font-size="7.4" fill="#8C8980">1 条事件 —— 上下文完好</text>
+
+  <!-- 四件套 -->
+  <rect x="40" y="196" width="604" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="216" font-size="8.6" font-weight="600" fill="#1F4468">四件套语义（yml）</text>
+  <text x="54" y="234" font-size="7.8" fill="#1F4468">pattern: '^\d{4}-\d{2}-\d{2}'　定义「新日志的开头」长什么样（按新事件思考，别按续行思考）</text>
+  <text x="54" y="250" font-size="7.8" fill="#1F4468">negate: true + match: after　不匹配 pattern 的行 → 并入上一条之后；timeout: 5s 防最后一条悬空</text>
+
+  <rect x="40" y="280" width="604" height="28" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="298" font-size="8" fill="#7A322B">反模式：按「异常的样子」写 pattern（如 ^\s+at）——换一种栈格式就漏，按「新事件开头」写才稳</text>
+</svg>

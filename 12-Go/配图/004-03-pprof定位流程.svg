@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 448" width="680" height="448" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>pprof 定位闭环：从症状到修复</title>
+  <desc>定位闭环四步：先看症状选 profile 类型，再用匿名导入加独立端口 6060 采集，然后用 top20 看 flat 与 cum、list 逐行、火焰图看最宽块进行分析，最后修复并用压测回归验证。右侧是五种 profile 各自回答的问题：CPU 被谁吃了、内存被谁占了、goroutine 卡在哪、谁在等锁、哪个锁竞争激烈、时间轴全景。安全要求是端口只绑本机回环地址。</desc>
+
+  <rect width="680" height="448" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">pprof 定位闭环：从症状到修复</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">004 §4</text>
+
+  <defs>
+    <marker id="g4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- ① 症状 -->
+  <text x="36" y="56" font-size="8.8" font-weight="600" fill="#2B2A27">① 症状</text>
+  <rect x="36" y="62" width="96" height="36" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="84" y="84" font-size="8.2" fill="#7A322B" text-anchor="middle">CPU 高</text>
+  <rect x="138" y="62" width="96" height="36" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="186" y="84" font-size="8.2" fill="#7A322B" text-anchor="middle">内存持续涨</text>
+  <rect x="240" y="62" width="96" height="36" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="288" y="84" font-size="8.2" fill="#7A322B" text-anchor="middle">goroutine 涨</text>
+  <rect x="342" y="62" width="96" height="36" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="390" y="84" font-size="8.2" fill="#7A322B" text-anchor="middle">锁竞争激烈</text>
+
+  <line x1="240" y1="98" x2="240" y2="110" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g4Blue)"/>
+
+  <!-- ② 采集 -->
+  <rect x="36" y="112" width="402" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="52" y="130" font-size="8.8" font-weight="600" fill="#1F4468">② 采集：开箱三件套</text>
+  <text x="52" y="148" font-size="7.4" fill="#4A4945">import _ "net/http/pprof" ＋ 独立端口 127.0.0.1:6060</text>
+  <text x="52" y="164" font-size="7.2" fill="#4A4945">go tool pprof http://127.0.0.1:6060/debug/pprof/…</text>
+
+  <line x1="240" y1="174" x2="240" y2="186" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g4Blue)"/>
+
+  <!-- ③ 分析 -->
+  <rect x="36" y="188" width="402" height="84" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="206" font-size="8.8" font-weight="600" fill="#7A4A12">③ 分析三招</text>
+  <text x="52" y="224" font-size="7.4" fill="#7A4A12">top20——flat 高 = 真热点；cum 高 = 慢在调用链</text>
+  <text x="52" y="240" font-size="7.4" fill="#7A4A12">list 函数名——逐行看耗时落点</text>
+  <text x="52" y="256" font-size="7.4" fill="#7A4A12">火焰图——看最宽的一块（-http=:8081 打开）</text>
+
+  <line x1="240" y1="272" x2="240" y2="284" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g4Blue)"/>
+
+  <!-- ④ 修复 -->
+  <rect x="36" y="286" width="402" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="52" y="310" font-size="8" font-weight="600" fill="#1D5A45">④ 修复 → 压测回归（§12）：用基准验证优化真的有效</text>
+
+  <!-- 安全注记 -->
+  <rect x="36" y="340" width="402" height="30" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="359" font-size="7.6" fill="#7A322B">安全：pprof 端口只绑 127.0.0.1，绝不与业务端口一起对外暴露</text>
+
+  <!-- 右：五种 profile -->
+  <rect x="458" y="44" width="202" height="356" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="468" y="64" font-size="8.8" font-weight="600" fill="#2B2A27">五种 profile 回答什么</text>
+
+  <rect x="468" y="72" width="182" height="44" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="478" y="88" font-size="8" font-weight="600" fill="#1F4468">CPU</text>
+  <text x="478" y="104" font-size="6.8" fill="#4A4945">CPU 被谁吃了</text>
+
+  <rect x="468" y="122" width="182" height="44" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="478" y="138" font-size="8" font-weight="600" fill="#1F4468">heap</text>
+  <text x="478" y="154" font-size="6.8" fill="#4A4945">内存被谁占了（默认存活）</text>
+
+  <rect x="468" y="172" width="182" height="44" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="478" y="188" font-size="8" font-weight="600" fill="#1F4468">goroutine</text>
+  <text x="478" y="204" font-size="6.8" fill="#4A4945">G 卡在哪、泄漏在哪</text>
+
+  <rect x="468" y="222" width="182" height="44" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="478" y="238" font-size="8" font-weight="600" fill="#1F4468">block</text>
+  <text x="478" y="254" font-size="6.8" fill="#4A4945">谁在等锁 / channel · 等多久</text>
+
+  <rect x="468" y="272" width="182" height="44" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="478" y="288" font-size="8" font-weight="600" fill="#1F4468">mutex</text>
+  <text x="478" y="304" font-size="6.8" fill="#4A4945">哪个锁竞争最激烈</text>
+
+  <rect x="468" y="322" width="182" height="44" rx="2" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
+  <text x="478" y="338" font-size="8" font-weight="600" fill="#1F4468">trace</text>
+  <text x="478" y="354" font-size="6.8" fill="#4A4945">时间轴：调度 · GC · syscall</text>
+
+  <text x="468" y="388" font-size="6.6" fill="#8C8980">block/mutex 默认采样率低，先 Set*Rate(1)</text>
+
+  <text x="32" y="436" font-size="9" fill="#8C8980">只看 flat 找热点，用 cum 找调用链——top 前 5 行累计超 70%，基本就定位了。</text>
+</svg>

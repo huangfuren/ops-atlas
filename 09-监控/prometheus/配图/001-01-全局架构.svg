@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 352" width="680" height="352" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Prometheus 全局架构</title>
+  <desc>分三层，颜色即角色：青色为被采集端，蓝色为 Prometheus 本体，紫色为存储与输出，琥珀色为告警。采集端三个来源全部靠本体主动拉取。本体四个模块中 Retrieval 只进不出；TSDB 向远程存储做 remote_write；Rules 向 Alertmanager 推送告警；HTTP API 供 Grafana 查询。</desc>
+
+  <defs>
+    <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6BAF95"/>
+    </marker>
+    <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9C8ACB"/>
+    </marker>
+    <marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+    <marker id="m4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="352" fill="#FFFFFF"/>
+  <text x="40" y="30" font-size="13" font-weight="500" fill="#2B2A27">Prometheus 全局架构</text>
+  <text x="640" y="30" font-size="9.5" fill="#9A9791" text-anchor="end">中间那层只有一个进程</text>
+
+  <!-- 采集端 -->
+  <text x="100" y="106" font-size="11" font-weight="500" fill="#1D5A45" text-anchor="end">采集端</text>
+  <g stroke-width="1">
+    <rect x="120" y="78" width="160" height="48" rx="3" fill="#DFF3EC" stroke="#6BAF95"/>
+    <rect x="300" y="78" width="160" height="48" rx="3" fill="#DFF3EC" stroke="#6BAF95"/>
+    <rect x="480" y="78" width="160" height="48" rx="3" fill="#DFF3EC" stroke="#6BAF95"/>
+  </g>
+  <g fill="#173D30" font-size="11.5" font-weight="500">
+    <text x="134" y="99">Instrumented Job</text>
+    <text x="314" y="99">Exporter</text>
+    <text x="494" y="99">Pushgateway</text>
+  </g>
+  <g fill="#3F6B5C" font-size="9">
+    <text x="134" y="115">业务埋点，暴露 /metrics</text>
+    <text x="314" y="115">node / blackbox / mysqld</text>
+    <text x="494" y="115">短命任务先推、再被拉</text>
+  </g>
+
+  <!-- Prometheus 本体 -->
+  <text x="100" y="199" font-size="11" font-weight="500" fill="#1F4468" text-anchor="end">本体</text>
+  <rect x="120" y="152" width="520" height="86" rx="3" fill="#EAF2FB" stroke="#B9CFE8" stroke-width="1"/>
+  <text x="132" y="170" font-size="10.5" font-weight="500" fill="#1F4468">Prometheus Server（必需）</text>
+  <g stroke-width="0.9" fill="#FFFFFF" stroke="#9BB8D8">
+    <rect x="132" y="178" width="115" height="50" rx="2"/>
+    <rect x="259" y="178" width="115" height="50" rx="2"/>
+    <rect x="386" y="178" width="115" height="50" rx="2"/>
+    <rect x="513" y="178" width="115" height="50" rx="2"/>
+  </g>
+  <g fill="#1F4468" font-size="11" font-weight="500" text-anchor="middle">
+    <text x="189.5" y="199">Retrieval</text>
+    <text x="316.5" y="199">TSDB</text>
+    <text x="443.5" y="199">Rules</text>
+    <text x="570.5" y="199">HTTP API</text>
+  </g>
+  <g fill="#5C7A96" font-size="8.5" text-anchor="middle">
+    <text x="189.5" y="214">抓取 + relabel</text>
+    <text x="316.5" y="214">WAL + block</text>
+    <text x="443.5" y="214">record / alert</text>
+    <text x="570.5" y="214">/api/v1/query</text>
+  </g>
+
+  <!-- 输出端：三列与上方 TSDB / Rules / HTTP API 严格对齐 -->
+  <text x="100" y="288" font-size="11" font-weight="500" fill="#46337A" text-anchor="end">输出端</text>
+  <g stroke-width="1">
+    <rect x="259" y="262" width="115" height="46" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
+    <rect x="386" y="262" width="115" height="46" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <rect x="513" y="262" width="115" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+  </g>
+  <g fill="#2B2A27" font-size="11.5" font-weight="500">
+    <text x="267" y="283">远程存储</text>
+    <text x="394" y="283">Alertmanager</text>
+    <text x="521" y="283">Grafana</text>
+  </g>
+  <g fill="#6B6A65" font-size="8.5">
+    <text x="267" y="299">Thanos / Mimir / VM</text>
+    <text x="394" y="299">去重 · 分组 · 抑制 · 路由</text>
+    <text x="521" y="299">看板与临时查询</text>
+  </g>
+  <g fill="#A5A29B" font-size="9">
+    <text x="132" y="281">Retrieval 只拉取，</text>
+    <text x="132" y="296">本身不产生对外输出</text>
+  </g>
+
+  <!-- 箭头：上排 pull 为青，下排三种出口各随目标染色 -->
+  <g stroke-width="1.1" fill="none">
+    <g stroke="#6BAF95" marker-end="url(#m1)">
+      <line x1="200" y1="126" x2="200" y2="149"/>
+      <line x1="380" y1="126" x2="380" y2="149"/>
+      <line x1="560" y1="126" x2="560" y2="149"/>
+    </g>
+    <g stroke="#9C8ACB" marker-end="url(#m2)">
+      <line x1="316.5" y1="239" x2="316.5" y2="260"/>
+    </g>
+    <g stroke="#D9A458" marker-end="url(#m3)">
+      <line x1="443.5" y1="239" x2="443.5" y2="260"/>
+    </g>
+    <g stroke="#7FA6D0" marker-end="url(#m4)">
+      <line x1="570.5" y1="239" x2="570.5" y2="260"/>
+    </g>
+  </g>
+  <text x="206" y="143" font-size="8.5" font-weight="500" fill="#1D5A45">pull</text>
+  <g font-size="8.5" font-weight="500">
+    <text x="322" y="252" fill="#46337A">remote_write</text>
+    <text x="449" y="252" fill="#7A4A12">告警推送</text>
+    <text x="576" y="252" fill="#1F4468">查询</text>
+  </g>
+
+  <text x="40" y="326" font-size="9.5" fill="#6B6A65">上方青色箭头为 pull：Prometheus 主动抓取。Pushgateway 是唯一例外——任务先推，再被拉。</text>
+  <text x="40" y="342" font-size="9.5" fill="#6B6A65">下方三色箭头是本体对外的三种出口：remote_write 推送、告警推送、供 Grafana 拉取查询——流向都是「本体 → 外部」。</text>
+</svg>

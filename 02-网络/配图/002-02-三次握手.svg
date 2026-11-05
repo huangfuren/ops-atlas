@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" width="680" height="470">
+  <title>三次握手的报文与时序</title>
+  <desc>客户端与服务端两条时间轴，三次报文交换 SYN、SYN+ACK、ACK，两侧状态同步推进到 ESTABLISHED，之后才开始数据传输。</desc>
+  <rect width="680" height="470" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
+    </marker>
+  </defs>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">三次握手：三个报文，确认双向都能收能发</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">时间向下，左侧＝本端状态，右侧＝对端状态</text>
+
+    <rect x="140" y="46" width="120" height="30" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="200" y="66" font-size="11.5" font-weight="600" fill="#2C2C2A" text-anchor="middle">客户端</text>
+    <rect x="420" y="46" width="120" height="30" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="480" y="66" font-size="11.5" font-weight="600" fill="#2C2C2A" text-anchor="middle">服务端</text>
+
+    <line x1="200" y1="76" x2="200" y2="340" stroke="#D5D2C8" stroke-width="1"/>
+    <line x1="480" y1="76" x2="480" y2="340" stroke="#D5D2C8" stroke-width="1"/>
+
+    <text x="95" y="94" font-size="8.5" fill="#8A8880" text-anchor="middle">本端状态</text>
+    <text x="585" y="94" font-size="8.5" fill="#8A8880" text-anchor="middle">对端状态</text>
+
+    <path d="M200,112 L476,127" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar2)"/>
+    <text x="340" y="104" font-size="10.5" fill="#2C2C2A" text-anchor="middle">① SYN   seq=x</text>
+    <rect x="49" y="119" width="92" height="22" rx="11" fill="#F1EFE8"/>
+    <text x="95" y="134" font-size="9.5" fill="#4A4945" text-anchor="middle">SYN_SENT</text>
+
+    <path d="M480,186 L206,201" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar2)"/>
+    <text x="340" y="178" font-size="10.5" fill="#2C2C2A" text-anchor="middle">② SYN+ACK   seq=y  ack=x+1</text>
+    <rect x="539" y="151" width="92" height="22" rx="11" fill="#F1EFE8"/>
+    <text x="585" y="166" font-size="9.5" fill="#4A4945" text-anchor="middle">SYN_RCVD</text>
+
+    <path d="M200,258 L476,273" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar2)"/>
+    <text x="340" y="250" font-size="10.5" fill="#2C2C2A" text-anchor="middle">③ ACK   seq=x+1  ack=y+1</text>
+
+    <rect x="49" y="293" width="92" height="22" rx="11" fill="#E1F5EE"/>
+    <text x="95" y="308" font-size="9" fill="#14584A" text-anchor="middle">ESTABLISHED</text>
+    <rect x="539" y="293" width="92" height="22" rx="11" fill="#E1F5EE"/>
+    <text x="585" y="308" font-size="9" fill="#14584A" text-anchor="middle">ESTABLISHED</text>
+
+    <rect x="60" y="330" width="560" height="34" rx="3" fill="#F1EFE8"/>
+    <text x="340" y="352" font-size="10.5" fill="#4A4945" text-anchor="middle">数据传输 —— 此刻起双向都能收发，应用数据才开始流动</text>
+
+    <rect x="40" y="388" width="600" height="62" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="410" font-size="9.8" fill="#2C2C2A">两次握手只能确认「客户端能发、服务端能收」，确认不了客户端的接收能力；第三次 ACK 补的正是这一半。</text>
+    <text x="56" y="430" font-size="9.8" fill="#6B6A65">否则一个滞留的旧 SYN 就能让服务端提前分配资源等数据，而客户端根本不认这条连接。</text>
+  </g>
+</svg>

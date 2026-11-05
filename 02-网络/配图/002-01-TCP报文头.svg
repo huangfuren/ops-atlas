@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420">
+  <title>TCP 固定头 20 字节的字段布局</title>
+  <desc>按 5 行 32 位绘制 TCP 固定头：端口、seq、ack、数据偏移与标志位、窗口、校验和与紧急指针；标志位单独展开为六个常用位。</desc>
+  <rect width="680" height="420" fill="#FFFFFF"/>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">TCP 固定头：5 行 × 32 位 = 20 字节</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">琥珀＝排查最常用的三处：seq / ack / 标志位</text>
+
+    <line x1="56" y1="46" x2="616" y2="46" stroke="#C9C6BC" stroke-width="0.8"/>
+    <g stroke="#C9C6BC" stroke-width="0.8">
+      <line x1="56" y1="42" x2="56" y2="50"/>
+      <line x1="196" y1="42" x2="196" y2="50"/>
+      <line x1="336" y1="42" x2="336" y2="50"/>
+      <line x1="476" y1="42" x2="476" y2="50"/>
+      <line x1="616" y1="42" x2="616" y2="50"/>
+    </g>
+    <g font-size="8" fill="#8A8880" text-anchor="middle">
+      <text x="56" y="38">0</text>
+      <text x="196" y="38">8</text>
+      <text x="336" y="38">16</text>
+      <text x="476" y="38">24</text>
+      <text x="616" y="38">31</text>
+    </g>
+    <text x="50" y="40" font-size="8" fill="#8A8880" text-anchor="end">bit</text>
+
+    <text x="50" y="82" font-size="8" fill="#8A8880" text-anchor="end">0–3</text>
+    <text x="50" y="124" font-size="8" fill="#8A8880" text-anchor="end">4–7</text>
+    <text x="50" y="166" font-size="8" fill="#8A8880" text-anchor="end">8–11</text>
+    <text x="50" y="208" font-size="8" fill="#8A8880" text-anchor="end">12–15</text>
+    <text x="50" y="250" font-size="8" fill="#8A8880" text-anchor="end">16–19</text>
+
+    <g stroke="#B9B6AC" stroke-width="0.8" fill="#F8F6F1">
+      <rect x="56" y="54" width="280" height="42"/>
+      <rect x="336" y="54" width="280" height="42"/>
+      <rect x="56" y="96" width="560" height="42" fill="#FAEEDA"/>
+      <rect x="56" y="138" width="560" height="42" fill="#FAEEDA"/>
+      <rect x="56" y="180" width="70" height="42"/>
+      <rect x="126" y="180" width="52.5" height="42"/>
+      <rect x="178.5" y="180" width="157.5" height="42" fill="#FAEEDA"/>
+      <rect x="336" y="180" width="280" height="42"/>
+      <rect x="56" y="222" width="280" height="42"/>
+      <rect x="336" y="222" width="280" height="42"/>
+    </g>
+
+    <g fill="#2C2C2A">
+      <text x="196" y="74" font-size="11" text-anchor="middle">源端口</text>
+      <text x="476" y="74" font-size="11" text-anchor="middle">目的端口</text>
+      <text x="336" y="116" font-size="11" text-anchor="middle" font-weight="600">序列号 seq</text>
+      <text x="336" y="158" font-size="11" text-anchor="middle" font-weight="600">确认号 ack</text>
+      <text x="257" y="200" font-size="11" text-anchor="middle" font-weight="600">标志位</text>
+      <text x="476" y="200" font-size="11" text-anchor="middle">窗口大小</text>
+      <text x="196" y="242" font-size="11" text-anchor="middle">校验和</text>
+      <text x="476" y="242" font-size="11" text-anchor="middle">紧急指针</text>
+    </g>
+    <g fill="#8A8880">
+      <text x="196" y="88" font-size="8.5" text-anchor="middle">16 位 · 四元组的一半</text>
+      <text x="476" y="88" font-size="8.5" text-anchor="middle">16 位 · 四元组的一半</text>
+      <text x="336" y="130" font-size="8.5" text-anchor="middle">32 位 · 本端字节流编号，判断重传与乱序</text>
+      <text x="336" y="172" font-size="8.5" text-anchor="middle">32 位 · 期望收到的下一个字节，判断谁在等谁</text>
+      <text x="257" y="214" font-size="8.5" text-anchor="middle">9 位 · 见下方</text>
+      <text x="476" y="214" font-size="8.5" text-anchor="middle">16 位 · 还能收多少字节，0 窗口＝对方处理不过来</text>
+      <text x="196" y="256" font-size="8.5" text-anchor="middle">16 位 · 错包被丢，表现为莫名重传</text>
+      <text x="476" y="256" font-size="8.5" text-anchor="middle">16 位 · 日常基本不用</text>
+    </g>
+    <g fill="#8A8880" font-size="9" text-anchor="middle">
+      <text x="91" y="198">数据偏移</text>
+      <text x="91" y="212" font-size="8">4 位</text>
+      <text x="152" y="198">保留</text>
+      <text x="152" y="212" font-size="8">3 位</text>
+    </g>
+
+    <text x="40" y="296" font-size="9.5" fill="#4A4945">9 位标志位里，日常只看这 6 个（CWR / ECE / NS 不在此展开）：</text>
+
+    <g stroke-width="0.8">
+      <rect x="56" y="306" width="84" height="40" rx="3" fill="#F8F6F1" stroke="#B9B6AC"/>
+      <rect x="150" y="306" width="84" height="40" rx="3" fill="#F8F6F1" stroke="#B9B6AC"/>
+      <rect x="244" y="306" width="84" height="40" rx="3" fill="#F8F6F1" stroke="#B9B6AC"/>
+      <rect x="338" y="306" width="84" height="40" rx="3" fill="#FAEEDA" stroke="#C08A3E"/>
+      <rect x="432" y="306" width="84" height="40" rx="3" fill="#FAEEDA" stroke="#C08A3E"/>
+      <rect x="526" y="306" width="84" height="40" rx="3" fill="#FAEEDA" stroke="#C08A3E"/>
+    </g>
+    <g text-anchor="middle" fill="#2C2C2A">
+      <text x="98" y="326" font-size="10.5" font-weight="600">URG</text>
+      <text x="192" y="326" font-size="10.5" font-weight="600">ACK</text>
+      <text x="286" y="326" font-size="10.5" font-weight="600">PSH</text>
+      <text x="380" y="326" font-size="10.5" font-weight="600">RST</text>
+      <text x="474" y="326" font-size="10.5" font-weight="600">SYN</text>
+      <text x="568" y="326" font-size="10.5" font-weight="600">FIN</text>
+    </g>
+    <g text-anchor="middle" fill="#6B6A65" font-size="8.5">
+      <text x="98" y="340">紧急数据</text>
+      <text x="192" y="340">确认号有效</text>
+      <text x="286" y="340">立刻上交应用</text>
+      <text x="380" y="340">重置连接</text>
+      <text x="474" y="340">建连请求</text>
+      <text x="568" y="340">结束发送</text>
+    </g>
+
+    <text x="40" y="372" font-size="9.5" fill="#4A4945">RST 是运维最该认识的标志：Connection reset by peer 全部来自它——它是立即拒绝，不是超时。</text>
+    <text x="40" y="390" font-size="9" fill="#8A8880">每行 4 字节：两端口与校验和各占 2 字节，seq / ack 各占 4 字节；格宽即真实占比。</text>
+  </g>
+</svg>

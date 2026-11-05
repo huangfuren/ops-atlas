@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>交付全景：从提交到观察的九段流水线</title>
+  <desc>提交触发 webhook 进入构建与自动测试，通过后制品化为不可变 tag 并推送制品库，部署到测试环境冒烟验证，人工审批后按滚动或灰度发布到生产，最后进入观察阶段由指标与告警兜底。每段的产物是下一段的唯一输入，每段失败即停线并通知。</desc>
+
+  <rect width="680" height="430" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">交付全景：九段流水线，段段有门禁</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">产物是下段的唯一输入</text>
+
+  <defs>
+    <marker id="b0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 九段 -->
+  <circle cx="52" cy="64" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="67" font-size="8.4" fill="#1F4468" text-anchor="middle">1</text>
+  <text x="70" y="60" font-size="9" font-weight="600" fill="#1F4468">提交</text>
+  <text x="70" y="74" font-size="7.4" fill="#4A4945">git push → webhook 秒级触发</text>
+  <text x="460" y="67" font-size="7.8" fill="#8C8980">触发条件：分支规则（003 §3.5）</text>
+  <line x1="52" y1="76" x2="52" y2="90" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="102" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="105" font-size="8.4" fill="#1F4468" text-anchor="middle">2</text>
+  <text x="70" y="98" font-size="9" font-weight="600" fill="#1F4468">构建</text>
+  <text x="70" y="112" font-size="7.4" fill="#4A4945">编译 · 依赖安装（容器内构建）</text>
+  <text x="460" y="105" font-size="7.8" fill="#8C8980">产物：编译产物（002 §2.5）</text>
+  <line x1="52" y1="114" x2="52" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="140" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="143" font-size="8.4" fill="#1F4468" text-anchor="middle">3</text>
+  <text x="70" y="136" font-size="9" font-weight="600" fill="#1F4468">自动测试</text>
+  <text x="70" y="150" font-size="7.4" fill="#7A322B">单元 + 静态检查 —— 门禁：红即停线</text>
+  <text x="460" y="143" font-size="7.8" fill="#8C8980">不绕行是纪律（008 §8.9）</text>
+  <line x1="52" y1="152" x2="52" y2="166" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="178" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="181" font-size="8.4" fill="#1F4468" text-anchor="middle">4</text>
+  <text x="70" y="174" font-size="9" font-weight="600" fill="#1F4468">制品化</text>
+  <text x="70" y="188" font-size="7.4" fill="#4A4945">打镜像 · 不可变 tag：版本-commit（006 §6.4）</text>
+  <text x="460" y="181" font-size="7.8" fill="#8C8980">latest 禁止上生产</text>
+  <line x1="52" y1="190" x2="52" y2="204" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="216" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="219" font-size="8.4" fill="#1F4468" text-anchor="middle">5</text>
+  <text x="70" y="212" font-size="9" font-weight="600" fill="#1F4468">推送制品库</text>
+  <text x="70" y="226" font-size="7.4" fill="#4A4945">Harbor / Nexus —— 测过的东西在此存证</text>
+  <text x="460" y="219" font-size="7.8" fill="#8C8980">扫描 HIGH 拦截（006 §6.8）</text>
+  <line x1="52" y1="228" x2="52" y2="242" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="254" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="257" font-size="8.4" fill="#1F4468" text-anchor="middle">6</text>
+  <text x="70" y="250" font-size="9" font-weight="600" fill="#1F4468">部署测试环境</text>
+  <text x="70" y="264" font-size="7.4" fill="#4A4945">rollout status + 冒烟检查（008 §8.6）</text>
+  <text x="460" y="257" font-size="7.8" fill="#8C8980">部署成功 ≠ 服务可用</text>
+  <line x1="52" y1="266" x2="52" y2="280" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="292" r="9" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="52" y="295" font-size="8.4" fill="#7A4A12" text-anchor="middle">7</text>
+  <text x="70" y="288" font-size="9" font-weight="600" fill="#7A4A12">人工审批（input）</text>
+  <text x="70" y="302" font-size="7.4" fill="#7A4A12">唯一的人工节点——业务判断留给人</text>
+  <text x="460" y="295" font-size="7.8" fill="#8C8980">审批人 ≠ 发布人（008 §8.9）</text>
+  <line x1="52" y1="304" x2="52" y2="318" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="330" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="333" font-size="8.4" fill="#1F4468" text-anchor="middle">8</text>
+  <text x="70" y="326" font-size="9" font-weight="600" fill="#1F4468">部署生产</text>
+  <text x="70" y="340" font-size="7.4" fill="#4A4945">滚动打底 · 灰度放量（007 三要素）</text>
+  <text x="460" y="333" font-size="7.8" fill="#8C8980">执行器：K8s 滚动 / 接入层权重</text>
+  <line x1="52" y1="342" x2="52" y2="356" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+
+  <circle cx="52" cy="368" r="9" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="52" y="371" font-size="8.4" fill="#1D5A45" text-anchor="middle">9</text>
+  <text x="70" y="364" font-size="9" font-weight="600" fill="#1D5A45">观察</text>
+  <text x="70" y="378" font-size="7.4" fill="#1D5A45">指标 · 告警 · 回滚兜底——发布的三要素之一</text>
+  <text x="460" y="371" font-size="7.8" fill="#8C8980">静默成功最危险（009 §9.7）</text>
+
+  <text x="32" y="414" font-size="9" fill="#8C8980">两条铁律：每段失败停线并通知；失败的流水线不允许跳段通过——门禁的意义在于它是门禁。</text>
+</svg>

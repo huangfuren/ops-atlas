@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Discover 四步工作流：缩窗、过滤、展开、上下文</title>
+  <desc>逐条排障的四步：先把时间窗缩到十五分钟，时间窗与查询成本线性相关；再加服务与级别的过滤条件；展开单条日志看完整 JSON；最后用上下文视图查看这条日志前后各若干条——异常前的日志里往往有真正的根因。任何搜到了但看不懂的问题，先试上下文视图。</desc>
+
+  <rect width="680" height="300" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Discover 四步：缩窗 → 过滤 → 展开 → 上下文</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">时间窗与成本线性相关</text>
+
+  <defs>
+    <marker id="g3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="52" width="140" height="100" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="110" y="76" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">① 缩时间窗</text>
+  <text x="110" y="94" font-size="7.6" fill="#4A4945" text-anchor="middle">Last 15 minutes</text>
+  <text x="110" y="110" font-size="7.6" fill="#4A4945" text-anchor="middle">查 7 天全量 =</text>
+  <text x="110" y="126" font-size="7.6" fill="#7A322B" text-anchor="middle">扫几十个索引的全部分片</text>
+
+  <rect x="196" y="52" width="140" height="100" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="266" y="76" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">② 加过滤</text>
+  <text x="266" y="94" font-size="7.6" fill="#4A4945" text-anchor="middle">service: myapp</text>
+  <text x="266" y="110" font-size="7.6" fill="#4A4945" text-anchor="middle">level: ERROR</text>
+  <text x="266" y="126" font-size="7.6" fill="#8C8980" text-anchor="middle">not level: INFO 更不易漏</text>
+
+  <rect x="352" y="52" width="140" height="100" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="422" y="76" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">③ 展开单条</text>
+  <text x="422" y="94" font-size="7.6" fill="#4A4945" text-anchor="middle">完整 JSON / 字段表</text>
+  <text x="422" y="110" font-size="7.6" fill="#4A4945" text-anchor="middle">确认原始内容</text>
+  <text x="422" y="126" font-size="7.6" fill="#8C8980" text-anchor="middle">表格 / JSON 视图切换</text>
+
+  <rect x="508" y="52" width="140" height="100" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="578" y="76" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">④ 看上下文 ★</text>
+  <text x="578" y="94" font-size="7.6" fill="#7A4A12" text-anchor="middle">View surrounding docs</text>
+  <text x="578" y="110" font-size="7.6" fill="#7A4A12" text-anchor="middle">前后各 N 条同流日志</text>
+  <text x="578" y="126" font-size="7.6" fill="#7A322B" text-anchor="middle">根因往往在异常之前</text>
+
+  <line x1="180" y1="102" x2="194" y2="102" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g3Blue)"/>
+  <line x1="336" y1="102" x2="350" y2="102" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g3Blue)"/>
+  <line x1="492" y1="102" x2="506" y2="102" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g3Blue)"/>
+
+  <rect x="40" y="172" width="604" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="192" font-size="8.4" font-weight="600" fill="#7A4A12">工作流公式：缩窗 → 过滤 → 展开单条 → 看上下文</text>
+  <text x="52" y="210" font-size="7.8" fill="#7A4A12">「Kibana 慢」的第一检查点就是右上角时间选择器——15 分钟恢复 = 查询设计问题，不是集群问题</text>
+
+  <text x="32" y="252" font-size="9" fill="#8C8980">与指标衔接：告警通知带时间点与服务名 → 圈"同服务 ±5 分钟"的 ERROR（000 §0.5 的取证入口）。</text>
+  <text x="32" y="274" font-size="9" fill="#8C8980">长周期统计（月度报表）别在 Discover 现扫——用聚合预计算或走冷数据（003 §3.4）。</text>
+</svg>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>DAC 与 MAC 两道门：chmod 777 只打开了第一道</title>
+  <desc>一个访问请求要连过两道门。第一道是 DAC 自主访问控制，由属主、属组、其他人和 ACL 决定，chmod 777 打开的就是这一道，用 ls -l 就能看见。第二道是 MAC 强制访问控制，SELinux 看的是文件的 type 而不是 rwx，root 也要服从，只有 ls -Z 才看得见。任何一道拒绝都到此为止，表现分别是 Permission denied 和 403 加 AVC 记录。图的下半部给出四步排查顺序，并强调验证时可以临时切 Permissive，但不要永久 Disabled。</desc>
+
+  <rect width="680" height="420" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">两道门：chmod 777 开的只是第一道</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">先 DAC，再 MAC</text>
+
+  <defs>
+    <marker id="a5Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a5Green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6BAF95"/>
+    </marker>
+    <marker id="a5Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="44" width="290" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="65" font-size="8.4" fill="#4A4945">httpd 要读 /data/web/index.html</text>
+  <line x1="185" y1="80" x2="185" y2="94" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a5Blue)"/>
+
+  <!-- 放行 -->
+  <rect x="350" y="44" width="290" height="34" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="364" y="65" font-size="8.6" font-weight="600" fill="#1D5A45">两道都过 → 才真的读到内容</text>
+
+  <!-- 门 1 -->
+  <rect x="40" y="96" width="290" height="76" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="54" y="116" font-size="10" font-weight="600" fill="#1F4468">① DAC　自主访问控制</text>
+  <text x="54" y="134" font-size="8.2" fill="#1F4468">属主 / 属组 / 其他人 + ACL</text>
+  <text x="54" y="150" font-size="8.2" fill="#1F4468">chmod、setfacl 改的就是这一扇</text>
+  <text x="54" y="166" font-size="7.8" fill="#8C8980">ls -l 就能看见</text>
+
+  <line x1="332" y1="134" x2="348" y2="134" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a5Blue)"/>
+
+  <!-- 门 2 -->
+  <rect x="350" y="96" width="290" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="364" y="116" font-size="10" font-weight="600" fill="#7A4A12">② MAC　强制访问控制</text>
+  <text x="364" y="134" font-size="8.2" fill="#7A4A12">SELinux 看的是 type，不是 rwx</text>
+  <text x="364" y="150" font-size="8.2" fill="#7A4A12">root 也要服从它，所以 777 无效</text>
+  <text x="364" y="166" font-size="7.8" fill="#7A4A12">ls -Z 才看得见</text>
+
+  <line x1="560" y1="94" x2="560" y2="80" stroke="#6BAF95" stroke-width="1.2" marker-end="url(#a5Green)"/>
+  <text x="568" y="90" font-size="7.4" font-weight="600" fill="#1D5A45">通过</text>
+
+  <!-- 拒绝 -->
+  <rect x="40" y="196" width="600" height="54" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="54" y="216" font-size="9.4" font-weight="600" fill="#7A322B">任一道拒绝，就到此为止</text>
+  <text x="54" y="234" font-size="8.2" fill="#7A322B">DAC 挡的：EACCES / Permission denied　　SELinux 挡的：在 Web 上同样是 403，但会留下 AVC 记录</text>
+  <line x1="185" y1="172" x2="185" y2="194" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a5Red)"/>
+  <text x="193" y="188" font-size="7.4" font-weight="600" fill="#7A322B">拒绝</text>
+  <line x1="430" y1="172" x2="430" y2="194" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a5Red)"/>
+  <text x="438" y="188" font-size="7.4" font-weight="600" fill="#7A322B">拒绝</text>
+
+  <text x="32" y="278" font-size="9.5" font-weight="600" fill="#4A4945">查的顺序：三步定性 + 一步处置（前两步占九成，见 3.8 的八因表）</text>
+
+  <rect x="40" y="292" width="136" height="62" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="310" font-size="8.8" font-weight="600" fill="#4A4945">getenforce</text>
+  <text x="52" y="325" font-size="7.4" fill="#4A4945">Enforcing 才可能拦你</text>
+  <text x="52" y="339" font-size="7.4" fill="#8C8980">Permissive 只记日志不拦</text>
+
+  <rect x="194" y="292" width="136" height="62" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="206" y="310" font-size="8.8" font-weight="600" fill="#4A4945">ausearch -m avc</text>
+  <text x="206" y="325" font-size="7.4" fill="#4A4945">有没有 AVC 记录</text>
+  <text x="206" y="339" font-size="7.4" fill="#8C8980">加 -ts recent 只看最近</text>
+
+  <rect x="348" y="292" width="136" height="62" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="360" y="310" font-size="8.8" font-weight="600" fill="#4A4945">ls -Z 看 type</text>
+  <text x="360" y="325" font-size="7.4" fill="#4A4945">该是 default_t 还是</text>
+  <text x="360" y="339" font-size="7.4" fill="#8C8980">httpd_sys_content_t</text>
+
+  <rect x="502" y="292" width="136" height="62" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="514" y="310" font-size="8.8" font-weight="600" fill="#4A4945">改标签，不是关它</text>
+  <text x="514" y="325" font-size="7.4" fill="#4A4945">chcon 临时</text>
+  <text x="514" y="339" font-size="7.4" fill="#8C8980">semanage + restorecon</text>
+
+  <text x="32" y="378" font-size="9" fill="#7A322B">临时 setenforce 0 验证可以；生产别设 Disabled —— 改回 Enforcing 前必须 touch /.autorelabel 重打标签。</text>
+  <text x="32" y="394" font-size="9" fill="#8C8980">忘了这一步，开机 sshd 起不来、卡在登录页，看起来像系统坏了（就是 01 §1.6 的救援场景）。</text>
+</svg>

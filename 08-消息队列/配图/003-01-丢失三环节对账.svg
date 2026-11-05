@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="680" height="370" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>消息丢失三环节对账：生产端、存储端、消费端</title>
+  <desc>消息丢失的申诉先对账三个环节：生产端丢在发出即忘或发送失败未重试，验收点是确认级别与发送日志；存储端丢在未持久化未复制就宕机，验收点是持久化三件套与仲裁队列或 ISR 配置；消费端丢在先提交后处理，验收点是处理完再确认加幂等。三方日志按业务键对齐，结论三选一：真丢、未消费、已消费转下游。</desc>
+
+  <rect width="680" height="370" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">丢失三环节：先对账，再修复</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">三方日志按业务键对齐</text>
+
+  <defs>
+    <marker id="m3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- ① 生产端 -->
+  <rect x="40" y="52" width="604" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="74" font-size="9" font-weight="600" fill="#1F4468">① 生产端 —— 发出去就等于送到了吗？</text>
+  <text x="56" y="92" font-size="7.8" fill="#7A322B">丢：acks=0/1 · 发送失败没有重试与日志 · 异步发送进程崩溃</text>
+  <text x="56" y="108" font-size="7.8" font-weight="600" fill="#1D5A45">验收：acks=all + 失败重试 + 发送确认留日志</text>
+
+  <line x1="340" y1="124" x2="340" y2="140" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3Blue)"/>
+
+  <!-- ② 存储端 -->
+  <rect x="40" y="144" width="604" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="166" font-size="9" font-weight="600" fill="#1F4468">② 存储端 —— broker 存住了吗？</text>
+  <text x="56" y="184" font-size="7.8" fill="#7A322B">丢：消息/队列未持久化 · 副本不足时宕机 · RabbitMQ 非仲裁队列单点</text>
+  <text x="56" y="200" font-size="7.8" font-weight="600" fill="#1D5A45">验收：RabbitMQ 三件套+仲裁队列；Kafka 副本 3+min.insync.replicas=2</text>
+
+  <line x1="340" y1="216" x2="340" y2="232" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m3Blue)"/>
+
+  <!-- ③ 消费端 -->
+  <rect x="40" y="236" width="604" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="258" font-size="9" font-weight="600" fill="#1F4468">③ 消费端 —— 先确认还是先处理？</text>
+  <text x="56" y="276" font-size="7.8" fill="#7A322B">丢：auto-commit 先提交 offset，处理还没完成就崩溃</text>
+  <text x="56" y="292" font-size="7.8" font-weight="600" fill="#1D5A45">验收：处理完再确认/提交 + 消费幂等（重复免疫）</text>
+
+  <!-- 对账方法 -->
+  <rect x="40" y="324" width="604" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="342" font-size="8.2" fill="#7A4A12">对账：生产发送日志 → MQ 存储证据 → 消费处理日志，三方按业务键（订单号/request_id）对齐</text>
+  <text x="52" y="354" font-size="7.4" fill="#7A4A12">结论三选一：真丢（修对应环节）/ 还在队列未消费（堆积，003 §3.3）/ 已消费（转下游排查）</text>
+</svg>

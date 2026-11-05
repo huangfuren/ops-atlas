@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>流水线全景：六个阶段，每段有门禁、有产物、可重跑</title>
+  <desc>Checkout 生成贯穿全链路的版本号；构建与测试在容器内进行，测试红了立即停线；镜像推 Harbor 接扫描门禁；部署测试环境用 rollout status 等待完成并冒烟验证；人工审批后发布生产；最后成败都发通知并写部署记录。失败从红段重跑的前提是版本号不变且各段幂等。</desc>
+
+  <rect width="680" height="430" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">流水线全景：六段，段段有门禁</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">失败从红段重跑</text>
+
+  <defs>
+    <marker id="b8Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 列头 -->
+  <text x="44" y="56" font-size="8" fill="#8C8980">阶段</text>
+  <text x="500" y="56" font-size="8" fill="#8C8980">门禁</text>
+
+  <!-- ① Checkout -->
+  <rect x="40" y="64" width="440" height="42" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="82" font-size="9" font-weight="600" fill="#4A4945">① Checkout</text>
+  <text x="54" y="97" font-size="7.6" fill="#4A4945">checkout scm + 版本号一次性生成：tag-commit（8.3）</text>
+  <text x="500" y="89" font-size="7.8" fill="#4A4945">–</text>
+  <line x1="260" y1="106" x2="260" y2="118" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b8Blue)"/>
+
+  <!-- ② Build & Test -->
+  <rect x="40" y="122" width="440" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="140" font-size="9" font-weight="600" fill="#1F4468">② Build &amp; Test（容器内构建）</text>
+  <text x="54" y="155" font-size="7.6" fill="#1F4468">go build / go test —— 单元级门禁</text>
+  <text x="500" y="147" font-size="7.8" font-weight="600" fill="#7A322B">红 = 停线，开发修代码</text>
+  <line x1="260" y1="164" x2="260" y2="176" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b8Blue)"/>
+
+  <!-- ③ Image -->
+  <rect x="40" y="180" width="440" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="198" font-size="9" font-weight="600" fill="#1F4468">③ Image（推 Harbor）</text>
+  <text x="54" y="213" font-size="7.6" fill="#1F4468">docker build + push，机器人账号，不可变 tag</text>
+  <text x="500" y="205" font-size="7.8" font-weight="600" fill="#7A322B">扫描 HIGH 拦截</text>
+  <line x1="260" y1="222" x2="260" y2="234" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b8Blue)"/>
+
+  <!-- ④ Deploy Test -->
+  <rect x="40" y="238" width="440" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="256" font-size="9" font-weight="600" fill="#1F4468">④ Deploy Test</text>
+  <text x="54" y="271" font-size="7.6" fill="#1F4468">kubectl set image + rollout status --timeout + 冒烟</text>
+  <text x="500" y="263" font-size="7.8" font-weight="600" fill="#7A322B">rollout 未完成即红</text>
+  <line x1="260" y1="280" x2="260" y2="292" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b8Blue)"/>
+
+  <!-- ⑤ Deploy Prod -->
+  <rect x="40" y="296" width="440" height="42" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="54" y="314" font-size="9" font-weight="600" fill="#7A4A12">⑤ 人工审批 input + Deploy Prod</text>
+  <text x="54" y="329" font-size="7.6" fill="#7A4A12">滚动起步，成熟后接灰度放量（007 §7.4）</text>
+  <text x="500" y="321" font-size="7.8" font-weight="600" fill="#7A4A12">审批人 ≠ 发布人</text>
+  <line x1="260" y1="338" x2="260" y2="350" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b8Blue)"/>
+
+  <!-- ⑥ Notify -->
+  <rect x="40" y="354" width="440" height="42" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="54" y="372" font-size="9" font-weight="600" fill="#1D5A45">⑥ Notify + 部署记录</text>
+  <text x="54" y="387" font-size="7.6" fill="#1D5A45">成败都发 IM + release 记录：谁·何时·哪个版本·谁审批</text>
+  <text x="500" y="379" font-size="7.8" fill="#1D5A45">静默成功最危险</text>
+
+  <text x="32" y="418" font-size="9" fill="#8C8980">重跑的两个前提：版本号在 ① 一次生成不变（8.3）；各段幂等——set image 天然幂等，Harbor 同 tag 重推会被不可变规则拒绝（006 §6.5）。</text>
+</svg>

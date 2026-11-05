@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 228" width="680" height="228" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>两阶段 relabel 的执行位置</title>
+  <desc>三个阶段的颜色与抓取六步图一致：青色为抓取前，蓝色为抓取中，紫色为入库前。琥珀色方框是仅有的两个可改写环节。以双下划线开头的内部标签在写入 TSDB 时自动丢弃。</desc>
+
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A8880"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="228" fill="#FFFFFF"/>
+  <text x="40" y="26" font-size="13" font-weight="500" fill="#2B2A27">两阶段 relabel：改的是不同对象</text>
+  <text x="640" y="26" font-size="9.5" fill="#9A9791" text-anchor="end">琥珀 = 可改写</text>
+
+  <g font-size="9.5" font-weight="500" text-anchor="middle">
+    <text x="180" y="44" fill="#1D5A45">抓取前</text>
+    <text x="420" y="44" fill="#1F4468">抓取中</text>
+    <text x="580" y="44" fill="#46337A">入库前</text>
+  </g>
+  <g stroke-width="1.2">
+    <line x1="30" y1="51" x2="330" y2="51" stroke="#6BAF95"/>
+    <line x1="350" y1="51" x2="490" y2="51" stroke="#7FA6D0"/>
+    <line x1="510" y1="51" x2="650" y2="51" stroke="#9C8ACB"/>
+  </g>
+
+  <g stroke-width="1">
+    <rect x="30" y="58" width="140" height="76" rx="3" fill="#DFF3EC" stroke="#6BAF95"/>
+    <rect x="190" y="58" width="140" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <rect x="350" y="58" width="140" height="76" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <rect x="510" y="58" width="140" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+  </g>
+
+  <g font-size="10.5" font-weight="500">
+    <text x="42" y="78" fill="#173D30">① 服务发现</text>
+    <text x="202" y="78" fill="#7A4A12">② relabel_configs</text>
+    <text x="362" y="78" fill="#1F4468">③ HTTP GET + 解析</text>
+    <text x="522" y="78" fill="#7A4A12">⑤ metric_relabel</text>
+  </g>
+  <g fill="#5A6570" font-size="8.5">
+    <text x="42" y="96">__address__</text>
+    <text x="42" y="110">__meta_* 内部标签</text>
+    <text x="42" y="124">全部 __ 开头</text>
+
+    <text x="202" y="96">抓取前 · 改目标</text>
+    <text x="202" y="110">keep / drop / replace</text>
+    <text x="202" y="124">决定抓不抓、抓哪</text>
+
+    <text x="362" y="96">默认 /metrics，10s</text>
+    <text x="362" y="110">注入 job、instance</text>
+    <text x="362" y="124">__* 此时仍在</text>
+
+    <text x="522" y="96">入库前 · 改样本</text>
+    <text x="522" y="110">drop 高基数指标</text>
+    <text x="522" y="124">决定存不存</text>
+  </g>
+
+  <g stroke="#8A8880" stroke-width="1" marker-end="url(#a3)">
+    <line x1="170" y1="96" x2="188" y2="96"/>
+    <line x1="330" y1="96" x2="348" y2="96"/>
+    <line x1="490" y1="96" x2="508" y2="96"/>
+  </g>
+
+  <rect x="40" y="150" width="600" height="62" rx="3" fill="#F4F2EC" stroke="#DCD9CE" stroke-width="0.8"/>
+  <text x="56" y="170" font-size="9.5" fill="#4A4945">写入 TSDB 时，所有以 __ 开头的标签自动丢弃，不会入库。</text>
+  <text x="56" y="187" font-size="9.5" fill="#4A4945">要让 __meta_* 变成正式 label，只能在 ② 里显式 replace 到不带 __ 的新名字。</text>
+  <text x="56" y="204" font-size="8.5" fill="#9A9791">编号与《一次抓取发生了什么》一致，原第 ④ 步「解析」已并入 ③，故此处从 ③ 直接跳到 ⑤。</text>
+</svg>

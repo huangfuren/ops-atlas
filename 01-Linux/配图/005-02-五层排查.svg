@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 436" width="680" height="436" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>网络排查的五层顺序：链路、地址、路由、端口、应用</title>
+  <desc>五层从上往下查，每一层只需要一条命令，通过了才往下走。第一层链路看 ip a 里有没有 UP 与 LOWER_UP；第二层地址看 inet 与掩码是否和对端一致；第三层路由用 ip route get 看 via、dev、src；第四层端口用 ss -lntp 加上防火墙与云安全组；第五层应用用 curl -v 看业务是否真的响应。同网段的通信不经过网关，所以只需要查第一、二、四、五层，查路由是白费力气。</desc>
+
+  <rect width="680" height="436" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">五层排查：顺序本身就是方法</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">跳着查会来回绕</text>
+
+  <defs>
+    <marker id="a9Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <text x="44" y="56" font-size="8" fill="#8C8980">层</text>
+  <text x="170" y="56" font-size="8" fill="#8C8980">一条命令，看什么</text>
+  <text x="452" y="56" font-size="8" fill="#8C8980">不通过说明什么</text>
+
+  <!-- 第 1 层 -->
+  <circle cx="56" cy="88" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="91" font-size="8.4" fill="#1F4468" text-anchor="middle">1</text>
+  <text x="72" y="92" font-size="9" font-weight="600" fill="#1F4468">链路</text>
+  <text x="170" y="82" font-size="8.4" font-weight="600" fill="#2B2A27">ip a</text>
+  <text x="170" y="97" font-size="7.4" fill="#4A4945">看有没有 UP 与 LOWER_UP</text>
+  <text x="452" y="92" font-size="7.8" fill="#7A322B">网线、对端、云平台网卡</text>
+  <line x1="40" y1="106" x2="644" y2="106" stroke="#EDEAE2" stroke-width="1"/>
+
+  <line x1="56" y1="110" x2="56" y2="124" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a9Blue)"/>
+  <text x="66" y="121" font-size="7" fill="#8C8980">正常</text>
+
+  <!-- 第 2 层 -->
+  <circle cx="56" cy="150" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="153" font-size="8.4" fill="#1F4468" text-anchor="middle">2</text>
+  <text x="72" y="154" font-size="9" font-weight="600" fill="#1F4468">地址</text>
+  <text x="170" y="144" font-size="8.4" font-weight="600" fill="#2B2A27">ip a</text>
+  <text x="170" y="159" font-size="7.4" fill="#4A4945">看 inet 与掩码</text>
+  <text x="452" y="154" font-size="7.8" fill="#7A322B">配置没生效，或掩码与对端不一致</text>
+  <line x1="40" y1="168" x2="644" y2="168" stroke="#EDEAE2" stroke-width="1"/>
+
+  <line x1="56" y1="172" x2="56" y2="186" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a9Blue)"/>
+  <text x="66" y="183" font-size="7" fill="#8C8980">正常</text>
+
+  <!-- 第 3 层 -->
+  <circle cx="56" cy="212" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="215" font-size="8.4" fill="#1F4468" text-anchor="middle">3</text>
+  <text x="72" y="216" font-size="9" font-weight="600" fill="#1F4468">路由</text>
+  <text x="170" y="206" font-size="8.4" font-weight="600" fill="#2B2A27">ip route get 目标IP</text>
+  <text x="170" y="221" font-size="7.4" fill="#4A4945">看 via / dev / src</text>
+  <text x="452" y="216" font-size="7.8" fill="#7A322B">缺网关，或多网卡选错出口</text>
+  <line x1="40" y1="230" x2="644" y2="230" stroke="#EDEAE2" stroke-width="1"/>
+
+  <line x1="56" y1="234" x2="56" y2="248" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a9Blue)"/>
+  <text x="66" y="245" font-size="7" fill="#8C8980">正常</text>
+
+  <!-- 第 4 层 -->
+  <circle cx="56" cy="274" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="277" font-size="8.4" fill="#1F4468" text-anchor="middle">4</text>
+  <text x="72" y="278" font-size="9" font-weight="600" fill="#1F4468">端口</text>
+  <text x="170" y="268" font-size="8.4" font-weight="600" fill="#2B2A27">ss -lntp</text>
+  <text x="170" y="283" font-size="7.4" fill="#4A4945">再看防火墙与云安全组</text>
+  <text x="452" y="278" font-size="7.8" fill="#7A322B">服务没起，或只听 127.0.0.1</text>
+  <line x1="40" y1="292" x2="644" y2="292" stroke="#EDEAE2" stroke-width="1"/>
+
+  <line x1="56" y1="296" x2="56" y2="310" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a9Blue)"/>
+  <text x="66" y="307" font-size="7" fill="#8C8980">正常</text>
+
+  <!-- 第 5 层 -->
+  <circle cx="56" cy="336" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="339" font-size="8.4" fill="#1F4468" text-anchor="middle">5</text>
+  <text x="72" y="340" font-size="9" font-weight="600" fill="#1F4468">应用</text>
+  <text x="170" y="330" font-size="8.4" font-weight="600" fill="#2B2A27">curl -v</text>
+  <text x="170" y="345" font-size="7.4" fill="#4A4945">看状态码与响应头</text>
+  <text x="452" y="340" font-size="7.8" fill="#7A322B">握手成了，问题在应用自己</text>
+  <line x1="40" y1="354" x2="644" y2="354" stroke="#EDEAE2" stroke-width="1"/>
+
+  <rect x="40" y="370" width="604" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="391" font-size="8.2" fill="#7A4A12">同网段只需查 1、2、4、5 层 —— 同网段不经过网关，去查路由是白费力气。</text>
+
+  <text x="32" y="422" font-size="9" fill="#8C8980">每一层只要一条命令，通过才往下走；五层走完最多五步，比凭经验乱敲快得多。</text>
+</svg>

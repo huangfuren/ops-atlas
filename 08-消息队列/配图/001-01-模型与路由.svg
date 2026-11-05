@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 390" width="680" height="390" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>RabbitMQ 模型：exchange 按规则路由进队列，vhost 隔离</title>
+  <desc>生产者把消息发到交换器，交换器按类型与绑定规则把消息路由进队列：direct 精确匹配、fanout 广播、topic 模式匹配。没有匹配绑定的消息默认被静默丢弃，重要业务要配备用交换器兜底并监控 unroutable 指标。队列持久化定义、消费者带 prefetch 与 ack。全部资源以 vhost 为隔离边界。</desc>
+
+  <rect width="680" height="390" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">RabbitMQ 模型：exchange 只管路由，queue 才排队</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">unroutable 默认丢弃</text>
+
+  <defs>
+    <marker id="m1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- vhost 边界 -->
+  <rect x="176" y="48" width="468" height="276" rx="10" fill="#FAFAF7" stroke="#CFCCC2" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="192" y="68" font-size="8.4" fill="#90a4ae">vhost（隔离单元：权限 + 资源）—— 按环境/业务划分，不全站共用 /</text>
+
+  <!-- 生产者 -->
+  <rect x="40" y="96" width="104" height="42" rx="21" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.4"/>
+  <text x="92" y="122" font-size="8.6" font-weight="600" fill="#37474F" text-anchor="middle">生产者</text>
+  <line x1="144" y1="117" x2="168" y2="117" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m1Blue)"/>
+  <text x="156" y="110" font-size="6.8" fill="#8C8980" text-anchor="middle">publish</text>
+
+  <!-- exchange -->
+  <rect x="192" y="88" width="150" height="94" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="267" y="110" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">exchange 交换器</text>
+  <text x="204" y="128" font-size="7.4" fill="#7A4A12">direct —— 精确匹配</text>
+  <text x="204" y="143" font-size="7.4" fill="#7A4A12">fanout —— 广播</text>
+  <text x="204" y="158" font-size="7.4" fill="#7A4A12">topic —— 模式匹配</text>
+
+  <!-- binding 箭头 -->
+  <line x1="342" y1="106" x2="368" y2="106" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m1Blue)"/>
+  <text x="355" y="98" font-size="6.8" fill="#8C8980" text-anchor="middle">binding</text>
+  <line x1="342" y1="122" x2="368" y2="150" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m1Blue)"/>
+  <line x1="342" y1="140" x2="368" y2="196" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m1Blue)"/>
+
+  <!-- queues -->
+  <rect x="372" y="88" width="256" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="500" y="104" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">订单队列（durable · quorum）</text>
+  <text x="500" y="119" font-size="7" fill="#4A4945" text-anchor="middle">消费者 ×N · prefetch=50 · ack</text>
+  <rect x="372" y="136" width="256" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="500" y="152" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">通知队列（fanout 广播目标）</text>
+  <text x="500" y="167" font-size="7" fill="#4A4945" text-anchor="middle">短信 · 推送 · 积分 各自消费</text>
+  <rect x="372" y="184" width="256" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="500" y="200" font-size="8.4" font-weight="600" fill="#4A4945" text-anchor="middle">审计队列（fanout）</text>
+  <text x="500" y="215" font-size="7" fill="#8C8980" text-anchor="middle">旁路记录 —— 同一消息多路复用</text>
+
+  <!-- unroutable -->
+  <line x1="342" y1="152" x2="342" y2="248" stroke="#D2948C" stroke-width="1" stroke-dasharray="4 3"/>
+  <rect x="250" y="248" width="184" height="40" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="342" y="264" font-size="7.8" font-weight="600" fill="#7A322B" text-anchor="middle">unroutable：无匹配 binding</text>
+  <text x="342" y="280" font-size="7.2" fill="#7A322B" text-anchor="middle">默认丢弃！alternate 兜底 + 告警</text>
+
+  <!-- 底部结论 -->
+  <rect x="40" y="304" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="323" font-size="8.2" fill="#7A4A12">路由配置是元数据变更：改 binding/routing key 前，确认存量消息去向与新旧规则的衔接（001 §1.2）</text>
+
+  <text x="32" y="362" font-size="9" fill="#8C8980">排障分界：消息没进队列=路由问题（binding/routing key）；进了队列不消费=prefetch/毒丸/消费者问题（003 §3.3）。</text>
+  <text x="32" y="380" font-size="9" fill="#8C8980">unroutable 指标必须进监控（001 §1.8）——静默丢消息比 MQ 崩了更难发现。</text>
+</svg>

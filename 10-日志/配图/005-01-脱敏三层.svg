@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" width="680" height="320" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>日志脱敏的三层防线：源头、采集、访问控制</title>
+  <desc>第一层在源头：代码评审红线禁止密码、完整 token、证件号入日志，要关联只打尾四位。第二层在采集端兜底：Filebeat 的 drop_fields 与 replace 处理器、Loki 的 pipeline 正则脱敏，抓漏网之鱼。第三层是访问控制：RBAC 收紧谁能看生产日志。已泄漏的凭据没有删除选项，只有轮换。</desc>
+
+  <rect width="680" height="320" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">脱敏三层防线：源头 → 采集 → 访问</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">日志=泄漏高发通道</text>
+
+  <defs>
+    <marker id="g5Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 第一层 -->
+  <rect x="40" y="52" width="604" height="56" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="56" y="74" font-size="9" font-weight="600" fill="#1D5A45">① 源头不打印 —— 代码评审红线</text>
+  <text x="56" y="92" font-size="7.8" fill="#1D5A45">密码 / 完整 token / 证件号 / 银行卡号 永不入日志；要关联只打尾四位（token: sk-…e9f2）</text>
+
+  <line x1="340" y1="108" x2="340" y2="124" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g5Blue)"/>
+
+  <!-- 第二层 -->
+  <rect x="40" y="128" width="604" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="56" y="150" font-size="9" font-weight="600" fill="#1F4468">② 采集端兜底 —— 抓漏网之鱼</text>
+  <text x="56" y="168" font-size="7.8" fill="#4A4945">Filebeat：drop_fields 删字段 / replace 正则打码；Loki：pipeline 阶段正则脱敏——处理"应用忘了"的那部分</text>
+
+  <line x1="340" y1="184" x2="340" y2="200" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g5Blue)"/>
+
+  <!-- 第三层 -->
+  <rect x="40" y="204" width="604" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="56" y="226" font-size="9" font-weight="600" fill="#1F4468">③ 访问控制 —— 收紧能看的人</text>
+  <text x="56" y="244" font-size="7.8" fill="#4A4945">Kibana Space + RBAC：研发只读自己服务的日志（003 §3.7）——日志里有 token、内网拓扑</text>
+
+  <!-- 泄漏处置 -->
+  <rect x="40" y="274" width="604" height="30" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
+  <text x="52" y="293" font-size="8.4" font-weight="600" fill="#7A322B">已泄漏 = 事故处理：轮换所有出现在日志里的凭据（没有"删除"选项）→ 排查泄漏途径（Git 历史/日志/备份）</text>
+</svg>

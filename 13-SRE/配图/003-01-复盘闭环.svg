@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>复盘闭环：故障到行动项到验证，让同类故障不再复发</title>
+  <desc>闭环从故障发生开始：四十八小时内完成七部分复盘，挖出可多个的机制根因；每条根因对应带认领人死线和验证方式的行动项；行动项两类去向，技术修复回各板块落地，流程修复改检查单与发布策略；完成率不低于八成才算健康，游戏日验证预案，下次同类故障被机制拦住。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">复盘闭环：从故障到「同类不再复发」</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">blameless 是前提</text>
+
+  <defs>
+    <marker id="s3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 故障 -->
+  <rect x="40" y="52" width="140" height="52" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
+  <text x="110" y="74" font-size="9" font-weight="600" fill="#7A322B" text-anchor="middle">故障发生</text>
+  <text x="110" y="92" font-size="7.2" fill="#7A322B" text-anchor="middle">影响面超阈值 / 反复发生</text>
+
+  <line x1="180" y1="78" x2="216" y2="78" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <text x="198" y="70" font-size="7" fill="#8C8980" text-anchor="middle">48h 内</text>
+
+  <!-- 复盘 -->
+  <rect x="220" y="52" width="180" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="310" y="74" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">七部分复盘</text>
+  <text x="310" y="92" font-size="7.2" fill="#4A4945" text-anchor="middle">概要·影响·时间线·根因·触发·响应·行动项</text>
+
+  <line x1="400" y1="78" x2="436" y2="78" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+
+  <!-- 根因 -->
+  <rect x="440" y="52" width="200" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="540" y="74" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">根因（机制缺陷，可多个）</text>
+  <text x="540" y="92" font-size="7.2" fill="#7A4A12" text-anchor="middle">5-Why 追到流程/防护缺失——不追人</text>
+
+  <line x1="540" y1="104" x2="540" y2="130" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+
+  <!-- 行动项 -->
+  <rect x="440" y="134" width="200" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="540" y="156" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">行动项（三属性）</text>
+  <text x="540" y="174" font-size="7.4" fill="#1F4468" text-anchor="middle">认领人到个人 · 死线 2~4 周</text>
+  <text x="540" y="190" font-size="7.4" fill="#1F4468" text-anchor="middle">可验证的完成标志</text>
+
+  <!-- 两类去向 -->
+  <line x1="440" y1="167" x2="330" y2="190" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <line x1="440" y1="180" x2="330" y2="240" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+
+  <rect x="180" y="164" width="146" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="253" y="184" font-size="8.4" font-weight="600" fill="#4A4945" text-anchor="middle">技术修复</text>
+  <text x="253" y="202" font-size="7.2" fill="#8C8980" text-anchor="middle">加监控 / 补 runbook / 改架构</text>
+
+  <rect x="180" y="224" width="146" height="52" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="253" y="244" font-size="8.4" font-weight="600" fill="#4A4945" text-anchor="middle">流程修复</text>
+  <text x="253" y="262" font-size="7.2" fill="#8C8980" text-anchor="middle">检查单 / 发布策略（007）</text>
+
+  <!-- 验证与闭环 -->
+  <line x1="178" y1="250" x2="150" y2="290" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <line x1="238" y1="276" x2="238" y2="290" stroke="#7FA6D0" stroke-width="0" />
+
+  <rect x="40" y="294" width="280" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="180" y="312" font-size="8.4" font-weight="600" fill="#1D5A45" text-anchor="middle">完成率 ≥ 80%：SRE 健康度指标</text>
+  <text x="180" y="328" font-size="7.2" fill="#1D5A45" text-anchor="middle">低于 6 成 = 复盘流于形式（004 §4.5）</text>
+
+  <rect x="340" y="294" width="304" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="354" y="312" font-size="8.4" font-weight="600" fill="#7A4A12">游戏日验证：主动注入同类故障</text>
+  <text x="354" y="328" font-size="7.2" fill="#7A4A12">看机制是否真拦住了——验证过才算闭环（3.5）</text>
+
+  <text x="32" y="352" font-size="9" fill="#8C8980">检验标准：当值者能完整说出「我当时做了这个决定，基于当时我知道的信息」而不设防——做不到，先修文化再谈方法（3.1）。</text>
+</svg>

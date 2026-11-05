@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>df 与 du 对不上的成因：已删除但仍被打开的文件，以及其他七条</title>
+  <desc>上半部分是差额最常见的来源：rm 只删掉目录项，数据块和 inode 因为还有进程开着文件描述符而无法释放，于是 df 照算、du 遍历不到，用 lsof +L1 就能看到 NLINK 为 0 且名字带 deleted。下半部分按差额方向把其余原因分成两侧：df 比 du 大，说明有东西占了余额却不在目录里；du 比 df 大，说明两边称量的不是同一种东西，块对齐、apparent-size 与跨挂载点都会这样。最后一栏指出两个都小却写不进，是 inode 用尽。</desc>
+
+  <rect width="680" height="430" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">df 满了、du 却只有一半：块去哪了</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">先 lsof +L1</text>
+
+  <defs>
+    <marker id="a7Gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#CFCCC2"/>
+    </marker>
+    <marker id="a7Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a7Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+    <marker id="a7Purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9C8ACB"/>
+    </marker>
+  </defs>
+
+  <text x="32" y="54" font-size="9.5" font-weight="600" fill="#4A4945">① 最常见的一个：文件删了，块没还</text>
+
+  <rect x="40" y="68" width="130" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="105" y="86" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">目录项</text>
+  <text x="105" y="102" font-size="7.4" fill="#4A4945" text-anchor="middle">/app/logs/app.log</text>
+
+  <rect x="210" y="68" width="140" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="280" y="86" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">inode</text>
+  <text x="280" y="102" font-size="7.8" fill="#1F4468" text-anchor="middle">nlink 归 0，引用还在</text>
+
+  <rect x="390" y="68" width="140" height="44" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1.4"/>
+  <text x="460" y="86" font-size="9" font-weight="600" fill="#46337A" text-anchor="middle">数据块 42G</text>
+  <text x="460" y="102" font-size="7.8" fill="#46337A" text-anchor="middle">一直占着，不释放</text>
+
+  <rect x="210" y="136" width="140" height="44" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="280" y="154" font-size="9" font-weight="600" fill="#7A322B" text-anchor="middle">java 进程</text>
+  <text x="280" y="170" font-size="7.8" fill="#7A322B" text-anchor="middle">fd 还开着这个文件</text>
+
+  <line x1="172" y1="90" x2="206" y2="90" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a7Gray)"/>
+  <text x="189" y="84" font-size="7" fill="#8C8980" text-anchor="middle">rm</text>
+  <line x1="352" y1="90" x2="386" y2="90" stroke="#9C8ACB" stroke-width="1.2" marker-end="url(#a7Purple)"/>
+  <line x1="532" y1="90" x2="546" y2="90" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a7Red)"/>
+  <line x1="280" y1="134" x2="280" y2="116" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a7Red)"/>
+
+  <text x="40" y="126" font-size="7.8" fill="#8C8980">rm 只删目录项</text>
+  <text x="390" y="126" font-size="7.8" fill="#8C8980">df 照算，du 遍历不到</text>
+
+  <rect x="550" y="68" width="92" height="112" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="596" y="102" font-size="8.6" font-weight="600" fill="#7A322B" text-anchor="middle">df 说满了</text>
+  <text x="596" y="126" font-size="13" font-weight="600" fill="#D2948C" text-anchor="middle">≠</text>
+  <text x="596" y="150" font-size="8.6" font-weight="600" fill="#4A4945" text-anchor="middle">du 找不到</text>
+
+  <text x="32" y="206" font-size="8.6" fill="#4A4945">lsof +L1 里 NLINK 是 0、名字后面带 (deleted) 的那几行，加起来往往正好等于差额。</text>
+
+  <text x="32" y="248" font-size="9.5" font-weight="600" fill="#4A4945">② 其余的，按差额方向分两侧看</text>
+
+  <rect x="40" y="260" width="290" height="28" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="279" font-size="8.6" font-weight="600" fill="#1F4468">df 大、du 小：占了余额却不在抽屉里</text>
+
+  <rect x="350" y="260" width="290" height="28" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="362" y="279" font-size="8.6" font-weight="600" fill="#7A4A12">du 大、df 小：两边称的不是同一种东西</text>
+
+  <text x="40" y="306" font-size="8" fill="#4A4945">· 文件系统元数据：inode 表、日志、保留块</text>
+  <text x="52" y="320" font-size="7.4" fill="#8C8980">stat -f 看得到，属正常，本来就算进容量</text>
+  <text x="40" y="342" font-size="8" fill="#4A4945">· 快照还占着：LVM、虚机快照</text>
+  <text x="52" y="356" font-size="7.4" fill="#8C8980">lvs 看数据百分比，删快照才还给 df</text>
+  <text x="40" y="378" font-size="8" fill="#4A4945">· 子挂载盖住了目录</text>
+  <text x="52" y="392" font-size="7.4" fill="#8C8980">findmnt -R /data，卸载后才看得到原内容</text>
+
+  <text x="350" y="306" font-size="8" fill="#4A4945">· 小文件按 4K 块计，实际只写了几十字节</text>
+  <text x="362" y="320" font-size="7.4" fill="#8C8980">正常现象，不是异常，别去「清理」</text>
+  <text x="350" y="342" font-size="8" fill="#4A4945">· 用了 --apparent-size，或算上了稀疏文件</text>
+  <text x="362" y="356" font-size="7.4" fill="#8C8980">换回 du -sh 再核对一遍</text>
+  <text x="350" y="378" font-size="8" fill="#4A4945">· du 跨了挂载点，把别的盘算进来</text>
+  <text x="362" y="392" font-size="7.4" fill="#8C8980">加 -x 限制在同一文件系统内</text>
+
+  <text x="32" y="418" font-size="9" fill="#8C8980">两个都小、却还是写不进 → 不是空间问题，是 inode 用尽，用 df -i 看（4.6）。</text>
+</svg>

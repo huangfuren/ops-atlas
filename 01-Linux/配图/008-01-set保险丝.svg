@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 388" width="680" height="388" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>set -euo pipefail：拦住了什么，漏了什么</title>
+  <desc>上排三个蓝色卡片是三个开关各自拦住的故障：-e 命令失败即退出、-u 未定义变量即退出、-o pipefail 管道任一段失败整条算失败。中排三个红色卡片是 -e 的三个漏网场景：条件判断里、或与符号的左边、叹号取反——这些地方失败是正常答案。下排琥珀色是最隐蔽的洞：local 赋值时命令替换的失败被 local 自己恒为 0 的退出码盖掉，要拆成声明与赋值两行写。</desc>
+
+  <rect width="680" height="388" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">set -euo pipefail：拦住明处的死法，漏掉暗处的失败</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">防手滑删库，靠的是 -u</text>
+
+  <!-- ① 三个开关 -->
+  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① 三个开关，各管一类死法</text>
+
+  <rect x="40" y="66" width="193" height="84" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="54" y="86" font-size="9.5" font-weight="600" fill="#1F4468">-e</text>
+  <text x="54" y="104" font-size="8.4" fill="#1F4468">命令失败（非 0）即退出</text>
+  <text x="54" y="121" font-size="7.6" fill="#8C8980">少了它：cd 失败了，</text>
+  <text x="54" y="136" font-size="7.6" fill="#8C8980">后面还在错误目录里删东西</text>
+
+  <rect x="245" y="66" width="193" height="84" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="259" y="86" font-size="9.5" font-weight="600" fill="#1F4468">-u</text>
+  <text x="259" y="104" font-size="8.4" fill="#1F4468">用到未定义变量即退出</text>
+  <text x="259" y="121" font-size="7.6" fill="#8C8980">少了它：DIR 拼错成 DIRR，</text>
+  <text x="259" y="136" font-size="7.6" fill="#8C8980">展开成空，rm -rf "" 删根</text>
+
+  <rect x="450" y="66" width="193" height="84" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="464" y="86" font-size="9.5" font-weight="600" fill="#1F4468">-o pipefail</text>
+  <text x="464" y="104" font-size="8.4" fill="#1F4468">管道任一段失败，整条算失败</text>
+  <text x="464" y="121" font-size="7.6" fill="#8C8980">少了它：cmd | tee log 里</text>
+  <text x="464" y="136" font-size="7.6" fill="#8C8980">cmd 崩了 tee 成功，整条算成功</text>
+
+  <!-- ② 三个漏网 -->
+  <text x="32" y="170" font-size="9.5" font-weight="600" fill="#4A4945">② -e 的三个漏网：失败是「正常答案」的地方</text>
+
+  <rect x="40" y="180" width="193" height="64" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="54" y="198" font-size="9" font-weight="600" fill="#7A322B">if / while 条件</text>
+  <text x="54" y="214" font-size="7.8" fill="#7A322B">if false 不退出——</text>
+  <text x="54" y="230" font-size="7.8" fill="#7A322B">失败是 if 在问「成不成」的正常答案</text>
+
+  <rect x="245" y="180" width="193" height="64" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="259" y="198" font-size="9" font-weight="600" fill="#7A322B">|| 与 &amp;&amp; 的左边</text>
+  <text x="259" y="214" font-size="7.8" fill="#7A322B">false || echo 照样执行；</text>
+  <text x="259" y="230" font-size="7.8" fill="#7A322B">cmd || true 是明确忽略错误</text>
+
+  <rect x="450" y="180" width="193" height="64" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="464" y="198" font-size="9" font-weight="600" fill="#7A322B">! 取反</text>
+  <text x="464" y="214" font-size="7.8" fill="#7A322B">! true 变失败，不触发退出；</text>
+  <text x="464" y="230" font-size="7.8" fill="#7A322B">但 x=$(false) 照样退出——见 ③</text>
+
+  <!-- ③ 最隐蔽的洞 -->
+  <text x="32" y="264" font-size="9.5" font-weight="600" fill="#4A4945">③ 最隐蔽的洞：local 把命令替换的失败吞掉</text>
+
+  <rect x="40" y="274" width="604" height="78" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="54" y="292" font-size="8.2" font-weight="600" fill="#7A4A12">local v=$(false) —— 失败被吞，脚本 exit 0 照常往下跑</text>
+  <text x="54" y="308" font-size="7.6" fill="#7A4A12">这行的退出码是 local 自己的（恒 0），命令替换的 1 被盖掉；declare / export / readonly 赋值同理</text>
+  <text x="54" y="326" font-size="8" font-weight="600" fill="#1D5A45">对：先 local v 单独声明，下一行再 v=$(false)，失败就拦得住</text>
+  <text x="54" y="341" font-size="7.6" fill="#8C8980">函数里每一个 $( ) 赋值都值得这么拆</text>
+
+  <text x="32" y="376" font-size="9" fill="#8C8980">加了 ≠ 安全：三个漏网点都在「失败是正常答案」的地方——那里要你自己处理失败，而不是指望 -e。</text>
+</svg>

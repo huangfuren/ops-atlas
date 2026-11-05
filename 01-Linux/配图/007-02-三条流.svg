@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 432" width="680" height="432" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>三条流：管道只接走 stdout，stderr 要手动并进去</title>
+  <desc>上半部分：任何命令自带 0 stdin、1 stdout、2 stderr 三个口，竖线管道只把 1 接走，2 仍然直接打在屏幕上，所以管道后面的 grep 抓不到报错。下半部分：2&gt;&amp;1 的意思是把 2 指向 1 此刻的指向，是复制当下不是绑定，所以 cmd 大于号 out.log 2&gt;&amp;1 两条流都进文件，而 cmd 2&gt;&amp;1 大于号 out.log 的 stderr 仍留在屏幕。底部备注退出码：0 成功、1 没匹配或失败、2 用法错、127 命令不存在、130 是 Ctrl-C。</desc>
+
+  <rect width="680" height="432" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">三条流：| 只接走 1，2 要手动并进去</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">2&gt;&amp;1 = 复制此刻指向</text>
+
+  <defs>
+    <marker id="a7Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a7Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① 每个命令三个口：0 读输入、1 出结果、2 出报错</text>
+
+  <!-- stdin 卡 -->
+  <rect x="40" y="86" width="84" height="56" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="82" y="107" font-size="15" font-weight="600" fill="#4A4945" text-anchor="middle">0</text>
+  <text x="82" y="122" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">stdin</text>
+  <text x="82" y="136" font-size="7.4" fill="#8C8980" text-anchor="middle">键盘 · 输入</text>
+  <line x1="129" y1="114" x2="149" y2="114" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a7Blue)"/>
+
+  <!-- 命令卡 -->
+  <rect x="156" y="78" width="180" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="166" y="102" font-size="8.4" font-weight="600" fill="#1F4468">find / -name "*.conf"</text>
+  <text x="166" y="120" font-size="7.4" fill="#1F4468">任何命令都自带三个口</text>
+  <text x="166" y="134" font-size="7.4" fill="#8C8980">0 读输入，1 出结果，2 出报错</text>
+
+  <!-- stdout 进管道 -->
+  <text x="340" y="88" font-size="7.4" font-weight="600" fill="#1F4468">1 stdout</text>
+  <line x1="341" y1="96" x2="389" y2="96" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a7Blue)"/>
+
+  <!-- 管道与结果 -->
+  <rect x="396" y="82" width="120" height="30" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="456" y="101" font-size="8.4" font-weight="600" fill="#4A4945" text-anchor="middle">| grep denied</text>
+  <line x1="521" y1="96" x2="541" y2="96" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a7Blue)"/>
+  <rect x="548" y="82" width="96" height="30" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="596" y="101" font-size="8.4" fill="#4A4945" text-anchor="middle">搜到的行</text>
+
+  <!-- stderr 绕过管道 -->
+  <text x="296" y="161" font-size="7.4" font-weight="600" fill="#7A322B">2 stderr</text>
+  <path d="M280,150 L280,168 L389,168" fill="none" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a7Red)"/>
+  <rect x="396" y="152" width="248" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="408" y="166" font-size="8" font-weight="600" fill="#7A322B">屏幕：Permission denied</text>
+  <text x="408" y="179" font-size="7.2" fill="#7A322B">直接打印——没进管道，grep 抓不到</text>
+
+  <text x="32" y="206" font-size="9" fill="#8C8980">「管道后面 grep 不到报错」的原因：2 这条流压根没进管道，先 2&gt;&amp;1 并流再进。</text>
+
+  <!-- ② 2&gt;&amp;1 位置对比 -->
+  <text x="32" y="228" font-size="9.5" font-weight="600" fill="#4A4945">② 2&gt;&amp;1 是「复制 1 此刻的指向」，写在 &gt; 前后就错了</text>
+
+  <rect x="40" y="240" width="294" height="100" rx="3" fill="#E4F0EA" stroke="#1D5A45" stroke-width="1"/>
+  <text x="54" y="259" font-size="9.5" font-weight="600" fill="#1D5A45">对：cmd &gt; out.log 2&gt;&amp;1</text>
+  <text x="54" y="277" font-size="8" fill="#4A4945">先：把 1 指向文件，1 = out.log</text>
+  <text x="54" y="293" font-size="8" fill="#4A4945">再：把 2 指向 1 现在的指向，2 = out.log</text>
+  <text x="54" y="311" font-size="8" font-weight="600" fill="#1D5A45">两条流都进 out.log</text>
+
+  <rect x="350" y="240" width="294" height="100" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="364" y="259" font-size="9.5" font-weight="600" fill="#7A322B">错：cmd 2&gt;&amp;1 &gt; out.log</text>
+  <text x="364" y="277" font-size="8" fill="#7A322B">先：把 2 指向 1 现在的指向（还是终端）</text>
+  <text x="364" y="293" font-size="8" fill="#7A322B">再：把 1 指向文件，2 已经定型，还指着终端</text>
+  <text x="364" y="311" font-size="8" font-weight="600" fill="#7A322B">stderr 仍在屏幕上，stdout 进文件</text>
+
+  <rect x="40" y="356" width="604" height="42" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="373" font-size="8.2" fill="#7A4A12">记法：2&gt;&amp;1 永远写在 &gt; 后面；&amp;&gt; 是等价新写法，脚本里用 &gt; out.log 2&gt;&amp;1 更保险</text>
+  <text x="52" y="388" font-size="7.6" fill="#7A4A12">进管道同理：find / -name "*.conf" 2&gt;&amp;1 | grep -i denied，先并流、再进管道</text>
+
+  <text x="32" y="422" font-size="9" fill="#8C8980">顺带记住退出码：0 成功 · 1 没匹配/失败 · 2 用法错 · 127 命令不存在 · 130 = Ctrl-C（128+n = 被信号 n 杀死）</text>
+</svg>

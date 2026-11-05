@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Loki 架构：采集打标签，Loki 只索引标签，Grafana 查询</title>
+  <desc>Promtail 或 Alloy 在采集端解析日志并打标签，推给 Loki；Loki 只对标签建索引，正文压缩成 chunk 顺序存储；查询走 Grafana 的 LogQL，必须先用标签圈定范围再匹配正文。标签设计的命门是基数：user_id 这类百万取值的字段进标签会让 Loki OOM，只能留在正文。</desc>
+
+  <rect width="680" height="340" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Loki 架构：标签是唯一的索引</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">先圈标签，再扫正文</text>
+
+  <defs>
+    <marker id="g4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 采集 -->
+  <rect x="40" y="56" width="180" height="96" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="130" y="78" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">Promtail / Alloy</text>
+  <text x="130" y="96" font-size="7.4" fill="#4A4945" text-anchor="middle">抓文件 · 解析行</text>
+  <text x="130" y="112" font-size="7.4" fill="#4A4945" text-anchor="middle">提取标签 · push</text>
+  <text x="130" y="132" font-size="7" fill="#8C8980" text-anchor="middle">Alloy = Promtail 继任者</text>
+
+  <line x1="224" y1="104" x2="266" y2="104" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g4Blue)"/>
+  <text x="245" y="96" font-size="7" fill="#8C8980" text-anchor="middle">push</text>
+
+  <!-- Loki -->
+  <rect x="270" y="56" width="200" height="96" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="370" y="78" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">Loki</text>
+  <text x="370" y="96" font-size="7.4" fill="#7A4A12" text-anchor="middle">索引：只有标签（低基数）</text>
+  <text x="370" y="112" font-size="7.4" fill="#7A4A12" text-anchor="middle">正文：压缩成 chunk 顺序存</text>
+  <text x="370" y="132" font-size="7" fill="#8C8980" text-anchor="middle">单二进制起步 · 对象存储友好</text>
+
+  <line x1="474" y1="104" x2="516" y2="104" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g4Blue)"/>
+  <text x="495" y="96" font-size="7" fill="#8C8980" text-anchor="middle">LogQL</text>
+
+  <!-- Grafana -->
+  <rect x="520" y="56" width="124" height="96" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="582" y="78" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">Grafana</text>
+  <text x="582" y="96" font-size="7.4" fill="#1D5A45" text-anchor="middle">Explore 查询</text>
+  <text x="582" y="112" font-size="7.4" fill="#1D5A45" text-anchor="middle">仪表盘 · 告警</text>
+  <text x="582" y="132" font-size="7" fill="#8C8980" text-anchor="middle">指标+日志同屏</text>
+
+  <!-- 标签 vs 正文对照 -->
+  <rect x="40" y="170" width="294" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="190" font-size="8.6" font-weight="600" fill="#1F4468">✅ 好标签（低基数 · 查询必用 · 稳定）</text>
+  <text x="54" y="208" font-size="7.8" fill="#1F4468">env（个位数）· service（几十~几百）</text>
+  <text x="54" y="226" font-size="7.8" fill="#4A4945">pod（随副本数，想清楚查询模式）</text>
+
+  <rect x="350" y="170" width="294" height="72" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
+  <text x="364" y="190" font-size="8.6" font-weight="600" fill="#7A322B">❌ 禁止进标签（高基数）</text>
+  <text x="364" y="208" font-size="7.8" fill="#7A322B">user_id · trace_id · url · 请求参数</text>
+  <text x="364" y="226" font-size="7.8" fill="#7A322B">每个取值生成一条流 → 索引内存爆炸</text>
+
+  <!-- LogQL 示例 -->
+  <rect x="40" y="256" width="604" height="42" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="274" font-size="8.2" font-family="Consolas,Menlo,monospace" fill="#2B2A27">{service="myapp", env="prod"} |= "timeout" != "healthcheck"</text>
+  <text x="52" y="290" font-size="7.4" fill="#8C8980">选择器圈定流（必写）→ 行过滤正文 → 统计管道 sum by (service) (rate(...[5m]))</text>
+
+  <text x="32" y="326" font-size="9" fill="#8C8980">与 ES 的取舍：全文检索强=ES；成本敏感+已用 Grafana+日志结构化=Loki——可先试跑一个业务再定（004 §4.6）。</text>
+</svg>

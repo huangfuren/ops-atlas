@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" width="680" height="410" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>从物理盘到 df 可见的五步，以及两处最常见的断点</title>
+  <desc>一块裸盘要经过分区、建文件系统、挂载三个动作才会出现在 df 里。常见误判都出在两处断点：有分区但没有 mkfs，mount 会报未知文件系统，blkid 的 TYPE 是空的；有文件系统但没有挂载，lsblk 看得到而 df 里根本没有这一条。图的下半部说明三条命令各看一半：lsblk -f 看设备树与每一层的类型，df -hT 只看已挂载文件系统的可用空间，blkid 与 findmnt 提供 UUID 与真实挂载点。</desc>
+
+  <rect width="680" height="410" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">从裸盘到 df 看得见：五步，断在两处</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">FSTYPE 空 = 没 mkfs</text>
+
+  <defs>
+    <marker id="a6Gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#CFCCC2"/>
+    </marker>
+    <marker id="a6Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <text x="32" y="58" font-size="9.5" font-weight="600" fill="#4A4945">三个动作：分区 → mkfs → 挂载，少一个都到不了 df</text>
+
+  <!-- 五个阶段 -->
+  <rect x="37" y="76" width="106" height="88" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="90" y="98" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">① 物理盘</text>
+  <text x="90" y="120" font-size="8.2" fill="#1D5A45" text-anchor="middle">/dev/sda</text>
+  <text x="90" y="140" font-size="7.2" fill="#4A4945" text-anchor="middle">内核自动识别</text>
+
+  <rect x="162" y="76" width="106" height="88" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="215" y="98" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">② 分区</text>
+  <text x="215" y="120" font-size="8.2" fill="#1D5A45" text-anchor="middle">parted / fdisk</text>
+  <text x="215" y="140" font-size="7.2" fill="#4A4945" text-anchor="middle">划出 /dev/sda1</text>
+
+  <rect x="287" y="76" width="106" height="88" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="340" y="98" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">③ 文件系统</text>
+  <text x="340" y="120" font-size="8.2" fill="#1F4468" text-anchor="middle">mkfs.ext4 / xfs</text>
+  <text x="340" y="140" font-size="7.2" fill="#4A4945" text-anchor="middle">blkid 有 TYPE 了</text>
+
+  <rect x="412" y="76" width="106" height="88" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="465" y="98" font-size="8.8" font-weight="600" fill="#46337A" text-anchor="middle">④ 挂载</text>
+  <text x="465" y="120" font-size="8.2" fill="#46337A" text-anchor="middle">mount / fstab</text>
+  <text x="465" y="140" font-size="7.2" fill="#4A4945" text-anchor="middle">挂到 /data</text>
+
+  <rect x="537" y="76" width="106" height="88" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="590" y="98" font-size="8.8" font-weight="600" fill="#7A4A12" text-anchor="middle">⑤ 可用</text>
+  <text x="590" y="120" font-size="8.2" fill="#7A4A12" text-anchor="middle">df -hT</text>
+  <text x="590" y="140" font-size="7.2" fill="#4A4945" text-anchor="middle">能读也能写</text>
+
+  <line x1="145" y1="120" x2="160" y2="120" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a6Gray)"/>
+  <line x1="270" y1="120" x2="285" y2="120" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a6Gray)"/>
+  <line x1="395" y1="120" x2="410" y2="120" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a6Gray)"/>
+  <line x1="520" y1="120" x2="535" y2="120" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a6Gray)"/>
+
+  <!-- 两处断点 -->
+  <line x1="277" y1="196" x2="277" y2="172" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a6Red)"/>
+  <line x1="402" y1="196" x2="402" y2="172" stroke="#D2948C" stroke-width="1.2" marker-end="url(#a6Red)"/>
+
+  <rect x="40" y="196" width="600" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <line x1="335" y1="206" x2="335" y2="242" stroke="#D2948C" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <text x="277" y="216" font-size="8.8" font-weight="600" fill="#7A322B" text-anchor="middle">断在②：有分区，没 mkfs</text>
+  <text x="277" y="234" font-size="7.8" fill="#7A322B" text-anchor="middle">mount 报 unknown fs type</text>
+  <text x="402" y="216" font-size="8.8" font-weight="600" fill="#7A322B" text-anchor="middle">断在③：有文件系统，没挂载</text>
+  <text x="402" y="234" font-size="7.8" fill="#7A322B" text-anchor="middle">lsblk 看得到，df 里没有</text>
+
+  <text x="32" y="280" font-size="9.5" font-weight="600" fill="#4A4945">三条命令，各看一半，合起来才完整</text>
+
+  <rect x="40" y="294" width="188" height="58" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="312" font-size="9" font-weight="600" fill="#4A4945">lsblk -f</text>
+  <text x="52" y="328" font-size="7.6" fill="#4A4945">设备树：谁在谁上面</text>
+  <text x="52" y="342" font-size="7.6" fill="#4A4945">每一层的类型与挂载点，一次看全</text>
+
+  <rect x="246" y="294" width="188" height="58" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="258" y="312" font-size="9" font-weight="600" fill="#4A4945">df -hT</text>
+  <text x="258" y="328" font-size="7.6" fill="#4A4945">只看已挂载的文件系统</text>
+  <text x="258" y="342" font-size="7.6" fill="#4A4945">「还能写多少」的权威答案</text>
+
+  <rect x="452" y="294" width="188" height="58" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="464" y="312" font-size="9" font-weight="600" fill="#4A4945">blkid / findmnt</text>
+  <text x="464" y="328" font-size="7.6" fill="#4A4945">UUID、类型、真实挂载点</text>
+  <text x="464" y="342" font-size="7.6" fill="#4A4945">fstab 写不住设备名，靠它</text>
+
+  <text x="32" y="380" font-size="9" fill="#8C8980">先 lsblk -f 看设备树，再 df -hT 看可用空间；两者对不上，就是上面两个断点之一。</text>
+  <text x="32" y="396" font-size="9" fill="#8C8980">「盘满没满」别问 du —— 4.5 那个差额，源头就在这里。</text>
+</svg>

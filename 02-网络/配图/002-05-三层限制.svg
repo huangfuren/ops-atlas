@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300">
+  <title>连接数的三层限制</title>
+  <desc>应用层连接池、进程层 fd 上限、系统层内核上限三层叠加，任何一层先到顶都会表现为连不上，但报错文案不同。</desc>
+  <rect width="680" height="300" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9A978D"/>
+    </marker>
+  </defs>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">连接数的三层天花板：报错文案决定先查哪一层</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">从上到下，越往下越难改</text>
+
+    <rect x="40" y="50" width="600" height="56" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="60" y="72" font-size="12" font-weight="600" fill="#2C2C2A">应用层</text>
+    <text x="60" y="88" font-size="8.5" fill="#8A8880">连接池与并发配置</text>
+    <text x="170" y="72" font-size="10" fill="#2C2C2A">max_connections、worker_connections</text>
+    <text x="170" y="88" font-size="8.5" fill="#6B6A65">应用自己就能限住，到顶时请求在应用内部排队</text>
+    <text x="628" y="72" font-size="9.5" fill="#7A4A12" text-anchor="end">表现：排队、等超时</text>
+    <text x="628" y="88" font-size="8.5" fill="#8A8880" text-anchor="end">连接根本没出去</text>
+
+    <line x1="340" y1="106" x2="340" y2="124" stroke="#9A978D" stroke-width="1" marker-end="url(#ar5)"/>
+
+    <rect x="40" y="126" width="600" height="56" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="60" y="148" font-size="12" font-weight="600" fill="#2C2C2A">进程层</text>
+    <text x="60" y="164" font-size="8.5" fill="#8A8880">每进程 fd 上限</text>
+    <text x="170" y="148" font-size="10" fill="#2C2C2A">ulimit -n（systemd 服务看 LimitNOFILE）</text>
+    <text x="170" y="164" font-size="8.5" fill="#6B6A65">每条连接占一个 fd，到顶后连 accept 都拿不到 fd</text>
+    <text x="628" y="148" font-size="9.5" fill="#7A4A12" text-anchor="end">报错：Too many open files</text>
+    <text x="628" y="164" font-size="8.5" fill="#8A8880" text-anchor="end">改 shell 的 ulimit 对 systemd 无效</text>
+
+    <line x1="340" y1="182" x2="340" y2="200" stroke="#9A978D" stroke-width="1" marker-end="url(#ar5)"/>
+
+    <rect x="40" y="202" width="600" height="56" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="60" y="224" font-size="12" font-weight="600" fill="#2C2C2A">系统层</text>
+    <text x="60" y="240" font-size="8.5" fill="#8A8880">内核与全机上限</text>
+    <text x="170" y="224" font-size="10" fill="#2C2C2A">fs.file-max、nf_conntrack_max、somaxconn</text>
+    <text x="170" y="240" font-size="8.5" fill="#6B6A65">还有本地临时端口范围：32768–60999</text>
+    <text x="628" y="224" font-size="9.5" fill="#7A4A12" text-anchor="end">表现：建连变慢、SYN 被丢</text>
+    <text x="628" y="240" font-size="8.5" fill="#8A8880" text-anchor="end">Cannot assign requested address</text>
+
+    <text x="40" y="280" font-size="9.5" fill="#4A4945">三层都要够，但真正生效的永远是先到顶的那一层——所以排查从报错文案反推，比从参数正推快得多。</text>
+  </g>
+</svg>

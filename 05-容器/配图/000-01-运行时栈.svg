@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>容器运行时栈：docker CLI 到容器进程的四层调用链</title>
+  <desc>自上而下四层：docker CLI 是用户敲的命令，dockerd 是引擎负责构建与管理，containerd 是容器生命周期管家，runc 按 OCI 规范配置 namespace 与 cgroup 后 exec 出容器进程。右侧注明 Kubernetes 1.24 起通过 CRI 直接对接 containerd，不再经过 Docker。每层可替换，OCI 标准让同一镜像处处能跑。</desc>
+
+  <rect width="680" height="380" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">运行时栈：一条 docker run 的四层调用链</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">每层可替换</text>
+
+  <defs>
+    <marker id="a0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- ① CLI -->
+  <rect x="40" y="52" width="300" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="71" font-size="9.5" font-weight="600" fill="#4A4945">① docker CLI</text>
+  <text x="54" y="87" font-size="7.8" fill="#8C8980">你敲的命令：run · build · ps</text>
+
+  <line x1="190" y1="96" x2="190" y2="112" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <!-- ② dockerd -->
+  <rect x="40" y="116" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="135" font-size="9.5" font-weight="600" fill="#1F4468">② dockerd —— Docker 引擎</text>
+  <text x="54" y="151" font-size="7.8" fill="#4A4945">构建 · API · 网络 · 卷（常驻守护进程）</text>
+
+  <line x1="190" y1="160" x2="190" y2="176" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <!-- ③ containerd -->
+  <rect x="40" y="180" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="54" y="199" font-size="9.5" font-weight="600" fill="#1F4468">③ containerd —— 生命周期管家</text>
+  <text x="54" y="215" font-size="7.8" fill="#4A4945">拉镜像 · 管容器 · 快照（K8s 对接点）</text>
+
+  <line x1="190" y1="224" x2="190" y2="240" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <!-- ④ runc -->
+  <rect x="40" y="244" width="300" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="54" y="263" font-size="9.5" font-weight="600" fill="#7A4A12">④ runc —— 按 OCI 规范拉起</text>
+  <text x="54" y="279" font-size="7.8" fill="#7A4A12">配好 namespace + cgroup，然后 exec</text>
+
+  <line x1="190" y1="288" x2="190" y2="304" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <!-- ⑤ 容器=进程 -->
+  <rect x="40" y="308" width="300" height="44" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="54" y="327" font-size="9.5" font-weight="600" fill="#1D5A45">容器 = 一个普通进程</text>
+  <text x="54" y="343" font-size="7.8" fill="#1D5A45">namespace 视图 + cgroup 额度 + 镜像根文件系统</text>
+
+  <!-- 右侧：K8s CRI 注记 -->
+  <rect x="380" y="180" width="264" height="76" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="394" y="202" font-size="9" font-weight="600" fill="#1F4468">K8s 1.24+ 的对接点</text>
+  <text x="394" y="219" font-size="7.8" fill="#4A4945">kubelet ──CRI──▶ containerd</text>
+  <text x="394" y="236" font-size="7.8" fill="#4A4945">不再经过 Docker，节点可不装 Docker</text>
+  <line x1="380" y1="202" x2="344" y2="202" stroke="#9C8ACB" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#a0Blue)"/>
+
+  <text x="32" y="372" font-size="9" fill="#8C8980">分层的好处：OCI 标准让 Docker、Podman、containerd 跑同一个镜像——镜像成为通用交付物（000 §0.4）。</text>
+</svg>

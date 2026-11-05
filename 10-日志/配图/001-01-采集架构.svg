@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Filebeat 采集架构：input → harvester → spooler → output，registry 记账</title>
+  <desc>采集流水线四段：input 定义盯哪些文件，harvester 每个文件一个协程逐行读，spooler 攒批发送，output 写到 ES 或 Loki。registry 是偏移账本，与 harvester 双向读写——重启后从账本继续，保证至少一次。多行合并在 harvester 层完成，异常栈才能并成一条。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Filebeat 架构：流水线四段 + 一本账</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">至少一次靠 registry</text>
+
+  <defs>
+    <marker id="g1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- input -->
+  <rect x="40" y="52" width="300" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="71" font-size="9" font-weight="600" fill="#4A4945">① input —— 盯哪里</text>
+  <text x="54" y="87" font-size="7.6" fill="#8C8980">filestream 类型 · paths · 显式 id（改名不重采）</text>
+
+  <line x1="190" y1="96" x2="190" y2="112" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g1Blue)"/>
+
+  <!-- harvester -->
+  <rect x="40" y="116" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="54" y="135" font-size="9" font-weight="600" fill="#1F4468">② harvester —— 每文件一个收割协程</text>
+  <text x="54" y="151" font-size="7.6" fill="#4A4945">逐行读 · 多行合并在此（Java 栈四件套）</text>
+
+  <line x1="190" y1="160" x2="190" y2="176" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g1Blue)"/>
+
+  <!-- spooler -->
+  <rect x="40" y="180" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="54" y="199" font-size="9" font-weight="600" fill="#1F4468">③ spooler —— 攒批发送</text>
+  <text x="54" y="215" font-size="7.6" fill="#4A4945">默认一批约 2048 事件 · 下游慢时背压</text>
+
+  <line x1="190" y1="224" x2="190" y2="240" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g1Blue)"/>
+
+  <!-- output -->
+  <rect x="40" y="244" width="300" height="44" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="54" y="263" font-size="9" font-weight="600" fill="#1D5A45">④ output —— 写到哪</text>
+  <text x="54" y="279" font-size="7.6" fill="#1D5A45">Elasticsearch（主线）/ Loki（对照）</text>
+
+  <!-- registry 右侧 -->
+  <rect x="400" y="116" width="244" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="414" y="139" font-size="9" font-weight="600" fill="#7A4A12">registry —— 偏移账本 ★</text>
+  <text x="414" y="157" font-size="7.6" fill="#7A4A12">每文件的读取位置持久化</text>
+  <text x="414" y="175" font-size="7.6" fill="#7A4A12">重启从账本继续 = 至少一次</text>
+
+  <line x1="400" y1="150" x2="344" y2="142" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g1Blue)"/>
+  <line x1="344" y1="156" x2="400" y2="164" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g1Blue)"/>
+  <text x="372" y="140" font-size="6.8" fill="#7A4A12" text-anchor="middle">记/读</text>
+
+  <!-- 底部 -->
+  <rect x="40" y="304" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="323" font-size="8.2" fill="#7A4A12">静默失败四步取证：filebeat test output → 看 registry offset 在不在动 → 查索引/模板 → 查数据视图（006 §6.2）</text>
+
+  <text x="32" y="352" font-size="9" fill="#8C8980">至少一次的代价是可能重复：发出后账本未落盘即崩溃 → 重启重发——下游要可幂等去重（001 §1.8）。</text>
+</svg>

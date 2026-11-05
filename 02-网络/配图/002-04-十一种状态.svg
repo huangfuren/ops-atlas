@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 700" width="680" height="700">
+  <title>TCP 十一种状态的流转</title>
+  <desc>从 CLOSED 出发，经被动打开与主动打开两列汇入 ESTABLISHED，再按主动关闭与被动关闭两列分叉，最终回到 CLOSED；CLOSING 为双方同时发 FIN 的罕见分支。</desc>
+  <rect width="680" height="700" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#8A8880"/>
+    </marker>
+    <marker id="ar4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#C08A3E"/>
+    </marker>
+  </defs>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">十一种状态：建连两列汇合，关闭两列分叉</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">青＝主动关闭方（背 TIME_WAIT）　琥珀＝被动关闭方（背 CLOSE_WAIT）</text>
+
+    <g stroke="#8A8880" stroke-width="1" fill="none" marker-end="url(#ar4)">
+      <path d="M340,77 L340,112 L140,112 L140,125"/>
+      <path d="M340,77 L340,112 L540,112 L540,125"/>
+      <path d="M140,159 L140,207"/>
+      <path d="M140,241 L140,310 L272,310"/>
+      <path d="M540,159 L540,310 L408,310"/>
+      <path d="M340,328 L340,355 L140,355 L140,378"/>
+      <path d="M340,355 L540,355 L540,378"/>
+      <path d="M140,412 L140,451"/>
+      <path d="M140,485 L140,524"/>
+      <path d="M140,558 L140,597"/>
+      <path d="M540,412 L540,451"/>
+      <path d="M540,485 L540,524"/>
+    </g>
+    <path d="M199,395 L330,395 L330,451" stroke="#C08A3E" stroke-width="1" stroke-dasharray="4 3" fill="none" marker-end="url(#ar4a)"/>
+
+    <g fill="#6B6A65" font-size="9">
+      <text x="240" y="106" text-anchor="middle">被动打开</text>
+      <text x="440" y="106" text-anchor="middle">主动打开</text>
+      <text x="150" y="188">收到 SYN</text>
+      <text x="150" y="302">收到 ACK</text>
+      <text x="530" y="302" text-anchor="end">收到 SYN+ACK</text>
+      <text x="240" y="349" text-anchor="middle">主动关闭：本端先发 FIN</text>
+      <text x="450" y="349" text-anchor="middle">被动关闭：收到对端 FIN</text>
+      <text x="150" y="435">收到 ACK</text>
+      <text x="150" y="508">收到 FIN</text>
+      <text x="150" y="581">等 2MSL ≈ 60s</text>
+      <text x="550" y="435">应用 close()</text>
+      <text x="550" y="508">收到 ACK</text>
+      <text x="265" y="389" text-anchor="middle" fill="#7A4A12">收到 FIN</text>
+    </g>
+
+    <rect x="281" y="43" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="340" y="64" font-size="10.5" fill="#2C2C2A" text-anchor="middle">CLOSED</text>
+
+    <rect x="81" y="125" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="140" y="146" font-size="10.5" fill="#2C2C2A" text-anchor="middle">LISTEN</text>
+    <rect x="481" y="125" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="540" y="146" font-size="10.5" fill="#2C2C2A" text-anchor="middle">SYN_SENT</text>
+
+    <rect x="81" y="207" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="140" y="228" font-size="10.5" fill="#2C2C2A" text-anchor="middle">SYN_RCVD</text>
+
+    <rect x="272" y="292" width="136" height="36" rx="3" fill="#F1EFE8" stroke="#8A8880" stroke-width="1"/>
+    <text x="340" y="314" font-size="11" font-weight="600" fill="#2C2C2A" text-anchor="middle">ESTABLISHED</text>
+
+    <rect x="81" y="378" width="118" height="34" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="140" y="399" font-size="10.5" fill="#14584A" text-anchor="middle">FIN_WAIT_1</text>
+    <rect x="481" y="378" width="118" height="34" rx="3" fill="#FAEEDA" stroke="#D8B27A" stroke-width="0.8"/>
+    <text x="540" y="399" font-size="10.5" fill="#7A4A12" text-anchor="middle">CLOSE_WAIT</text>
+
+    <rect x="81" y="451" width="118" height="34" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="140" y="472" font-size="10.5" fill="#14584A" text-anchor="middle">FIN_WAIT_2</text>
+    <rect x="481" y="451" width="118" height="34" rx="3" fill="#FAEEDA" stroke="#D8B27A" stroke-width="0.8"/>
+    <text x="540" y="472" font-size="10.5" fill="#7A4A12" text-anchor="middle">LAST_ACK</text>
+
+    <rect x="271" y="451" width="118" height="34" rx="3" fill="#FFFFFF" stroke="#D8B27A" stroke-width="0.8" stroke-dasharray="4 3"/>
+    <text x="330" y="472" font-size="10.5" fill="#8A8880" text-anchor="middle">CLOSING</text>
+    <text x="330" y="502" font-size="8.5" fill="#8A8880" text-anchor="middle">双方同时发 FIN，极少见</text>
+    <text x="330" y="516" font-size="8.5" fill="#8A8880" text-anchor="middle">收到 ACK 后转 TIME_WAIT</text>
+
+    <rect x="81" y="524" width="118" height="34" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
+    <text x="140" y="545" font-size="10.5" fill="#14584A" text-anchor="middle">TIME_WAIT</text>
+    <rect x="481" y="524" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="540" y="545" font-size="10.5" fill="#2C2C2A" text-anchor="middle">CLOSED</text>
+
+    <rect x="81" y="597" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="140" y="618" font-size="10.5" fill="#2C2C2A" text-anchor="middle">CLOSED</text>
+
+    <rect x="40" y="648" width="600" height="46" rx="3" fill="#F1EFE8"/>
+    <text x="56" y="668" font-size="9.8" fill="#2C2C2A">CLOSE_WAIT 是应用没 close()，连接会一直累积到 fd 耗尽——去查代码，别调内核参数。</text>
+    <text x="56" y="686" font-size="9.8" fill="#6B6A65">TIME_WAIT 是主动关闭方在等 2MSL，协议的正常行为，约 60 秒自行消失——根治靠连接池、长连接。</text>
+  </g>
+</svg>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>三种发布策略对比：滚动、蓝绿、灰度</title>
+  <desc>三列对比：滚动发布逐台替换新旧共存，资源最省回滚靠反向滚动；蓝绿两套环境整切流量，回滚是秒级切回但资源翻倍；灰度按比例先放小流量观察指标再逐级放量，回滚是权重归零。三者的共同前提是新版本能与旧版本共存。</desc>
+
+  <rect width="680" height="330" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">三种发布策略：代价、回滚、前提</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">共同前提：新旧共存</text>
+
+  <!-- 列 1：滚动 -->
+  <rect x="40" y="48" width="193" height="196" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="136" y="70" font-size="10" font-weight="600" fill="#1F4468" text-anchor="middle">滚动</text>
+  <rect x="56" y="82" width="24" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <rect x="88" y="82" width="24" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <rect x="120" y="82" width="24" height="24" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="152" y="82" width="24" height="24" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="184" y="82" width="24" height="24" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="136" y="122" font-size="7.4" fill="#8C8980" text-anchor="middle">绿=新版 蓝=旧版 · 逐台替换</text>
+  <text x="54" y="146" font-size="8" fill="#4A4945">资源代价：最低（+一批）</text>
+  <text x="54" y="164" font-size="8" fill="#4A4945">回滚：反向滚动（中速）</text>
+  <text x="54" y="182" font-size="8" fill="#4A4945">适合：常规迭代 · 默认选它</text>
+  <text x="54" y="204" font-size="7.6" fill="#8C8980">K8s：maxSurge/maxUnavailable</text>
+  <text x="54" y="220" font-size="7.6" fill="#8C8980">虚机：Ansible serial 分批</text>
+
+  <!-- 列 2：蓝绿 -->
+  <rect x="245" y="48" width="193" height="196" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="341" y="70" font-size="10" font-weight="600" fill="#1F4468" text-anchor="middle">蓝绿</text>
+  <rect x="261" y="82" width="161" height="24" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="341" y="98" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">蓝 · 旧版 ◀── 100% 流量</text>
+  <rect x="261" y="114" width="161" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="341" y="130" font-size="7.6" font-weight="600" fill="#1D5A45" text-anchor="middle">绿 · 新版 ── 0%（待验证）</text>
+  <text x="259" y="146" font-size="8" fill="#4A4945">资源代价：×2 双环境</text>
+  <text x="259" y="164" font-size="8" fill="#1D5A45">回滚：切回蓝（秒级）</text>
+  <text x="259" y="182" font-size="8" fill="#4A4945">适合：大版本 · 快回滚诉求</text>
+  <text x="259" y="204" font-size="7.6" fill="#8C8980">隐患：切走期间蓝环境要保持</text>
+  <text x="259" y="220" font-size="7.6" fill="#8C8980">可用（会话/定时任务），演练切回</text>
+
+  <!-- 列 3：灰度 -->
+  <rect x="450" y="48" width="193" height="196" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="546" y="70" font-size="10" font-weight="600" fill="#1F4468" text-anchor="middle">灰度 / 金丝雀</text>
+  <rect x="466" y="82" width="10" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <rect x="478" y="82" width="161" height="24" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="546" y="98" font-size="7.6" font-weight="600" fill="#7A4A12" text-anchor="middle">5% 新版 ◀── 观察指标</text>
+  <text x="466" y="126" font-size="8" font-weight="600" fill="#4A4945">5% → 25% → 50% → 100%</text>
+  <text x="464" y="146" font-size="8" fill="#4A4945">资源代价：低（多一实例起）</text>
+  <text x="464" y="164" font-size="8" fill="#1D5A45">回滚：weight 归零（快）</text>
+  <text x="464" y="182" font-size="8" fill="#4A4945">适合：核心业务 · 高风险变更</text>
+  <text x="464" y="204" font-size="7.6" fill="#8C8980">前提：指标按版本分桶（7.10）</text>
+  <text x="464" y="220" font-size="7.6" fill="#8C8980">执行器：接入层权重路由（003）</text>
+
+  <!-- 底部 -->
+  <rect x="40" y="258" width="603" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="277" font-size="8.4" font-weight="600" fill="#7A4A12">选择经验：默认滚动，核心业务与大版本上灰度，需要秒级回滚的变更用蓝绿——三者不互斥，灰度终点就是滚动</text>
+  <text x="52" y="294" font-size="7.8" fill="#7A4A12">无论哪种：发布检查单十项全绿才动（007 §7.9），回滚预案必须演练过</text>
+
+  <text x="32" y="322" font-size="9" fill="#8C8980">数据库变更不参与任何策略的「一键回退」——expand-contract 三步法是它的独立轨道（007 §7.6）。</text>
+</svg>

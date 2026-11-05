@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Compose 单机编排：一组容器、一张默认网络、一份 YAML</title>
+  <desc>一台机器上的三个服务：web 对外发布 8080，db 用具名卷存数据并带健康检查，cache 秒起。它们自动接入同一张默认网络，服务名就是主机名——web 用 DB_HOST=db 互联，不写 IP。depends_on 配 service_healthy 条件后，web 会等 db 健康检查通过才启动，解决启动顺序不等于服务就绪的问题。</desc>
+
+  <rect width="680" height="350" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Compose：一台机器上的一组容器</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">服务名就是主机名</text>
+
+  <defs>
+    <marker id="d4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="d4Gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#A9A69C"/>
+    </marker>
+  </defs>
+
+  <!-- 宿主机大框 -->
+  <rect x="40" y="50" width="604" height="210" rx="10" fill="#FAFAF7" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="56" y="70" font-size="9" fill="#90a4ae">docker host —— compose.yaml 定义全部三个服务</text>
+
+  <!-- web -->
+  <rect x="60" y="84" width="180" height="64" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="150" y="104" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">web · myapp:1.4.2</text>
+  <text x="150" y="120" font-size="7.4" fill="#4A4945" text-anchor="middle">ports: 8080:8080</text>
+  <text x="150" y="136" font-size="7.4" fill="#4A4945" text-anchor="middle">restart: unless-stopped</text>
+
+  <!-- db -->
+  <rect x="270" y="84" width="180" height="64" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="360" y="104" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">db · mysql:8.0</text>
+  <text x="360" y="120" font-size="7.4" fill="#7A4A12" text-anchor="middle">volumes: db-data:/var/lib/mysql</text>
+  <text x="360" y="136" font-size="7.4" fill="#7A4A12" text-anchor="middle">healthcheck: mysqladmin ping</text>
+
+  <!-- cache -->
+  <rect x="480" y="84" width="150" height="64" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="555" y="104" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">cache · redis:7</text>
+  <text x="555" y="120" font-size="7.4" fill="#1D5A45" text-anchor="middle">秒起 · 无需健康检查</text>
+
+  <!-- 默认网络带 -->
+  <rect x="60" y="176" width="570" height="30" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="345" y="196" font-size="8.4" font-weight="600" fill="#46337A" text-anchor="middle">默认网络（自动创建）—— 服务名互访：DB_HOST=db · REDIS_HOST=cache，不写 IP</text>
+
+  <line x1="150" y1="148" x2="150" y2="176" stroke="#7FA6D0" stroke-width="1" marker-end="url(#d4Blue)"/>
+  <line x1="360" y1="148" x2="360" y2="176" stroke="#7FA6D0" stroke-width="1" marker-end="url(#d4Blue)"/>
+  <line x1="555" y1="148" x2="555" y2="176" stroke="#7FA6D0" stroke-width="1" marker-end="url(#d4Blue)"/>
+
+  <!-- 卷 -->
+  <rect x="270" y="216" width="180" height="28" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="360" y="234" font-size="7.6" fill="#4A4945" text-anchor="middle">具名卷 db-data —— rm 容器数据还在（003）</text>
+  <line x1="360" y1="148" x2="360" y2="216" stroke="#CFCCC2" stroke-width="0.8" stroke-dasharray="3 2"/>
+
+  <!-- 依赖关系（框外） -->
+  <text x="40" y="300" font-size="9.5" font-weight="600" fill="#4A4945">启动顺序 ≠ 服务就绪</text>
+  <rect x="40" y="308" width="604" height="28" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="326" font-size="8.2" fill="#7A4A12">depends_on + condition: service_healthy —— db 健康检查通过后 web 才启动；只写 depends_on 只保证"先启动"</text>
+</svg>

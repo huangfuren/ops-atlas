@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>制品晋级链路：构建一次，同 tag 逐级复制，绝不重新构建</title>
+  <desc>CI 构建一次推送 dev 项目的不可变 tag；测试环境拉这个 tag 验证；通过后把同一 tag 复制到 staging 项目，再验证；最后复制到 prod 项目，生产部署引用它。整条链路上镜像内容不变，环境差异全部外置在配置里。重新构建等于赌两次构建产物相同，是晋级的大忌。</desc>
+
+  <rect width="680" height="330" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">晋级链路：同一 tag 走完 dev → staging → prod</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">绝不重新构建</text>
+
+  <defs>
+    <marker id="e6Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 构建一次 -->
+  <rect x="40" y="56" width="130" height="70" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="105" y="78" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">CI 构建一次</text>
+  <text x="105" y="96" font-size="7.4" fill="#4A4945" text-anchor="middle">commit b3f2a1c</text>
+  <text x="105" y="112" font-size="7.4" fill="#8C8980" text-anchor="middle">此后内容永不变</text>
+
+  <line x1="170" y1="91" x2="204" y2="91" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e6Blue)"/>
+  <text x="187" y="83" font-size="7.2" fill="#8C8980" text-anchor="middle">push</text>
+
+  <!-- dev -->
+  <rect x="208" y="56" width="150" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="283" y="78" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">Harbor · dev 项目</text>
+  <text x="283" y="96" font-size="7.6" fill="#1F4468" text-anchor="middle">myapp:1.4.2-b3f2a1c</text>
+  <text x="283" y="114" font-size="7.2" fill="#8C8980" text-anchor="middle">CI 自动推送 · 不可变</text>
+
+  <line x1="358" y1="91" x2="392" y2="91" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e6Blue)"/>
+  <text x="375" y="83" font-size="7.2" fill="#1D5A45" text-anchor="middle">测试通过</text>
+
+  <!-- staging -->
+  <rect x="396" y="56" width="130" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="461" y="78" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">staging 项目</text>
+  <text x="461" y="96" font-size="7.6" fill="#1F4468" text-anchor="middle">同一 tag（复制）</text>
+  <text x="461" y="114" font-size="7.2" fill="#8C8980" text-anchor="middle">验证环境差异外置</text>
+
+  <line x1="526" y1="91" x2="560" y2="91" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e6Blue)"/>
+  <text x="543" y="83" font-size="7.2" fill="#1D5A45" text-anchor="middle">验证通过</text>
+
+  <!-- prod -->
+  <rect x="564" y="56" width="80" height="70" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.4"/>
+  <text x="604" y="78" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">prod</text>
+  <text x="604" y="96" font-size="7.6" fill="#1D5A45" text-anchor="middle">同一 tag</text>
+  <text x="604" y="114" font-size="7.2" fill="#1D5A45" text-anchor="middle">部署引用</text>
+
+  <!-- digest 注记 -->
+  <rect x="208" y="140" width="436" height="28" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="426" y="158" font-size="8" fill="#4A4945" text-anchor="middle">整条链路同一个 digest（sha256:…）——tag 是名字，digest 是身份证（006 §6.5）</text>
+
+  <!-- 反模式 -->
+  <rect x="40" y="184" width="604" height="60" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="54" y="204" font-size="8.6" font-weight="600" fill="#7A322B">反模式：每个环境重新 git pull + 构建</text>
+  <text x="54" y="222" font-size="7.8" fill="#7A322B">依赖重新解析、基础镜像可能更新——你测试过的镜像和上生产的镜像不是同一个东西</text>
+  <text x="54" y="238" font-size="7.8" fill="#7A322B">回滚也随之失效：没有"当初那个制品"可回</text>
+
+  <rect x="40" y="256" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="275" font-size="8.2" fill="#7A4A12">环境差异全部外置：K8s ConfigMap/不同 namespace 的 values；虚机 Ansible group_vars——制品跨环境不变（007 §7.7）</text>
+
+  <text x="32" y="318" font-size="9" fill="#8C8980">retention 策略必须覆盖回滚窗口：保留最近 3~5 个版本，否则 rollout undo 时镜像已不存在（006 §6.9）。</text>
+</svg>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="680" height="240">
+  <title>TCP 的两个连接队列</title>
+  <desc>SYN 到达后先进半连接队列等握手完成，完成三次握手后进全连接队列等应用 accept()；两个队列溢出各有不同的内核计数与后果。</desc>
+  <rect width="680" height="240" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
+    </marker>
+  </defs>
+  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">两个队列：半连接收 SYN，全连接等 accept()</text>
+    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">两个溢出，两种后果，两个计数</text>
+
+    <text x="206" y="58" font-size="9.5" fill="#7A4A12" text-anchor="middle">溢出 → 丢弃新 SYN</text>
+    <text x="206" y="73" font-size="8.5" fill="#8A8880" text-anchor="middle">SYN 洪水时开 tcp_syncookies</text>
+    <line x1="206" y1="80" x2="206" y2="100" stroke="#D8B27A" stroke-width="0.8" stroke-dasharray="3 3"/>
+
+    <text x="430" y="58" font-size="9.5" fill="#7A4A12" text-anchor="middle">溢出 → 新连接被丢或 RST</text>
+    <text x="430" y="73" font-size="8.5" fill="#8A8880" text-anchor="middle">应用 accept 不过来</text>
+    <line x1="430" y1="80" x2="430" y2="100" stroke="#D8B27A" stroke-width="0.8" stroke-dasharray="3 3"/>
+
+    <rect x="40" y="113" width="64" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="72" y="134" font-size="10" fill="#2C2C2A" text-anchor="middle">SYN 到达</text>
+
+    <path d="M104,130 L120,130" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar6)"/>
+
+    <rect x="124" y="102" width="164" height="56" rx="3" fill="#FAEEDA" stroke="#D8B27A" stroke-width="0.8"/>
+    <text x="206" y="126" font-size="11.5" font-weight="600" fill="#7A4A12" text-anchor="middle">半连接队列</text>
+    <text x="206" y="142" font-size="9" fill="#8A6A3A" text-anchor="middle">tcp_max_syn_backlog</text>
+
+    <path d="M288,130 L344,130" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar6)"/>
+    <text x="316" y="122" font-size="8.5" fill="#6B6A65" text-anchor="middle">握手完成</text>
+
+    <rect x="348" y="102" width="164" height="56" rx="3" fill="#FAEEDA" stroke="#D8B27A" stroke-width="0.8"/>
+    <text x="430" y="126" font-size="11.5" font-weight="600" fill="#7A4A12" text-anchor="middle">全连接队列</text>
+    <text x="430" y="142" font-size="9" fill="#8A6A3A" text-anchor="middle">min(somaxconn, listen backlog)</text>
+
+    <path d="M512,130 L540,130" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar6)"/>
+
+    <rect x="544" y="113" width="96" height="34" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
+    <text x="592" y="128" font-size="10" fill="#2C2C2A" text-anchor="middle">应用进程</text>
+    <text x="592" y="141" font-size="8.5" fill="#8A8880" text-anchor="middle">accept() 取走</text>
+
+    <text x="40" y="190" font-size="9.5" fill="#4A4945">netstat -s 里两个计数是分开的：「listen queue overflowed」是全连接队列，「SYNs to LISTEN dropped」是半连接队列。</text>
+    <text x="40" y="210" font-size="9" fill="#8A8880">两个都非零且持续增长时，通常不是队列太小，而是应用 accept() 太慢——调参只能缓解。</text>
+  </g>
+</svg>

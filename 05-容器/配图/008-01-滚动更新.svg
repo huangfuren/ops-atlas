@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>滚动更新时间线：replicas=3、maxSurge=1、maxUnavailable=0 的四帧</title>
+  <desc>四个时间帧展示滚动更新：起始三个旧 Pod；第一帧起一个新 Pod（靠 maxSurge 临时到四个）；第二帷新 Pod 过了 readiness 进入 Endpoints 接流量后，旧的第一个才退，回到三个；第三帧重复该循环直到三个全是新 Pod。readiness 是放行闸门，回滚靠保留的旧 ReplicaSet。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">滚动更新四帧：先起新的，就绪了才退旧的</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">readiness = 放行闸门</text>
+
+  <!-- 帧模板：每帧 4 槽 -->
+  <!-- 帧 1 -->
+  <rect x="40" y="52" width="146" height="130" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="113" y="74" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">t0 · 起始</text>
+  <rect x="60" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="92" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="124" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="60" y="130" font-size="7.2" fill="#8C8980">旧 旧 旧 · 3/3</text>
+  <text x="60" y="148" font-size="7.2" fill="#8C8980">set image 触发</text>
+
+  <!-- 帧 2 -->
+  <rect x="200" y="52" width="146" height="130" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="273" y="74" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">t1 · 新 Pod 起来</text>
+  <rect x="220" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="252" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="284" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="316" y="86" width="26" height="26" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="220" y="130" font-size="7.2" fill="#8C8980">3 旧 + 1 新（临时 4 个）</text>
+  <text x="220" y="148" font-size="7.2" fill="#8C8980">maxSurge=1 的体现</text>
+
+  <!-- 帧 3 -->
+  <rect x="360" y="52" width="146" height="130" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="433" y="74" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">t2 · 新就绪，旧才退</text>
+  <rect x="380" y="86" width="26" height="26" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <rect x="412" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="444" y="86" width="26" height="26" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="380" y="130" font-size="7.2" fill="#8C8980">新 1 过 readiness →</text>
+  <text x="380" y="144" font-size="7.2" fill="#8C8980">进 Endpoints → 旧 1 退出</text>
+  <text x="380" y="162" font-size="7.2" fill="#D2948C">没配 readiness = 名存实亡</text>
+
+  <!-- 帧 4 -->
+  <rect x="520" y="52" width="124" height="130" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="582" y="74" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">t3 · 完成</text>
+  <rect x="534" y="86" width="26" height="26" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <rect x="566" y="86" width="26" height="26" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <rect x="598" y="86" width="26" height="26" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="534" y="130" font-size="7.2" fill="#1D5A45">3/3 新版 · 旧 RS 归零</text>
+  <text x="534" y="148" font-size="7.2" fill="#1D5A45">旧 RS 保留可回滚</text>
+
+  <!-- 帧间箭头 -->
+  <line x1="186" y1="117" x2="198" y2="117" stroke="#7FA6D0" stroke-width="1.2"/>
+  <line x1="346" y1="117" x2="358" y2="117" stroke="#7FA6D0" stroke-width="1.2"/>
+  <line x1="506" y1="117" x2="518" y2="117" stroke="#7FA6D0" stroke-width="1.2"/>
+
+  <!-- 图例与结论 -->
+  <rect x="40" y="200" width="604" height="30" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="219" font-size="8.2" fill="#4A4945">图例：蓝 = 旧版 Pod · 绿 = 新版 Pod · maxSurge=1（允许多 1 个）/ maxUnavailable=0（全程 ≥3 可用）——默认都是 25%</text>
+
+  <rect x="40" y="242" width="604" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="262" font-size="8.4" font-weight="600" fill="#7A4A12">观测与回滚：rollout status 看进度（CI 里当等待门），rollout undo 回到旧 RS——前提旧镜像在仓库、数据库兼容旧代码</text>
+  <text x="52" y="282" font-size="7.8" fill="#7A4A12">发布卡住两种形态：卡拉取 = ImagePullBackOff（tag 错）；卡就绪 = readiness 不过（探针/依赖）——describe 新 Pod 分辨</text>
+
+  <text x="32" y="326" font-size="9" fill="#8C8980">节奏取舍：maxUnavailable=0 全程容量不缩（费临时资源）；maxSurge=0 不占额外资源（容量短暂缩水）——按业务敏感度选（008 §8.1）。</text>
+  <text x="32" y="348" font-size="9" fill="#8C8980">灰度是它的增量改进：先起 canary 副本接 5% 流量观察，再全量（007 §7.4，执行器在接入层）。</text>
+</svg>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>日志链路四段取证：产生 → 采集 → 存储 → 查询</title>
+  <desc>日志看不到时的分段取证：第一段产生，上机器确认应用还在打日志；第二段采集，test output 验连通、看 registry 偏移在不在动；第三段存储，查磁盘水位并直接查 API 绕过界面；第四段查询，检查时间窗、数据视图与字段类型。从第一段顺序往下走不跳段，大多数工单断在采集或查询。</desc>
+
+  <rect width="680" height="380" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">四段取证：先定位断在哪一段</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">从 ① 顺序往下，不跳段</text>
+
+  <defs>
+    <marker id="g6Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- ① 产生 -->
+  <rect x="40" y="52" width="604" height="60" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="56" y="74" font-size="9" font-weight="600" fill="#4A4945">① 产生 —— 应用还在打日志吗？</text>
+  <text x="56" y="90" font-size="7.8" fill="#4A4945">验证：docker logs 容器 / tail 原始文件 / journalctl -u 服务</text>
+  <text x="470" y="90" font-size="7.4" fill="#8C8980">源头没有 → 找应用（回「容器」004）</text>
+
+  <line x1="340" y1="112" x2="340" y2="126" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g6Blue)"/>
+
+  <!-- ② 采集 -->
+  <rect x="40" y="130" width="604" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="56" y="152" font-size="9" font-weight="600" fill="#1F4468">② 采集 —— 采集器活着、偏移在动吗？</text>
+  <text x="56" y="168" font-size="7.8" fill="#1F4468">filebeat test output → registry 的 offset 在动？→ journalctl -u filebeat 找 ERROR</text>
+  <text x="470" y="168" font-size="7.4" fill="#8C8980">断了：凭据 / 权限 / 429</text>
+
+  <line x1="340" y1="190" x2="340" y2="204" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g6Blue)"/>
+
+  <!-- ③ 存储 -->
+  <rect x="40" y="208" width="604" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="56" y="230" font-size="9" font-weight="600" fill="#1F4468">③ 存储 —— 数据到了 ES 吗？</text>
+  <text x="56" y="246" font-size="7.8" fill="#1F4468">GET _cat/allocation（水位）→ GET logs-*/_search 不带时间直接查（绕过界面）</text>
+  <text x="470" y="246" font-size="7.4" fill="#8C8980">只读锁 / red / 429 → 6.3</text>
+
+  <line x1="340" y1="268" x2="340" y2="282" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g6Blue)"/>
+
+  <!-- ④ 查询 -->
+  <rect x="40" y="286" width="604" height="60" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="56" y="308" font-size="9" font-weight="600" fill="#7A4A12">④ 查询 —— 数据在，是查询层的问题</text>
+  <text x="56" y="324" font-size="7.8" fill="#7A4A12">时间窗 → 数据视图的 @timestamp → 字段 text/keyword 类型 → 查询语法（003）</text>
+  <text x="470" y="324" font-size="7.4" fill="#8C8980">五类查不到因：6.4</text>
+
+  <text x="32" y="366" font-size="9" fill="#8C8980">经验分布：多数工单断在 ②（采集静默失败）与 ④（查询姿势）——人们总是先怀疑 ③（存储），这就是跳段的代价。</text>
+</svg>

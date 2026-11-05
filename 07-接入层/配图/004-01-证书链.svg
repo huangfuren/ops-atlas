@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>证书链：服务器必须下发站点证书加中间证书，缺一即部分客户端报错</title>
+  <desc>信任链自上而下：根 CA 在客户端的受信任列表里，签发中间 CA，中间 CA 签发站点证书。服务器要下发 fullchain 两张一起。缺中间证书时出现分叉现象：见过这张中间证书的浏览器有缓存能补全链访问正常，新设备与程序化客户端直接报证书错误，测试全过生产半瘫。验证用 openssl s_client 看链长度与返回码。</desc>
+
+  <rect width="680" height="380" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">证书链：少一张中间证书 = 半瘫</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">第一张必须是站点证书</text>
+
+  <defs>
+    <marker id="c4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="c4Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    </marker>
+  </defs>
+
+  <!-- 信任链 -->
+  <rect x="40" y="52" width="250" height="42" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="165" y="70" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">根 CA —— 在客户端受信任列表里</text>
+  <text x="165" y="86" font-size="7.4" fill="#1D5A45" text-anchor="middle">信任的起点（系统/浏览器内置）</text>
+
+  <line x1="165" y1="94" x2="165" y2="110" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c4Blue)"/>
+  <text x="175" y="106" font-size="7.4" fill="#8C8980">签发</text>
+
+  <rect x="40" y="114" width="250" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="165" y="132" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">中间 CA（Intermediate）</text>
+  <text x="165" y="148" font-size="7.4" fill="#4A4945" text-anchor="middle">如 R3 / E1 —— 必须随证书一起下发</text>
+
+  <line x1="165" y1="156" x2="165" y2="172" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c4Blue)"/>
+  <text x="175" y="168" font-size="7.4" fill="#8C8980">签发</text>
+
+  <rect x="40" y="176" width="250" height="42" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="165" y="194" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">站点证书 app.example.com</text>
+  <text x="165" y="210" font-size="7.4" fill="#7A4A12" text-anchor="middle">绑定域名与公钥，Nginx 的 ssl_certificate 指向它</text>
+
+  <!-- 右：fullchain 文件结构 -->
+  <text x="356" y="56" font-size="9.5" font-weight="600" fill="#4A4945">fullchain.pem 的正确结构</text>
+  <rect x="372" y="66" width="260" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="502" y="88" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">① 站点证书（第一张）</text>
+  <rect x="372" y="104" width="260" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="502" y="126" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">② 中间 CA（第二张，必须带）</text>
+  <text x="372" y="160" font-size="7.8" fill="#8C8980">拼接顺序错了同样失败——第一张不是站点证书即无效</text>
+
+  <!-- 现象分叉 -->
+  <text x="40" y="242" font-size="9.5" font-weight="600" fill="#4A4945">缺中间证书时的分叉现象</text>
+  <rect x="40" y="254" width="294" height="56" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="54" y="274" font-size="8.6" font-weight="600" fill="#1b5e20">浏览器（见过中间证书，有缓存）</text>
+  <text x="54" y="296" font-size="8.6" fill="#1b5e20">能补全链 → 访问正常 ✓（假象）</text>
+  <rect x="350" y="254" width="294" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="364" y="274" font-size="8.6" font-weight="600" fill="#7A322B">新设备 / curl / APP / Java 客户端</text>
+  <text x="364" y="296" font-size="8.6" fill="#7A322B">无缓存可补 → 证书错误 ✗（真实暴露）</text>
+
+  <text x="32" y="342" font-size="9" fill="#8C8980">验证：openssl s_client -connect app.example.com:443 -servername app.example.com —— 看 Chain length 与 verify return code。</text>
+  <text x="32" y="362" font-size="9" fill="#8C8980">「测试全过、生产半瘫」的机制就在分叉里：测试用浏览器有缓存，生产里程序化客户端没有。处置见 004 §4.2。</text>
+</svg>

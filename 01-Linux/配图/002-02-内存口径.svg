@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 416" width="680" height="416" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>内存口径：free 各列的构成，以及 VSZ、RSS、PSS、USS 对共享页的不同算法</title>
+  <desc>上半部分把一条物理内存按用途分成三段：进程拿走的 used、内核拿去做缓存的 buff/cache、完全没碰过的 free。能回收的 cache 加上 free 才是 available，所以判断内存够不够只看 available。下半部分用两个进程共享一份 glibc 的例子说明四个指标的差别：RSS 把共享页在每个进程里各算一遍，两进程合计虚高到 190M，PSS 按比例分摊得到真实的 150M，USS 只算私有部分。</desc>
+
+  <rect width="680" height="416" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">内存口径：能回收的，都不算「用了」</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">只看 available</text>
+
+  <defs>
+    <marker id="a3Gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#CFCCC2"/>
+    </marker>
+    <marker id="a3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① free -h 的几列，是同一块内存的三种身份</text>
+
+  <!-- 内存条 -->
+  <rect x="40" y="68" width="128" height="34" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <rect x="168" y="68" width="428" height="34" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <rect x="596" y="68" width="44" height="34" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="104" y="90" font-size="9" fill="#46337A" text-anchor="middle">used 3.2G</text>
+  <text x="382" y="90" font-size="9" fill="#1F4468" text-anchor="middle">buff/cache 11G</text>
+
+  <text x="40" y="120" font-size="8.6" font-weight="600" fill="#46337A">进程真拿走的</text>
+  <text x="40" y="134" font-size="7.8" fill="#4A4945">单看它没有意义</text>
+
+  <text x="176" y="120" font-size="8.6" font-weight="600" fill="#1F4468">内核拿去当读写缓存</text>
+  <text x="176" y="134" font-size="7.8" fill="#4A4945">内存紧张时立刻让出，高不是浪费</text>
+
+  <text x="640" y="120" font-size="8.6" font-weight="600" fill="#4A4945" text-anchor="end">free 1.1G</text>
+  <text x="640" y="134" font-size="7.8" fill="#4A4945" text-anchor="end">完全没碰过的，接近 0 也健康</text>
+
+  <!-- available 括线 -->
+  <line x1="168" y1="148" x2="640" y2="148" stroke="#6BAF95" stroke-width="1"/>
+  <line x1="168" y1="148" x2="168" y2="143" stroke="#6BAF95" stroke-width="1"/>
+  <line x1="640" y1="148" x2="640" y2="143" stroke="#6BAF95" stroke-width="1"/>
+  <text x="640" y="160" font-size="7.4" fill="#1D5A45" text-anchor="end">↑ 这一段才可能算进 available</text>
+  <text x="168" y="176" font-size="8.4" fill="#1D5A45">available 11G ＝ free ＋ 能回收的 cache − 不可回收的 shared 与 slab</text>
+
+  <text x="32" y="196" font-size="9.5" font-weight="600" fill="#4A4945">② 同一份共享库，四个指标怎么算（下面都是 A 与 B 的合计）</text>
+
+  <!-- 进程 A -->
+  <text x="40" y="229" font-size="9" fill="#2B2A27">进程 A</text>
+  <rect x="92" y="208" width="120" height="32" rx="2" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="152" y="228" font-size="8.4" fill="#46337A" text-anchor="middle">私有 60M</text>
+  <rect x="212" y="208" width="100" height="32" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="262" y="228" font-size="8.4" fill="#1F4468" text-anchor="middle">共享 40M</text>
+
+  <!-- 进程 B -->
+  <text x="40" y="269" font-size="9" fill="#2B2A27">进程 B</text>
+  <rect x="92" y="248" width="120" height="32" rx="2" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="152" y="268" font-size="8.4" fill="#46337A" text-anchor="middle">私有 50M</text>
+  <rect x="212" y="248" width="100" height="32" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="262" y="268" font-size="8.4" fill="#1F4468" text-anchor="middle">共享 40M</text>
+
+  <!-- 物理页 -->
+  <rect x="336" y="208" width="264" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="348" y="228" font-size="8.6" font-weight="600" fill="#1F4468">物理页只有一份</text>
+  <text x="348" y="246" font-size="8.2" fill="#1F4468">glibc 40M，两个进程指向同一块</text>
+  <text x="348" y="264" font-size="7.6" fill="#4A4945">差别全在下面四个指标怎么记这笔账</text>
+  <line x1="314" y1="224" x2="334" y2="224" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a3Blue)"/>
+  <line x1="314" y1="264" x2="334" y2="264" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a3Blue)"/>
+
+  <!-- 四个指标：统一按 A+B 合计口径 -->
+  <rect x="40" y="296" width="136" height="60" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="314" font-size="9" font-weight="600" fill="#4A4945">VSZ</text>
+  <text x="52" y="330" font-size="7.6" fill="#4A4945">含已申请未用</text>
+  <text x="52" y="344" font-size="7.6" fill="#8C8980">别用它判够不够</text>
+
+  <rect x="196" y="296" width="136" height="60" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="208" y="314" font-size="9" font-weight="600" fill="#7A322B">RSS</text>
+  <text x="208" y="330" font-size="7.6" fill="#7A322B">(60+40)+(50+40)</text>
+  <text x="208" y="344" font-size="7.6" fill="#7A322B">= 190M，共享算两遍</text>
+
+  <rect x="352" y="296" width="136" height="60" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="364" y="314" font-size="9" font-weight="600" fill="#1D5A45">PSS</text>
+  <text x="364" y="330" font-size="7.6" fill="#1D5A45">(60+20)+(50+20)</text>
+  <text x="364" y="344" font-size="7.6" fill="#1D5A45">= 150M，共享算一遍</text>
+
+  <rect x="508" y="296" width="136" height="60" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="520" y="314" font-size="9" font-weight="600" fill="#46337A">USS</text>
+  <text x="520" y="330" font-size="7.6" fill="#46337A">60 + 50</text>
+  <text x="520" y="344" font-size="7.6" fill="#46337A">= 110M，共享不算</text>
+
+  <text x="32" y="382" font-size="9" fill="#8C8980">用 RSS 相加判断「内存不足」是错的：20 个 Java 各显示 800M，加起来 16G，可机器只有 8G。</text>
+  <text x="32" y="398" font-size="9" fill="#8C8980">够不够只看 available，掉到 total 一成以下才要担心；buff/cache 高恰恰说明内存被用起来了。</text>
+</svg>

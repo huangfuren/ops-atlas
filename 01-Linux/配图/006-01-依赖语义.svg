@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 386" width="680" height="386" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>After 管顺序，Requires 管存在：三种写法的启动时间线</title>
+  <desc>三行对比：第一行只写 After=postgresql.service，db 启动失败后 app 照样启动，起来也连不上；第二行只写 Requires=postgresql.service，两个同时启动，app 先就绪而 db 还没好；第三行 After 与 Requires 一起写，db 就绪之后 app 才启动。绿色竖线标记就绪时刻，红色条表示启动失败。</desc>
+
+  <rect width="680" height="386" fill="#FFFFFF"/>
+  <text x="32" y="28" font-size="13.5" font-weight="600" fill="#2B2A27">After 管顺序，Requires 管存在——两个都要写</text>
+  <text x="648" y="28" font-size="9" fill="#8C8980" text-anchor="end">▎绿色 = 就绪时刻</text>
+
+  <!-- 列头 -->
+  <text x="40" y="66" font-size="8.4" fill="#8C8980">写法</text>
+  <text x="200" y="66" font-size="8.4" fill="#8C8980">启动时间线 →</text>
+  <text x="510" y="66" font-size="8.4" fill="#8C8980">现象</text>
+
+  <!-- ========== 行1：只写 After ========== -->
+  <rect x="40" y="96" width="146" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="113" font-size="8.6" fill="#4A4945">After=postgresql.service</text>
+  <text x="52" y="128" font-size="7.6" fill="#8C8980">只写顺序</text>
+
+  <rect x="200" y="100" width="120" height="16" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="208" y="112" font-size="8" fill="#7A322B">db 启动失败</text>
+
+  <rect x="330" y="124" width="140" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="338" y="136" font-size="8" fill="#1F4468">app</text>
+  <line x1="470" y1="121" x2="470" y2="143" stroke="#1D5A45" stroke-width="2"/>
+
+  <text x="510" y="112" font-size="8.6" fill="#7A322B">db 失败，app 照样起</text>
+  <text x="510" y="128" font-size="8.6" fill="#7A322B">起来也连不上</text>
+
+  <line x1="24" y1="166" x2="656" y2="166" stroke="#EFEBE2" stroke-width="1"/>
+
+  <!-- ========== 行2：只写 Requires ========== -->
+  <rect x="40" y="184" width="146" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="201" font-size="8.6" fill="#4A4945">Requires=postgresql.service</text>
+  <text x="52" y="216" font-size="7.6" fill="#8C8980">只写存在</text>
+
+  <rect x="200" y="188" width="160" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="208" y="200" font-size="8" fill="#1F4468">db</text>
+  <line x1="360" y1="185" x2="360" y2="207" stroke="#1D5A45" stroke-width="2"/>
+
+  <rect x="200" y="212" width="100" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="208" y="224" font-size="8" fill="#1F4468">app</text>
+  <line x1="300" y1="209" x2="300" y2="231" stroke="#1D5A45" stroke-width="2"/>
+
+  <text x="510" y="200" font-size="8.6" fill="#7A322B">app 先就绪</text>
+  <text x="510" y="216" font-size="8.6" fill="#7A322B">db 还没好，连不上</text>
+
+  <line x1="24" y1="254" x2="656" y2="254" stroke="#EFEBE2" stroke-width="1"/>
+
+  <!-- ========== 行3：两个一起写 ========== -->
+  <rect x="40" y="272" width="146" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="52" y="289" font-size="8.6" fill="#4A4945">After= + Requires=</text>
+  <text x="52" y="304" font-size="7.6" fill="#8C8980">两个都写</text>
+
+  <rect x="200" y="276" width="140" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="208" y="288" font-size="8" fill="#1F4468">db</text>
+  <line x1="340" y1="273" x2="340" y2="295" stroke="#1D5A45" stroke-width="2"/>
+
+  <line x1="342" y1="308" x2="348" y2="308" stroke="#1D5A45" stroke-width="1.2"/>
+  <polygon points="348,304.8 353.5,308 348,311.2" fill="#1D5A45"/>
+  <rect x="356" y="300" width="140" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="364" y="312" font-size="8" fill="#1F4468">app</text>
+  <line x1="496" y1="297" x2="496" y2="319" stroke="#1D5A45" stroke-width="2"/>
+
+  <text x="510" y="288" font-size="8.6" fill="#1D5A45">db 就绪后 app 才起</text>
+  <text x="510" y="304" font-size="8.6" fill="#1D5A45">顺序与存在都对</text>
+
+  <!-- 底部结论 -->
+  <text x="32" y="354" font-size="8.6" fill="#4A4945">After 管先后，Requires 管存亡，WantedBy 管被谁拉起——三者互不替代。</text>
+  <text x="32" y="370" font-size="8" fill="#8C8980">enable 只是在 target 里建一条链接，start 才真正按依赖拉起。</text>
+</svg>

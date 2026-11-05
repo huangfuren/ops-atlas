@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 374" width="680" height="374" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>备份、归档、快照、高可用：四个词四件事，互不替代</title>
+  <desc>四列对照：备份防误删损坏勒索，恢复分钟到小时，存独立介质最好异地，按 RPO 保留七到九十天；归档防查不到历史，翻查可能要天；快照防短时间的错误变更，秒级回滚，但和原卷在同一份存储上；高可用防停机，秒级自动切换，不保留数据。每列最后一行是典型误用。底部强调：高可用不防误删，快照不防盘坏，备份不防停机，三者同时都要有；RAID 属于高可用那一列；3-2-1 是底线，加强版 3-2-1-1-0 再加一份不可改副本和零错误验证；正确顺序是业务方先报 RPO 与 RTO，反推频率与方式，最后才选工具。</desc>
+
+  <rect width="680" height="374" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">四个词四件事：备份 · 归档 · 快照 · 高可用</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">互不替代，同时都要有</text>
+
+  <!-- 备份 -->
+  <rect x="40" y="64" width="145" height="130" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="52" y="86" font-size="9.5" font-weight="600" fill="#1F4468">备份</text>
+  <text x="52" y="108" font-size="7.6" fill="#1F4468">防：误删 · 损坏 · 勒索</text>
+  <text x="52" y="126" font-size="7.6" fill="#1F4468">用：恢复，分钟～小时</text>
+  <text x="52" y="144" font-size="7.6" fill="#1F4468">存：独立介质，最好异地</text>
+  <text x="52" y="162" font-size="7.6" fill="#1F4468">留：按 RPO，7～90 天</text>
+  <text x="52" y="182" font-size="7.6" font-weight="600" fill="#7A322B">误用：备份到同一块盘</text>
+
+  <!-- 归档 -->
+  <rect x="193" y="64" width="145" height="130" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="205" y="86" font-size="9.5" font-weight="600" fill="#4A4945">归档</text>
+  <text x="205" y="108" font-size="7.6" fill="#4A4945">防：查不到历史</text>
+  <text x="205" y="126" font-size="7.6" fill="#4A4945">用：翻查，可能要天</text>
+  <text x="205" y="144" font-size="7.6" fill="#4A4945">存：大容量，可离线</text>
+  <text x="205" y="162" font-size="7.6" fill="#4A4945">留：按合规，1～10 年</text>
+  <text x="205" y="182" font-size="7.6" font-weight="600" fill="#7A322B">误用：拿归档当备份（太慢）</text>
+
+  <!-- 快照 -->
+  <rect x="346" y="64" width="145" height="130" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="358" y="86" font-size="9.5" font-weight="600" fill="#7A4A12">快照</text>
+  <text x="358" y="108" font-size="7.6" fill="#7A4A12">防：短时间内的错误变更</text>
+  <text x="358" y="126" font-size="7.6" fill="#7A4A12">用：秒级回滚</text>
+  <text x="358" y="144" font-size="7.6" fill="#7A4A12">存：和原卷同一份存储</text>
+  <text x="358" y="162" font-size="7.6" fill="#7A4A12">留：小时～天</text>
+  <text x="358" y="182" font-size="7.6" font-weight="600" fill="#7A322B">误用：拿快照当备份</text>
+
+  <!-- 高可用 -->
+  <rect x="499" y="64" width="145" height="130" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="511" y="86" font-size="9.5" font-weight="600" fill="#4A4945">高可用</text>
+  <text x="511" y="108" font-size="7.6" fill="#4A4945">防：停机（硬件 / 进程）</text>
+  <text x="511" y="126" font-size="7.6" fill="#4A4945">用：自动切换，秒级</text>
+  <text x="511" y="144" font-size="7.6" fill="#4A4945">存：另一台机器</text>
+  <text x="511" y="162" font-size="7.6" fill="#4A4945">留：不保留，实时状态</text>
+  <text x="511" y="182" font-size="7.6" font-weight="600" fill="#7A322B">误用：拿高可用当备份</text>
+
+  <!-- 一句话结论 -->
+  <rect x="40" y="210" width="604" height="40" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="52" y="227" font-size="8.6" font-weight="600" fill="#7A322B">高可用不防误删，快照不防盘坏，备份不防停机——rm -rf 会实时同步到备机，快照跟着原卷一起走。</text>
+  <text x="52" y="242" font-size="7.6" fill="#7A322B">RAID 属于「高可用」那一列：防盘坏，不防删、不防覆盖、不防加密，也回不到昨天。</text>
+
+  <!-- 3-2-1 -->
+  <rect x="40" y="262" width="604" height="64" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="52" y="280" font-size="8.6" font-weight="600" fill="#1F4468">3-2-1 是底线：3 份副本 · 2 种介质 · 1 份异地</text>
+  <text x="52" y="296" font-size="7.6" fill="#4A4945">常见假做到：RAID 1 算成 3 份 / 两块盘挂在同一台机器的同一张 RAID 卡后 / 「异地」在同一路市电、同一台交换机下</text>
+  <text x="52" y="312" font-size="7.6" fill="#4A4945">加强版 3-2-1-1-0：+1 份不可改（离线或 WORM，防勒索加密）· +0 错误（恢复演练验证过，10.14）</text>
+
+  <text x="32" y="346" font-size="9" fill="#8C8980">RPO = 出事最多容忍丢多少数据（定频率）；RTO = 最多容忍多久恢复（定方式）。</text>
+  <text x="32" y="362" font-size="9" fill="#8C8980">顺序不能反：业务方先报数 → 反推频率与方式 → 才选工具；「我们有 rsync」不是方案。</text>
+</svg>

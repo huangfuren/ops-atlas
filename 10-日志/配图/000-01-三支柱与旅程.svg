@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>三支柱协作与日志的五段旅程</title>
+  <desc>上半部分是可观测性三支柱的协作：指标发现异常并触发告警，到日志里解释原因，需要跨服务定位时用 trace_id 还原链路。下半部分是一段日志的五段旅程：应用产生、采集器搬运、ES 或 Loki 存储、Kibana 或 Grafana 查询、治理贯穿全程。排障时五段旅程就是分段取证的地图。</desc>
+
+  <rect width="680" height="400" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">三支柱协作，日志的五段旅程</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">日志 = 第二支柱</text>
+
+  <defs>
+    <marker id="g0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 三支柱 -->
+  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#4A4945">三支柱：出事 → 解释 → 定位</text>
+  <rect x="40" y="66" width="193" height="58" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="136" y="88" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">指标（监控册）</text>
+  <text x="136" y="104" font-size="7.4" fill="#4A4945" text-anchor="middle">回答：出了什么事</text>
+  <text x="136" y="118" font-size="7.2" fill="#8C8980" text-anchor="middle">错误率 · 延迟 · 水位</text>
+
+  <rect x="245" y="66" width="193" height="58" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="341" y="88" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">日志（本套）★</text>
+  <text x="341" y="104" font-size="7.4" fill="#7A4A12" text-anchor="middle">回答：为什么出事</text>
+  <text x="341" y="118" font-size="7.2" fill="#8C8980" text-anchor="middle">事发前后的完整证据</text>
+
+  <rect x="450" y="66" width="194" height="58" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="547" y="88" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">链路（OTel，待单开）</text>
+  <text x="547" y="104" font-size="7.4" fill="#4A4945" text-anchor="middle">回答：慢/错在哪一跳</text>
+  <text x="547" y="118" font-size="7.2" fill="#8C8980" text-anchor="middle">跨服务调用图</text>
+
+  <line x1="233" y1="95" x2="243" y2="95" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g0Blue)"/>
+  <line x1="438" y1="95" x2="448" y2="95" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g0Blue)"/>
+  <text x="238" y="88" font-size="6.8" fill="#8C8980" text-anchor="middle">取证</text>
+  <text x="443" y="88" font-size="6.8" fill="#8C8980" text-anchor="middle">trace_id</text>
+
+  <line x1="32" y1="146" x2="648" y2="146" stroke="#EDEAE2" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- 五段旅程 -->
+  <text x="40" y="170" font-size="9.5" font-weight="600" fill="#4A4945">一段日志的旅程：五段，排障即分段取证</text>
+
+  <rect x="40" y="182" width="108" height="62" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="94" y="202" font-size="8.6" font-weight="600" fill="#4A4945" text-anchor="middle">① 产生</text>
+  <text x="94" y="218" font-size="7.2" fill="#8C8980" text-anchor="middle">应用 stdout/文件</text>
+  <text x="94" y="232" font-size="7" fill="#8C8980" text-anchor="middle">规范 → 005</text>
+
+  <rect x="162" y="182" width="108" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="216" y="202" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">② 采集</text>
+  <text x="216" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">Filebeat / Promtail</text>
+  <text x="216" y="232" font-size="7" fill="#8C8980" text-anchor="middle">→ 001</text>
+
+  <rect x="284" y="182" width="108" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="338" y="202" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">③ 存储</text>
+  <text x="338" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">ES / Loki</text>
+  <text x="338" y="232" font-size="7" fill="#8C8980" text-anchor="middle">→ 002 / 004</text>
+
+  <rect x="406" y="182" width="108" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="460" y="202" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">④ 查询</text>
+  <text x="460" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">Kibana / Grafana</text>
+  <text x="460" y="232" font-size="7" fill="#8C8980" text-anchor="middle">→ 003</text>
+
+  <rect x="528" y="182" width="108" height="62" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="582" y="202" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">⑤ 治理</text>
+  <text x="582" y="218" font-size="7.2" fill="#1D5A45" text-anchor="middle">成本 · 脱敏 · 级别</text>
+  <text x="582" y="232" font-size="7" fill="#8C8980" text-anchor="middle">→ 005 / 006</text>
+
+  <line x1="148" y1="213" x2="160" y2="213" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g0Blue)"/>
+  <line x1="270" y1="213" x2="282" y2="213" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g0Blue)"/>
+  <line x1="392" y1="213" x2="404" y2="213" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g0Blue)"/>
+  <line x1="514" y1="213" x2="526" y2="213" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g0Blue)"/>
+
+  <!-- 结论 -->
+  <rect x="40" y="262" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="282" font-size="8.4" font-weight="600" fill="#7A4A12">排障纪律：日志"看不到"时先判断断在哪一段（006 §6.1 四段取证），不跨段乱查</text>
+  <text x="52" y="298" font-size="7.8" fill="#7A4A12">采集端救不了"源头是乱的"——005 的规范是五段旅程的第一因</text>
+
+  <text x="32" y="336" font-size="9" fill="#8C8980">与指标的衔接：告警通知带时间点与服务名 → 来日志圈"同服务 ±5 分钟"（003 §3.4）；日志里的 trace_id 再串向链路（005 §5.3）。</text>
+  <text x="32" y="360" font-size="9" fill="#8C8980">别用日志查询当主告警源：近实时（refresh 约 1 秒）+ 查询成本高——ERROR 计数应由应用直接打指标（002 §2.9）。</text>
+  <text x="32" y="384" font-size="9" fill="#8C8980">成本三铁律在先：保留期业务签字 · 级别纪律换算成钱 · 先降量再扩容（000 §0.6）。</text>
+</svg>

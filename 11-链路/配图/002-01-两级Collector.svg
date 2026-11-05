@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>两级 Collector：Agent 就近收，Gateway 承担重活</title>
+  <desc>应用 Pod 的 SDK 把 span 用 OTLP 发给本节点的 Agent Collector（DaemonSet，只做轻处理：脱敏与批量），Agent 再转发给中心 Gateway（Deployment，承担重活：尾部采样、路由、多后端分发），最后写入 Jaeger 或 Tempo。两级部署的理由：应用直发后端有凭据耦合、重试分散、无治理点、尾部采样无处安放四个问题。</desc>
+
+  <rect width="680" height="360" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">两级 Collector：Agent 薄，Gateway 重</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">尾部采样只在 Gateway</text>
+
+  <defs>
+    <marker id="h2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 应用 -->
+  <rect x="40" y="66" width="150" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="115" y="88" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">应用 Pod × N</text>
+  <text x="115" y="106" font-size="7.4" fill="#4A4945" text-anchor="middle">SDK 自动埋点（001 §1.5）</text>
+  <text x="115" y="122" font-size="7.4" fill="#8C8980" text-anchor="middle">OTLP → localhost:4317</text>
+
+  <line x1="190" y1="101" x2="216" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h2Blue)"/>
+  <text x="203" y="93" font-size="7" fill="#8C8980" text-anchor="middle">OTLP</text>
+
+  <!-- Agent -->
+  <rect x="220" y="56" width="180" height="90" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1.2"/>
+  <text x="310" y="78" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">Agent（DaemonSet）</text>
+  <text x="310" y="96" font-size="7.4" fill="#4A4945" text-anchor="middle">轻处理：batch · 脱敏</text>
+  <text x="310" y="112" font-size="7.4" fill="#8C8980" text-anchor="middle">每节点一个 · 故障域小</text>
+  <text x="310" y="130" font-size="7.4" fill="#7A322B" text-anchor="middle">✗ 尾部采样不放这（聚不齐）</text>
+
+  <line x1="400" y1="101" x2="426" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h2Blue)"/>
+
+  <!-- Gateway -->
+  <rect x="430" y="56" width="214" height="90" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="537" y="78" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">Gateway（Deployment）</text>
+  <text x="537" y="96" font-size="7.4" fill="#7A4A12" text-anchor="middle">重活：尾部采样（005 §5.3）</text>
+  <text x="537" y="112" font-size="7.4" fill="#7A4A12" text-anchor="middle">路由 · 多后端分发 · 租户限流</text>
+  <text x="537" y="130" font-size="7.2" fill="#8C8980" text-anchor="middle">规模大了再拆，起步可合并</text>
+
+  <line x1="537" y1="146" x2="537" y2="168" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h2Blue)"/>
+  <text x="545" y="161" font-size="7" fill="#8C8980">OTLP</text>
+
+  <!-- 后端 -->
+  <rect x="430" y="172" width="214" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="537" y="190" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">Jaeger / Tempo（003）</text>
+  <text x="537" y="205" font-size="7.2" fill="#1D5A45" text-anchor="middle">存储 · 按 trace_id 还原</text>
+
+  <!-- 底部要点 -->
+  <rect x="40" y="228" width="604" height="56" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="54" y="248" font-size="8.4" font-weight="600" fill="#4A4945">应用直发后端的四个问题（002 §2.1）</text>
+  <text x="54" y="266" font-size="7.6" fill="#4A4945">① 后端凭据与地址耦合进应用　② 重试逻辑分散不可控　③ 无统一治理点（脱敏/过滤/采样）</text>
+  <text x="54" y="281" font-size="7.6" fill="#4A4945">④ 尾部采样需要中心聚齐 trace——直发模式无处安放</text>
+
+  <rect x="40" y="296" width="604" height="28" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="52" y="314" font-size="8" fill="#1b5e20">Agent 必配：memory_limiter（自保）+ batch（攒批）——processor 顺序即语义（002 §2.7 第 5 坑）</text>
+
+  <text x="32" y="348" font-size="9" fill="#8C8980">规模路径：起步一级（单 Collector）→ 尾部采样/多后端时拆两级；K8s 场景 Agent=DaemonSet（002 §2.3）。</text>
+</svg>
