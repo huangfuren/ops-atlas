@@ -5,7 +5,7 @@
 
   <rect width="680" height="420" fill="#FFFFFF"/>
   <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">GC 三色标记 + 混合写屏障：并发标记为什么不漏标</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">004 §3.1</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">013 §2.1</text>
 
   <defs>
     <marker id="g4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">

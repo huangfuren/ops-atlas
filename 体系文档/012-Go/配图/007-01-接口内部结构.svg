@@ -5,7 +5,7 @@
 
   <rect width="680" height="390" fill="#FFFFFF"/>
   <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">接口值的内部结构：两个指针——nil 接口陷阱的根源</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">003 §2.1</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">007 §2.1</text>
 
   <defs>
     <marker id="g3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">

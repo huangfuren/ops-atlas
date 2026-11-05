@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Go 板块十七册地图：基础线 → 进阶线 → 高阶线</title>
+  <desc>Go 板块十七册分三条线：基础线会写，包括环境配置、语言概览、语法基础、复合类型与函数、方法接口与错误处理、标准库与并发第一课；进阶线会维护，包括类型系统与接口进阶、切片map底层与值语义、并发模式与channel进阶、错误处理进阶与测试基准、工程化与代码组织；高阶线会调优救火，包括GMP调度与内存模型、GC内存管理与调优、pprof与性能调优、并发高级泛型与反射、编译交付与可观测、事故复盘与源码阅读。</desc>
+
+  <rect width="680" height="430" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Go 十七册地图：三条能力线</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+
+  <!-- 基础线 -->
+  <rect x="20" y="54" width="640" height="92" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="70" font-size="8" font-weight="600" fill="#8C8980">基础线 · 会写</text>
+  <rect x="28" y="76" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="77" y="94" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">001 环境配置</text>
+  <text x="77" y="108" font-size="6.6" fill="#4A4945" text-anchor="middle">SDK · 代理 · 速查</text>
+  <text x="77" y="121" font-size="6.6" fill="#4A4945" text-anchor="middle">七个坑</text>
+  <rect x="132" y="76" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="181" y="94" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">002 语言概览</text>
+  <text x="181" y="108" font-size="6.6" fill="#4A4945" text-anchor="middle">五特性 · 四哲学</text>
+  <text x="181" y="121" font-size="6.6" fill="#4A4945" text-anchor="middle">三语言对比</text>
+  <rect x="236" y="76" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="285" y="94" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">003 语法基础</text>
+  <text x="285" y="108" font-size="6.6" fill="#4A4945" text-anchor="middle">变量类型</text>
+  <text x="285" y="121" font-size="6.6" fill="#4A4945" text-anchor="middle">流程控制</text>
+  <rect x="340" y="76" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="389" y="94" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">004 复合类型函数</text>
+  <text x="389" y="108" font-size="6.6" fill="#4A4945" text-anchor="middle">切片 map struct</text>
+  <text x="389" y="121" font-size="6.6" fill="#4A4945" text-anchor="middle">defer · 指针</text>
+  <rect x="444" y="76" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="493" y="94" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">005 方法接口错误</text>
+  <text x="493" y="108" font-size="6.6" fill="#4A4945" text-anchor="middle">方法集 · 隐式实现</text>
+  <text x="493" y="121" font-size="6.6" fill="#4A4945" text-anchor="middle">错误包装</text>
+  <rect x="548" y="76" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="597" y="94" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">006 标准库并发</text>
+  <text x="597" y="108" font-size="6.6" fill="#4A4945" text-anchor="middle">常用库</text>
+  <text x="597" y="121" font-size="6.6" fill="#4A4945" text-anchor="middle">goroutine 第一课</text>
+
+  <!-- 进阶线 -->
+  <rect x="20" y="156" width="640" height="92" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="172" font-size="8" font-weight="600" fill="#8C8980">进阶线 · 会维护</text>
+  <rect x="28" y="178" width="118" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="87" y="196" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">007 类型系统接口</text>
+  <text x="87" y="210" font-size="6.6" fill="#4A4945" text-anchor="middle">断言 · 嵌入</text>
+  <text x="87" y="223" font-size="6.6" fill="#4A4945" text-anchor="middle">itab · nil 陷阱</text>
+  <rect x="152" y="178" width="118" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="211" y="196" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">008 切片 map 底层</text>
+  <text x="211" y="210" font-size="6.6" fill="#4A4945" text-anchor="middle">扩容 · 共享数组</text>
+  <text x="211" y="223" font-size="6.6" fill="#4A4945" text-anchor="middle">值语义</text>
+  <rect x="276" y="178" width="118" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="335" y="196" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">009 并发模式 channel</text>
+  <text x="335" y="210" font-size="6.6" fill="#4A4945" text-anchor="middle">errgroup · 扇入扇出</text>
+  <text x="335" y="223" font-size="6.6" fill="#4A4945" text-anchor="middle">单向 channel</text>
+  <rect x="400" y="178" width="118" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="459" y="196" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">010 错误进阶测试</text>
+  <text x="459" y="210" font-size="6.6" fill="#4A4945" text-anchor="middle">包装链 · panic 纪律</text>
+  <text x="459" y="223" font-size="6.6" fill="#4A4945" text-anchor="middle">基准测试</text>
+  <rect x="524" y="178" width="118" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="583" y="196" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">011 工程化</text>
+  <text x="583" y="210" font-size="6.6" fill="#4A4945" text-anchor="middle">项目布局</text>
+  <text x="583" y="223" font-size="6.6" fill="#4A4945" text-anchor="middle">依赖 · 构建</text>
+
+  <!-- 高阶线 -->
+  <rect x="20" y="258" width="640" height="92" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="274" font-size="8" font-weight="600" fill="#8C8980">高阶线 · 会调优救火</text>
+  <rect x="28" y="280" width="98" height="60" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="77" y="298" font-size="7.6" font-weight="600" fill="#7A4A12" text-anchor="middle">012 GMP 内存模型</text>
+  <text x="77" y="312" font-size="6.6" fill="#7A4A12" text-anchor="middle">G/M/P · 偷任务</text>
+  <text x="77" y="325" font-size="6.6" fill="#7A4A12" text-anchor="middle">数据竞争</text>
+  <rect x="132" y="280" width="98" height="60" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="181" y="298" font-size="7.6" font-weight="600" fill="#7A4A12" text-anchor="middle">013 GC 调优</text>
+  <text x="181" y="312" font-size="6.6" fill="#7A4A12" text-anchor="middle">三色标记</text>
+  <text x="181" y="325" font-size="6.6" fill="#7A4A12" text-anchor="middle">GOMEMLIMIT</text>
+  <rect x="236" y="280" width="98" height="60" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="285" y="298" font-size="7.6" font-weight="600" fill="#7A4A12" text-anchor="middle">014 pprof 调优</text>
+  <text x="285" y="312" font-size="6.6" fill="#7A4A12" text-anchor="middle">五种 profile</text>
+  <text x="285" y="325" font-size="6.6" fill="#7A4A12" text-anchor="middle">火焰图</text>
+  <rect x="340" y="280" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="389" y="298" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">015 泛型反射</text>
+  <text x="389" y="312" font-size="6.6" fill="#4A4945" text-anchor="middle">单 chan · 约束</text>
+  <text x="389" y="325" font-size="6.6" fill="#4A4945" text-anchor="middle">unsafe 边界</text>
+  <rect x="444" y="280" width="98" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="493" y="298" font-size="7.6" font-weight="600" fill="#1F4468" text-anchor="middle">016 编译交付可观测</text>
+  <text x="493" y="312" font-size="6.6" fill="#4A4945" text-anchor="middle">交叉编译 · slog</text>
+  <text x="493" y="325" font-size="6.6" fill="#4A4945" text-anchor="middle">OTel 出口</text>
+  <rect x="548" y="280" width="98" height="60" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="597" y="298" font-size="7.6" font-weight="600" fill="#7A4A12" text-anchor="middle">017 事故复盘</text>
+  <text x="597" y="312" font-size="6.6" fill="#7A4A12" text-anchor="middle">六起事故</text>
+  <text x="597" y="325" font-size="6.6" fill="#7A4A12" text-anchor="middle">源码阅读</text>
+
+  <!-- 术语表与提示 -->
+  <rect x="20" y="360" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="377" font-size="7.8" font-weight="600" fill="#7A4A12">★ 最快上手工线：001 → 003 → 004 → 006 → 照 006 §4 练习写一个工具，其余按需回查；005 全例的零件在此组装（「Python」005 同思路）</text>
+
+  <text x="32" y="408" font-size="8.6" fill="#8C8980">分界：可观测三支柱出口 → 监控 007 / 日志 / 链路 002；静态二进制的容器交付 → 容器 002；三语言分工 → Python 000 §0.2。词汇查 00 术语表。</text>
+</svg>

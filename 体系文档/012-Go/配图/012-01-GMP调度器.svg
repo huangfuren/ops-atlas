@@ -5,7 +5,7 @@
 
   <rect width="680" height="458" fill="#FFFFFF"/>
   <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">GMP 调度器：M 必须绑 P 才能执行 G，work stealing 自动均衡</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">004 §1.1–1.3</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">012 §1.1–1.3</text>
 
   <defs>
     <marker id="g4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
