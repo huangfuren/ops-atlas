@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Python 板块七册地图：三语言分工下的运维实战线</title>
+  <desc>Python 板块七册按学习顺序两行排布：第一行 000 全貌、001 脚本基础、002 与系统打交道、003 网络与 API；第二行 004 数据报表、005 自动化实战、006 工程化，右侧是三语言分工口诀卡。005 是全例册，前面各册的零件都为它服务。工具链口径是 venv 加 pip、标准库优先、ruff 检查。</desc>
+
+  <rect width="680" height="380" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Python 七册地图：零件为 005 全例服务</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+
+  <defs>
+    <marker id="p0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 第一行 -->
+  <rect x="30" y="66" width="140" height="74" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="100" y="86" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">000 全貌 ★ 你在这里</text>
+  <text x="100" y="102" font-size="7.2" fill="#4A4945" text-anchor="middle">生态位 · 三语言分工</text>
+  <text x="100" y="116" font-size="7.2" fill="#4A4945" text-anchor="middle">工具链 · 场景清单</text>
+  <line x1="170" y1="103" x2="188" y2="103" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#p0Blue)"/>
+  <rect x="190" y="66" width="140" height="74" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="260" y="86" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">001 脚本基础</text>
+  <text x="260" y="102" font-size="7.2" fill="#4A4945" text-anchor="middle">语法 · venv · argparse</text>
+  <text x="260" y="116" font-size="7.2" fill="#4A4945" text-anchor="middle">异常处理</text>
+  <line x1="330" y1="103" x2="348" y2="103" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#p0Blue)"/>
+  <rect x="350" y="66" width="140" height="74" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="420" y="86" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">002 与系统打交道</text>
+  <text x="420" y="102" font-size="7.2" fill="#4A4945" text-anchor="middle">subprocess · pathlib</text>
+  <text x="420" y="116" font-size="7.2" fill="#4A4945" text-anchor="middle">cron 定时</text>
+  <line x1="490" y1="103" x2="508" y2="103" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#p0Blue)"/>
+  <rect x="510" y="66" width="140" height="74" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="580" y="86" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">003 网络与 API</text>
+  <text x="580" y="102" font-size="7.2" fill="#4A4945" text-anchor="middle">requests · 超时重试</text>
+  <text x="580" y="116" font-size="7.2" fill="#4A4945" text-anchor="middle">paramiko 边界</text>
+  <path d="M580,140 L580,166 L259,166" fill="none" stroke="#7FA6D0" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="262" y1="166" x2="258" y2="188" stroke="#7FA6D0" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#p0Blue)"/>
+
+  <!-- 第二行 -->
+  <rect x="120" y="192" width="140" height="74" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="190" y="212" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">004 数据报表</text>
+  <text x="190" y="228" font-size="7.2" fill="#4A4945" text-anchor="middle">正则 · Counter</text>
+  <text x="190" y="242" font-size="7.2" fill="#4A4945" text-anchor="middle">流式处理</text>
+  <line x1="260" y1="229" x2="278" y2="229" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#p0Blue)"/>
+  <rect x="280" y="192" width="140" height="74" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.4"/>
+  <text x="350" y="212" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">005 自动化实战 ★ 全例</text>
+  <text x="350" y="228" font-size="7.2" fill="#1D5A45" text-anchor="middle">磁盘巡检 → 报表 → IM 通知</text>
+  <text x="350" y="242" font-size="7.2" fill="#1D5A45" text-anchor="middle">前面各册零件都在这里组装</text>
+  <line x1="420" y1="229" x2="438" y2="229" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#p0Blue)"/>
+  <rect x="440" y="192" width="140" height="74" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="510" y="212" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">006 工程化</text>
+  <text x="510" y="228" font-size="7.2" fill="#4A4945" text-anchor="middle">ruff · pytest</text>
+  <text x="510" y="242" font-size="7.2" fill="#4A4945" text-anchor="middle">pipx · traceback</text>
+
+  <!-- 三语言分工卡 -->
+  <rect x="30" y="192" width="70" height="74" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="65" y="212" font-size="7.6" font-weight="600" fill="#7A4A12" text-anchor="middle">三语言分工</text>
+  <text x="65" y="228" font-size="6.8" fill="#7A4A12" text-anchor="middle">Shell &lt;20 行</text>
+  <text x="65" y="242" font-size="6.8" fill="#7A4A12" text-anchor="middle">Python 20~500</text>
+  <text x="65" y="256" font-size="6.8" fill="#7A4A12" text-anchor="middle">Go 并发常驻</text>
+
+  <rect x="30" y="300" width="620" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="42" y="320" font-size="7.8" font-weight="600" fill="#7A4A12">★ 005 是全例册：磁盘巡检 → 数据报表 → IM 通知——001~004 的零件都为它服务，读完即可照搬改造。</text>
+
+  <text x="32" y="356" font-size="8.6" fill="#8C8980">工具链：venv + pip；标准库优先；ruff 检查（006）；Python 3.10+，示例在 3.12 验证。Python 深入监控打点见「监控」007 的 client_python。</text>
+</svg>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 490" width="680" height="490" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>网络板块九篇分层地图：按层定位，009 收口</title>
+  <desc>九篇按网络分层归位：跨层场景篇是负载均衡、NAT 防火墙、容器云与企业网络；应用层是 DNS、HTTP、HTTPS 与 TLS；传输层是 TCP 与连接状态；网络层与二层是 IP 路由与 ARP。右侧 009 排障抓包与性能贯穿各层，是争议时刻的第一证据。读法是先按层定位再进对应篇。</desc>
+
+  <rect width="680" height="490" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">网络九篇分层地图：报障先按层定位，009 收口</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+
+  <!-- 场景篇 -->
+  <rect x="20" y="54" width="480" height="96" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="70" font-size="8" font-weight="600" fill="#8C8980">场景篇 · 跨层机制</text>
+  <rect x="36" y="78" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="106" y="96" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">006 负载均衡与高可用</text>
+  <text x="106" y="112" font-size="7.2" fill="#4A4945" text-anchor="middle">四层七层 · LVS · 健康检查</text>
+  <text x="106" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">会话保持 · 调度算法</text>
+  <rect x="186" y="78" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="256" y="96" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">007 NAT 防火墙</text>
+  <text x="256" y="112" font-size="7.2" fill="#4A4945" text-anchor="middle">conntrack · 四表五链</text>
+  <text x="256" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">安全组与 ACL</text>
+  <rect x="336" y="78" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="406" y="96" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">008 容器云企业网络</text>
+  <text x="406" y="112" font-size="7.2" fill="#4A4945" text-anchor="middle">veth 网桥 · VXLAN 一览</text>
+  <text x="406" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">云上网络 · AD 域</text>
+
+  <!-- 应用层 -->
+  <rect x="20" y="160" width="480" height="96" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="176" font-size="8" font-weight="600" fill="#8C8980">应用层</text>
+  <rect x="36" y="184" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="106" y="202" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">003 DNS 与域名解析</text>
+  <text x="106" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">缓存层级 · 解析路径</text>
+  <text x="106" y="232" font-size="7.2" fill="#4A4945" text-anchor="middle">hosts 与 resolv.conf</text>
+  <rect x="186" y="184" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="256" y="202" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">004 HTTP</text>
+  <text x="256" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">状态码 · keep-alive</text>
+  <text x="256" y="232" font-size="7.2" fill="#4A4945" text-anchor="middle">队头阻塞</text>
+  <rect x="336" y="184" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="406" y="202" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">005 HTTPS 与 TLS</text>
+  <text x="406" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">握手 · 证书链</text>
+  <text x="406" y="232" font-size="7.2" fill="#4A4945" text-anchor="middle">证书告警怎么读</text>
+
+  <!-- 传输层 -->
+  <rect x="20" y="266" width="480" height="78" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="282" font-size="8" font-weight="600" fill="#8C8980">传输层</text>
+  <rect x="36" y="290" width="190" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="131" y="308" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">002 TCP 与连接状态</text>
+  <text x="131" y="324" font-size="7.2" fill="#4A4945" text-anchor="middle">状态机 · 握手挥手 · 队列</text>
+  <text x="244" y="306" font-size="7.4" fill="#4A4945">端口不通的三种表现各指一个方向：</text>
+  <text x="244" y="322" font-size="7.4" fill="#4A4945">拒绝（服务没听）· 超时（路不通）· 被拦（007）</text>
+
+  <!-- 网络层与二层 -->
+  <rect x="20" y="354" width="480" height="78" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="28" y="370" font-size="8" font-weight="600" fill="#8C8980">网络层与二层</text>
+  <rect x="36" y="378" width="190" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="131" y="396" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">001 IP 路由与二层</text>
+  <text x="131" y="412" font-size="7.2" fill="#4A4945" text-anchor="middle">路由表 · ARP · 二层连通</text>
+  <text x="244" y="394" font-size="7.4" fill="#4A4945">90% 的乱查从这里省掉：ARP 失败=二层问题，</text>
+  <text x="244" y="410" font-size="7.4" fill="#4A4945">先看 ip neigh 再谈 IP、路由、防火墙。</text>
+
+  <!-- 009 贯穿条 -->
+  <rect x="515" y="54" width="145" height="378" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="587" y="86" font-size="14" font-weight="600" fill="#7A4A12" text-anchor="middle">009</text>
+  <text x="587" y="104" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">排障、抓包与性能</text>
+  <line x1="533" y1="120" x2="642" y2="120" stroke="#D9A458" stroke-width="0.8"/>
+  <text x="587" y="140" font-size="7.4" fill="#7A4A12" text-anchor="middle">分层决策树</text>
+  <text x="587" y="156" font-size="7.4" fill="#7A4A12" text-anchor="middle">tcpdump 抓包</text>
+  <text x="587" y="172" font-size="7.4" fill="#7A4A12" text-anchor="middle">性能四要素</text>
+  <text x="587" y="188" font-size="7.4" fill="#7A4A12" text-anchor="middle">MTU / PMTUD</text>
+  <text x="587" y="216" font-size="8" font-weight="600" fill="#7A4A12" text-anchor="middle">★ 贯穿各层</text>
+  <text x="587" y="236" font-size="7.2" fill="#7A4A12" text-anchor="middle">建议读完 001~005</text>
+  <text x="587" y="250" font-size="7.2" fill="#7A4A12" text-anchor="middle">就先读一遍 009，</text>
+  <text x="587" y="264" font-size="7.2" fill="#7A4A12" text-anchor="middle">再用它回看各篇</text>
+  <text x="587" y="296" font-size="7.4" font-weight="600" fill="#7A4A12" text-anchor="middle">争议时刻的第一证据</text>
+  <text x="587" y="312" font-size="7.2" fill="#7A4A12" text-anchor="middle">日志会说谎，</text>
+  <text x="587" y="326" font-size="7.2" fill="#7A4A12" text-anchor="middle">包不会</text>
+
+  <rect x="20" y="440" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="457" font-size="7.8" font-weight="600" fill="#7A4A12">读法：报障先按层定位（009 决策树）→ 进对应篇；跨主机 / 容器场景先看 008 的形态图。</text>
+
+  <text x="32" y="482" font-size="8.6" fill="#8C8980">分界：主机网卡配置 → Linux 005；K8s 网络深入 → 容器 006；转发规则与证书卸载 → 接入层板块。</text>
+</svg>
