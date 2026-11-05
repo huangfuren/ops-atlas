@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>错误包装链：fmt.Errorf %w 与 errors.Is/As 解包</title>
+  <desc>错误包装链路：底层函数返回哨兵错误或自定义类型，中间层用 fmt.Errorf 加 %w 包裹上下文形成链，顶层用 errors.Is 判断哨兵值、errors.As 提取自定义类型。右下是三条纪律：只包一次上下文、不要 stringify、哨兵错误先声明。</desc>
+
+  <rect width="680" height="420" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">错误包装链：`%w` 建链，Is/As 解包</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">005 §2 · 配图</text>
+
+  <defs>
+    <marker id="e5Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 链路 -->
+  <rect x="30" y="56" width="620" height="66" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="44" y="78" font-size="8.6" font-weight="600" fill="#8C8980">底层（dao 层）</text>
+  <rect x="44" y="86" width="592" height="28" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="105" font-size="7.8" fill="#1F4468">var ErrNotFound = errors.New("record not found")   ← 哨兵错误：先声明，供上层 Is 判断</text>
+  <line x1="340" y1="122" x2="340" y2="136" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e5Blue)"/>
+
+  <rect x="30" y="140" width="620" height="66" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="44" y="162" font-size="8.6" font-weight="600" fill="#8C8980">中间层（service）—— %w 包一层上下文</text>
+  <rect x="44" y="170" width="592" height="28" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="56" y="189" font-size="7.8" fill="#1F4468">return fmt.Errorf("query user %d: %w", uid, err)   ← %w 保留错误链，不是 %v</text>
+  <line x1="340" y1="206" x2="340" y2="220" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e5Blue)"/>
+
+  <rect x="30" y="224" width="620" height="66" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="44" y="246" font-size="8.6" font-weight="600" fill="#8C8980">顶层（handler）—— Is 判断 / As 提取</text>
+  <rect x="44" y="254" width="292" height="28" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="56" y="273" font-size="7.8" fill="#1D5A45">errors.Is(err, ErrNotFound) → true   判断是不是</text>
+  <rect x="344" y="254" width="292" height="28" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="356" y="273" font-size="7.8" fill="#1D5A45">var e *MyErr; errors.As(err, &amp;e) → 提取类型</text>
+
+  <!-- 纪律 -->
+  <rect x="30" y="306" width="620" height="66" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="44" y="326" font-size="8.4" font-weight="600" fill="#7A4A12">三条纪律</text>
+  <text x="44" y="344" font-size="7.6" fill="#7A4A12">① 每层只包一次上下文（谁调用谁包），不要底层把上下文全拼完</text>
+  <text x="44" y="360" font-size="7.6" fill="#7A4A12">② %w 才能建链；用 %v/fmt.Println 打错误 = 链断了，Is/As 全失效</text>
+
+  <text x="32" y="400" font-size="8.6" fill="#8C8980">链的底层实现：err 实现 Unwrap() 方法——包装一次包一层，errors.Is 循环 Unwrap 逐层比对。深入见 010 §1。</text>
+</svg>
