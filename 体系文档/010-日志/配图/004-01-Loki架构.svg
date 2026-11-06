@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600.0" width="1200" height="600.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Loki 架构：采集打标签，Loki 只索引标签，Grafana 查询</title>
   <desc>Promtail 或 Alloy 在采集端解析日志并打标签，推给 Loki；Loki 只对标签建索引，正文压缩成 chunk 顺序存储；查询走 Grafana 的 LogQL，必须先用标签圈定范围再匹配正文。标签设计的命门是基数：user_id 这类百万取值的字段进标签会让 Loki OOM，只能留在正文。</desc>
 
@@ -57,4 +60,6 @@
   <text x="52" y="290" font-size="7.4" fill="#8C8980">选择器圈定流（必写）→ 行过滤正文 → 统计管道 sum by (service) (rate(...[5m]))</text>
 
   <text x="32" y="326" font-size="9" fill="#8C8980">与 ES 的取舍：全文检索强=ES；成本敏感+已用 Grafana+日志结构化=Loki——可先试跑一个业务再定（004 §4.6）。</text>
+
+  </g>
 </svg>

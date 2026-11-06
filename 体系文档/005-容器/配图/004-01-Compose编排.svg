@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 617.65" width="1200" height="617.65" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Compose 单机编排：一组容器、一张默认网络、一份 YAML</title>
   <desc>一台机器上的三个服务：web 对外发布 8080，db 用具名卷存数据并带健康检查，cache 秒起。它们自动接入同一张默认网络，服务名就是主机名——web 用 DB_HOST=db 互联，不写 IP。depends_on 配 service_healthy 条件后，web 会等 db 健康检查通过才启动，解决启动顺序不等于服务就绪的问题。</desc>
 
@@ -54,4 +57,6 @@
   <text x="40" y="300" font-size="9.5" font-weight="600" fill="#4A4945">启动顺序 ≠ 服务就绪</text>
   <rect x="40" y="308" width="604" height="28" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
   <text x="52" y="326" font-size="8.2" fill="#7A4A12">depends_on + condition: service_healthy —— db 健康检查通过后 web 才启动；只写 depends_on 只保证"先启动"</text>
+
+  </g>
 </svg>

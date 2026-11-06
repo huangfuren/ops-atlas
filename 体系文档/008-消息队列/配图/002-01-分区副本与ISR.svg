@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 390" width="680" height="390" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 688.24" width="1200" height="688.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Kafka 分区副本与 ISR：acks=all 的可靠性来自三件一体</title>
   <desc>topic orders 有三个分区，每分区三副本分散在三个 broker：分零的主副本在 broker 一，跟随副本在 broker 二与三，三者共同构成 ISR 同步集合。生产者配置 acks=all 加 min.insync.replicas=2 加副本数三，三者是一个整体，只设 acks=all 而副本为一等于没设。ISR 收缩说明副本掉队可靠性降级。</desc>
 
@@ -69,4 +72,6 @@
   <text x="52" y="335" font-size="8.2" fill="#7A4A12">三件一体：acks=all + min.insync.replicas=2 + 副本数 3 —— 只设 acks=all 而副本为 1，等于没设（002 §2.3）</text>
 
   <text x="32" y="374" font-size="9" fill="#8C8980">ISR 收缩 = 有副本掉队（节点慢/挂/磁盘满）；unclean.leader.election 打开会用掉队副本选主——不丢换可用，默认关闭。</text>
+
+  </g>
 </svg>

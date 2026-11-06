@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="680" height="370" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 652.94" width="1200" height="652.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>消息丢失三环节对账：生产端、存储端、消费端</title>
   <desc>消息丢失的申诉先对账三个环节：生产端丢在发出即忘或发送失败未重试，验收点是确认级别与发送日志；存储端丢在未持久化未复制就宕机，验收点是持久化三件套与仲裁队列或 ISR 配置；消费端丢在先提交后处理，验收点是处理完再确认加幂等。三方日志按业务键对齐，结论三选一：真丢、未消费、已消费转下游。</desc>
 
@@ -39,4 +42,6 @@
   <rect x="40" y="324" width="604" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
   <text x="52" y="342" font-size="8.2" fill="#7A4A12">对账：生产发送日志 → MQ 存储证据 → 消费处理日志，三方按业务键（订单号/request_id）对齐</text>
   <text x="52" y="354" font-size="7.4" fill="#7A4A12">结论三选一：真丢（修对应环节）/ 还在队列未消费（堆积，003 §3.3）/ 已消费（转下游排查）</text>
+
+  </g>
 </svg>

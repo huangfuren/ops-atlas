@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>一次抓取的六个步骤</title>
   <desc>六个步骤分属三个阶段：抓取前（青色，服务发现与 relabel）、抓取中（蓝色，HTTP GET 与解析）、入库（紫色，metric relabel 与写 WAL）。其中第 2 步与第 5 步是仅有的两个可改写环节，用琥珀色数字标出。</desc>
 
@@ -66,4 +69,6 @@
 
   <line x1="40" y1="390" x2="640" y2="390" stroke="#DCD9CE" stroke-width="0.8"/>
   <text x="40" y="408" font-size="9.5" fill="#6B6A65">六步里只有 ② 和 ⑤ 能改变数据：② 改的是「哪个目标」，⑤ 改的是「哪些样本」。其余四步只负责搬运。</text>
+
+  </g>
 </svg>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>两大模型对照与消息旅程：丢失与重复发生的位置</title>
   <desc>上半部分对照两种模型：RabbitMQ 是消息代理，消息按路由投递、消费确认后删除；Kafka 是分布式日志，消息追加进分区、消费只移动指针、到期才清理。下半部分是四段通用旅程：发送、存储复制、投递、确认——丢失只可能发生在发送、存储、确认三个环节，重复只可能发生在投递与确认环节。结论：至少一次是默认语义，消费端幂等是标配。</desc>
 
@@ -82,4 +85,6 @@
 
   <text x="32" y="390" font-size="9" fill="#8C8980">运维关注点随模型不同：RabbitMQ 盯单条消息状态与水位（001 §1.5），Kafka 盯分区健康与消费 lag（002 §2.6）。</text>
   <text x="32" y="408" font-size="9" fill="#8C8980">选型口诀：任务可靠交付选 RabbitMQ；事件流多方消费、需要回放选 Kafka——共存常见（000 §0.2）。</text>
+
+  </g>
 </svg>

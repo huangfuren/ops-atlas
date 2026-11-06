@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" width="680" height="370" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 652.94" width="1200" height="652.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>堆积归因两步法：先判假活，再比速率，最后才扩容</title>
   <desc>堆积的第一步是看消费速率是否归零或趋零：归零是假活，消费者进程在但被下游阻塞，修下游即恢复；第二步比较生产与消费速率曲线：生产跳升是突增，要治上游并评估下游容量；消费长期低于生产是能力问题，按手段阶梯处理：修阻塞、提效率、扩消费者、扩分区有顺序代价、降级需要业务签字。毒丸消息进死信。</desc>
 
@@ -62,4 +65,6 @@
   <text x="52" y="331" font-size="8.2" fill="#7A322B">毒丸消息卡住消费：不是能力问题——N 次失败进死信队列（3.6），扩容无效</text>
 
   <text x="32" y="362" font-size="9" fill="#8C8980">两步法的价值：先归因再动手——毒丸引起的堆积扩一百个消费者也没用，突增引起的堆积修上游比扩容便宜。</text>
+
+  </g>
 </svg>

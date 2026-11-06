@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>channel 运行模型与 select：缓冲、阻塞、多路复用</title>
   <desc>channel 运行模型：无缓冲 channel 发送即阻塞直到接收方就绪；有缓冲 channel 容量满时发送阻塞、空时接收阻塞。select 同时等多个 channel，就绪的随机选一个，default 分支实现非阻塞，time.After 实现超时。坑位提示：向 nil channel 收发永久阻塞、close 后接收得到零值、只由发送方 close。</desc>
 
@@ -68,4 +71,6 @@
   <text x="34" y="364" font-size="7.6" fill="#7A322B">④ `time.After` 在 for 循环里每轮都新建 Timer——长循环用 NewTimer + Reset（009 §3 坑 3）</text>
 
   <text x="32" y="400" font-size="8.6" fill="#8C8980">选型口诀：同步交接用无缓冲；解耦削峰用有缓冲；多路等任一用 select。channel 泄漏排查见 §3。</text>
+
+  </g>
 </svg>

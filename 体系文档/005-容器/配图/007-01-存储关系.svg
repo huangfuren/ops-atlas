@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 617.65" width="1200" height="617.65" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>K8s 存储对象关系：Pod 挂 PVC，PVC 绑 PV，StorageClass 动态供给</title>
   <desc>Pod 通过 volumeMount 引用 PVC，PVC 是使用者的申请单声明容量与访问模式，PV 是真实的存储资源。PVC 声明 storageClassName 后由 StorageClass 模板自动创建对应的 PV，即动态供给。访问模式 RWO 表示单节点读写，回收策略决定 PVC 删除后 PV 保留还是联动删除。</desc>
 
@@ -58,4 +61,6 @@
   <text x="52" y="297" font-size="8.2" fill="#7A4A12">纪律：生产数据的类必须 Retain（或复核默认值）——「顺手删了没人要的 PVC，云盘跟着没了」是缺位时的经典事故</text>
 
   <text x="32" y="336" font-size="9" fill="#8C8980">多副本应用配 RWO 盘：第二个副本永远 Pending——用 RWX 存储或每副本独立 PVC（StatefulSet 的 volumeClaimTemplates，007 §7.8）。</text>
+
+  </g>
 </svg>

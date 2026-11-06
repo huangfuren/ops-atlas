@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Zabbix 6.0 组件与数据流：谁连谁、走哪个端口</title>
   <desc>被监控端有四种接入方式：agent2 走 10050、SNMP 设备走 161、IPMI 带外、JMX 经 Java gateway 10052。数据汇聚到 server 的 10051：被动模式是 server 连 agent，主动模式是 agent 连 server。跨网段或大规模时中间加一层 proxy，断网可本地缓存。server 读写 MySQL 3306，前端 nginx/PHP 8080 只读写数据库，不参与采集。</desc>
 
@@ -104,4 +107,6 @@
   <text x="32" y="403" font-size="7.4" fill="#1D5A45">部署顺序：chrony → 数据库 → server → 前端（含时区与 SELinux）→ agent2 → 纳管；每步都有验证命令，别跳。</text>
 
   <text x="32" y="428" font-size="9" fill="#8C8980">前端只是数据库的另一个客户端；监控是否在跑，看 server 与 agent，不看页面刷不刷得开。</text>
+
+  </g>
 </svg>

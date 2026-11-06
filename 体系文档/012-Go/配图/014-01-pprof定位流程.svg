@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 448" width="680" height="448" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790.59" width="1200" height="790.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>pprof 定位闭环：从症状到修复</title>
   <desc>定位闭环四步：先看症状选 profile 类型，再用匿名导入加独立端口 6060 采集，然后用 top20 看 flat 与 cum、list 逐行、火焰图看最宽块进行分析，最后修复并用压测回归验证。右侧是五种 profile 各自回答的问题：CPU 被谁吃了、内存被谁占了、goroutine 卡在哪、谁在等锁、哪个锁竞争激烈、时间轴全景。安全要求是端口只绑本机回环地址。</desc>
 
@@ -82,4 +85,6 @@
   <text x="468" y="388" font-size="6.6" fill="#8C8980">block/mutex 默认采样率低，先 Set*Rate(1)</text>
 
   <text x="32" y="436" font-size="9" fill="#8C8980">只看 flat 找热点，用 cum 找调用链——top 前 5 行累计超 70%，基本就定位了。</text>
+
+  </g>
 </svg>

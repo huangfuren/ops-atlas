@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 617.65" width="1200" height="617.65" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Ansible 推模式：控制节点 SSH 推送模块，被管端无 agent</title>
   <desc>控制节点上只有 playbook 和 inventory，执行时通过 SSH 把模块代码推到每台被管节点，用 Python 跑完收回结果，不留任何常驻进程。被管节点只要求 SSH 和 Python。推模式带来单一出处：谁在什么时候改了什么，答案永远在控制节点的执行记录里；代价是几千台规模时全量推送耗时。</desc>
 
@@ -46,4 +49,6 @@
   <text x="52" y="283" font-size="8.2" fill="#7A4A12">提权用 become（sudo 白名单），最小权限——提权失败发生在中途，重跑即可收敛（幂等），但先在一台机器全流程跑通</text>
 
   <text x="32" y="330" font-size="9" fill="#8C8980">执行输出两种颜色就是全部语义：ok = 已是目标状态没动，changed = 这次真改了——"机器不一致"从翻配置变成看颜色（004 §4.5）。</text>
+
+  </g>
 </svg>

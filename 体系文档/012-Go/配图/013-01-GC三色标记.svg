@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>GC 三色标记 + 混合写屏障：并发标记为什么不漏标</title>
   <desc>三色抽象：白是未访问可能被回收，灰是已访问但子对象未扫描完，黑是扫描完安全。标记从 GC Roots 出发把可达对象涂灰，逐个扫完涂黑，剩下的白对象就是垃圾。并发标记的问题在于业务代码同时还在改指针，黑对象新指向白对象会导致误回收，解法是写屏障记录每次指针写入，混合写屏障把 STW 压到两次几十微秒。</desc>
 
@@ -64,4 +67,6 @@
   <text x="32" y="372" font-size="7.8" fill="#1D5A45">解法：写屏障——每次指针写入都记录变更，保证不漏标；混合写屏障把 STW 压到两次几十微秒</text>
 
   <text x="32" y="408" font-size="9" fill="#8C8980">调优入口：GOGC 触发频率、GOMEMLIMIT 软上限（容器按 limit 的 80% 设）；健康判据看 gctrace 的存活堆是否持续上涨。</text>
+
+  </g>
 </svg>

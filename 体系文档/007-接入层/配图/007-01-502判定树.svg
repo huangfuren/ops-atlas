@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>502 判定树：error log 三句原话对应三种病因</title>
   <desc>502 表示 Nginx 到后端的链路出问题。error log 里的三句原话直接对应三种病因：Connection refused 是后端进程没起或端口不对，用 ss 查监听；Connection timed out 是防火墙或路由不通，查安全组；upstream prematurely closed 是后端接了单但进程崩了，查应用日志与 OOM。第四种形态是后端返回畸形响应，调 proxy_buffer_size。</desc>
 
@@ -64,4 +67,6 @@
   <text x="54" y="355" font-size="8.4" fill="#7A4A12">高频窗口：后端重启（发布时）与内存峰值（OOM 被杀）——前者用优雅发布消除，后者是容量问题</text>
 
   <text x="32" y="396" font-size="9" fill="#8C8980">502 不是应用报错——应用活着但返回 500，那是后端自己的事；502 永远指「Nginx 到后端」这一段。取证总纲见 007 §7.1。</text>
+
+  </g>
 </svg>

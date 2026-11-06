@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>复盘闭环：故障到行动项到验证，让同类故障不再复发</title>
   <desc>闭环从故障发生开始：四十八小时内完成七部分复盘，挖出可多个的机制根因；每条根因对应带认领人死线和验证方式的行动项；行动项两类去向，技术修复回各板块落地，流程修复改检查单与发布策略；完成率不低于八成才算健康，游戏日验证预案，下次同类故障被机制拦住。</desc>
 
@@ -66,4 +69,6 @@
   <text x="354" y="328" font-size="7.2" fill="#7A4A12">看机制是否真拦住了——验证过才算闭环（3.5）</text>
 
   <text x="32" y="352" font-size="9" fill="#8C8980">检验标准：当值者能完整说出「我当时做了这个决定，基于当时我知道的信息」而不设防——做不到，先修文化再谈方法（3.1）。</text>
+
+  </g>
 </svg>

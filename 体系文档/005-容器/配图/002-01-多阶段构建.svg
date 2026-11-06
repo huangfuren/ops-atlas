@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600.0" width="1200" height="600.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>多阶段构建：编译阶段怎么脏都行，运行阶段只带产物</title>
   <desc>左侧 build 阶段基于 golang 镜像约 250MB，装着整套工具链，唯一使命是产出二进制；右侧 runtime 阶段从干净的 alpine 起步，只拷贝二进制进来，成品约 12MB。下方体积对比条显示单阶段与多阶段的差距。中间的 COPY --from 是两个阶段之间唯一传递的东西。</desc>
 
@@ -47,4 +50,6 @@
   <text x="52" y="299" font-size="8.2" fill="#7A4A12">编译阶段怎么脏都行，运行阶段只带产物——CI 里的测试阶段可以作为第三段插在中间（008 §8.4）</text>
 
   <text x="32" y="330" font-size="9" fill="#8C8980">静态二进制可再进一步：FROM scratch 连 alpine 都不要——代价是没有 sh、没有 CA 证书，需自带（002 §2.6）。</text>
+
+  </g>
 </svg>

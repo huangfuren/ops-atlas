@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" width="680" height="410" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 723.53" width="1200" height="723.53" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>切片三要素：指针 + len + cap，append 与共享陷阱的根源</title>
   <desc>切片本身不存数据，只是切片头三个字段：指针指向底层数组、len 是长度、cap 是容量。append 时容量够就原地写入，容量不够就分配新数组搬家。下方对比两个陷阱：子切片与原切片共享同一底层数组，改一个另一个也变；append 容量不够后指向新数组，两者从此无关。</desc>
 
@@ -92,4 +95,6 @@
   <text x="52" y="364" font-size="8" font-weight="600" fill="#7A4A12">预分配：知道容量就写 make([]int, 0, n)——省掉反复搬家拷贝（扩容规则见 003 §3.1）</text>
 
   <text x="32" y="398" font-size="9" fill="#8C8980">切片头不存数据——len/cap 与共享、扩容的所有行为都由这三个字段决定。</text>
+
+  </g>
 </svg>

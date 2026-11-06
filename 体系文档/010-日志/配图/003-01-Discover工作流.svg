@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 529.41" width="1200" height="529.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Discover 四步工作流：缩窗、过滤、展开、上下文</title>
   <desc>逐条排障的四步：先把时间窗缩到十五分钟，时间窗与查询成本线性相关；再加服务与级别的过滤条件；展开单条日志看完整 JSON；最后用上下文视图查看这条日志前后各若干条——异常前的日志里往往有真正的根因。任何搜到了但看不懂的问题，先试上下文视图。</desc>
 
@@ -47,4 +50,6 @@
 
   <text x="32" y="252" font-size="9" fill="#8C8980">与指标衔接：告警通知带时间点与服务名 → 圈"同服务 ±5 分钟"的 ERROR（000 §0.5 的取证入口）。</text>
   <text x="32" y="274" font-size="9" fill="#8C8980">长周期统计（月度报表）别在 Discover 现扫——用聚合预计算或走冷数据（003 §3.4）。</text>
+
+  </g>
 </svg>

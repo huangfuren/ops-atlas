@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" width="680" height="470" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>外部流量的完整路径：六跳每一跳断了是什么现象</title>
   <desc>用户请求从浏览器出发经过六跳：DNS 解析域名、云负载均衡转发、Ingress Controller 按域名路径路由并终止 TLS、Service 按 Endpoints 选 Pod、Pod 里的应用响应。右侧标注每一跳断掉时的现象与排查入口，自下而上逐跳验证是网络排障的方法。</desc>
 
@@ -79,4 +82,6 @@
 
   <text x="32" y="424" font-size="9" fill="#8C8980">逐跳断点对照是 009 故障剧本 1 号（全站 502/503）的标准取证路径；协议封装细节在「网络」008。</text>
   <text x="32" y="448" font-size="9" fill="#8C8980">K8s 没有端口映射层：Pod IP 直接可达，稳定入口全靠 Service 的虚拟 IP——这是与 Docker 单机网络的本质差异。</text>
+
+  </g>
 </svg>

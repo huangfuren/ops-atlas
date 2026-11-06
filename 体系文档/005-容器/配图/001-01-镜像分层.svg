@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>镜像分层与 overlay2：只读层叠加可写层，写时复制到 upperdir</title>
   <desc>左侧是容器视角的层叠：最上面的可写层是容器独有，下面三层只读镜像层从上到下是应用代码、依赖、基础镜像。右侧是宿主 overlay2 的目录映射：merged 是容器看到的视图，diff 是可写层实体，lowerdir 是镜像只读层且被多个容器共享。读取从上往下穿透，首次写入把文件拷到 diff 再改；删除只读层文件只是放遮罩不释放空间。</desc>
 
@@ -68,4 +71,6 @@
   <text x="52" y="292" font-size="7.8" fill="#7A4A12">删下层文件 = 在 diff 放遮罩（whiteout），下层原文件还在——删文件不释放镜像层空间</text>
 
   <text x="32" y="342" font-size="9" fill="#8C8980">因此：数据库等持续大写负载必须用卷（003），可写层只放日志尾巴与临时文件；取证路径见 001 §1.3。</text>
+
+  </g>
 </svg>

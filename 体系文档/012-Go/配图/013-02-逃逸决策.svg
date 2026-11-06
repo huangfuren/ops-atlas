@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" width="680" height="424" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 748.24" width="1200" height="748.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>逃逸决策：变量去栈还是堆</title>
   <desc>编译器在编译期做逃逸分析：变量生命周期不超出栈帧就分配在栈上，随函数返回自动回收、零 GC 成本；一旦返回局部变量指针、被 interface 或闭包捕获、发送到 channel、元素过大，就逃逸到堆，由 GC 管理。判断入口是 go build -gcflags=-m，优化方向是减少高频路径上的分配，而不是消灭所有逃逸。</desc>
 
@@ -82,4 +85,6 @@
   <text x="32" y="371" font-size="7.6" fill="#1D5A45">查看方式：go build -gcflags='-m' ./... 看是否逃逸；-m -m 看原因；生产判据看 gctrace 的存活堆是否持续上涨。</text>
 
   <text x="32" y="410" font-size="9" fill="#8C8980">栈是自动回收的快速通道，堆是 GC 的管辖范围；逃逸分析是编译器替你做的一次分配决策。</text>
+
+  </g>
 </svg>

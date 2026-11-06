@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>链路排障四段流：从告警到 span 归因</title>
   <desc>告警确认是哪个服务哪个接口的 P99 涨了；通过 exemplar 或日志里的 trace_id 打开慢 trace；瀑布图找关键路径——最长的那条 span 链；读最慢 span 的属性归因到下游，分别转数据库、接入层、外部依赖对应册取证。与指标日志联动：spanmetrics 出 RED 指标，日志带 trace_id。</desc>
 
@@ -46,4 +49,6 @@
   <text x="56" y="328" font-size="7.6" fill="#1D5A45">error span 的属性要带全归因信息（error.type / 下游地址）——开发侧埋点义务（006 §6.3）</text>
 
   <text x="32" y="356" font-size="9" fill="#8C8980">与「日志」联动：trace_id 搜上下文日志，互证"链路说的"与"业务日志说的"（004 §4.4）。</text>
+
+  </g>
 </svg>

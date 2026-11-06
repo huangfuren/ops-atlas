@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" width="680" height="424" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 748.24" width="1200" height="748.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>编译交叉交付：一份源码出多平台静态二进制</title>
   <desc>交叉编译靠三个环境变量：GOOS 选操作系统、GOARCH 选架构、CGO_ENABLED=0 切断 C 依赖。三者组合成平台矩阵，同一份源码可以产出 linux/darwin/windows 各架构的静态二进制。产物不依赖运行时，可直接 scp 到服务器或塞进 scratch 镜像；代价是要自己拷 CA 证书，且 -w 去掉调试信息后 core dump 无法还原堆栈。</desc>
 
@@ -104,4 +107,6 @@
   <text x="32" y="371" font-size="7.4" fill="#1D5A45">推荐：CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o app .　（arm64 目标改 GOARCH=arm64）</text>
 
   <text x="32" y="410" font-size="9" fill="#8C8980">交叉编译不是「模拟运行」，是直接产出目标平台的机器码——所以能在 Windows 上构建 Linux 服务。</text>
+
+  </g>
 </svg>

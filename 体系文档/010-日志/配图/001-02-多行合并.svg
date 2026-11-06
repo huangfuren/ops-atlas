@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 582.35" width="1200" height="582.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>多行合并：把异常栈并回一条事件的四件套</title>
   <desc>左侧是没配 multiline 的下场：一条 Java 异常栈被按行拆成四条独立事件，上下文全毁。右侧是配好后的效果：四行并成一条完整事件。四件套的语义：pattern 定义什么样子是一條新日志的开头（日期开头），negate 取反表示不匹配的就是续行，match after 把续行并入上一条之后，timeout 五秒防止最后一条悬空不发。</desc>
 
@@ -35,4 +38,6 @@
 
   <rect x="40" y="280" width="604" height="28" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
   <text x="52" y="298" font-size="8" fill="#7A322B">反模式：按「异常的样子」写 pattern（如 ^\s+at）——换一种栈格式就漏，按「新事件开头」写才稳</text>
+
+  </g>
 </svg>

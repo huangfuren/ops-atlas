@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Zabbix 与 Prometheus：采集模型与数据模型的分岔</title>
   <desc>左边 Zabbix 是模板化监控平台：server 通过 proxy 或直连，用 agent、SNMP、IPMI、JMX 多协议采集，数据模型是 item 取值、trigger 求值。右边 Prometheus 是标签化时序库：按服务发现的目标主动拉取 /metrics，数据模型是指标名加 label，再由规则求值。两者采集方向与数据结构不同，但告警出口可以汇合，实际环境常常并存。</desc>
 
@@ -84,4 +87,6 @@
   <text x="32" y="393" font-size="7.4" fill="#1D5A45">共存是常态：容器层 Prometheus、网络与遗留系统 Zabbix，告警统一汇到值班平台，而不是强行二选一。</text>
 
   <text x="32" y="426" font-size="9" fill="#8C8980">两套系统的本质差异不在功能清单，而在「数据怎么表示」与「谁发起采集」。</text>
+
+  </g>
 </svg>

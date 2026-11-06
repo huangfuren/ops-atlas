@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 390" width="680" height="390" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 688.24" width="1200" height="688.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>RabbitMQ 模型：exchange 按规则路由进队列，vhost 隔离</title>
   <desc>生产者把消息发到交换器，交换器按类型与绑定规则把消息路由进队列：direct 精确匹配、fanout 广播、topic 模式匹配。没有匹配绑定的消息默认被静默丢弃，重要业务要配备用交换器兜底并监控 unroutable 指标。队列持久化定义、消费者带 prefetch 与 ack。全部资源以 vhost 为隔离边界。</desc>
 
@@ -59,4 +62,6 @@
 
   <text x="32" y="362" font-size="9" fill="#8C8980">排障分界：消息没进队列=路由问题（binding/routing key）；进了队列不消费=prefetch/毒丸/消费者问题（003 §3.3）。</text>
   <text x="32" y="380" font-size="9" fill="#8C8980">unroutable 指标必须进监控（001 §1.8）——静默丢消息比 MQ 崩了更难发现。</text>
+
+  </g>
 </svg>

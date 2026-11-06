@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 330" width="680" height="330" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 582.35" width="1200" height="582.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>制品晋级链路：构建一次，同 tag 逐级复制，绝不重新构建</title>
   <desc>CI 构建一次推送 dev 项目的不可变 tag；测试环境拉这个 tag 验证；通过后把同一 tag 复制到 staging 项目，再验证；最后复制到 prod 项目，生产部署引用它。整条链路上镜像内容不变，环境差异全部外置在配置里。重新构建等于赌两次构建产物相同，是晋级的大忌。</desc>
 
@@ -60,4 +63,6 @@
   <text x="52" y="275" font-size="8.2" fill="#7A4A12">环境差异全部外置：K8s ConfigMap/不同 namespace 的 values；虚机 Ansible group_vars——制品跨环境不变（007 §7.7）</text>
 
   <text x="32" y="318" font-size="9" fill="#8C8980">retention 策略必须覆盖回滚窗口：保留最近 3~5 个版本，否则 rollout undo 时镜像已不存在（006 §6.9）。</text>
+
+  </g>
 </svg>

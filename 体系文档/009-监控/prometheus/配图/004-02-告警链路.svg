@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 310" width="680" height="310" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 547.06" width="1200" height="547.06" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>告警链路：谁判断，谁发送</title>
   <desc>上半为 Prometheus 进程（蓝色），规则求值后进入 pending，持续满足 for 之后变为 firing（琥珀色）。下半为 Alertmanager 进程（紫色），其内部依次完成去重、分组、抑制与静默、路由，之后投递到接收端（青色）。</desc>
 
@@ -85,4 +88,6 @@
   <rect x="40" y="252" width="600" height="44" rx="3" fill="#F4F2EC" stroke="#DCD9CE" stroke-width="0.8"/>
   <text x="56" y="271" font-size="9.5" fill="#4A4945">分组逻辑不要写进规则。规则里的 for 与 AM 的 group_wait 会串联，最坏情况首条通知被推迟 for + group_wait。</text>
   <text x="56" y="287" font-size="9.5" fill="#4A4945">去重压的是「同一告警被多个副本各推一遍」，抑制压的是「根因响了就连带项一起静音」——两者不同层，别混用。</text>
+
+  </g>
 </svg>

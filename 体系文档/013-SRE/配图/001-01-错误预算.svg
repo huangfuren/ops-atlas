@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>错误预算：从 SLO 到预算政策告警的完整机制</title>
   <desc>机制四段：SLO 99.9% 配 28 天滚动窗口，错误预算换算约 43 分钟；burn rate 是当前错误率除以允许错误率的倍数，14 倍速意味着约两天烧完预算；双窗口告警一小时窗口乘五分钟窗口都超过十四点四就紧急响应，六小时窗口超过六开工单；预算余额决定发布政策，充足正常迭代，烧完冻结非必要发布。特批可以存在但要记录在案。</desc>
 
@@ -63,4 +66,6 @@
 
   <text x="32" y="372" font-size="9" fill="#8C8980">SLA 比 SLO 松一个档（99.5%）——内部目标是外部合同的安全垫；SLO 的数据源是「监控」册的指标体系。</text>
   <text x="32" y="392" font-size="9" fill="#8C8980">起步纪律：每服务 1–2 个 SLO（可用性 + 延迟），度量诚实先行——假装可靠比不可靠更危险。</text>
+
+  </g>
 </svg>

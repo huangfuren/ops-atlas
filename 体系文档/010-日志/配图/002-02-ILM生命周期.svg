@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 300" width="680" height="300" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 529.41" width="1200" height="529.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>ILM 索引生命周期：hot 滚动、warm 降盘、delete 到期清理</title>
   <desc>索引从创建进入 hot 阶段：接收写入与高频查询，满一天或单分片三十吉字节就 rollover 出新索引；七天后进入 warm 阶段，挪到慢盘、缩副本；三十天后进入 delete 阶段由 ILM 自动删除。保留期的天数是业务方签过字的数字，卡住的阶段用 ILM explain 排查。</desc>
 
@@ -59,4 +62,6 @@
   <text x="32" y="240" font-size="9" fill="#8C8980">成本杠杆按级递增：关 DEBUG（005）→ 缩保留期 → warm 挪慢盘 → 冷数据出集群进对象存储——扩容永远最后（000 §0.6）。</text>
   <text x="32" y="264" font-size="9" fill="#8C8980">磁盘 95% 只读锁的根因治理也落在这里：临时解锁（002 §2.7）之后，把 ILM 的 delete 阶段收紧才是根治。</text>
   <text x="32" y="288" font-size="9" fill="#8C8980">Loki 对照：等价机制是 compactor 的 retention（004 §4.7）——两条路线都要有「到期自动清」的执行器。</text>
+
+  </g>
 </svg>

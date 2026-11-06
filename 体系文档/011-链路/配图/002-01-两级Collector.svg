@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>两级 Collector：Agent 就近收，Gateway 承担重活</title>
   <desc>应用 Pod 的 SDK 把 span 用 OTLP 发给本节点的 Agent Collector（DaemonSet，只做轻处理：脱敏与批量），Agent 再转发给中心 Gateway（Deployment，承担重活：尾部采样、路由、多后端分发），最后写入 Jaeger 或 Tempo。两级部署的理由：应用直发后端有凭据耦合、重试分散、无治理点、尾部采样无处安放四个问题。</desc>
 
@@ -56,4 +59,6 @@
   <text x="52" y="314" font-size="8" fill="#1b5e20">Agent 必配：memory_limiter（自保）+ batch（攒批）——processor 顺序即语义（002 §2.7 第 5 坑）</text>
 
   <text x="32" y="348" font-size="9" fill="#8C8980">规模路径：起步一级（单 Collector）→ 尾部采样/多后端时拆两级；K8s 场景 Agent=DaemonSet（002 §2.3）。</text>
+
+  </g>
 </svg>

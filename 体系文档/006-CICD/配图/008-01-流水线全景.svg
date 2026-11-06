@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758.82" width="1200" height="758.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>流水线全景：六个阶段，每段有门禁、有产物、可重跑</title>
   <desc>Checkout 生成贯穿全链路的版本号；构建与测试在容器内进行，测试红了立即停线；镜像推 Harbor 接扫描门禁；部署测试环境用 rollout status 等待完成并冒烟验证；人工审批后发布生产；最后成败都发通知并写部署记录。失败从红段重跑的前提是版本号不变且各段幂等。</desc>
 
@@ -59,4 +62,6 @@
   <text x="500" y="379" font-size="7.8" fill="#1D5A45">静默成功最危险</text>
 
   <text x="32" y="418" font-size="9" fill="#8C8980">重跑的两个前提：版本号在 ① 一次生成不变（8.3）；各段幂等——set image 天然幂等，Harbor 同 tag 重推会被不可变规则拒绝（006 §6.5）。</text>
+
+  </g>
 </svg>

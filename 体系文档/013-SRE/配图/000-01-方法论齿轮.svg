@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>SRE 方法论齿轮：定承诺 → 值守 → 变强 → 减琐事 → 循环</title>
   <desc>四件机制构成循环齿轮：定承诺建立 SLO 与错误预算，为值守与发布提供裁决依据；值守阶段告警可行动、应急有指挥；故障之后进入无指责复盘，产出带认领人和死线的行动项；行动项的一部分指向减琐事的自动化，自动化反过来改进 SLO 度量，齿轮转动。成熟度诊断四问：有没有承诺、值守有没有纪律、故障有没有产出行动项、行动项是否在消灭琐事。</desc>
 
@@ -56,4 +59,6 @@
   <rect x="440" y="200" width="0" height="0" fill="none"/>
   <text x="60" y="364" font-size="9" fill="#8C8980">成熟度四问：有没有承诺？值守有没有纪律？故障有没有产出行动项？行动项是不是在消灭琐事？——四问全「无」，还在传统运维阶段。</text>
   <text x="60" y="384" font-size="9" fill="#8C8980">数据源：SLO 的每个度量都是监控查询（「监控」04）；取证的原始材料在日志（「日志」006）。</text>
+
+  </g>
 </svg>

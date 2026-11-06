@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600.0" width="1200" height="600.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>自动化三级阶梯：流程化 → 脚本化 → 平台化，幂等是安全带</title>
   <desc>三级阶梯从左到右升高：第一级流程化把隐含步骤写成检查单，换人执行结果一致；第二级脚本化把重复步骤写成幂等的剧本与流水线，中断可重跑；第三级平台化组合成自助系统，使用者不需要懂内部步骤。每一级的完成标志各不相同，跳级得到的是快速混乱。右侧是幂等安全带的四条工程要求。</desc>
 
@@ -50,4 +53,6 @@
   <text x="52" y="307" font-size="7.6" fill="#7A4A12">「重跑不出事」——CICD 004 §4.7 / 005 §5.8 的机制在本册收拢为规范（004 §4.4）</text>
 
   <text x="32" y="330" font-size="9" fill="#8C8980">立项算术：10 分钟琐事 × 每天 × 250 天 = 41 小时/年 ≈ 一个全职周——toil 审计表是自动化立项陈述的第一页（004 §4.2）。</text>
+
+  </g>
 </svg>

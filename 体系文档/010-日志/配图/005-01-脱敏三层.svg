@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320" width="680" height="320" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 564.71" width="1200" height="564.71" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>日志脱敏的三层防线：源头、采集、访问控制</title>
   <desc>第一层在源头：代码评审红线禁止密码、完整 token、证件号入日志，要关联只打尾四位。第二层在采集端兜底：Filebeat 的 drop_fields 与 replace 处理器、Loki 的 pipeline 正则脱敏，抓漏网之鱼。第三层是访问控制：RBAC 收紧谁能看生产日志。已泄漏的凭据没有删除选项，只有轮换。</desc>
 
@@ -35,4 +38,6 @@
   <!-- 泄漏处置 -->
   <rect x="40" y="274" width="604" height="30" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
   <text x="52" y="293" font-size="8.4" font-weight="600" fill="#7A322B">已泄漏 = 事故处理：轮换所有出现在日志里的凭据（没有"删除"选项）→ 排查泄漏途径（Git 历史/日志/备份）</text>
+
+  </g>
 </svg>

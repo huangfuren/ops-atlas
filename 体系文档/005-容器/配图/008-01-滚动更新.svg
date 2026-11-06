@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>滚动更新时间线：replicas=3、maxSurge=1、maxUnavailable=0 的四帧</title>
   <desc>四个时间帧展示滚动更新：起始三个旧 Pod；第一帧起一个新 Pod（靠 maxSurge 临时到四个）；第二帷新 Pod 过了 readiness 进入 Endpoints 接流量后，旧的第一个才退，回到三个；第三帧重复该循环直到三个全是新 Pod。readiness 是放行闸门，回滚靠保留的旧 ReplicaSet。</desc>
 
@@ -61,4 +64,6 @@
 
   <text x="32" y="326" font-size="9" fill="#8C8980">节奏取舍：maxUnavailable=0 全程容量不缩（费临时资源）；maxSurge=0 不占额外资源（容量短暂缩水）——按业务敏感度选（008 §8.1）。</text>
   <text x="32" y="348" font-size="9" fill="#8C8980">灰度是它的增量改进：先起 canary 副本接 5% 流量观察，再全量（007 §7.4，执行器在接入层）。</text>
+
+  </g>
 </svg>

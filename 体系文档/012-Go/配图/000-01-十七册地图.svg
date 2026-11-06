@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758.82" width="1200" height="758.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Go 板块十七册地图：基础线 → 进阶线 → 高阶线</title>
   <desc>Go 板块十七册分三条线：基础线会写，包括环境配置、语言概览、语法基础、复合类型与函数、方法接口与错误处理、标准库与并发第一课；进阶线会维护，包括类型系统与接口进阶、切片map底层与值语义、并发模式与channel进阶、错误处理进阶与测试基准、工程化与代码组织；高阶线会调优救火，包括GMP调度与内存模型、GC内存管理与调优、pprof与性能调优、并发高级泛型与反射、编译交付与可观测、事故复盘与源码阅读。</desc>
 
@@ -92,4 +95,6 @@
   <text x="32" y="377" font-size="7.8" font-weight="600" fill="#7A4A12">★ 最快上手工线：001 → 003 → 004 → 006 → 照 006 §4 练习写一个工具，其余按需回查；005 全例的零件在此组装（「Python」005 同思路）</text>
 
   <text x="32" y="408" font-size="8.6" fill="#8C8980">分界：可观测三支柱出口 → 监控 007 / 日志 / 链路 002；静态二进制的容器交付 → 容器 002；三语言分工 → Python 000 §0.2。词汇查 00 术语表。</text>
+
+  </g>
 </svg>

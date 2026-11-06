@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>三支柱协作与日志的五段旅程</title>
   <desc>上半部分是可观测性三支柱的协作：指标发现异常并触发告警，到日志里解释原因，需要跨服务定位时用 trace_id 还原链路。下半部分是一段日志的五段旅程：应用产生、采集器搬运、ES 或 Loki 存储、Kibana 或 Grafana 查询、治理贯穿全程。排障时五段旅程就是分段取证的地图。</desc>
 
@@ -78,4 +81,6 @@
   <text x="32" y="336" font-size="9" fill="#8C8980">与指标的衔接：告警通知带时间点与服务名 → 来日志圈"同服务 ±5 分钟"（003 §3.4）；日志里的 trace_id 再串向链路（005 §5.3）。</text>
   <text x="32" y="360" font-size="9" fill="#8C8980">别用日志查询当主告警源：近实时（refresh 约 1 秒）+ 查询成本高——ERROR 计数应由应用直接打指标（002 §2.9）。</text>
   <text x="32" y="384" font-size="9" fill="#8C8980">成本三铁律在先：保留期业务签字 · 级别纪律换算成钱 · 先降量再扩容（000 §0.6）。</text>
+
+  </g>
 </svg>

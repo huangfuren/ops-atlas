@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>trace 贯通：上下文随 HTTP 与 MQ 头传播，断链即排查</title>
   <desc>网关生成 trace_id 并开启第一个 SERVER span，向下游发起 HTTP 调用时 SDK 自动写 W3C traceparent 头，订单服务读到后成为子 span 并继续向下游传播；MQ 场景上下文写进消息头，消费侧生成 CONSUMER span 并用 span link 关联生产侧。四个高频断点：网关重写丢头、客户端未埋点、自研客户端不注入、下游自造 trace_id。</desc>
 
@@ -66,4 +69,6 @@
   <text x="52" y="335" font-size="8.2" fill="#7A4A12">日志互跳：埋点 SDK 把当前 trace_id 注入日志——告警 → 日志 → trace 一键贯通（004 §4.4）</text>
 
   <text x="32" y="366" font-size="9" fill="#8C8980">验收命令：在断点两侧各打一次上下文。多 SDK 冲突（两个 tracer 都想管）也表现为断链——确认全局只有一个 provider。</text>
+
+  </g>
 </svg>

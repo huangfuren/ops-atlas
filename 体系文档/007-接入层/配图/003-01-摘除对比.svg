@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>被动 vs 主动健康检查：坏后端多久被发现</title>
   <desc>上条时间线是 Nginx 开源版的被动检查：t0 后端坏掉后要等真实请求撞上失败，低流量下凑满 max_fails 次数很慢，摘除后还要等 fail_timeout 到期才试探恢复。下条时间线是 HAProxy 的主动检查：每 2 秒探测一次，连续 3 次失败约 6 秒即摘除，恢复也由探测确认。定时巡诊与等患者上门是两者的本质差异。</desc>
 
@@ -57,4 +60,6 @@
   <text x="52" y="344" font-size="7.8" fill="#7A4A12">能力缺口不等于必须补齐——补齐的运维成本（编译模块/多养组件）要一起算（003 §3.7）</text>
 
   <text x="32" y="384" font-size="9" fill="#8C8980">两种机制都只认"实例死活"，业务级健康（接口 500 率）永远靠应用层与监控——别指望 LB 替你发现业务 bug。</text>
+
+  </g>
 </svg>

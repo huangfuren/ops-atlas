@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>日志链路四段取证：产生 → 采集 → 存储 → 查询</title>
   <desc>日志看不到时的分段取证：第一段产生，上机器确认应用还在打日志；第二段采集，test output 验连通、看 registry 偏移在不在动；第三段存储，查磁盘水位并直接查 API 绕过界面；第四段查询，检查时间窗、数据视图与字段类型。从第一段顺序往下走不跳段，大多数工单断在采集或查询。</desc>
 
@@ -44,4 +47,6 @@
   <text x="470" y="324" font-size="7.4" fill="#8C8980">五类查不到因：6.4</text>
 
   <text x="32" y="366" font-size="9" fill="#8C8980">经验分布：多数工单断在 ②（采集静默失败）与 ④（查询姿势）——人们总是先怀疑 ③（存储），这就是跳段的代价。</text>
+
+  </g>
 </svg>

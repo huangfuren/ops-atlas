@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 228" width="680" height="228" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 402.35" width="1200" height="402.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>两阶段 relabel 的执行位置</title>
   <desc>三个阶段的颜色与抓取六步图一致：青色为抓取前，蓝色为抓取中，紫色为入库前。琥珀色方框是仅有的两个可改写环节。以双下划线开头的内部标签在写入 TSDB 时自动丢弃。</desc>
 
@@ -65,4 +68,6 @@
   <text x="56" y="170" font-size="9.5" fill="#4A4945">写入 TSDB 时，所有以 __ 开头的标签自动丢弃，不会入库。</text>
   <text x="56" y="187" font-size="9.5" fill="#4A4945">要让 __meta_* 变成正式 label，只能在 ② 里显式 replace 到不带 __ 的新名字。</text>
   <text x="56" y="204" font-size="8.5" fill="#9A9791">编号与《一次抓取发生了什么》一致，原第 ④ 步「解析」已并入 ③，故此处从 ③ 直接跳到 ⑤。</text>
+
+  </g>
 </svg>

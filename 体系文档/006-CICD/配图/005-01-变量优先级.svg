@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 350" width="680" height="350" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 617.65" width="1200" height="617.65" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Ansible 变量优先级：五层阶梯，上层覆盖下层</title>
   <desc>同名变量按优先级裁决，工程上最常打交道的五层从高到低：命令行 extra vars 最高用于救急与演练，play vars 其次，host_vars 是单机差异，group_vars 是组与环境的真实值，role defaults 最低是 role 作者给的兜底。纪律是 defaults 放可调参数、group_vars 放环境真实值、-e 只救急。ansible-inventory --host 一条命令看某台机器的变量最终值。</desc>
 
@@ -50,4 +53,6 @@
 
   <rect x="40" y="298" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
   <text x="52" y="317" font-size="8.2" fill="#7A4A12">纪律：真实值进 group_vars（进 Git），-e 不当配置手段——否则"这台机器为什么不一样"永远查不清（005 §5.10）</text>
+
+  </g>
 </svg>

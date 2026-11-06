@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 352" width="680" height="352" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 621.18" width="1200" height="621.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Prometheus 全局架构</title>
   <desc>分三层，颜色即角色：青色为被采集端，蓝色为 Prometheus 本体，紫色为存储与输出，琥珀色为告警。采集端三个来源全部靠本体主动拉取。本体四个模块中 Retrieval 只进不出；TSDB 向远程存储做 remote_write；Rules 向 Alertmanager 推送告警；HTTP API 供 Grafana 查询。</desc>
 
@@ -111,4 +114,6 @@
 
   <text x="40" y="326" font-size="9.5" fill="#6B6A65">上方青色箭头为 pull：Prometheus 主动抓取。Pushgateway 是唯一例外——任务先推，再被拉。</text>
   <text x="40" y="342" font-size="9.5" fill="#6B6A65">下方三色箭头是本体对外的三种出口：remote_write 推送、告警推送、供 Grafana 拉取查询——流向都是「本体 → 外部」。</text>
+
+  </g>
 </svg>

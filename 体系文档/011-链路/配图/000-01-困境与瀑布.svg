@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758.82" width="1200" height="758.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>跨服务调用的困境与链路瀑布图</title>
   <desc>上半部分是没有链路的困境：三台机器各看各的日志，同一个请求无法确认、耗时无法拼对。下半部分是有链路后的瀑布图：一个 trace_id 串起网关、订单、支付、MySQL 的 span，父子嵌套一目了然，耗时分布与空隙直接可见。</desc>
 
@@ -63,4 +66,6 @@
 
   <text x="32" y="396" font-size="9" fill="#8C8980">同一个 trace_id 串起全部 span —— "是同一次请求吗"从此有答案（000 §0.2）。</text>
   <text x="32" y="414" font-size="9" fill="#8C8980">模型细节：trace_id 16 字节、span 父子嵌套、上下文传播——下一册展开（001）。</text>
+
+  </g>
 </svg>

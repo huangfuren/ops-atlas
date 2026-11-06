@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600.0" width="1200" height="600.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>内存与磁盘水位：RabbitMQ 阻塞生产者的两道闸</title>
   <desc>生产者发布消息进入 RabbitMQ，消息堆积在队列消耗内存与磁盘。两道自保闸：内存水位约物理内存的比例，磁盘空闲低于限制，任一触发都会阻塞生产者连接——阻塞是流控不是故障，消费不受影响。处置顺序是归因堆积、扩消费、必要时评估参数，只调高水位等于把报警器调哑。</desc>
 
@@ -60,4 +63,6 @@
   <text x="52" y="291" font-size="8.2" fill="#7A4A12">只调高水位不清堆积 = 把报警器调哑——alarm 解除后自动恢复，但根因在消费能力（001 §1.5）</text>
 
   <text x="32" y="326" font-size="9" fill="#8C8980">指标接入：Prometheus 插件暴露内存/磁盘/连接 blocking/队列深度——alarm 状态进「监控」册告警（001 §1.7）。</text>
+
+  </g>
 </svg>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 250" width="680" height="250" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 441.18" width="1200" height="441.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Git 三区模型：工作区、暂存区、仓库、远端之间的搬运</title>
   <desc>四个区从左到右：工作区是正在编辑的文件，git add 把改动搬进暂存区决定这次提交什么，git commit 把暂存区定格为快照进本地仓库，git push 同步到远端。反向：restore 丢弃工作区改动，reset 退回提交，pull 拉取远端更新。git status 是三区之间的透视镜。</desc>
 
@@ -52,4 +55,6 @@
   <text x="32" y="196" font-size="9" fill="#8C8980">暂存区的价值：按逻辑分批 add，让每个提交原子化——回退时切得开，别用 commit -a 一把梭（001 §1.11）。</text>
   <text x="32" y="216" font-size="9" fill="#8C8980">commit 记录快照而非差异；分支是指针（41 字节），建分支零成本——一切合并与 rebase 都在快照链上发生。</text>
   <text x="32" y="236" font-size="9" fill="#8C8980">detached HEAD 状态下改代码切走即丢——先 switch -c 建分支再动手。</text>
+
+  </g>
 </svg>

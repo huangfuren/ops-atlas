@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758.82" width="1200" height="758.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>双机热备：正常态与主故障态的 VIP 漂移</title>
   <desc>正常态：用户访问 VIP，LB-1 是 MASTER 持有 VIP，每秒向 LB-2 发 VRRP 通告，两台都把流量转给后端集群。故障态：LB-1 停止服务后，LB-2 约 3 秒收不到通告就接管 VIP，流量继续，中断时长秒级。漂移时长由 advert_int 与抢占机制决定，演练覆盖停服务与断网卡两种故障注入。</desc>
 
@@ -71,4 +74,6 @@
 
   <text x="32" y="396" font-size="9" fill="#8C8980">已建立的 TCP 连接会断：短连接业务无感，长连接业务需要重连逻辑——「秒级漂移」的真实含义（8.8）。</text>
   <text x="32" y="416" font-size="9" fill="#8C8980">脑裂预防：防火墙放行 vrrp 协议；云上 VPC 无组播，改 unicast_peer 单播（8.3）。两台配置必须同源（Ansible 下发）。</text>
+
+  </g>
 </svg>

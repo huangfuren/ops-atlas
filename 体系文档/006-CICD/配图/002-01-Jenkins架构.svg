@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Jenkins 架构：controller 只调度，构建下放 agent，标签匹配能力</title>
   <desc>GitLab 的 push 通过 webhook 秒级触发 controller；controller 只负责调度、记录与展示，把构建任务按标签派发给对应的 agent——java17 的任务到装了 JDK 17 的机器，docker 标签的到容器构建机。在 controller 上直接构建有三大后遗症：磁盘 CPU 互拖、凭据污染、无法扩容。</desc>
 
@@ -59,4 +62,6 @@
   <text x="52" y="311" font-size="8.2" fill="#7A4A12">controller 上直接构建的后遗症：磁盘 CPU 互拖 UI 卡死 · 构建代码污染凭据环境 · 构建量涨了无法扩容</text>
 
   <text x="32" y="346" font-size="9" fill="#8C8980">纪律：能力进标签（换机器流水线零改动），别写死节点名；备份只需 /var/jenkins_home，进 Git 的 Jenkinsfile 不占备份（002 §2.2）。</text>
+
+  </g>
 </svg>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 458" width="680" height="458" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 808.24" width="1200" height="808.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>GMP 调度器：M 必须绑 P 才能执行 G，work stealing 自动均衡</title>
   <desc>G 是 goroutine，M 是操作系统线程，P 是持有本地运行队列的逻辑处理器。新 goroutine 优先进当前 P 的本地队列，满了转一半到全局队列；M 绑定一个 P 取 G 执行，本地队列空了先偷其他 P 的一半（work stealing），再取全局队列，再从 netpoll 取，都没有则 M 休眠。sysmon 检测到 G 运行超过 10 毫秒会发信号强制让出。</desc>
 
@@ -112,4 +115,6 @@
   <text x="52" y="408" font-size="8" font-weight="600" fill="#1F4468">硬约束：M 必须绑一个 P 才能执行 G → 真正并行的 G 上限 = P 数 = GOMAXPROCS（默认 = CPU 核数，容器里按 limit 设，见 §1.4）</text>
 
   <text x="32" y="446" font-size="9" fill="#8C8980">几万到几百万个 G，几十个 M 转起来——队列 + work stealing 把负载均衡内建进运行时，不用配线程池。</text>
+
+  </g>
 </svg>

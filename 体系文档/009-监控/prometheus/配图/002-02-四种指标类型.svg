@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="680" height="340" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600.0" width="1200" height="600.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>四种指标类型的形态差异</title>
   <desc>Counter 单调递增，Gauge 上下起伏，Histogram 是分桶累计计数，Summary 是客户端算好的若干分位线。四者用四种颜色区分，颜色在其余各图中保持一致。</desc>
 
@@ -58,4 +61,6 @@
   </g>
 
   <text x="40" y="328" font-size="9" fill="#9A9791">图仅示意形态差异，纵轴不代表同一量纲。选型不确定时优先 Histogram：它是唯一能跨实例合并后再算分位的类型。</text>
+
+  </g>
 </svg>

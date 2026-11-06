@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>一条请求的入口旅程：五跳到应用，每跳的职责与断点</title>
   <desc>用户在浏览器敲下域名后经过五跳：DNS 把域名解析成 IP，CDN 就近返回静态资源，负载均衡持有公网 IP 做四层分流，网关 Nginx 做七层治理包括 TLS 终止、域名路径路由、限流与灰度，最后到达应用集群。右侧标注每一跳断掉时的现象。接入层的五大职能集中在第四跳。</desc>
 
@@ -57,4 +60,6 @@
   <!-- 底部 -->
   <rect x="40" y="374" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
   <text x="52" y="393" font-size="8.2" fill="#7A4A12">五大职能全在第 ④ 跳：转发（002/003）· TLS 卸载（004）· 防护（005）· 灰度（003 §3.8）· 观测（005/007）</text>
+
+  </g>
 </svg>

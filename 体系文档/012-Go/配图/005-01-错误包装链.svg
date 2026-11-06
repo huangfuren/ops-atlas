@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>错误包装链：fmt.Errorf %w 与 errors.Is/As 解包</title>
   <desc>错误包装链路：底层函数返回哨兵错误或自定义类型，中间层用 fmt.Errorf 加 %w 包裹上下文形成链，顶层用 errors.Is 判断哨兵值、errors.As 提取自定义类型。右下是三条纪律：只包一次上下文、不要 stringify、哨兵错误先声明。</desc>
 
@@ -40,4 +43,6 @@
   <text x="44" y="360" font-size="7.6" fill="#7A4A12">② %w 才能建链；用 %v/fmt.Println 打错误 = 链断了，Is/As 全失效</text>
 
   <text x="32" y="400" font-size="8.6" fill="#8C8980">链的底层实现：err 实现 Unwrap() 方法——包装一次包一层，errors.Is 循环 Unwrap 逐层比对。深入见 010 §1。</text>
+
+  </g>
 </svg>

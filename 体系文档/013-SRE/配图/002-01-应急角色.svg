@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>应急响应的角色与升级链：IC 指挥不亲手修</title>
   <desc>上半部分是三个应急角色：指挥官负责决策与分派但绝不亲手修，沟通负责人定期向内外播报，领域专家接到明确任务后动手并汇报。下半部分是升级链：一级值班十五分钟无进展升级二级并加领域专家，三十分钟无进展或影响扩大升级工程负责人接管指挥，重大业务影响升级管理层提供资源支持。每一级都有截止时间。</desc>
 
@@ -70,4 +73,6 @@
   <text x="32" y="344" font-size="9" fill="#8C8980">runbook 生命周期：告警创建时同步写（告警消息里放链接），复盘的新处置动作回写，告警删除时同删——过时的 runbook 比没有更危险。</text>
   <text x="32" y="364" font-size="9" fill="#8C8980">度量：MTTA（确认时长）与 MTTR（恢复时长，R 的口径团队约定）按月看趋势——恶化时拆解：发现慢 / 决策慢 / 修复慢。</text>
   <text x="32" y="384" font-size="9" fill="#8C8980">已建立的 TCP 连接类细节与 VIP 漂移类故障见「接入层」008；告警技术配置见「监控」04。</text>
+
+  </g>
 </svg>

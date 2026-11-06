@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>消费者组与重平衡：分配机制与风暴循环</title>
   <desc>左侧是正常态：topic 六个分区被消费组的三个消费者分摊，每个消费者负责两个分区，一个分区同组内只归一个消费者。右侧是重平衡的三大诱因：单批处理超过最大轮询间隔、心跳超时、成员上下线。重平衡风暴的循环是：处理超时被判死亡、分区分给他人、它处理完提交又把自己拉回组、再次重平衡。治理是缩小单批处理量并给足轮询间隔。</desc>
 
@@ -64,4 +67,6 @@
 
   <text x="32" y="346" font-size="9" fill="#8C8980">观测：消费组 lag 用 kafka-consumer-groups.sh --describe 或 kafka-exporter 进「监控」——lag 持续增长即堆积（003 §3.3）。</text>
   <text x="32" y="366" font-size="9" fill="#8C8980">offset 提交：先提交后处理会丢消息，处理完再提交会重复——重复靠消费端幂等兜底（003 §3.2）。</text>
+
+  </g>
 </svg>

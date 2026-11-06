@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Filebeat 采集架构：input → harvester → spooler → output，registry 记账</title>
   <desc>采集流水线四段：input 定义盯哪些文件，harvester 每个文件一个协程逐行读，spooler 攒批发送，output 写到 ES 或 Loki。registry 是偏移账本，与 harvester 双向读写——重启后从账本继续，保证至少一次。多行合并在 harvester 层完成，异常栈才能并成一条。</desc>
 
@@ -54,4 +57,6 @@
   <text x="52" y="323" font-size="8.2" fill="#7A4A12">静默失败四步取证：filebeat test output → 看 registry offset 在不在动 → 查索引/模板 → 查数据视图（006 §6.2）</text>
 
   <text x="32" y="352" font-size="9" fill="#8C8980">至少一次的代价是可能重复：发出后账本未落盘即崩溃 → 重启重发——下游要可幂等去重（001 §1.8）。</text>
+
+  </g>
 </svg>

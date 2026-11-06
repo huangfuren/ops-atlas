@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 360" width="680" height="360" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>头部采样 vs 尾部采样：决策时机决定盲区</title>
   <desc>头部采样在入口掷骰子，决策时不知道这单会不会出错——错误率千分之一的服务，采样率十分之一时错误 trace 被留下的概率只有十分之一，这是盲区。尾部采样在 Gateway 收齐整棵 trace 后再决策，错误全留、慢的全留，代价是缓存与算力。生产组合：概率保底加尾部优化。</desc>
 
@@ -43,4 +46,6 @@
   <text x="54" y="314" font-size="7.6" fill="#8C8980">decision_wait 要大于业务最大链路跨度——含异步 MQ 的分钟级跨度要专门评估（005 §5.6 第 3 坑）</text>
 
   <text x="32" y="352" font-size="9" fill="#8C8980">成本核算：日 span 数 × 采样率 × 平均大小 × 保留天数——采样率与保留期是两个独立旋钮（005 §5.5）。</text>
+
+  </g>
 </svg>

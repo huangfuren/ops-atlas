@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>location 匹配决策：四种修饰符的生效顺序</title>
   <desc>请求 URI 进来后按固定顺序裁决：先看等号精确匹配，命中立即结束；否则找最长前缀匹配并记住它，若它带 ^~ 就直接使用跳过正则；否则按文件顺序逐条试正则，第一条命中的生效；正则全不中时回到刚才记住的最长前缀。右侧是四种修饰符的写法示例与工程纪律。</desc>
 
@@ -66,4 +69,6 @@
   <text x="392" y="320" font-size="7.8" fill="#7A4A12">try_files $uri $uri/ /index.html</text>
 
   <text x="32" y="384" font-size="9" fill="#8C8980">排障：curl -I 打目标 URI + error_log 升到 notice 级，能看到 Nginx 选中了哪个 location（007 §7.7）。</text>
+
+  </g>
 </svg>

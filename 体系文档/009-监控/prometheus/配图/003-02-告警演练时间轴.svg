@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 372" width="680" height="372" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 656.47" width="1200" height="656.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>一条告警从触达到收到通知的时间轴</title>
   <desc>上行是 Prometheus 的规则状态：0 秒首次求值为真进入 pending，60 秒满足 for，因规则 interval 为 15 秒，实际转 firing 落在 60~75 秒之间。下行是 Alertmanager 的通知投递：firing 之后才启动 group_wait 30 秒，因此收到通知最快 90 秒、最坏 105 秒。底部说明恢复方向的时间语义：告警立即消失，但 resolved 通知受 group_interval 约束。</desc>
 
@@ -77,4 +80,6 @@
   <text x="36" y="318" font-size="10" font-weight="500" fill="#2B2A27">恢复方向（时间另起，与前段无累加关系）</text>
   <text x="36" y="336" font-size="9.5" fill="#6B6A65">告警消失：规则变假后的下一轮求值，在 Status → Alerts 里立即不再显示。</text>
   <text x="36" y="352" font-size="9.5" fill="#6B6A65">恢复通知：受 group_interval 约束，演练 30s 后到、生产常见 5m —— 这就是「故障已恢复但群里消息还挂着」的原因。</text>
+
+  </g>
 </svg>

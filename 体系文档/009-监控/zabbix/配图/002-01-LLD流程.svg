@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>LLD：从一条发现规则到成百个监控项</title>
   <desc>低级发现的链路是：发现规则执行一个 key，返回 JSON 实体数组；过滤器决定哪些实体要；监控项、触发器、图形原型决定每个实体生成什么；最后每个实体生成一组监控项与触发器。过滤器只决定要不要，覆盖决定生成后怎么改，覆盖首条命中即停。不加过滤的发现会生成大量无用监控项。</desc>
 
@@ -82,4 +85,6 @@
   <text x="32" y="410" font-size="7.4" fill="#1D5A45">验证闭环：发现规则最近执行时间 → 监控项列表里出现实体名 → Latest data 有值。三步缺一，都是 LLD 没走完。</text>
 
   <text x="32" y="432" font-size="9" fill="#8C8980">LLD 的价值不是「自动」，而是「实体变化时不用人工补监控项」——所以过滤与命名规则比规则本身更重要。</text>
+
+  </g>
 </svg>

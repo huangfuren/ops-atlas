@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>K8s 集群架构：控制平面决策，节点执行，一切通信过 apiserver</title>
   <desc>顶部的 kubectl 把请求发给控制平面：apiserver 是唯一入口负责认证校验并写入 etcd，scheduler 决定新 Pod 落在哪个节点，controller-manager 里的控制器持续把现实掰向期望状态。两个工作节点上 kubelet 按指令拉起容器并上报状态，kube-proxy 维护 Service 转发规则，containerd 真正跑容器。控制平面挂掉不影响存量业务。</desc>
 
@@ -85,4 +88,6 @@
 
   <text x="32" y="402" font-size="9" fill="#8C8980">自愈分两层：节点上 kubelet 重启崩掉的容器（005 §5.2），控制面 Deployment 补齐副本数——命令式动作先想清楚自愈会怎么反应（005 §5.10）。</text>
   <text x="32" y="424" font-size="9" fill="#8C8980">组件挂掉表现：apiserver 失联 · scheduler 全 Pending · kubelet 单节点 NotReady——对号入座见 009 §9.4。</text>
+
+  </g>
 </svg>

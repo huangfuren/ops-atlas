@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>容器运行时栈：docker CLI 到容器进程的四层调用链</title>
   <desc>自上而下四层：docker CLI 是用户敲的命令，dockerd 是引擎负责构建与管理，containerd 是容器生命周期管家，runc 按 OCI 规范配置 namespace 与 cgroup 后 exec 出容器进程。右侧注明 Kubernetes 1.24 起通过 CRI 直接对接 containerd，不再经过 Docker。每层可替换，OCI 标准让同一镜像处处能跑。</desc>
 
@@ -54,4 +57,6 @@
   <line x1="380" y1="202" x2="344" y2="202" stroke="#9C8ACB" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#a0Blue)"/>
 
   <text x="32" y="372" font-size="9" fill="#8C8980">分层的好处：OCI 标准让 Docker、Podman、containerd 跑同一个镜像——镜像成为通用交付物（000 §0.4）。</text>
+
+  </g>
 </svg>

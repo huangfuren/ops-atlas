@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="680" height="240" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 423.53" width="1200" height="423.53" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>TSDB 生命周期</title>
   <desc>样本写入 Head Block（蓝色，内存约两小时），同时并行写 WAL（琥珀色，用于崩溃恢复）；Head 定期落盘为不可变的持久 Block（紫色），后台 compaction 合并成更大的块，最终按保留期整块删除（赭色）。</desc>
 
@@ -55,4 +58,6 @@
   <text x="264" y="202" font-size="8.5" fill="#9A9791">删 series 只写 tombstones，数据不会立即消失，磁盘空间也不立刻释放</text>
 
   <text x="40" y="230" font-size="9" fill="#9A9791">磁盘布局：data/01BK.../{chunks,index,tombstones,meta.json} + chunks_head/ + wal/</text>
+
+  </g>
 </svg>
