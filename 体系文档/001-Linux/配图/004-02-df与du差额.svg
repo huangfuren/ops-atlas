@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" width="680" height="430" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758.82" width="1200" height="758.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>df 与 du 对不上的成因：已删除但仍被打开的文件，以及其他七条</title>
   <desc>上半部分是差额最常见的来源：rm 只删掉目录项，数据块和 inode 因为还有进程开着文件描述符而无法释放，于是 df 照算、du 遍历不到，用 lsof +L1 就能看到 NLINK 为 0 且名字带 deleted。下半部分按差额方向把其余原因分成两侧：df 比 du 大，说明有东西占了余额却不在目录里；du 比 df 大，说明两边称量的不是同一种东西，块对齐、apparent-size 与跨挂载点都会这样。最后一栏指出两个都小却写不进，是 inode 用尽。</desc>
 
@@ -79,4 +81,6 @@
   <text x="362" y="392" font-size="7.4" fill="#8C8980">加 -x 限制在同一文件系统内</text>
 
   <text x="32" y="418" font-size="9" fill="#8C8980">两个都小、却还是写不进 → 不是空间问题，是 inode 用尽，用 df -i 看（4.6）。</text>
+
+  </g>
 </svg>

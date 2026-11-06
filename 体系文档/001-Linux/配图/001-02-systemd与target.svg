@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 404" width="680" height="404" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 712.94" width="1200" height="712.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>systemd 作为 PID 1 的组织方式与 target 的四层降级关系</title>
   <desc>上半部分说明 systemd 怎么工作：内核最后 exec 的 /sbin/init 就是 systemd，它因此永远是 PID 1；它按 unit 的依赖关系并行拉起服务。unit 有六种后缀，最常用的是 service、socket、target。下半部分是 target 的四层降级：graphical 依赖 multi-user，而 rescue、emergency 是从 normal 降下去时 isolate 的独立目标，越往里被拉起的服务越少。graphical 与 multi-user 是正常态，rescue 与 emergency 是降级态，后者才是救命的入口。嵌套只表示服务集合收窄，不表示 target 定义上的依赖包含。</desc>
 
@@ -86,4 +88,6 @@
   <text x="32" y="360" font-size="9" fill="#8C8980">systemctl isolate xxx 立刻切过去，会停掉不在这条链上的服务；set-default 只改下次开机。</text>
   <text x="32" y="374" font-size="9" fill="#8C8980">真正救命的是后两层：rescue 挂全盘能改配置，emergency 只读但最不容易继续崩。</text>
   <text x="32" y="392" font-size="8.6" fill="#7A322B">注意：嵌套只表示「服务集合收窄」，不是依赖包含 —— rescue / emergency 与 multi-user 是并列的，isolate 过去会停掉后者的服务。</text>
+
+  </g>
 </svg>

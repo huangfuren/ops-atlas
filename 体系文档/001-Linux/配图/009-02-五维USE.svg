@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 378" width="680" height="378" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 667.06" width="1200" height="667.06" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>USE 五维模型：每一维问利用率、饱和度、错误三个问题</title>
   <desc>五个维度分别是 CPU、内存、磁盘、网络、进程状态，对每一维都问三句话：利用率满了吗、有没有东西在排队、有没有报错。CPU 看 us 加 sy、r 队列、%st 与 MCE；内存看 available、si/so 与 OOM 日志；磁盘看会骗人的 %util、await 与 aqu-sz、dmesg 的 IO error；网络看带宽占比与 pps、Recv-Q 积压与重传率、drops 与 conntrack full；进程状态是前四维的结果，看进程总数、D 状态与僵尸个数、fork 失败与 fd 耗尽，是天然的交叉验证点。</desc>
 
@@ -53,4 +55,6 @@
   <text x="52" y="331" font-size="7.6" fill="#7A4A12">第一眼看什么：vmstat 的 r · free -m · iostat -x · sar -n DEV · ps -eo stat——30 秒抓完（9.2 的清单）</text>
 
   <text x="32" y="364" font-size="9" fill="#8C8980">进程状态不是资源，是前四维的结果：CPU 不够是 r 堆积，磁盘慢是 D 堆积，内存紧是 D + si/so——天然的交叉验证点。</text>
+
+  </g>
 </svg>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 458" width="680" height="458" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 808.24" width="1200" height="808.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>脚本的四种结束方式殊途同归到 EXIT trap，kill -9 是唯一的旁路</title>
   <desc>上半部分：正常结束、set -e 拦下失败、Ctrl-C 的 INT、kill 的 TERM 四种结束方式全部汇入 EXIT trap 执行清理，然后进程退出，退出码原样保留。下半部分两个陷阱：kill -9 不可捕获，trap 不执行临时文件留下；trap 里跑了命令会改掉退出码，要先存 rc 再 return 恢复。底部备注防重入：exec 打开文件描述符加 flock 非阻塞锁，拿不到锁退出码用 0，进程退出锁自动释放。</desc>
 
@@ -68,4 +70,6 @@
   <text x="54" y="406" font-size="7.6" fill="#7A4A12">exec 9&gt;/var/lock/x.lock; flock -n 9 || exit 0 —— 拿不到锁退出码用 0（cron 不告警）；进程退出锁自动释放，kill -9 也放</text>
 
   <text x="32" y="446" font-size="9" fill="#8C8980">信号备忘：EXIT 必抓 · ERR 配 set -E 打错误日志 · INT / TERM 视需要 · HUP 一般不抓（脚本不该依赖终端）</text>
+
+  </g>
 </svg>

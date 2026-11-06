@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 336" width="680" height="336" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 592.94" width="1200" height="592.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>rsync 三种模式：协议一样，只是建立连接的方式不同</title>
   <desc>三条通道：本地模式同一台机器不走网络，靠文件系统权限，写法 rsync -a /src/ /dst/；remote shell 走 ssh 加密、端口 22、系统账号或密钥，是主力用法，写法 rsync -a /src/ u@h:/dst/；daemon 走 TCP 873 明文传输，用 rsyncd.secrets 里独立于系统的一套账号，写法 rsync -a /src/ u@h::mod/。底部强调冒号陷阱：h:/path 与 h::mod 是两个世界，写错一个冒号，报错长得像密码错误，其实是连接方式错了。</desc>
 
@@ -52,9 +54,11 @@
   <text x="562" y="230" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">目标机 module/</text>
 
   <!-- 冒号陷阱 -->
-  <rect x="40" y="258" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="276" font-size="8.2" font-weight="600" fill="#7A4A12">h:/path 走 ssh（22 · 系统账号）；h::mod 走 daemon（873 · rsyncd 账号）——一个冒号之差，两个世界</text>
-  <text x="52" y="292" font-size="7.6" fill="#7A4A12">写错冒号，报错长得像密码错误——先查连接方式，再查密码</text>
+  <rect x="40" y="266" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="52" y="284" font-size="8.2" font-weight="600" fill="#7A4A12">h:/path 走 ssh（22 · 系统账号）；h::mod 走 daemon（873 · rsyncd 账号）——一个冒号之差，两个世界</text>
+  <text x="52" y="300" font-size="7.6" fill="#7A4A12">写错冒号，报错长得像密码错误——先查连接方式，再查密码</text>
 
   <text x="32" y="324" font-size="9" fill="#8C8980">三种模式跑的是同一个 rsync 协议，参数通用——除了「怎么建立连接」，其余只学一遍。</text>
+
+  </g>
 </svg>

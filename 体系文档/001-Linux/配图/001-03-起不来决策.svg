@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 432" width="680" height="432" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 762.35" width="1200" height="762.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>开机失败时按屏幕现象定位卡在哪一级</title>
   <desc>四行对应启动链的四个阶段。第一列是能看到的屏幕现象，第二列是据此判断卡在哪一级，第三列是这一级该怎么救。判断依据只有屏幕，所以救之前要先看清最后一屏。处置动作从轻到重：改 BIOS、重装引导、修根分区与 fstab、进 rescue 或 emergency，最后才是 rd.break 改密码。</desc>
 
@@ -79,4 +81,6 @@
 
   <text x="32" y="404" font-size="9" fill="#8C8980">三招从轻到重：rescue → emergency → rd.break。每一招都要先确认现象对得上，别乱试。</text>
   <text x="32" y="420" font-size="9" fill="#8C8980">判断依据只有屏幕 —— 所以动手前先把最后一屏拍下来，它决定了后面所有动作。</text>
+
+  </g>
 </svg>

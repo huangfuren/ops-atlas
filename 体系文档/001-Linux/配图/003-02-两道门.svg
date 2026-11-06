@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>DAC 与 MAC 两道门：chmod 777 只打开了第一道</title>
   <desc>一个访问请求要连过两道门。第一道是 DAC 自主访问控制，由属主、属组、其他人和 ACL 决定，chmod 777 打开的就是这一道，用 ls -l 就能看见。第二道是 MAC 强制访问控制，SELinux 看的是文件的 type 而不是 rwx，root 也要服从，只有 ls -Z 才看得见。任何一道拒绝都到此为止，表现分别是 Permission denied 和 403 加 AVC 记录。图的下半部给出四步排查顺序，并强调验证时可以临时切 Permissive，但不要永久 Disabled。</desc>
 
@@ -79,4 +81,6 @@
 
   <text x="32" y="378" font-size="9" fill="#7A322B">临时 setenforce 0 验证可以；生产别设 Disabled —— 改回 Enforcing 前必须 touch /.autorelabel 重打标签。</text>
   <text x="32" y="394" font-size="9" fill="#8C8980">忘了这一步，开机 sshd 起不来、卡在登录页，看起来像系统坏了（就是 01 §1.6 的救援场景）。</text>
+
+  </g>
 </svg>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 448" width="680" height="448" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790.59" width="1200" height="790.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>Linux 运维手册的六层十册体系</title>
   <desc>十册按六层排列：机器层（01 系统与启动、02 进程与资源）、权限层（03）、存储层（04）、网络与服务层（05、06）、操作层（07、08）、运营层（09、10）。每册只回答一个问题。卡片颜色按册的性质区分：蓝色是系统与内核，琥珀是权限边界，紫色是数据，绿色是连接，红色是故障与风险，灰色是通用手段。层越靠上越贴近机器本体，越靠下越贴近日常处置。底部列出参考层三册与配色图例。</desc>
 
@@ -98,4 +100,6 @@
   <text x="378" y="414" font-size="8.4" fill="#4A4945">通用手段</text>
 
   <text x="32" y="436" font-size="9" fill="#8C8980">越靠上越贴近机器本体，越靠下越贴近日常处置；跨册的问题按「最后一步落在哪册」归属。</text>
+
+  </g>
 </svg>

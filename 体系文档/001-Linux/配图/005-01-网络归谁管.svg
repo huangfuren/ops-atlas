@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" width="680" height="410" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 723.53" width="1200" height="723.53" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>按配置文件判断这台机器的网络归哪个服务管</title>
   <desc>从上往下依次问四个问题，第一个命中的就是答案：有 /etc/netplan 的 yaml 归 netplan，用 netplan apply 生效；有 /etc/network/interfaces 归 ifupdown，重启 networking；有 ifcfg 开头的网卡文件归 network-scripts，CentOS 7 用 nmcli 或 restart network；有 nmconnection 归 NetworkManager keyfile，Rocky 9 与 CentOS 8 以后用这种格式。四样都没有，就只剩 ip addr add 的临时办法。核心结论是：配置文件存在不等于有人在读它，改了不生效往往是因为改错了文件。</desc>
 
@@ -70,4 +72,6 @@
   <text x="68" y="357" font-size="8.2" fill="#4A4945">四样都没有 → 只剩 ip addr add 的临时办法，重启就没了（排障时验证用，不是配置）</text>
 
   <text x="32" y="392" font-size="9" fill="#8C8980">文件存在，不等于有人在读它：改了不生效，先确认归谁管 —— 这一册一半的时间浪费在这里。</text>
+
+  </g>
 </svg>

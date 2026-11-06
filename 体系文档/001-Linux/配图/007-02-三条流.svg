@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 432" width="680" height="432" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 762.35" width="1200" height="762.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>三条流：管道只接走 stdout，stderr 要手动并进去</title>
   <desc>上半部分：任何命令自带 0 stdin、1 stdout、2 stderr 三个口，竖线管道只把 1 接走，2 仍然直接打在屏幕上，所以管道后面的 grep 抓不到报错。下半部分：2&gt;&amp;1 的意思是把 2 指向 1 此刻的指向，是复制当下不是绑定，所以 cmd 大于号 out.log 2&gt;&amp;1 两条流都进文件，而 cmd 2&gt;&amp;1 大于号 out.log 的 stderr 仍留在屏幕。底部备注退出码：0 成功、1 没匹配或失败、2 用法错、127 命令不存在、130 是 Ctrl-C。</desc>
 
@@ -71,4 +73,6 @@
   <text x="52" y="388" font-size="7.6" fill="#7A4A12">进管道同理：find / -name "*.conf" 2&gt;&amp;1 | grep -i denied，先并流、再进管道</text>
 
   <text x="32" y="422" font-size="9" fill="#8C8980">顺带记住退出码：0 成功 · 1 没匹配/失败 · 2 用法错 · 127 命令不存在 · 130 = Ctrl-C（128+n = 被信号 n 杀死）</text>
+
+  </g>
 </svg>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 388" width="680" height="388" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 684.71" width="1200" height="684.71" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>set -euo pipefail：拦住了什么，漏了什么</title>
   <desc>上排三个蓝色卡片是三个开关各自拦住的故障：-e 命令失败即退出、-u 未定义变量即退出、-o pipefail 管道任一段失败整条算失败。中排三个红色卡片是 -e 的三个漏网场景：条件判断里、或与符号的左边、叹号取反——这些地方失败是正常答案。下排琥珀色是最隐蔽的洞：local 赋值时命令替换的失败被 local 自己恒为 0 的退出码盖掉，要拆成声明与赋值两行写。</desc>
 
@@ -56,4 +58,6 @@
   <text x="54" y="341" font-size="7.6" fill="#8C8980">函数里每一个 $( ) 赋值都值得这么拆</text>
 
   <text x="32" y="376" font-size="9" fill="#8C8980">加了 ≠ 安全：三个漏网点都在「失败是正常答案」的地方——那里要你自己处理失败，而不是指望 -e。</text>
+
+  </g>
 </svg>

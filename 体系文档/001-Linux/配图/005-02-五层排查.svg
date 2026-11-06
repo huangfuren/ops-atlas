@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 436" width="680" height="436" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 769.41" width="1200" height="769.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>网络排查的五层顺序：链路、地址、路由、端口、应用</title>
   <desc>五层从上往下查，每一层只需要一条命令，通过了才往下走。第一层链路看 ip a 里有没有 UP 与 LOWER_UP；第二层地址看 inet 与掩码是否和对端一致；第三层路由用 ip route get 看 via、dev、src；第四层端口用 ss -lntp 加上防火墙与云安全组；第五层应用用 curl -v 看业务是否真的响应。同网段的通信不经过网关，所以只需要查第一、二、四、五层，查路由是白费力气。</desc>
 
@@ -78,4 +80,6 @@
   <text x="52" y="391" font-size="8.2" fill="#7A4A12">同网段只需查 1、2、4、5 层 —— 同网段不经过网关，去查路由是白费力气。</text>
 
   <text x="32" y="422" font-size="9" fill="#8C8980">每一层只要一条命令，通过才往下走；五层走完最多五步，比凭经验乱敲快得多。</text>
+
+  </g>
 </svg>

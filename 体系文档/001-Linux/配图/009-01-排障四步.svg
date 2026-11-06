@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 464" width="680" height="464" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 818.82" width="1200" height="818.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>整机排障四步：确认影响面、抓现场、vmstat 定维度、进故障树</title>
   <desc>从用户报障开始四步：第一步确认影响面，只有某个功能慢大概率是应用或数据库，只有某个用户慢看网络与限流，整机都慢才继续；第二步用 30 秒抓现场清单把数落下来，重启之前先取数；第三步看 vmstat 三行定维度，r 持续大于核数是 CPU，b 持续大于 0 且 wa 高是磁盘 IO，b 大但 wa 不高是锁或回收，si/so 非 0 是内存，都正常但慢是单核瓶颈网络或抖动；第四步进对应故障树按判据决断，一次只改一个变量。三条纪律：先取数再动手、先整机再进程、一次只改一个变量。</desc>
 
@@ -61,4 +63,6 @@
   <text x="54" y="427" font-size="7.8" fill="#7A4A12">一次只改一个变量：改一个、测一次、记一笔——同时改五个，就不知道哪个起效哪个闯祸</text>
 
   <text x="32" y="452" font-size="9" fill="#8C8980">先定维度再找进程——「CPU 最高的进程」常常是无辜的，它可能只是在等一块坏盘。</text>
+
+  </g>
 </svg>

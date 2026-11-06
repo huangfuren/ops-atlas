@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" width="680" height="424" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 748.24" width="1200" height="748.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>启动链的四个阶段与 initramfs 的作用</title>
   <desc>上行是从按电源到出现登录提示符的四个阶段：固件自检并找引导器、GRUB2 读配置加载内核与 initramfs、内核初始化硬件并挂根分区、systemd 作为 PID 1 按依赖拉起服务进入 target。每段下方红色条是这一段坏掉时屏幕上的样子，据此可以判断该救哪一级（红条上方的括号说明这条规律适用于四段）。下行解释阶段三为什么需要 initramfs：挂根分区要先有文件系统驱动，而驱动模块本身放在根分区里，两者互为前提形成死锁，内存盘就是把驱动提前放进内存来打破它。</desc>
 
@@ -114,4 +116,6 @@
   <text x="52" y="380" font-size="8.8" fill="#1D5A45">把驱动先装进一个内存盘，用它挂上根分区，再 switch_root 把根切过去。</text>
 
   <text x="32" y="410" font-size="9" fill="#8C8980">内存盘由 dracut / mkinitrd 生成，换内核或改 LVM、RAID 配置后必须跟着重建 —— 这是它最常见的失效原因。</text>
+
+  </g>
 </svg>

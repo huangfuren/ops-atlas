@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 386" width="680" height="386" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 681.18" width="1200" height="681.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>After 管顺序，Requires 管存在：三种写法的启动时间线</title>
   <desc>三行对比：第一行只写 After=postgresql.service，db 启动失败后 app 照样启动，起来也连不上；第二行只写 Requires=postgresql.service，两个同时启动，app 先就绪而 db 还没好；第三行 After 与 Requires 一起写，db 就绪之后 app 才启动。绿色竖线标记就绪时刻，红色条表示启动失败。</desc>
 
@@ -67,4 +70,6 @@
   <!-- 底部结论 -->
   <text x="32" y="354" font-size="8.6" fill="#4A4945">After 管先后，Requires 管存亡，WantedBy 管被谁拉起——三者互不替代。</text>
   <text x="32" y="370" font-size="8" fill="#8C8980">enable 只是在 target 里建一条链接，start 才真正按依赖拉起。</text>
+
+  </g>
 </svg>

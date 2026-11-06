@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>权限判定的三步比对，以及路径上每一级目录都需要 x 位</title>
   <desc>上半部分是内核判权的顺序：先比 euid 与文件属主，命中就只用属主那三位；否则比进程的组与文件属组，命中就只用属组那三位；再不然才用其他人那三位。任何一步命中就结束，权限不叠加，所以属主位是 --- 时属组位写着 rwx 也没用。下半部分是一条路径的逐级权限：每一级目录都要有 x 才能进入下一级，team 目录对其他人没有 x，所以后面的文件权限再大也访问不到，这就是 namei -l 要逐级看的原因。</desc>
 
@@ -94,4 +96,6 @@
   <text x="32" y="390" font-size="9" fill="#8C8980">断在 team 这一级：不在 devteam 组的人，report.csv 开到 777 也读不到。</text>
   <text x="32" y="406" font-size="9" fill="#8C8980">所以「某人访问不了某个文件」的第一条命令是 namei -l，不是 ls -l。</text>
   <text x="32" y="426" font-size="9" fill="#8C8980">这三步是 DAC 的全部规则；DAC 之外还有一道 SELinux 的门，见 3.11 与配图 03-02。</text>
+
+  </g>
 </svg>

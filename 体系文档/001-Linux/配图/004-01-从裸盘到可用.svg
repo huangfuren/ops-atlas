@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 410" width="680" height="410" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 723.53" width="1200" height="723.53" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>从物理盘到 df 可见的五步，以及两处最常见的断点</title>
   <desc>一块裸盘要经过分区、建文件系统、挂载三个动作才会出现在 df 里。常见误判都出在两处断点：有分区但没有 mkfs，mount 会报未知文件系统，blkid 的 TYPE 是空的；有文件系统但没有挂载，lsblk 看得到而 df 里根本没有这一条。图的下半部说明三条命令各看一半：lsblk -f 看设备树与每一层的类型，df -hT 只看已挂载文件系统的可用空间，blkid 与 findmnt 提供 UUID 与真实挂载点。</desc>
 
@@ -79,4 +81,6 @@
 
   <text x="32" y="380" font-size="9" fill="#8C8980">先 lsblk -f 看设备树，再 df -hT 看可用空间；两者对不上，就是上面两个断点之一。</text>
   <text x="32" y="396" font-size="9" fill="#8C8980">「盘满没满」别问 du —— 4.5 那个差额，源头就在这里。</text>
+
+  </g>
 </svg>

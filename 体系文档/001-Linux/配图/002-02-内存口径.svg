@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 416" width="680" height="416" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 734.12" width="1200" height="734.12" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>内存口径：free 各列的构成，以及 VSZ、RSS、PSS、USS 对共享页的不同算法</title>
   <desc>上半部分把一条物理内存按用途分成三段：进程拿走的 used、内核拿去做缓存的 buff/cache、完全没碰过的 free。能回收的 cache 加上 free 才是 available，所以判断内存够不够只看 available。下半部分用两个进程共享一份 glibc 的例子说明四个指标的差别：RSS 把共享页在每个进程里各算一遍，两进程合计虚高到 190M，PSS 按比例分摊得到真实的 150M，USS 只算私有部分。</desc>
 
@@ -88,4 +90,6 @@
 
   <text x="32" y="382" font-size="9" fill="#8C8980">用 RSS 相加判断「内存不足」是错的：20 个 Java 各显示 800M，加起来 16G，可机器只有 8G。</text>
   <text x="32" y="398" font-size="9" fill="#8C8980">够不够只看 available，掉到 total 一成以下才要担心；buff/cache 高恰恰说明内存被用起来了。</text>
+
+  </g>
 </svg>

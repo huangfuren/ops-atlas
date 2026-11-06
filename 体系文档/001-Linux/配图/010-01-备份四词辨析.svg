@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 374" width="680" height="374" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660.0" width="1200" height="660.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
+  <g transform="scale(1.7647058824)">
   <title>备份、归档、快照、高可用：四个词四件事，互不替代</title>
   <desc>四列对照：备份防误删损坏勒索，恢复分钟到小时，存独立介质最好异地，按 RPO 保留七到九十天；归档防查不到历史，翻查可能要天；快照防短时间的错误变更，秒级回滚，但和原卷在同一份存储上；高可用防停机，秒级自动切换，不保留数据。每列最后一行是典型误用。底部强调：高可用不防误删，快照不防盘坏，备份不防停机，三者同时都要有；RAID 属于高可用那一列；3-2-1 是底线，加强版 3-2-1-1-0 再加一份不可改副本和零错误验证；正确顺序是业务方先报 RPO 与 RTO，反推频率与方式，最后才选工具。</desc>
 
@@ -56,4 +58,6 @@
 
   <text x="32" y="346" font-size="9" fill="#8C8980">RPO = 出事最多容忍丢多少数据（定频率）；RTO = 最多容忍多久恢复（定方式）。</text>
   <text x="32" y="362" font-size="9" fill="#8C8980">顺序不能反：业务方先报数 → 反推频率与方式 → 才选工具；「我们有 rsync」不是方案。</text>
+
+  </g>
 </svg>
