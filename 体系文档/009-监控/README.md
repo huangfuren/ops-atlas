@@ -4,7 +4,7 @@
 > **读者**：要为自己的服务建立监控、响应告警的运维/SRE。  
 > **口径**：Prometheus 2.x/3.x · Alertmanager 0.27+ · Grafana 10+；Zabbix 6.0 LTS；指标模型遵循 OTel 语义约定（与「链路」互通）。  
 > **更新**：2026-11-06  
-> **术语表**：板块级 [00 术语表](00-术语表.md)；Prometheus 工具术语见 [prometheus/00 术语表](prometheus/00-术语表.md)；Zabbix 专有词见 [zabbix/00 术语表](zabbix/00-术语表.md)。
+> **术语表**：板块级 [00 术语表](00-术语表.md)（47 个术语 · 10 个缩写 · 12 对易混 · 11 条症状反查）；Prometheus 工具术语见 [prometheus/00 术语表](prometheus/00-术语表.md)；Zabbix 专有词见 [zabbix/00 术语表](zabbix/00-术语表.md)。
 
 ## 体系总览
 
@@ -64,7 +64,7 @@
 
 三份术语表各司其职：**板块级**管监控领域（MTTD/拨测/USE/SLA 这些跨工具的词），**Prometheus 工具级**管 target/series/WAL，**Zabbix 工具级**管 item/LLD/proxy。
 
-- [00-术语表.md](00-术语表.md) —— 按主题分组 · 缩写速查 · 10 对易混 · 11 条症状反查
+- [00-术语表.md](00-术语表.md) —— 47 个术语 · 10 个缩写 · 12 对易混 · 11 条症状反查
 - [prometheus/00-术语表.md](prometheus/00-术语表.md) —— 按册分组 · 缩写 · 12 对易混 · 12 条症状反查
 - [zabbix/00-术语表.md](zabbix/00-术语表.md) —— 按册分组 · 缩写 · 12 对易混 · 12 条症状反查
 
