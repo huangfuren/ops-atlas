@@ -12,6 +12,7 @@
 | 1 | 并发模式 |
 | 2 | channel 进阶 |
 | 3 | 新手坑：泄漏与阻塞 |
+| 4 | 检查清单 |
 
 ---
 ## 1. 并发模式
@@ -305,9 +306,6 @@ for {
 
 ---
 
-
----
-
 channel 的运行模型与 select 一图看清：
 
 ![channel 运行模型与 select：缓冲、阻塞、多路复用](配图/009-01-channel运行模型.svg)
@@ -332,6 +330,19 @@ n := runtime.NumGoroutine()      // 定期打点，只增不减就是泄漏
 ```
 
 有 pprof 时直接看 `go tool pprof http://localhost:6060/debug/pprof/goroutine`。
+
+---
+
+## 4. 检查清单
+
+| # | 问题 | 判据 |
+|---|---|---|
+| 1 | 无缓冲 channel 的收发何时阻塞？ | 发送阻塞到有接收方，接收阻塞到有发送方；两者必须同时就绪 |
+| 2 | 关闭 channel 后再发会怎样？接收呢？ | 发送 panic；接收拿到零值且 ok=false，可用来退出 `for range` |
+| 3 | 谁该负责关闭 channel？ | 发送方关闭；接收方关闭会 panic，多发送方时用额外的 done channel |
+| 4 | `select` 的 default 分支语义？ | 无就绪分支时立即走 default，不阻塞；常用来做非阻塞尝试 |
+| 5 | goroutine 泄漏的三种典型形态？ | 发送方无人接收、接收方无人发送、`select` 缺 ctx 退出分支 |
+| 6 | 限流与扇出扇入各靠什么原语？ | 带缓冲 channel 当令牌桶；`sync.WaitGroup` + 结果 channel 做扇出扇入 |
 
 ---
 
