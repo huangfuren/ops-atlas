@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 386" width="680" height="386">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 681.18" width="1200" height="681.18">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>一次 HTTP 请求经过谁：七步链路与四段责任</title>
   <desc>从左到右为浏览器、DNS、服务端边界（CDN/WAF/LB/Nginx）、应用四个区域，七个步骤编号标在箭头上，下方为响应返回与浏览器渲染的回程。</desc>
   <rect width="680" height="386" fill="#FFFFFF"/>
@@ -8,7 +11,7 @@
       <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
     </marker>
   </defs>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">一次 HTTP 请求经过谁：七步链路，四段责任</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">①–⑦ 对应正文 4.1.1，每格标出该段该查什么</text>
 
@@ -63,5 +66,7 @@
     <text x="56" y="304" font-size="9.8" fill="#2C2C2A">无状态是这条链路能水平扩容的前提：服务端不记上一个请求，任何一台机器都能处理任何请求。</text>
     <text x="56" y="322" font-size="9.8" fill="#6B6A65">代价是登录态得自己维持——Cookie / Session / Token 放在客户端或共享存储里。</text>
     <text x="56" y="340" font-size="9.8" fill="#6B6A65">性能主战场在 ⑦：一个页面 80 个请求很常见，不是「一个页面一次请求」。</text>
+  </g>
+
   </g>
 </svg>

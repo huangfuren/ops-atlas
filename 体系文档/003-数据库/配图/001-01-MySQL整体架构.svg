@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="540" viewBox="0 0 680 540" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="952.94" viewBox="0 0 1200 952.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>MySQL 架构：三层服务 + 物理层</title>
   <desc>自上而下四层：连接层、Server 层、存储引擎层同处一个 mysqld 进程内，物理层是进程之外的磁盘文件。</desc>
   <rect x="0" y="0" width="680" height="540" fill="#ffffff"/>
@@ -99,4 +102,6 @@
   <text x="570" y="490" font-size="8" fill="#8C8980" text-anchor="middle">诊断日志</text>
 
   <text x="32" y="528" font-size="9" fill="#4A4945">调优入口各看一层：连接层看配额（max_connections）· Server 层看选路（EXPLAIN）· 引擎层看内存（buffer pool）。</text>
+
+  </g>
 </svg>

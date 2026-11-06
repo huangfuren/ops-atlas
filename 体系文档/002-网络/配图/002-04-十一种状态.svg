@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 700" width="680" height="700">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1235.29" width="1200" height="1235.29">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>TCP 十一种状态的流转</title>
   <desc>从 CLOSED 出发，经被动打开与主动打开两列汇入 ESTABLISHED，再按主动关闭与被动关闭两列分叉，最终回到 CLOSED；CLOSING 为双方同时发 FIN 的罕见分支。</desc>
   <rect width="680" height="700" fill="#FFFFFF"/>
@@ -11,7 +14,7 @@
       <path d="M0,0 L10,5 L0,10 Z" fill="#C08A3E"/>
     </marker>
   </defs>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">十一种状态：建连两列汇合，关闭两列分叉</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">青＝主动关闭方（背 TIME_WAIT）　琥珀＝被动关闭方（背 CLOSE_WAIT）</text>
 
@@ -87,5 +90,7 @@
     <rect x="40" y="648" width="600" height="46" rx="3" fill="#F1EFE8"/>
     <text x="56" y="668" font-size="9.8" fill="#2C2C2A">CLOSE_WAIT 是应用没 close()，连接会一直累积到 fd 耗尽——去查代码，别调内核参数。</text>
     <text x="56" y="686" font-size="9.8" fill="#6B6A65">TIME_WAIT 是主动关闭方在等 2MSL，协议的正常行为，约 60 秒自行消失——根治靠连接池、长连接。</text>
+  </g>
+
   </g>
 </svg>

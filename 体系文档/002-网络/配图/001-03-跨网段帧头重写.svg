@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 680 350" width="680" height="350" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif" role="img">
+<svg viewBox="0 0 1200 617.65" width="1200" height="617.65" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif" role="img">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
 <title>跨网段：帧头逐跳重写，IP 头端到端不变</title>
 <desc>A 主机 192.168.1.10 访问 10.1.1.20 时经过网关。每一跳帧头的源与目的 MAC 都会改写，而 IP 头的源与目的地址全程保持不变。</desc>
 <rect width="680" height="350" fill="#FFFFFF"/>
@@ -57,4 +60,6 @@
 <text x="535" y="283" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">192.168.1.10</text>
 
 <text x="40" y="330" font-size="11" fill="#888780">MAC 只描述当前一段链路，每过一跳重写；IP 描述起点到终点，全程不变</text>
+
+  </g>
 </svg>

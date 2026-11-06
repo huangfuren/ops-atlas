@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="680" height="240">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 423.53" width="1200" height="423.53">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>TCP 的两个连接队列</title>
   <desc>SYN 到达后先进半连接队列等握手完成，完成三次握手后进全连接队列等应用 accept()；两个队列溢出各有不同的内核计数与后果。</desc>
   <rect width="680" height="240" fill="#FFFFFF"/>
@@ -8,7 +11,7 @@
       <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
     </marker>
   </defs>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">两个队列：半连接收 SYN，全连接等 accept()</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">两个溢出，两种后果，两个计数</text>
 
@@ -44,5 +47,7 @@
 
     <text x="40" y="190" font-size="9.5" fill="#4A4945">netstat -s 里两个计数是分开的：「listen queue overflowed」是全连接队列，「SYNs to LISTEN dropped」是半连接队列。</text>
     <text x="40" y="210" font-size="9" fill="#8A8880">两个都非零且持续增长时，通常不是队列太小，而是应用 accept() 太慢——调参只能缓解。</text>
+  </g>
+
   </g>
 </svg>

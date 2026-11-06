@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 412" width="680" height="412">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 727.06" width="1200" height="727.06">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>请求报文与响应报文的四个部分</title>
   <desc>左右并列展示请求与响应：起始行、头部、空行、体四段结构完全相同，起始行拆成方法/路径/版本与版本/状态码/原因短语。</desc>
   <rect width="680" height="412" fill="#FFFFFF"/>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">请求与响应：同一种结构，四个部分</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">空行是头与体的分界，缺了整条报文都会解析错</text>
 
@@ -75,5 +78,7 @@
     <text x="56" y="352" font-size="9.8" fill="#2C2C2A">起始行回答「要什么」，头部回答「我是谁、接受什么格式」，体才是数据本身。</text>
     <text x="56" y="370" font-size="9.8" fill="#6B6A65">头部是排查主战场，按用途分六类：请求上下文、认证、内容协商、缓存、连接、安全（4.2.3）。</text>
     <text x="56" y="388" font-size="9.8" fill="#6B6A65">看到没见过的头，先归类再查字段——比背字段名有用。</text>
+  </g>
+
   </g>
 </svg>

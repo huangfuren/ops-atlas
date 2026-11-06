@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="478" viewBox="0 0 680 478" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="843.53" viewBox="0 0 1200 843.53" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>MySQL 分层排查：症状 → 查哪里 → 具体命令</title>
   <desc>四层由外向内：连接层、Server 层、存储引擎层同属 mysqld 进程，物理层是进程外的磁盘文件。每层右侧给出该层的典型症状与排查命令。</desc>
   <rect x="0" y="0" width="680" height="478" fill="#ffffff"/>
@@ -94,4 +97,6 @@
   <text x="26" y="453" font-size="7" fill="#4A4945">③ 三层调优入口不重叠：连接层看配额，Server 层看选路（EXPLAIN），引擎层看内存（buffer pool）。</text>
 
   <text x="16" y="470" font-size="6.5" fill="#8C8980">注：命令需在对应实例上执行；SHOW ENGINE INNODB STATUS 输出较长，先看 TRANSACTIONS 段。</text>
+
+  </g>
 </svg>

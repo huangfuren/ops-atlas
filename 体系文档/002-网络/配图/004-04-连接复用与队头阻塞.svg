@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>连接复用、队头阻塞与版本演进</title>
   <desc>上半部分对比短连接与长连接的建连次数，下半部分用三条泳道对比 HTTP/1.1 串行、HTTP/2 多路复用与 HTTP/3 独立流在丢包时的表现，底部为四个版本的演进。</desc>
   <rect width="680" height="440" fill="#FFFFFF"/>
@@ -11,7 +14,7 @@
       <line x1="0" y1="0" x2="0" y2="6" stroke="#C08A3E" stroke-width="1.2"/>
     </pattern>
   </defs>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">连接复用与队头阻塞：为什么要升级版本</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">4.5</text>
 
@@ -116,5 +119,7 @@
     </g>
 
     <text x="40" y="426" font-size="9.5" fill="#6B6A65">1.1 解决不了应用层队头阻塞；2 解决了应用层，却把问题推给了 TCP；3 才真正把流拆开。</text>
+  </g>
+
   </g>
 </svg>

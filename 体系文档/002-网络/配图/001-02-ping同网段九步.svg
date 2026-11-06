@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 680 520" width="680" height="520" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif" role="img">
+<svg viewBox="0 0 1200 917.65" width="1200" height="917.65" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif" role="img">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
 <title>ping 同网段的九步交互</title>
 <desc>A 主机 192.168.1.10 与 B 主机 192.168.1.20 处于同一网段，经交换机完成构造报文、查路由、ARP 解析、封装帧、查表转发与应答的九个步骤。</desc>
 <rect width="680" height="520" fill="#FFFFFF"/>
@@ -60,4 +63,6 @@
 <line x1="560" y1="466" x2="128" y2="466" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#ar)"/>
 
 <text x="40" y="512" font-size="11" fill="#888780">虚线为时间轴，自上而下；绿色箭头为跨设备报文，灰框为设备本地动作</text>
+
+  </g>
 </svg>

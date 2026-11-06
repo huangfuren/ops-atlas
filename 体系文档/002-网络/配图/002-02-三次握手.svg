@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" width="680" height="470">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>三次握手的报文与时序</title>
   <desc>客户端与服务端两条时间轴，三次报文交换 SYN、SYN+ACK、ACK，两侧状态同步推进到 ESTABLISHED，之后才开始数据传输。</desc>
   <rect width="680" height="470" fill="#FFFFFF"/>
@@ -8,7 +11,7 @@
       <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
     </marker>
   </defs>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">三次握手：三个报文，确认双向都能收能发</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">时间向下，左侧＝本端状态，右侧＝对端状态</text>
 
@@ -47,5 +50,7 @@
     <rect x="40" y="388" width="600" height="62" rx="3" fill="#F1EFE8"/>
     <text x="56" y="410" font-size="9.8" fill="#2C2C2A">两次握手只能确认「客户端能发、服务端能收」，确认不了客户端的接收能力；第三次 ACK 补的正是这一半。</text>
     <text x="56" y="430" font-size="9.8" fill="#6B6A65">否则一个滞留的旧 SYN 就能让服务端提前分配资源等数据，而客户端根本不认这条连接。</text>
+  </g>
+
   </g>
 </svg>

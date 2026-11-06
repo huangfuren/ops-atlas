@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460" width="680" height="460" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 811.76" width="1200" height="811.76" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>数据库板块十一册地图：版图选型 → MySQL 主线 → 扩展</title>
   <desc>数据库板块十一册分三列：左列版图与选型是 000 全貌（你在这里）和 010 数据库选型；中列 MySQL 主线八册是架构、SQL、索引、事务锁、备份、主从高可用、性能诊断、日常运维；右列扩展是 009 其他数据库与 00 术语表。底部提示只有时间读两篇就读索引与备份。</desc>
 
@@ -87,4 +90,6 @@
   <text x="42" y="392" font-size="7.8" font-weight="600" fill="#7A4A12">★ 只有时间读两篇：003 索引与执行计划 + 005 备份恢复——前者解决 80% 性能问题，后者决定救不救得回来</text>
 
   <text x="32" y="426" font-size="8.6" fill="#8C8980">主线 MySQL 8.0；PG / Redis / MongoDB 运维差异在 009；选型撞墙逻辑在 010 §1；备份方法论在 Linux 010。</text>
+
+  </g>
 </svg>

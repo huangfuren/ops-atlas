@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="466" viewBox="0 0 680 466" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="822.35" viewBox="0 0 1200 822.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>数据库 6 大类与 24 个常用产品</title>
   <desc>六行版图：关系型 OLTP 拆成主流四家与国产六家；缓存与键值挡在读前面；文档型主流只有 MongoDB；分析型 MPP 服务报表与大屏；检索与时序覆盖日志与指标；HTAP 兼具交易与分析。</desc>
   <rect x="0" y="0" width="680" height="466" fill="#ffffff"/>
@@ -99,4 +102,6 @@
   <text x="28" y="410" font-size="8" fill="#4A4945">关系型拆「主流 / 国产」两组：国产库的运维经验不能直接从 MySQL 迁移，得先看它属于哪一派。</text>
   <text x="28" y="430" font-size="8" fill="#4A4945">OceanBase / PolarDB / TiDB 兼具交易与分析能力，故归 HTAP；只当交易库用时，按关系型对待即可。</text>
   <text x="28" y="446" font-size="7.5" fill="#8C8980">选型细节见 010 数据库选型；各家运维差异见 009 其他数据库。</text>
+
+  </g>
 </svg>

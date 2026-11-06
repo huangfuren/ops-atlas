@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" width="680" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 882.35" width="1200" height="882.35">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>HTTP 缓存的三级判断与验证流程</title>
   <desc>从左到右依次判断有没有缓存、是否过期、是否需要向服务端验证，四项结果分别对应回源、直接用、304 与 200；底部为 max-age、no-cache、no-store 的差别。</desc>
   <rect width="680" height="500" fill="#FFFFFF"/>
@@ -8,7 +11,7 @@
       <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
     </marker>
   </defs>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">缓存：先看有没有，再看过没过期，最后才回源</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">4.6 · 只有第 4 种情况要传 body</text>
 
@@ -69,5 +72,7 @@
     <rect x="40" y="440" width="600" height="46" rx="3" fill="#F1EFE8"/>
     <text x="56" y="460" font-size="9.8" fill="#2C2C2A">no-cache ≠ no-store：前者是「存了但不放心，每次问一句」，后者是「不许存」。</text>
     <text x="56" y="478" font-size="9.8" fill="#6B6A65">标准配法：HTML 用 no-cache，静态资源文件名带 hash 且长缓存——发版后 URL 变了，用户自然拿到新文件。</text>
+  </g>
+
   </g>
 </svg>

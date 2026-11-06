@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="364" viewBox="0 0 680 364" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="642.35" viewBox="0 0 1200 642.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>MySQL 主从复制：三个线程接力完成一次数据同步</title>
   <desc>业务写 binlog 由主库 dump 线程发出，经网络到从库 IO 线程落 relay log，再由 SQL 线程重放。延迟只可能出在主库 dump、网络、从库 SQL 重放三段之一。</desc>
   <rect x="0" y="0" width="680" height="364" fill="#ffffff"/>
@@ -78,4 +81,6 @@
   <rect x="420" y="320" width="14" height="10" rx="2" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
   <text x="440" y="329" font-size="8" fill="#4A4945">已知瓶颈点</text>
   <text x="540" y="329" font-size="8" fill="#7A322B">红字 = 延迟来源</text>
+
+  </g>
 </svg>

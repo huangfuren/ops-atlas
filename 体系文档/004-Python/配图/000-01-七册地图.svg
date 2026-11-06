@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="680" height="380" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>Python 板块七册地图：三语言分工下的运维实战线</title>
   <desc>Python 板块七册按学习顺序两行排布：第一行 000 全貌、001 脚本基础、002 与系统打交道、003 网络与 API；第二行 004 数据报表、005 自动化实战、006 工程化，右侧是三语言分工口诀卡。005 是全例册，前面各册的零件都为它服务。工具链口径是 venv 加 pip、标准库优先、ruff 检查。</desc>
 
@@ -63,4 +66,6 @@
   <text x="42" y="320" font-size="7.8" font-weight="600" fill="#7A4A12">★ 005 是全例册：磁盘巡检 → 数据报表 → IM 通知——001~004 的零件都为它服务，读完即可照搬改造。</text>
 
   <text x="32" y="356" font-size="8.6" fill="#8C8980">工具链：venv + pip；标准库优先；ruff 检查（006）；Python 3.10+，示例在 3.12 验证。Python 深入监控打点见「监控」007 的 client_python。</text>
+
+  </g>
 </svg>

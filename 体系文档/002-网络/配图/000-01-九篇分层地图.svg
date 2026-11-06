@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 490" width="680" height="490" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 864.71" width="1200" height="864.71" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>网络板块九篇分层地图：按层定位，009 收口</title>
   <desc>九篇按网络分层归位：跨层场景篇是负载均衡、NAT 防火墙、容器云与企业网络；应用层是 DNS、HTTP、HTTPS 与 TLS；传输层是 TCP 与连接状态；网络层与二层是 IP 路由与 ARP。右侧 009 排障抓包与性能贯穿各层，是争议时刻的第一证据。读法是先按层定位再进对应篇。</desc>
 
@@ -78,4 +81,6 @@
   <text x="32" y="457" font-size="7.8" font-weight="600" fill="#7A4A12">读法：报障先按层定位（009 决策树）→ 进对应篇；跨主机 / 容器场景先看 008 的形态图。</text>
 
   <text x="32" y="482" font-size="8.6" fill="#8C8980">分界：主机网卡配置 → Linux 005；K8s 网络深入 → 容器 006；转发规则与证书卸载 → 接入层板块。</text>
+
+  </g>
 </svg>

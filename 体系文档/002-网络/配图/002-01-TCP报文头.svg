@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
   <title>TCP 固定头 20 字节的字段布局</title>
   <desc>按 5 行 32 位绘制 TCP 固定头：端口、seq、ack、数据偏移与标志位、窗口、校验和与紧急指针；标志位单独展开为六个常用位。</desc>
   <rect width="680" height="420" fill="#FFFFFF"/>
-  <g font-family="'Segoe UI','Microsoft YaHei','PingFang SC',sans-serif">
+  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">TCP 固定头：5 行 × 32 位 = 20 字节</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">琥珀＝排查最常用的三处：seq / ack / 标志位</text>
 
@@ -99,5 +102,7 @@
 
     <text x="40" y="372" font-size="9.5" fill="#4A4945">RST 是运维最该认识的标志：Connection reset by peer 全部来自它——它是立即拒绝，不是超时。</text>
     <text x="40" y="390" font-size="9" fill="#8A8880">每行 4 字节：两端口与校验和各占 2 字节，seq / ack 各占 4 字节；格宽即真实占比。</text>
+  </g>
+
   </g>
 </svg>

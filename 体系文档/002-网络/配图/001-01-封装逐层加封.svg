@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 680 350" width="680" height="350" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif" role="img">
+<svg viewBox="0 0 1200 617.65" width="1200" height="617.65" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif" role="img">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
+  <g transform="scale(1.7647058824)">
+
 <title>封装：每往下一层，加一个信封</title>
 <desc>从应用层到链路层逐层添加头部：TCP 头 20 字节、IP 头 20 字节、以太网帧头 14 字节与帧尾 FCS 4 字节。各段宽度按字节数等比绘制。</desc>
 <rect width="680" height="350" fill="#FFFFFF"/>
@@ -43,4 +46,6 @@
 <text x="488" y="328" font-size="11" fill="#5F5E5A">本层新增</text>
 <rect x="560" y="318" width="12" height="12" rx="2" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
 <text x="578" y="328" font-size="11" fill="#5F5E5A">已有内容</text>
+
+  </g>
 </svg>
