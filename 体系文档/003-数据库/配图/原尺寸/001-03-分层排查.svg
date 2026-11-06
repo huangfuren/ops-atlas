@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 1136" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="1460" height="1136" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5e35b1"/>
+    </marker>
+    <marker id="arrowYellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f9a825"/>
+    </marker>
+  </defs>
+
+  <!-- ===== 标题 ===== -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#1b5e20">MySQL 分层排查：症状 → 查哪里 → 具体命令</text>
+  <text x="40" y="72" font-size="12" fill="#616161">来源：《001 MySQL 架构与基础》§1.1 三层架构 · §1.3 存储引擎 · §1.4 物理文件 · §1.7 连接与线程</text>
+  <text x="40" y="92" font-size="11.5" fill="#78909c">读法：由外向内，每层只调用下一层，不越级访问；右侧一栏是同一分层在运维视角下的对照（§1.1 症状表）。</text>
+
+  <!-- ===== 客户端 ===== -->
+  <rect x="40" y="106" width="1010" height="52" rx="26" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="545" y="138" font-size="15" font-weight="bold" fill="#263238" text-anchor="middle">客户端：应用服务 / mysql 命令行 / GUI 工具 / 连接池</text>
+  <line x1="545" y1="159" x2="545" y2="175" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="556" y="169" font-size="11" fill="#1565c0">TCP 3306</text>
+
+  <!-- ===== mysqld 进程外框 ===== -->
+  <rect x="28" y="178" width="1034" height="578" rx="14" fill="#fbfcfd" stroke="#cfd8dc" stroke-width="1.5"/>
+  <text x="46" y="196" font-size="11" fill="#78909c">mysqld 服务进程（① ② ③ 同属一个进程）</text>
+
+  <!-- ① 连接层 -->
+  <rect x="44" y="210" width="1002" height="126" rx="10" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="62" y="240" font-size="15" font-weight="bold" fill="#0d47a1">① 连接层</text>
+  <text x="1028" y="240" font-size="10.5" fill="#78909c" text-anchor="end">只做接入：连接生命周期与身份认证</text>
+
+  <rect x="60" y="252" width="228" height="58" rx="6" fill="#ffffff" stroke="#90caf9" stroke-width="1.2"/>
+  <text x="174" y="276" font-size="12.5" font-weight="bold" fill="#0d2f5c" text-anchor="middle">连接管理</text>
+  <text x="174" y="296" font-size="10" fill="#546e7a" text-anchor="middle">每条连接一个线程</text>
+
+  <rect x="307" y="252" width="228" height="58" rx="6" fill="#ffffff" stroke="#90caf9" stroke-width="1.2"/>
+  <text x="421" y="276" font-size="12.5" font-weight="bold" fill="#0d2f5c" text-anchor="middle">身份认证</text>
+  <text x="421" y="296" font-size="10" fill="#546e7a" text-anchor="middle">用户名 · 密码 · host</text>
+
+  <rect x="554" y="252" width="228" height="58" rx="6" fill="#ffffff" stroke="#90caf9" stroke-width="1.2"/>
+  <text x="668" y="276" font-size="12.5" font-weight="bold" fill="#0d2f5c" text-anchor="middle">权限校验</text>
+  <text x="668" y="296" font-size="10" fill="#546e7a" text-anchor="middle">库表级 ACL</text>
+
+  <rect x="801" y="252" width="228" height="58" rx="6" fill="#ffffff" stroke="#90caf9" stroke-width="1.2"/>
+  <text x="915" y="276" font-size="12.5" font-weight="bold" fill="#0d2f5c" text-anchor="middle">线程分配</text>
+  <text x="915" y="296" font-size="10" fill="#546e7a" text-anchor="middle">线程池（可选）</text>
+
+  <text x="62" y="324" font-size="11" fill="#37474f">★ 默认 one-thread-per-connection：连接数上限直接决定内存占用（每连接约 256KB–1MB，§1.6.3）。</text>
+
+  <line x1="545" y1="337" x2="545" y2="363" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ② Server 层 -->
+  <rect x="44" y="366" width="1002" height="172" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="62" y="396" font-size="15" font-weight="bold" fill="#1b5e20">② Server 层（SQL 层）</text>
+  <text x="1028" y="396" font-size="10.5" fill="#78909c" text-anchor="end">只做逻辑：把 SQL 变成可执行的计划</text>
+
+  <rect x="60" y="408" width="214" height="66" rx="6" fill="#ffffff" stroke="#a5d6a7" stroke-width="1.2"/>
+  <text x="167" y="436" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">解析器</text>
+  <text x="167" y="456" font-size="9.5" fill="#546e7a" text-anchor="middle">词法 + 语法分析</text>
+  <line x1="276" y1="441" x2="306" y2="441" stroke="#607d8b" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="310" y="408" width="214" height="66" rx="6" fill="#ffffff" stroke="#a5d6a7" stroke-width="1.2"/>
+  <text x="417" y="436" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">预处理器</text>
+  <text x="417" y="456" font-size="9.5" fill="#546e7a" text-anchor="middle">校验表列 · 展开 * · 验权限</text>
+  <line x1="526" y1="441" x2="556" y2="441" stroke="#607d8b" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="560" y="408" width="214" height="66" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2"/>
+  <text x="667" y="436" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">优化器 ★</text>
+  <text x="667" y="456" font-size="9.5" fill="#1b3d1e" text-anchor="middle">选索引 · 定 JOIN 顺序</text>
+  <line x1="776" y1="441" x2="806" y2="441" stroke="#607d8b" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="810" y="408" width="214" height="66" rx="6" fill="#ffffff" stroke="#a5d6a7" stroke-width="1.2"/>
+  <text x="917" y="436" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">执行器</text>
+  <text x="917" y="456" font-size="9.5" fill="#546e7a" text-anchor="middle">按计划调引擎接口</text>
+
+  <text x="62" y="500" font-size="11.5" fill="#37474f">★ 第 4 步是性能问题的根源：90% 的慢查询不是机器慢，是优化器选错索引或走了全表扫描。</text>
+  <text x="62" y="520" font-size="10.5" fill="#546e7a">同一层还有：权限与账户体系、内置函数、视图与存储过程；binlog 也由这一层写入（提交阶段）。</text>
+
+  <line x1="545" y1="539" x2="545" y2="565" stroke="#5e35b1" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text x="558" y="558" font-size="10.5" fill="#5e35b1">Handler API（统一的存储引擎接口）</text>
+
+  <!-- ③ 存储引擎层 -->
+  <rect x="44" y="568" width="1002" height="170" rx="10" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="62" y="598" font-size="15" font-weight="bold" fill="#311b92">③ 存储引擎层（可插拔）</text>
+  <text x="1028" y="598" font-size="10.5" fill="#78909c" text-anchor="end">只做物理：页、索引、事务、锁</text>
+
+  <rect x="60" y="610" width="190" height="88" rx="6" fill="#d1c4e9" stroke="#4527a0" stroke-width="2"/>
+  <text x="155" y="634" font-size="13" font-weight="bold" fill="#311b92" text-anchor="middle">InnoDB</text>
+  <text x="155" y="656" font-size="10" fill="#311b92" text-anchor="middle">默认引擎（5.5+）</text>
+  <text x="155" y="678" font-size="9.5" fill="#4a3b8f" text-anchor="middle">事务 · 行锁 · 崩溃恢复</text>
+
+  <rect x="262" y="610" width="190" height="88" rx="6" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="357" y="634" font-size="13" font-weight="bold" fill="#616161" text-anchor="middle">MyISAM</text>
+  <text x="357" y="656" font-size="10" fill="#757575" text-anchor="middle">无事务 · 只有表锁</text>
+  <text x="357" y="678" font-size="9.5" fill="#757575" text-anchor="middle">历史表遗留</text>
+
+  <rect x="464" y="610" width="190" height="88" rx="6" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="559" y="634" font-size="13" font-weight="bold" fill="#616161" text-anchor="middle">Memory</text>
+  <text x="559" y="656" font-size="10" fill="#757575" text-anchor="middle">内存表 · 重启即失</text>
+  <text x="559" y="678" font-size="9.5" fill="#757575" text-anchor="middle">临时中间结果</text>
+
+  <line x1="666" y1="612" x2="666" y2="696" stroke="#b39ddb" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+  <rect x="678" y="610" width="352" height="88" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.2"/>
+  <text x="692" y="632" font-size="11.5" font-weight="bold" fill="#311b92">InnoDB 内部（运维关注点）</text>
+  <text x="692" y="656" font-size="10.5" fill="#37474f">缓冲池（数据页缓存）· B+ 树索引 · 事务与锁 · MVCC</text>
+  <text x="692" y="676" font-size="10.5" fill="#37474f">redo log 保崩溃恢复 · undo 支撑回滚与旧版本</text>
+
+  <text x="62" y="724" font-size="11.5" fill="#37474f">★ 存储引擎可插拔是 MySQL 的结构性特征（当年胜过对手的原因）；但 5.5 之后 InnoDB 即默认，新表一律用 InnoDB（§1.3）。</text>
+
+  <line x1="545" y1="757" x2="545" y2="779" stroke="#f9a825" stroke-width="2" marker-end="url(#arrowYellow)"/>
+  <text x="558" y="772" font-size="10.5" fill="#8d6e00">读 16KB 数据页 / 刷脏页</text>
+
+  <!-- ④ 物理层 -->
+  <rect x="44" y="782" width="1002" height="150" rx="10" fill="#fffdf0" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="62" y="812" font-size="15" font-weight="bold" fill="#5d4700">④ 物理层：磁盘文件（datadir = /var/lib/mysql）</text>
+  <text x="1028" y="812" font-size="10.5" fill="#78909c" text-anchor="end">只做持久：所有变更最终落到这些文件</text>
+
+  <rect x="60" y="824" width="228" height="88" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="174" y="850" font-size="12" font-family="Consolas,Menlo,monospace" font-weight="bold" fill="#1b5e20" text-anchor="middle">your_db/*.ibd</text>
+  <text x="174" y="872" font-size="10" fill="#37474f" text-anchor="middle">表数据与索引，一表一文件</text>
+  <text x="174" y="894" font-size="10" font-weight="bold" fill="#c62828" text-anchor="middle">绝不删除</text>
+
+  <rect x="307" y="824" width="228" height="88" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="421" y="850" font-size="12" font-family="Consolas,Menlo,monospace" font-weight="bold" fill="#1b5e20" text-anchor="middle">ibdata1 / #innodb_redo/</text>
+  <text x="421" y="872" font-size="10" fill="#37474f" text-anchor="middle">系统表空间 与 redo 日志（两个文件）</text>
+  <text x="421" y="894" font-size="10" font-weight="bold" fill="#c62828" text-anchor="middle">绝不删除</text>
+
+  <rect x="554" y="824" width="228" height="88" rx="6" fill="#fff8e1" stroke="#ef6c00" stroke-width="1.2"/>
+  <text x="668" y="850" font-size="12" font-family="Consolas,Menlo,monospace" font-weight="bold" fill="#8d4e00" text-anchor="middle">binlog.000001</text>
+  <text x="668" y="872" font-size="10" fill="#37474f" text-anchor="middle">数据变更 · 主从与时间点恢复</text>
+  <text x="668" y="894" font-size="10" font-weight="bold" fill="#e65100" text-anchor="middle">只能 PURGE 清理</text>
+
+  <rect x="801" y="824" width="228" height="88" rx="6" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="915" y="850" font-size="12" font-family="Consolas,Menlo,monospace" font-weight="bold" fill="#555555" text-anchor="middle">error.log · slow.log</text>
+  <text x="915" y="872" font-size="10" fill="#37474f" text-anchor="middle">启动崩溃 · 慢查询现场</text>
+  <text x="915" y="894" font-size="10" font-weight="bold" fill="#757575" text-anchor="middle">可清理（先存档）</text>
+
+  <!-- ===== 右栏：运维对照 ===== -->
+  <text x="1090" y="196" font-size="11.5" font-weight="bold" fill="#e65100">运维视角：出问题先看这里</text>
+
+  <rect x="1090" y="210" width="330" height="126" rx="8" fill="#fff8f1" stroke="#e65100" stroke-width="1.2"/>
+  <text x="1108" y="234" font-size="11.5" font-weight="bold" fill="#bf360c">① 连接层</text>
+  <text x="1108" y="258" font-size="11" fill="#c62828">连接数打满 · 认证失败 · 连接被拒</text>
+  <line x1="1108" y1="270" x2="1402" y2="270" stroke="#ffcc80" stroke-width="1"/>
+  <text x="1108" y="288" font-size="9.5" fill="#8d6e00">查这里</text>
+  <text x="1108" y="308" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">SHOW FULL PROCESSLIST</text>
+  <text x="1108" y="326" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">SELECT @@max_connections</text>
+
+  <rect x="1090" y="366" width="330" height="172" rx="8" fill="#fff8f1" stroke="#e65100" stroke-width="1.2"/>
+  <text x="1108" y="392" font-size="11.5" font-weight="bold" fill="#bf360c">② Server 层</text>
+  <text x="1108" y="416" font-size="11" fill="#c62828">执行计划选错 · 函数报错 · 权限不足</text>
+  <line x1="1108" y1="430" x2="1402" y2="430" stroke="#ffcc80" stroke-width="1"/>
+  <text x="1108" y="448" font-size="9.5" fill="#8d6e00">查这里</text>
+  <text x="1108" y="470" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">EXPLAIN</text>
+  <text x="1108" y="488" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">SHOW GRANTS FOR 'app'@'%'</text>
+  <text x="1108" y="506" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">SHOW FULL PROCESSLIST</text>
+  <text x="1108" y="528" font-size="10.5" font-weight="bold" fill="#bf360c">★ 90% 的慢查询在这一层定性</text>
+
+  <rect x="1090" y="568" width="330" height="170" rx="8" fill="#fff8f1" stroke="#e65100" stroke-width="1.2"/>
+  <text x="1108" y="594" font-size="11.5" font-weight="bold" fill="#bf360c">③ 存储引擎层</text>
+  <text x="1108" y="618" font-size="11" fill="#c62828">锁等待 · 死锁 · 命中率低 · 磁盘 IO 高</text>
+  <line x1="1108" y1="632" x2="1402" y2="632" stroke="#ffcc80" stroke-width="1"/>
+  <text x="1108" y="650" font-size="9.5" fill="#8d6e00">查这里</text>
+  <text x="1108" y="672" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">SHOW ENGINE INNODB STATUS</text>
+  <text x="1108" y="690" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">SHOW GLOBAL STATUS</text>
+  <text x="1108" y="714" font-size="10.5" font-weight="bold" fill="#bf360c">★ 长事务超 60 秒必须处理（§1.7.3）</text>
+
+  <rect x="1090" y="782" width="330" height="150" rx="8" fill="#fff8f1" stroke="#e65100" stroke-width="1.2"/>
+  <text x="1108" y="806" font-size="11.5" font-weight="bold" fill="#bf360c">④ 磁盘与日志文件</text>
+  <text x="1108" y="830" font-size="11" fill="#c62828">磁盘满 · binlog 堆积 · undo 膨胀</text>
+  <line x1="1108" y1="844" x2="1402" y2="844" stroke="#ffcc80" stroke-width="1"/>
+  <text x="1108" y="862" font-size="9.5" fill="#8d6e00">查这里</text>
+  <text x="1108" y="882" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">du -sh /var/lib/mysql</text>
+  <text x="1108" y="900" font-size="10.5" font-family="Consolas,Menlo,monospace" fill="#7f3f00">PURGE BINARY LOGS BEFORE '...'</text>
+  <text x="1108" y="922" font-size="10.5" font-weight="bold" fill="#bf360c">★ 不要用 rm 删 binlog</text>
+
+  <!-- ===== 结构要点 ===== -->
+  <rect x="40" y="956" width="1380" height="96" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="982" font-size="13" font-weight="bold" fill="#bf360c">结构要点</text>
+  <text x="60" y="1002" font-size="11.5" fill="#7f3f00">① 三层是同一个 mysqld 进程内部的划分，磁盘在进程之外；存储引擎可插拔是 MySQL 与其他数据库的结构性差异。</text>
+  <text x="60" y="1020" font-size="11.5" fill="#7f3f00">② 一次写操作跨两层落三种日志：undo / redo 在 InnoDB，binlog 在 Server 层，靠两阶段提交保证主从一致（§1.5.4）。</text>
+  <text x="60" y="1038" font-size="11.5" fill="#7f3f00">③ 三层的调优入口互不重叠：连接层看配额（max_connections），Server 层看选路（EXPLAIN），引擎层看内存（buffer pool）。</text>
+
+  <!-- ===== 图例 ===== -->
+  <rect x="40" y="1072" width="1380" height="44" rx="8" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+  <rect x="60" y="1084" width="16" height="12" rx="3" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.2"/>
+  <text x="86" y="1094" font-size="12" fill="#37474f">连接层（接入）</text>
+  <rect x="336" y="1084" width="16" height="12" rx="3" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="362" y="1094" font-size="12" fill="#37474f">Server 层（SQL 处理）</text>
+  <rect x="612" y="1084" width="16" height="12" rx="3" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.2"/>
+  <text x="638" y="1094" font-size="12" fill="#37474f">存储引擎层</text>
+  <rect x="888" y="1084" width="16" height="12" rx="3" fill="#fffdf0" stroke="#f9a825" stroke-width="1.2"/>
+  <text x="914" y="1094" font-size="12" fill="#37474f">物理层（磁盘文件）</text>
+  <rect x="1164" y="1084" width="16" height="12" rx="3" fill="#fff8f1" stroke="#e65100" stroke-width="1.2"/>
+  <text x="1190" y="1094" font-size="12" fill="#37474f">运维排查入口</text>
+</svg>

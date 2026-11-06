@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 486" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="1000" height="486" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+  </defs>
+
+  <!-- 标题栏 -->
+  <rect x="0" y="0" width="1000" height="64" fill="#263238"/>
+  <text x="24" y="29" font-size="20" font-weight="bold" fill="#ffffff">MySQL 主从复制：三个线程接力完成一次数据同步</text>
+  <text x="24" y="50" font-size="12" fill="#b0bec5">业务写 binlog → ① dump 发出 → 网络 → ② IO 落 relay log → ③ SQL 重放 → 从库数据</text>
+
+  <!-- 主库分区 -->
+  <rect x="14" y="88" width="369" height="206" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="30" y="124" font-size="17" font-weight="bold" fill="#1b5e20">🏢 主库 Master</text>
+  <text x="30" y="143" font-size="11.5" fill="#2e7d32">产生 binlog 的一方</text>
+
+  <!-- 从库分区 -->
+  <rect x="479" y="88" width="502" height="206" rx="12" fill="#e3f2fd" fill-opacity="0.6" stroke="#1565c0" stroke-width="2"/>
+  <text x="495" y="124" font-size="17" font-weight="bold" fill="#0d47a1">🏢 从库 Slave</text>
+  <text x="495" y="143" font-size="11.5" fill="#1565c0">重放 binlog 的一方</text>
+
+  <!-- e1 业务写入 -->
+  <rect x="30" y="176" width="88" height="100" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="74" y="210" font-size="15" font-weight="bold" fill="#37474f" text-anchor="middle">业务写入</text>
+  <text x="74" y="231" font-size="9.5" fill="#616161" text-anchor="middle">INSERT/UPDATE</text>
+  <text x="74" y="251" font-size="10" fill="#546e7a" text-anchor="middle">产生变更事件</text>
+
+  <!-- e2 binlog -->
+  <rect x="146" y="176" width="88" height="100" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="190" y="210" font-size="15" font-weight="bold" fill="#37474f" text-anchor="middle">binlog</text>
+  <text x="190" y="231" font-size="11" fill="#616161" text-anchor="middle">二进制日志</text>
+  <text x="190" y="251" font-size="10" fill="#546e7a" text-anchor="middle">按事务顺序追加</text>
+
+  <!-- e3 ① Binlog Dump -->
+  <rect x="262" y="176" width="105" height="100" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="314" y="210" font-size="12.5" font-weight="bold" fill="#1b3d1e" text-anchor="middle">① Binlog Dump</text>
+  <text x="314" y="231" font-size="10.5" fill="#2e7d32" text-anchor="middle">读 binlog 发走</text>
+  <text x="314" y="251" font-size="10.5" fill="#c62828" text-anchor="middle">慢 = 主库压力大</text>
+
+  <!-- e4 ② IO Thread -->
+  <rect x="495" y="176" width="105" height="100" rx="6" fill="#90caf9" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="547" y="210" font-size="12.5" font-weight="bold" fill="#0d2f5c" text-anchor="middle">② IO Thread</text>
+  <text x="547" y="231" font-size="10.5" fill="#1565c0" text-anchor="middle">接收并落盘</text>
+  <text x="547" y="251" font-size="10.5" fill="#757575" text-anchor="middle">通常不是瓶颈</text>
+
+  <!-- e5 relay log -->
+  <rect x="628" y="176" width="88" height="100" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="672" y="210" font-size="14" font-weight="bold" fill="#37474f" text-anchor="middle">relay log</text>
+  <text x="672" y="231" font-size="11" fill="#616161" text-anchor="middle">中继日志</text>
+  <text x="672" y="251" font-size="10" fill="#546e7a" text-anchor="middle">等 ③ 重放</text>
+
+  <!-- e6 ③ SQL Thread -->
+  <rect x="744" y="176" width="105" height="100" rx="6" fill="#90caf9" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="796" y="210" font-size="12.5" font-weight="bold" fill="#0d2f5c" text-anchor="middle">③ SQL Thread</text>
+  <text x="796" y="231" font-size="10.5" fill="#1565c0" text-anchor="middle">重放 SQL 到数据</text>
+  <text x="796" y="251" font-size="10.5" fill="#c62828" text-anchor="middle">★ 最常见瓶颈</text>
+
+  <!-- e7 从库数据 -->
+  <rect x="877" y="176" width="88" height="100" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="921" y="210" font-size="15" font-weight="bold" fill="#37474f" text-anchor="middle">从库数据</text>
+  <text x="921" y="231" font-size="11" fill="#616161" text-anchor="middle">与主库一致</text>
+  <text x="921" y="251" font-size="10" fill="#546e7a" text-anchor="middle">异步：有延迟</text>
+
+  <!-- 卡间箭头 -->
+  <line x1="122" y1="226" x2="140" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="238" y1="226" x2="256" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="604" y1="226" x2="622" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="720" y1="226" x2="738" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="853" y1="226" x2="871" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 跨库：binlog 经网络传输 -->
+  <text x="431" y="200" font-size="11" font-weight="bold" fill="#1565c0" text-anchor="middle">网络传输</text>
+  <line x1="371" y1="226" x2="489" y2="226" stroke="#1565c0" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <text x="431" y="252" font-size="10" fill="#c62828" text-anchor="middle">慢 = 带宽不足</text>
+
+  <!-- 底部结论条 -->
+  <rect x="14" y="318" width="970" height="88" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="32" y="344" font-size="14.5" font-weight="bold" fill="#bf360c">延迟只可能出在三段中的一段——主库 dump、网络、从库 SQL 重放</text>
+  <text x="32" y="370" font-size="12" fill="#7f3f00">① 慢 = 主库压力大  ｜  网络慢 = 带宽或 RTT  ｜  ③ 慢 = 从库性能不够或有大事务</text>
+  <text x="32" y="392" font-size="12" fill="#7f3f00">② IO 线程只负责搬字节、不执行 SQL，几乎从不成为瓶颈——排查时可以直接跳过它</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="430" width="18" height="13" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="64" y="441" font-size="12.5" fill="#37474f">数据 / 日志（载体）</text>
+
+  <rect x="285" y="430" width="18" height="13" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="309" y="441" font-size="12.5" fill="#37474f">主库侧的线程</text>
+
+  <rect x="530" y="430" width="18" height="13" rx="3" fill="#90caf9" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="554" y="441" font-size="12.5" fill="#37474f">从库侧的线程</text>
+
+  <text x="775" y="441" font-size="12.5" fill="#c62828">慢 = 延迟来源</text>
+
+  <text x="984" y="472" font-size="10.5" fill="#90a4ae" text-anchor="end">依据 MySQL 8.0 复制机制 · 对应文档 6.1</text>
+</svg>
