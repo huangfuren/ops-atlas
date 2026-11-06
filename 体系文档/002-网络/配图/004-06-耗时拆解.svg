@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
   <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
   <g transform="scale(1.7647058824)">
 
   <title>用 curl 的五个时间字段拆开一次请求的耗时</title>
   <desc>一条时间轴按 DNS、TCP、TLS、服务端思考、传输五段切分，五个刻度分别对应 curl 的 time_namelookup、time_connect、time_appconnect、time_starttransfer、time_total。</desc>
   <rect width="680" height="400" fill="#FFFFFF"/>
-  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <g>
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">一条命令拆开耗时：五个数，五段责任</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">curl -w · 4.8</text>
 

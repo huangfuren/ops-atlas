@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1235.29" width="1200" height="1235.29">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1235.29" width="1200" height="1235.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
   <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
   <g transform="scale(1.7647058824)">
 
@@ -14,7 +14,7 @@
       <path d="M0,0 L10,5 L0,10 Z" fill="#C08A3E"/>
     </marker>
   </defs>
-  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <g>
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">十一种状态：建连两列汇合，关闭两列分叉</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">青＝主动关闭方（背 TIME_WAIT）　琥珀＝被动关闭方（背 CLOSE_WAIT）</text>
 

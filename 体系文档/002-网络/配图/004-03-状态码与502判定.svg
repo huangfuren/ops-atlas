@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 952.94" width="1200" height="952.94">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 952.94" width="1200" height="952.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
   <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
   <g transform="scale(1.7647058824)">
 
   <title>状态码的责任划分与 502/503/504 判据</title>
   <desc>上半部分按 1xx 到 5xx 列出责任方与首查方向，下半部分给出用 upstream 变量区分 502、503、504 的三条判据。</desc>
   <rect width="680" height="540" fill="#FFFFFF"/>
-  <g font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <g>
     <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">状态码：先看是谁的责任，再看是几</text>
     <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">4xx 不代表「不是我们的问题」</text>
 
