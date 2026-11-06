@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" width="680" height="424" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>编译交叉交付：一份源码出多平台静态二进制</title>
+  <desc>交叉编译靠三个环境变量：GOOS 选操作系统、GOARCH 选架构、CGO_ENABLED=0 切断 C 依赖。三者组合成平台矩阵，同一份源码可以产出 linux/darwin/windows 各架构的静态二进制。产物不依赖运行时，可直接 scp 到服务器或塞进 scratch 镜像；代价是要自己拷 CA 证书，且 -w 去掉调试信息后 core dump 无法还原堆栈。</desc>
+
+  <rect width="680" height="424" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">编译交叉交付：一份源码出多平台静态二进制</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">016 §1.2</text>
+
+  <defs>
+    <marker id="a16Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 左：构建输入 -->
+  <rect x="20" y="44" width="170" height="252" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="36" y="64" font-size="8.6" font-weight="600" fill="#2B2A27">构建输入</text>
+
+  <rect x="36" y="76" width="138" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="105" y="94" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">源码 + go.mod</text>
+  <text x="105" y="109" font-size="6.8" fill="#4A4945" text-anchor="middle">依赖已 go mod tidy</text>
+
+  <line x1="105" y1="122" x2="105" y2="132" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a16Blue)"/>
+
+  <rect x="36" y="134" width="138" height="96" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="46" y="152" font-size="7.2" font-weight="600" fill="#7A4A12">三个环境变量</text>
+  <text x="46" y="169" font-size="7" fill="#7A4A12">CGO_ENABLED=0</text>
+  <text x="46" y="185" font-size="7" fill="#7A4A12">GOOS=linux</text>
+  <text x="46" y="201" font-size="7" fill="#7A4A12">GOARCH=amd64</text>
+  <text x="46" y="219" font-size="6.6" fill="#8C8980">三者组合，循环即批量</text>
+
+  <text x="36" y="250" font-size="7.2" font-weight="600" fill="#2B2A27">-ldflags "-s -w"</text>
+  <text x="36" y="264" font-size="6.8" fill="#4A4945">去符号表与 DWARF</text>
+  <text x="36" y="278" font-size="6.8" fill="#4A4945">体积减 25~30%</text>
+
+  <!-- 中：平台矩阵 -->
+  <rect x="200" y="44" width="270" height="252" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="216" y="64" font-size="8.6" font-weight="600" fill="#2B2A27">平台矩阵：GOOS × GOARCH</text>
+  <text x="216" y="80" font-size="6.8" fill="#8C8980">go tool dist list 查全集</text>
+
+  <rect x="216" y="92" width="74" height="42" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="253" y="110" font-size="7" fill="#1F4468" text-anchor="middle">linux</text>
+  <text x="253" y="124" font-size="7" fill="#1F4468" text-anchor="middle">amd64</text>
+
+  <rect x="298" y="92" width="74" height="42" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="335" y="110" font-size="7" fill="#1F4468" text-anchor="middle">linux</text>
+  <text x="335" y="124" font-size="7" fill="#1F4468" text-anchor="middle">arm64</text>
+
+  <rect x="380" y="92" width="74" height="42" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="417" y="110" font-size="7" fill="#1F4468" text-anchor="middle">darwin</text>
+  <text x="417" y="124" font-size="7" fill="#1F4468" text-anchor="middle">amd64</text>
+
+  <rect x="216" y="144" width="74" height="42" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="253" y="162" font-size="7" fill="#1F4468" text-anchor="middle">darwin</text>
+  <text x="253" y="176" font-size="7" fill="#1F4468" text-anchor="middle">arm64</text>
+
+  <rect x="298" y="144" width="74" height="42" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="335" y="162" font-size="7" fill="#1F4468" text-anchor="middle">windows</text>
+  <text x="335" y="176" font-size="7" fill="#1F4468" text-anchor="middle">amd64</text>
+
+  <rect x="380" y="144" width="74" height="42" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="417" y="162" font-size="7" fill="#1F4468" text-anchor="middle">windows</text>
+  <text x="417" y="176" font-size="7" fill="#1F4468" text-anchor="middle">arm64</text>
+
+  <text x="216" y="208" font-size="7.2" fill="#4A4945">CGO_ENABLED=0 时一条命令跨平台；</text>
+  <text x="216" y="224" font-size="7.2" fill="#4A4945">CGO=1 需交叉工具链，多数场景不划算。</text>
+  <text x="216" y="244" font-size="7.2" fill="#4A4945">产物命名约定：dist/app-$GOOS-$GOARCH</text>
+  <text x="216" y="266" font-size="7.2" font-weight="600" fill="#1D5A45">同一份源码，六个文件，零运行时依赖。</text>
+  <text x="216" y="284" font-size="6.8" fill="#8C8980">目标机架构先 uname -m 确认，别照抄教程。</text>
+
+  <!-- 右：交付形态 -->
+  <rect x="480" y="44" width="180" height="252" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="496" y="64" font-size="8.6" font-weight="600" fill="#2B2A27">交付形态</text>
+
+  <rect x="496" y="76" width="148" height="52" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="570" y="94" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">静态二进制</text>
+  <text x="570" y="108" font-size="6.8" fill="#1D5A45" text-anchor="middle">10~20MB · 无运行时</text>
+  <text x="570" y="120" font-size="6.8" fill="#1D5A45" text-anchor="middle">scp 上去就能跑</text>
+
+  <line x1="570" y1="130" x2="570" y2="140" stroke="#6BAF95" stroke-width="1.2" marker-end="url(#a16Blue)"/>
+
+  <rect x="496" y="142" width="148" height="52" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="570" y="160" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">scratch 镜像</text>
+  <text x="570" y="174" font-size="6.8" fill="#1D5A45" text-anchor="middle">只拷二进制 + CA 证书</text>
+  <text x="570" y="186" font-size="6.8" fill="#1D5A45" text-anchor="middle">镜像 ≈ 二进制大小</text>
+
+  <line x1="570" y1="196" x2="570" y2="206" stroke="#6BAF95" stroke-width="1.2" marker-end="url(#a16Blue)"/>
+
+  <rect x="496" y="208" width="148" height="52" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="570" y="226" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">scp / 容器 / systemd</text>
+  <text x="570" y="240" font-size="6.8" fill="#1D5A45" text-anchor="middle">无依赖地狱</text>
+  <text x="570" y="252" font-size="6.8" fill="#1D5A45" text-anchor="middle">回滚只换一个文件</text>
+
+  <text x="496" y="278" font-size="7" fill="#8C8980">交付成本 ≈ 复制一个文件，</text>
+  <text x="496" y="290" font-size="7" fill="#8C8980">这是 Go 在运维场景的最大优势。</text>
+
+  <!-- 底部：坑与推荐命令 -->
+  <rect x="20" y="308" width="640" height="36" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="32" y="323" font-size="8" font-weight="600" fill="#7A322B">两个必踩的坑：① 忘拷 CA 证书 → HTTPS 全报 x509 错误；② 加 -w 去 DWARF → core dump 还原不出堆栈。</text>
+  <text x="32" y="337" font-size="7.2" fill="#7A322B">前者在 scratch 镜像里必现；后者只在崩溃分析时暴露，生产环境要留一版带调试信息的产物。</text>
+
+  <rect x="20" y="352" width="640" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="32" y="371" font-size="7.4" fill="#1D5A45">推荐：CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o app .　（arm64 目标改 GOARCH=arm64）</text>
+
+  <text x="32" y="410" font-size="9" fill="#8C8980">交叉编译不是「模拟运行」，是直接产出目标平台的机器码——所以能在 Windows 上构建 Linux 服务。</text>
+</svg>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Zabbix 与 Prometheus：采集模型与数据模型的分岔</title>
+  <desc>左边 Zabbix 是模板化监控平台：server 通过 proxy 或直连，用 agent、SNMP、IPMI、JMX 多协议采集，数据模型是 item 取值、trigger 求值。右边 Prometheus 是标签化时序库：按服务发现的目标主动拉取 /metrics，数据模型是指标名加 label，再由规则求值。两者采集方向与数据结构不同，但告警出口可以汇合，实际环境常常并存。</desc>
+
+  <rect width="680" height="440" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Zabbix 与 Prometheus：采集模型与数据模型的分岔</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 选型对照</text>
+
+  <defs>
+    <marker id="a0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a0Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- 左：Zabbix -->
+  <rect x="20" y="44" width="310" height="196" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="36" y="64" font-size="8.8" font-weight="600" fill="#1F4468">Zabbix｜模板化平台 + 多协议采集</text>
+
+  <rect x="36" y="76" width="118" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="95" y="95" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">Zabbix server</text>
+  <text x="95" y="110" font-size="6.6" fill="#4A4945" text-anchor="middle">调度 · 求值 · 告警</text>
+
+  <line x1="156" y1="99" x2="168" y2="99" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <rect x="170" y="76" width="144" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="242" y="95" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">Zabbix proxy</text>
+  <text x="242" y="110" font-size="6.6" fill="#4A4945" text-anchor="middle">可选 · 断网本地缓存</text>
+
+  <rect x="36" y="140" width="278" height="80" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="48" y="158" font-size="7.4" font-weight="600" fill="#2B2A27">被监控端：四类协议</text>
+  <text x="48" y="174" font-size="6.8" fill="#4A4945">agent2 :10050　SNMP :161　IPMI　JMX → Java gateway :10052</text>
+  <text x="48" y="190" font-size="6.8" fill="#4A4945">被动 = server 连 agent 取数；主动 = agent 连 server 上报</text>
+  <text x="48" y="206" font-size="6.8" fill="#8C8980">模板定义采什么，LLD 长出磁盘/网卡/接口</text>
+
+  <line x1="242" y1="124" x2="242" y2="136" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <text x="36" y="234" font-size="7" fill="#8C8980">数据模型：item（key → value）→ trigger（表达式求值）</text>
+
+  <!-- 右：Prometheus -->
+  <rect x="350" y="44" width="310" height="196" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="366" y="64" font-size="8.8" font-weight="600" fill="#7A4A12">Prometheus｜标签化时序库 + 拉取</text>
+
+  <rect x="366" y="76" width="118" height="46" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="425" y="95" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">Prometheus</text>
+  <text x="425" y="110" font-size="6.6" fill="#7A4A12" text-anchor="middle">scrape · TSDB · PromQL</text>
+
+  <line x1="486" y1="99" x2="498" y2="99" stroke="#D9A458" stroke-width="1.2" marker-end="url(#a0Amber)"/>
+
+  <rect x="500" y="76" width="144" height="46" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="572" y="95" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">服务发现</text>
+  <text x="572" y="110" font-size="6.6" fill="#7A4A12" text-anchor="middle">K8s / file_sd / Consul</text>
+
+  <rect x="366" y="140" width="278" height="80" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="378" y="158" font-size="7.4" font-weight="600" fill="#2B2A27">抓取目标：/metrics 端点</text>
+  <text x="378" y="174" font-size="6.8" fill="#4A4945">exporter · kubelet/cAdvisor · node-exporter · 应用埋点</text>
+  <text x="378" y="190" font-size="6.8" fill="#4A4945">以 pull 为主；短命任务用 pushgateway 兜底</text>
+  <text x="378" y="206" font-size="6.8" fill="#8C8980">指标集合由 exporter 决定，服务发现决定「抓谁」</text>
+
+  <line x1="425" y1="124" x2="425" y2="136" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+
+  <text x="366" y="234" font-size="7" fill="#8C8980">数据模型：metric{label…} → recording / alerting rule</text>
+
+  <!-- 下：数据模型对照 -->
+  <rect x="20" y="252" width="310" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="36" y="270" font-size="7.6" font-weight="600" fill="#1F4468">一个监控项 = 一个 key + 一个值</text>
+  <text x="36" y="286" font-size="6.8" fill="#1F4468">system.cpu.load[percpu,avg1] = 0.8</text>
+  <text x="36" y="302" font-size="6.6" fill="#4A4945">维度靠 LLD 生成多个 item 表达</text>
+
+  <rect x="350" y="252" width="310" height="62" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="366" y="270" font-size="7.6" font-weight="600" fill="#7A4A12">一条样本 = 指标名 + 一组 label + 时间戳</text>
+  <text x="366" y="286" font-size="6.8" fill="#7A4A12">node_load1{instance="10.0.0.5:9100"} 0.8</text>
+  <text x="366" y="302" font-size="6.6" fill="#7A4A12">维度靠 label 切分，查询靠 PromQL</text>
+
+  <!-- 选型三问 -->
+  <rect x="20" y="326" width="640" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="342" font-size="7.8" font-weight="600" fill="#7A4A12">选型三问：① 目标以容器/K8s 为主？是 → Prometheus　② 有 SNMP 设备、Windows、IPMI？有 → Zabbix 必上　③ 团队更熟 SQL 还是 PromQL？</text>
+  <text x="32" y="357" font-size="7" fill="#7A4A12">第三问不是技术优劣，是日常排障成本——换工具不换人，学习曲线就是真成本。</text>
+
+  <rect x="20" y="374" width="640" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="32" y="393" font-size="7.4" fill="#1D5A45">共存是常态：容器层 Prometheus、网络与遗留系统 Zabbix，告警统一汇到值班平台，而不是强行二选一。</text>
+
+  <text x="32" y="426" font-size="9" fill="#8C8980">两套系统的本质差异不在功能清单，而在「数据怎么表示」与「谁发起采集」。</text>
+</svg>

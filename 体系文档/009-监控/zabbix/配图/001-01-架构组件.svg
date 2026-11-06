@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>Zabbix 6.0 组件与数据流：谁连谁、走哪个端口</title>
+  <desc>被监控端有四种接入方式：agent2 走 10050、SNMP 设备走 161、IPMI 带外、JMX 经 Java gateway 10052。数据汇聚到 server 的 10051：被动模式是 server 连 agent，主动模式是 agent 连 server。跨网段或大规模时中间加一层 proxy，断网可本地缓存。server 读写 MySQL 3306，前端 nginx/PHP 8080 只读写数据库，不参与采集。</desc>
+
+  <rect width="680" height="440" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Zabbix 6.0 组件与数据流：谁连谁、走哪个端口</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">001 §1.2</text>
+
+  <defs>
+    <marker id="a1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a1BlueStart" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M10,0 L0,5 L10,10 z" fill="#7FA6D0"/>
+    </marker>
+    <marker id="a1Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
+    </marker>
+  </defs>
+
+  <!-- 左：被监控端 -->
+  <rect x="20" y="44" width="170" height="200" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="34" y="63" font-size="8.2" font-weight="600" fill="#2B2A27">被监控端</text>
+
+  <rect x="32" y="72" width="146" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="105" y="90" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">agent2 · 10050</text>
+  <text x="105" y="105" font-size="6.6" fill="#4A4945" text-anchor="middle">Linux / Windows 主机</text>
+
+  <rect x="32" y="124" width="146" height="40" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="105" y="141" font-size="7.6" font-weight="600" fill="#2B2A27" text-anchor="middle">SNMP · 161</text>
+  <text x="105" y="155" font-size="6.4" fill="#4A4945" text-anchor="middle">交换机 / 防火墙 / UPS</text>
+
+  <rect x="32" y="170" width="146" height="40" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="105" y="187" font-size="7.6" font-weight="600" fill="#2B2A27" text-anchor="middle">IPMI / JMX</text>
+  <text x="105" y="201" font-size="6.4" fill="#4A4945" text-anchor="middle">带外硬件 / Java → 10052</text>
+
+  <text x="34" y="230" font-size="6.4" fill="#8C8980">不装 agent 的设备走标准协议</text>
+
+  <!-- 右：服务端 -->
+  <rect x="400" y="44" width="260" height="200" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="414" y="63" font-size="8.2" font-weight="600" fill="#2B2A27">服务端</text>
+
+  <rect x="416" y="72" width="108" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="470" y="90" font-size="8" font-weight="600" fill="#7A4A12" text-anchor="middle">server · 10051</text>
+  <text x="470" y="104" font-size="6.4" fill="#7A4A12" text-anchor="middle">调度 / 求值 / 告警</text>
+  <text x="470" y="117" font-size="6.4" fill="#7A4A12" text-anchor="middle">配置缓存</text>
+
+  <line x1="526" y1="98" x2="538" y2="98" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a1Blue)"/>
+
+  <rect x="540" y="72" width="104" height="52" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="592" y="90" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">MySQL · 3306</text>
+  <text x="592" y="104" font-size="6.4" fill="#4A4945" text-anchor="middle">配置 / 历史 / 趋势</text>
+  <text x="592" y="117" font-size="6.4" fill="#4A4945" text-anchor="middle">事件</text>
+
+  <rect x="416" y="140" width="108" height="46" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="470" y="157" font-size="7.6" font-weight="600" fill="#2B2A27" text-anchor="middle">nginx / PHP · 8080</text>
+  <text x="470" y="172" font-size="6.4" fill="#4A4945" text-anchor="middle">前端，不参与采集</text>
+
+  <line x1="470" y1="140" x2="470" y2="128" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a1Blue)"/>
+
+  <rect x="540" y="140" width="104" height="46" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="592" y="157" font-size="7.6" font-weight="600" fill="#2B2A27" text-anchor="middle">浏览器</text>
+  <text x="592" y="172" font-size="6.4" fill="#4A4945" text-anchor="middle">运维人员</text>
+
+  <line x1="540" y1="163" x2="528" y2="163" stroke="#CFCCC2" stroke-width="1.2" marker-end="url(#a1Blue)"/>
+
+  <text x="414" y="204" font-size="6.4" fill="#8C8980">前端挂了监控照跑、告警照发</text>
+  <text x="414" y="222" font-size="6.4" fill="#8C8980">排障先看 server 日志，不是先刷页面</text>
+
+  <!-- 主链路：双向 -->
+  <line x1="182" y1="80" x2="408" y2="80" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#a1Blue)"/>
+  <text x="295" y="74" font-size="6.8" fill="#1F4468" text-anchor="middle">主动上报 → 10051</text>
+
+  <line x1="408" y1="104" x2="182" y2="104" stroke="#D9A458" stroke-width="1.4" marker-end="url(#a1Amber)"/>
+  <text x="295" y="118" font-size="6.8" fill="#7A4A12" text-anchor="middle">← 被动取数 10050</text>
+
+  <!-- Proxy -->
+  <rect x="215" y="166" width="170" height="62" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="300" y="184" font-size="7.8" font-weight="600" fill="#46337A" text-anchor="middle">Zabbix proxy（可选）</text>
+  <text x="300" y="199" font-size="6.6" fill="#46337A" text-anchor="middle">跨网段 / 大规模 · 断网本地缓存</text>
+  <text x="300" y="214" font-size="6.6" fill="#46337A" text-anchor="middle">主动：Proxy→server　被动：server→Proxy</text>
+
+  <line x1="300" y1="164" x2="300" y2="124" stroke="#9C8ACB" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#a1Amber)"/>
+  <text x="318" y="146" font-size="6.4" fill="#46337A">10051</text>
+
+  <!-- 下：主被动对照 -->
+  <rect x="20" y="258" width="310" height="66" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="34" y="276" font-size="7.8" font-weight="600" fill="#7A4A12">被动检查：server → agent:10050</text>
+  <text x="34" y="292" font-size="6.8" fill="#7A4A12">每台被监控机要放行 10050，适合同网段、主机少</text>
+  <text x="34" y="307" font-size="6.8" fill="#7A4A12">排障：server 上 zabbix_get -s &lt;ip&gt; -k agent.ping</text>
+
+  <rect x="350" y="258" width="310" height="66" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="364" y="276" font-size="7.8" font-weight="600" fill="#1D5A45">主动检查：agent → server:10051</text>
+  <text x="364" y="292" font-size="6.8" fill="#1D5A45">只需出站可达，适合跨网段、NAT 后、主机多</text>
+  <text x="364" y="307" font-size="6.8" fill="#1D5A45">硬条件：Hostname 与前端主机名逐字符一致</text>
+
+  <!-- 端口速查 -->
+  <rect x="20" y="336" width="640" height="40" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="32" y="352" font-size="7.6" font-weight="600" fill="#2B2A27">端口速查：10051 server/proxy · 10050 agent · 10052 Java gateway · 8080/80/443 前端 · 3306 数据库 · 162/udp SNMP trap</text>
+  <text x="32" y="367" font-size="6.8" fill="#4A4945">只开必要方向：被动要「server 能连 agent」，主动要「agent 能连 server」，两者防火墙规则相反。</text>
+
+  <rect x="20" y="384" width="640" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="32" y="403" font-size="7.4" fill="#1D5A45">部署顺序：chrony → 数据库 → server → 前端（含时区与 SELinux）→ agent2 → 纳管；每步都有验证命令，别跳。</text>
+
+  <text x="32" y="428" font-size="9" fill="#8C8980">前端只是数据库的另一个客户端；监控是否在跑，看 server 与 agent，不看页面刷不刷得开。</text>
+</svg>

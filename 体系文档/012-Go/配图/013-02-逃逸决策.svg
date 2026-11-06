@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 424" width="680" height="424" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>逃逸决策：变量去栈还是堆</title>
+  <desc>编译器在编译期做逃逸分析：变量生命周期不超出栈帧就分配在栈上，随函数返回自动回收、零 GC 成本；一旦返回局部变量指针、被 interface 或闭包捕获、发送到 channel、元素过大，就逃逸到堆，由 GC 管理。判断入口是 go build -gcflags=-m，优化方向是减少高频路径上的分配，而不是消灭所有逃逸。</desc>
+
+  <rect width="680" height="424" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">逃逸决策：变量去栈还是堆</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">013 §1.1</text>
+
+  <defs>
+    <marker id="a13Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 左：决策路径 -->
+  <rect x="20" y="44" width="400" height="252" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <rect x="40" y="62" width="132" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="106" y="80" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">局部变量 / 返回值</text>
+  <text x="106" y="95" font-size="6.8" fill="#4A4945" text-anchor="middle">声明在函数内</text>
+
+  <line x1="174" y1="83" x2="206" y2="83" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a13Blue)"/>
+
+  <rect x="208" y="62" width="196" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="306" y="80" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">编译期逃逸分析</text>
+  <text x="306" y="95" font-size="6.8" fill="#4A4945" text-anchor="middle">不改变语义，只决定去向</text>
+
+  <line x1="306" y1="104" x2="306" y2="126" stroke="#7FA6D0" stroke-width="1.2"/>
+  <line x1="115" y1="126" x2="305" y2="126" stroke="#7FA6D0" stroke-width="1.2"/>
+  <line x1="115" y1="126" x2="115" y2="142" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a13Blue)"/>
+  <line x1="305" y1="126" x2="305" y2="142" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a13Blue)"/>
+
+  <rect x="40" y="146" width="150" height="66" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
+  <text x="115" y="166" font-size="8.8" font-weight="600" fill="#1D5A45" text-anchor="middle">栈 · 不逃逸</text>
+  <text x="115" y="182" font-size="7" fill="#1D5A45" text-anchor="middle">函数返回即回收</text>
+  <text x="115" y="197" font-size="7" fill="#1D5A45" text-anchor="middle">零 GC 成本 · 极快</text>
+
+  <rect x="230" y="146" width="150" height="66" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
+  <text x="305" y="166" font-size="8.8" font-weight="600" fill="#7A4A12" text-anchor="middle">堆 · 逃逸</text>
+  <text x="305" y="182" font-size="7" fill="#7A4A12" text-anchor="middle">生命周期超出栈帧</text>
+  <text x="305" y="197" font-size="7" fill="#7A4A12" text-anchor="middle">GC 管理 · 有分配成本</text>
+
+  <text x="40" y="234" font-size="7.6" font-weight="600" fill="#2B2A27">三个判据，命中任一即上堆：</text>
+  <text x="40" y="250" font-size="7.2" fill="#4A4945">① 指针逃出函数　② 被 interface / 闭包捕获　③ 发送到 channel 或对象过大</text>
+  <text x="40" y="268" font-size="7.2" fill="#4A4945">栈空间有上限（默认 1GB），递归深或大数组会触发栈增长，仍不改变归属。</text>
+  <text x="40" y="284" font-size="7.2" fill="#8C8980">逃逸是编译期结论，运行期不会在栈堆之间搬——看 -m 输出，别猜。</text>
+
+  <!-- 右：常见逃逸原因 -->
+  <rect x="436" y="44" width="224" height="252" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="452" y="66" font-size="8.6" font-weight="600" fill="#2B2A27">常见逃逸原因</text>
+  <text x="452" y="88" font-size="7.2" fill="#4A4945">返回局部变量指针</text>
+  <text x="644" y="88" font-size="6.6" fill="#8C8980" text-anchor="end">return &amp;T{}</text>
+  <line x1="452" y1="96" x2="644" y2="96" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="112" font-size="7.2" fill="#4A4945">存进 interface</text>
+  <text x="644" y="112" font-size="6.6" fill="#8C8980" text-anchor="end">fmt.Println(x)</text>
+  <line x1="452" y1="120" x2="644" y2="120" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="136" font-size="7.2" fill="#4A4945">闭包捕获外部变量</text>
+  <text x="644" y="136" font-size="6.6" fill="#8C8980" text-anchor="end">func(){ use(x) }</text>
+  <line x1="452" y1="144" x2="644" y2="144" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="160" font-size="7.2" fill="#4A4945">切片 / map 元素是指针</text>
+  <text x="644" y="160" font-size="6.6" fill="#8C8980" text-anchor="end">底层数组在堆</text>
+  <line x1="452" y1="168" x2="644" y2="168" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="184" font-size="7.2" fill="#4A4945">变量过大超栈帧</text>
+  <text x="644" y="184" font-size="6.6" fill="#8C8980" text-anchor="end">大数组 / 大 struct</text>
+  <line x1="452" y1="192" x2="644" y2="192" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="208" font-size="7.2" fill="#4A4945">发送到 channel</text>
+  <text x="644" y="208" font-size="6.6" fill="#8C8980" text-anchor="end">跨协程共享</text>
+  <line x1="452" y1="216" x2="644" y2="216" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="232" font-size="7.2" fill="#4A4945">返回 slice 的 sub-slice</text>
+  <text x="644" y="232" font-size="6.6" fill="#8C8980" text-anchor="end">共享底层数组</text>
+  <line x1="452" y1="240" x2="644" y2="240" stroke="#EDEAE2" stroke-width="1"/>
+  <text x="452" y="256" font-size="7" fill="#8C8980">逃逸不等于内存泄漏，</text>
+  <text x="452" y="270" font-size="7" fill="#8C8980">只意味着这次分配要 GC 兜底。</text>
+  <text x="452" y="286" font-size="7" fill="#8C8980">先看频率，再看单次成本。</text>
+
+  <!-- 底部：优化判据 -->
+  <rect x="20" y="308" width="640" height="36" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="323" font-size="8" font-weight="600" fill="#7A4A12">优化方向不是「消灭所有逃逸」，而是「减少高频路径上的分配」——热点上的每请求一次分配都值得改。</text>
+  <text x="32" y="337" font-size="7.2" fill="#7A4A12">先 profile 找热点（014），再看热点函数的 -m 输出，最后才动代码；盲目改返回值形态常换来更差的 API。</text>
+
+  <rect x="20" y="352" width="640" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="32" y="371" font-size="7.6" fill="#1D5A45">查看方式：go build -gcflags='-m' ./... 看是否逃逸；-m -m 看原因；生产判据看 gctrace 的存活堆是否持续上涨。</text>
+
+  <text x="32" y="410" font-size="9" fill="#8C8980">栈是自动回收的快速通道，堆是 GC 的管辖范围；逃逸分析是编译器替你做的一次分配决策。</text>
+</svg>
