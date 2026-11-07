@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>缓存三件套对比：穿透、击穿、雪崩的病根与防法</title>
+  <desc>三列对比：穿透是查不存在的数据缓存永远为空，防法是布隆过滤器加空值缓存；击穿是一个热点 key 过期瞬间并发涌入，防法是互斥重建加逻辑过期；雪崩是大批 key 同时失效或缓存宕机，防法是过期时间加随机、多级缓存、限流熔断与高可用。底部是一致性纪律：先更新数据库再删除缓存，残余窗口靠延迟双删与 TTL 收敛。</desc>
+  <g transform="scale(1.7647058824)">
+  <rect width="680" height="470" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">缓存三件套：病根不同，防法不同</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">005 §1 · 配图</text>
+
+  <!-- 三列 -->
+  <rect x="20" y="50" width="210" height="240" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <rect x="30" y="60" width="190" height="30" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="125" y="80" font-size="9.5" font-weight="600" fill="#7A322B" text-anchor="middle">① 穿透 penetration</text>
+  <text x="32" y="110" font-size="8" font-weight="600" fill="#2B2A27">病根：查不存在的数据</text>
+  <text x="32" y="126" font-size="7.6" fill="#4A4945">缓存里永远查不到，</text>
+  <text x="32" y="140" font-size="7.6" fill="#4A4945">每次请求都直接落库</text>
+  <text x="32" y="162" font-size="8" font-weight="600" fill="#2B2A27">防法</text>
+  <text x="32" y="178" font-size="7.6" fill="#1D5A45">✓ 布隆过滤器挡第一道</text>
+  <text x="32" y="194" font-size="7.6" fill="#1D5A45">✓ 空值缓存（短 TTL）</text>
+  <text x="32" y="210" font-size="7.6" fill="#1D5A45">✓ 开放接口必配</text>
+  <text x="32" y="240" font-size="7.2" fill="#8C8980">特征：持续性低速压力</text>
+
+  <rect x="235" y="50" width="210" height="240" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <rect x="245" y="60" width="190" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="340" y="80" font-size="9.5" font-weight="600" fill="#7A4A12" text-anchor="middle">② 击穿 breakdown</text>
+  <text x="247" y="110" font-size="8" font-weight="600" fill="#2B2A27">病根：热点 key 过期瞬间</text>
+  <text x="247" y="126" font-size="7.6" fill="#4A4945">成百上千并发同时</text>
+  <text x="247" y="140" font-size="7.6" fill="#4A4945">落库重建</text>
+  <text x="247" y="162" font-size="8" font-weight="600" fill="#2B2A27">防法</text>
+  <text x="247" y="178" font-size="7.6" fill="#1D5A45">✓ 互斥重建（SET NX 抢锁）</text>
+  <text x="247" y="194" font-size="7.6" fill="#1D5A45">✓ 逻辑过期（异步重建）</text>
+  <text x="247" y="210" font-size="7.6" fill="#1D5A45">✓ 头部热点永不过期</text>
+  <text x="247" y="240" font-size="7.2" fill="#8C8980">特征：瞬时尖峰</text>
+
+  <rect x="450" y="50" width="210" height="240" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <rect x="460" y="60" width="190" height="30" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="555" y="80" font-size="9.5" font-weight="600" fill="#7A322B" text-anchor="middle">③ 雪崩 avalanche</text>
+  <text x="462" y="110" font-size="8" font-weight="600" fill="#2B2A27">病根：大批同时失效</text>
+  <text x="462" y="126" font-size="7.6" fill="#4A4945">批量导入同 TTL，</text>
+  <text x="462" y="140" font-size="7.6" fill="#4A4945">或缓存整体宕机</text>
+  <text x="462" y="162" font-size="8" font-weight="600" fill="#2B2A27">防法</text>
+  <text x="462" y="178" font-size="7.6" fill="#1D5A45">✓ TTL 加随机偏移</text>
+  <text x="462" y="194" font-size="7.6" fill="#1D5A45">✓ 多级缓存 + 限流熔断</text>
+  <text x="462" y="210" font-size="7.6" fill="#1D5A45">✓ 缓存层 HA（003/004）</text>
+  <text x="462" y="240" font-size="7.2" fill="#8C8980">特征：集体尖峰</text>
+
+  <!-- 一致性 -->
+  <rect x="20" y="304" width="640" height="106" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="32" y="326" font-size="9" font-weight="600" fill="#2B2A27">一致性：Cache-Aside——先更新数据库，再删除缓存（不是更新缓存）</text>
+  <text x="32" y="346" font-size="7.6" fill="#4A4945">为什么删不更：并发写顺序不可控；删除后下次读重算，天然收敛。</text>
+  <text x="32" y="364" font-size="7.6" fill="#4A4945">残余窗口：读请求卡在「写库后、删缓存前」读到旧值——概率低，TTL 兜底收敛。</text>
+  <text x="32" y="382" font-size="7.6" font-weight="600" fill="#1D5A45">要求更强：延迟双删（删缓存→更库→延迟几百 ms 再删）或订阅 binlog 异步删（零业务侵入）。</text>
+  <text x="32" y="400" font-size="7.2" fill="#8C8980">Redis 侧配套：maxmemory-policy 显式选型（纯缓存 allkeys-lfu；混布 volatile-*；主存储 noeviction+告警）。</text>
+
+  <text x="32" y="432" font-size="8.6" fill="#8C8980">三件套防法主要在应用侧实现（Redis 提供原子命令）——运维负责评审清单（005 §8）与兜底配置。</text>
+  </g>
+</svg>

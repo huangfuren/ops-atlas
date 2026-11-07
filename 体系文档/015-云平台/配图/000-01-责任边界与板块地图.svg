@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>云上责任边界与板块六册地图</title>
+  <desc>云上责任边界三行：云厂商管底层设施（机房/硬件/虚拟化/托管服务自身），共同区域是安全配置与身份，用户管数据/配置/SQL/容量/账单。下半是板块六册地图：001 云上网络、002 云主机与镜像、003 云数据库与存储、004 Terraform IaC、005 云监控与账单衔接、000 全貌。底部提示接手云账号的第一件事是打标签与开操作审计。</desc>
+  <g transform="scale(1.7647058824)">
+  <rect width="680" height="470" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">云上责任边界与板块六册地图</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+
+  <!-- 责任边界三行 -->
+  <rect x="20" y="50" width="640" height="150" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="30" y="68" font-size="8" font-weight="600" fill="#8C8980">责任共担：每层谁负责什么</text>
+  <rect x="30" y="76" width="600" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="44" y="90" font-size="8" font-weight="600" fill="#1F4468">云厂商 · 底层设施</text>
+  <text x="44" y="104" font-size="7" fill="#4A4945">机房 · 硬件 · 虚拟化 · 托管服务自身的高可用与补丁</text>
+  <rect x="30" y="114" width="600" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="44" y="128" font-size="8" font-weight="600" fill="#7A4A12">共同区域 · 配置与身份</text>
+  <text x="44" y="142" font-size="7" fill="#7A4A12">安全组/防火墙规则 · 账号与 ACL · 备份策略开关——谁配错了算谁的</text>
+  <rect x="30" y="152" width="600" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
+  <text x="44" y="166" font-size="8" font-weight="600" fill="#7A322B">用户 · 数据与配置</text>
+  <text x="44" y="180" font-size="7" fill="#7A322B">SQL 与索引 · 容量规划 · 数据正确性 · 账单——RDS 接管机器，不接管这些</text>
+
+  <!-- 六册地图 -->
+  <rect x="20" y="214" width="640" height="164" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="30" y="232" font-size="8" font-weight="600" fill="#8C8980">板块六册地图</text>
+  <rect x="30" y="240" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
+  <text x="132" y="260" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">000 全貌 ★ 你在这里</text>
+  <text x="132" y="276" font-size="7" fill="#4A4945" text-anchor="middle">责任边界 · 六册地图</text>
+  <text x="132" y="289" font-size="7" fill="#4A4945" text-anchor="middle">分界 · 学习路径</text>
+  <rect x="241" y="240" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="343" y="260" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">001 云上网络</text>
+  <text x="343" y="276" font-size="7" fill="#4A4945" text-anchor="middle">VPC · 安全组 · SLB · NAT</text>
+  <text x="343" y="289" font-size="7" fill="#4A4945" text-anchor="middle">与自建网络对照</text>
+  <rect x="452" y="240" width="196" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="550" y="260" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">002 云主机与镜像</text>
+  <text x="550" y="276" font-size="7" fill="#4A4945" text-anchor="middle">规格族 · 镜像 · 生命周期</text>
+  <text x="550" y="289" font-size="7" fill="#4A4945" text-anchor="middle">释放/停机的数据后果</text>
+  <rect x="30" y="304" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="132" y="324" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">003 云数据库与存储</text>
+  <text x="132" y="340" font-size="7" fill="#4A4945" text-anchor="middle">RDS 责任边界 · 高可用</text>
+  <text x="132" y="353" font-size="7" fill="#4A4945" text-anchor="middle">OSS · 生命周期规则</text>
+  <rect x="241" y="304" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="343" y="324" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">004 Terraform IaC 基础</text>
+  <text x="343" y="340" font-size="7" fill="#4A4945" text-anchor="middle">HCL · state · plan/apply</text>
+  <text x="343" y="353" font-size="7" fill="#4A4945" text-anchor="middle">漂移 · 与 Ansible 对照</text>
+  <rect x="452" y="304" width="196" height="56" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="550" y="324" font-size="8.2" font-weight="600" fill="#7A4A12" text-anchor="middle">005 云观测与账单衔接</text>
+  <text x="550" y="340" font-size="7" fill="#7A4A12" text-anchor="middle">云监控/操作审计</text>
+  <text x="550" y="353" font-size="7" fill="#7A4A12" text-anchor="middle">与自建体系衔接 · 标签</text>
+
+  <!-- 底部 -->
+  <rect x="20" y="392" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="409" font-size="7.8" font-weight="600" fill="#7A4A12">★ 接手云账号的第一件事：给全部资源打标签（env/app/owner）+ 开操作审计长存——账单与追溯都靠它们（005）</text>
+
+  <text x="32" y="448" font-size="8.6" fill="#8C8980">分界：K8s 托管深入 → 容器 005~009；SQL 优化 → 数据库 007/010；加固体系 → 安全运维 000~004；备份方法论 → Linux 010。</text>
+  </g>
+</svg>

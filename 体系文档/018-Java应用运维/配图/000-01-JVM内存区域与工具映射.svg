@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>JVM 内存区域与排障工具映射</title>
+  <desc>JVM 进程的内存四区：堆（对象，受 Xmx 管，分年轻代和老年代）、元空间（类元数据，本地内存）、线程栈（每线程私有调用帧）、直接内存（NIO 堆外）。每区标注对应工具：jstat 看 GC、jmap 抓堆 dump、jstack 抓线程栈、native memory tracking 看直接内存。右侧是两册地图：001 JVM 内存与 GC 排障、002 Tomcat 与应用交付。底部提示容器里的退出码 137。</desc>
+  <g transform="scale(1.7647058824)">
+  <rect width="680" height="470" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">JVM 内存区域与排障工具映射</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+
+  <defs>
+    <marker id="j0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 内存四区 -->
+  <rect x="20" y="50" width="400" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="34" y="72" font-size="8.6" font-weight="600" fill="#1F4468">堆 Heap —— 对象存放（-Xmx/-Xms）</text>
+  <text x="34" y="88" font-size="7.4" fill="#4A4945">年轻代（Eden+Survivor）+ 老年代——GC 主战场</text>
+  <text x="34" y="104" font-size="7.2" font-weight="600" fill="#1D5A45">工具：jstat -gc · jmap -dump · GC 日志</text>
+
+  <rect x="20" y="124" width="400" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="34" y="146" font-size="8.6" font-weight="600" fill="#1F4468">元空间 Metaspace —— 类元数据（本地内存）</text>
+  <text x="34" y="162" font-size="7.4" fill="#4A4945">8.x 取代永久代；不受 -Xmx 管，受 MaxMetaspaceSize 管</text>
+  <text x="34" y="177" font-size="7.2" font-weight="600" fill="#1D5A45">OOM 症状：OutOfMemoryError: Metaspace</text>
+
+  <rect x="20" y="192" width="400" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="34" y="214" font-size="8.6" font-weight="600" fill="#1F4468">线程栈 Thread Stack —— 每线程私有</text>
+  <text x="34" y="230" font-size="7.4" fill="#4A4945">方法调用帧；-Xss 控制（默认 1MB）；线程数暴涨的账算这里</text>
+  <text x="34" y="245" font-size="7.2" font-weight="600" fill="#1D5A45">工具：jstack · thread dump</text>
+
+  <rect x="20" y="260" width="400" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="34" y="282" font-size="8.6" font-weight="600" fill="#1F4468">直接内存 Direct Memory —— NIO 堆外</text>
+  <text x="34" y="298" font-size="7.4" fill="#4A4945">不受 -Xmx 管，受 MaxDirectMemorySize 管——容器 OOM 常见暗雷</text>
+  <text x="34" y="313" font-size="7.2" font-weight="600" fill="#1D5A45">观察：NMT（NativeMemoryTracking=summary）</text>
+
+  <!-- 右：两册地图 -->
+  <rect x="440" y="50" width="210" height="270" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
+  <text x="545" y="72" font-size="8.6" font-weight="600" fill="#2B2A27" text-anchor="middle">板块两册地图</text>
+  <rect x="452" y="84" width="186" height="104" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="545" y="104" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">001 JVM 内存与 GC 排障</text>
+  <text x="545" y="120" font-size="7.2" fill="#4A4945" text-anchor="middle">内存分区 · GC 器</text>
+  <text x="545" y="136" font-size="7.2" fill="#4A4945" text-anchor="middle">jps/jstat/jmap/jstack</text>
+  <text x="545" y="152" font-size="7.2" fill="#4A4945" text-anchor="middle">OOM 四型 · dump 分析</text>
+  <text x="545" y="168" font-size="7.2" fill="#4A4945" text-anchor="middle">容器 137 退出码</text>
+  <rect x="452" y="198" width="186" height="104" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="545" y="218" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">002 Tomcat 与应用交付</text>
+  <text x="545" y="234" font-size="7.2" fill="#4A4945" text-anchor="middle">war vs fat jar</text>
+  <text x="545" y="250" font-size="7.2" fill="#4A4945" text-anchor="middle">server.xml · 线程池</text>
+  <text x="545" y="266" font-size="7.2" fill="#4A4945" text-anchor="middle">部署与回滚</text>
+  <text x="545" y="282" font-size="7.2" fill="#4A4945" text-anchor="middle">日志体系</text>
+  <rect x="452" y="308" width="186" height="0" rx="0" fill="none" stroke="none"/>
+
+  <!-- 对照 Go -->
+  <rect x="20" y="330" width="630" height="56" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="350" font-size="8.4" font-weight="600" fill="#7A4A12">★ 与 Go 板块对照学：「Go」013 GC ↔ 本册 GC；「Go」014 pprof ↔ jstack/jmap——同一问题两种解法，概念可互相迁移</text>
+  <text x="32" y="370" font-size="7.4" fill="#7A4A12">★ 容器红线：-Xmx 只管堆——堆外（元空间+直接内存+线程栈）叠加后超过容器 limit → OOMKilled 退出码 137（001 §5）</text>
+
+  <text x="32" y="424" font-size="8.6" fill="#8C8980">排障第一步永远是 jps 找 PID——参数与命令族详见 001 §3；应用日志采集见「日志」001。</text>
+  </g>
+</svg>

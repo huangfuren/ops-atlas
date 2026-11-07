@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <title>哨兵切换时序：主观下线到通知客户端，脑裂窗口与防治</title>
+  <desc>哨兵切换六步：主库失联、各哨兵主观下线（down-after-milliseconds）、quorum 个哨兵确认升级客观下线、哨兵间选举 leader、挑选数据最新的从库提升为新主、通知客户端与其余从库改挂新主。右侧脑裂窗口：旧主在分区期间仍接写入，恢复后全量同步导致丢失，防治是 min-replicas-to-write 与 max-lag。</desc>
+  <g transform="scale(1.7647058824)">
+  <rect width="680" height="470" fill="#FFFFFF"/>
+  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">哨兵切换时序：六步完成主从易主</text>
+  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">003 §3 · 配图</text>
+
+  <defs>
+    <marker id="s3Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    </marker>
+  </defs>
+
+  <!-- 六步阶梯 -->
+  <circle cx="44" cy="64" r="12" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="44" y="68" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">1</text>
+  <text x="64" y="60" font-size="9" font-weight="600" fill="#2B2A27">主库失联</text>
+  <text x="64" y="74" font-size="7.6" fill="#4A4945">网络分区 / 进程崩溃——客户端开始报错</text>
+
+  <circle cx="44" cy="112" r="12" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="44" y="116" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">2</text>
+  <text x="64" y="108" font-size="9" font-weight="600" fill="#2B2A27">主观下线（sdown）</text>
+  <text x="64" y="122" font-size="7.6" fill="#4A4945">每个哨兵独立判定：down-after-milliseconds（默认 30s）收不到回复</text>
+
+  <circle cx="44" cy="160" r="12" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="44" y="164" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">3</text>
+  <text x="64" y="156" font-size="9" font-weight="600" fill="#2B2A27">客观下线（odown）</text>
+  <text x="64" y="170" font-size="7.6" fill="#4A4945">≥quorum 个哨兵都判定失联——够数才切换，防单哨兵误判</text>
+
+  <circle cx="44" cy="208" r="12" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
+  <text x="44" y="212" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">4</text>
+  <text x="64" y="204" font-size="9" font-weight="600" fill="#2B2A27">哨兵间选 leader</text>
+  <text x="64" y="218" font-size="7.6" fill="#4A4945">Raft 式选举：多数派同意——所以哨兵要 ≥3 个奇数个</text>
+
+  <circle cx="44" cy="256" r="12" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
+  <text x="44" y="260" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">5</text>
+  <text x="64" y="252" font-size="9" font-weight="600" fill="#7A4A12">挑新主提升</text>
+  <text x="64" y="266" font-size="7.6" fill="#7A4A12">优先级 replica-priority → 复制 offset 最大 → runid 最小；其余从库 replicaof 新主</text>
+
+  <circle cx="44" cy="304" r="12" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.4"/>
+  <text x="44" y="308" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">6</text>
+  <text x="64" y="300" font-size="9" font-weight="600" fill="#1D5A45">通知客户端</text>
+  <text x="64" y="314" font-size="7.6" fill="#1D5A45">发布 +switch-master 事件 + 从库改挂新主——客户端须用 sentinel 模式才能自动跟随</text>
+
+  <line x1="44" y1="76" x2="44" y2="98" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <line x1="44" y1="124" x2="44" y2="146" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <line x1="44" y1="172" x2="44" y2="194" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <line x1="44" y1="220" x2="44" y2="242" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+  <line x1="44" y1="268" x2="44" y2="290" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s3Blue)"/>
+
+  <!-- 脑裂窗口 -->
+  <rect x="330" y="56" width="320" height="180" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
+  <text x="344" y="78" font-size="9" font-weight="600" fill="#7A322B">⚠ 脑裂窗口：数据丢失的高危期</text>
+  <text x="344" y="100" font-size="7.6" fill="#7A322B">主库没挂，只是与哨兵/从库网络分区：</text>
+  <text x="344" y="118" font-size="7.6" fill="#7A322B">哨兵照常切了新主，但旧主仍接客户端写入</text>
+  <text x="344" y="136" font-size="7.6" fill="#7A322B">分区恢复 → 旧主降为从库 → 全量同步新主</text>
+  <text x="344" y="154" font-size="7.6" font-weight="600" fill="#7A322B">分区期间写进旧主的数据全部丢失</text>
+  <text x="344" y="180" font-size="7.6" font-weight="600" fill="#7A4A12">防治（主库配置，两行）：min-replicas-to-write 1</text>
+  <text x="344" y="196" font-size="7.6" fill="#7A4A12">min-replicas-max-lag 10——没有健康从库就拒绝写入，</text>
+  <text x="344" y="212" font-size="7.6" fill="#7A4A12">脑裂窗口自动变只读。代价：从库全失联时主库也只读。</text>
+
+  <!-- 演练 -->
+  <rect x="330" y="252" width="320" height="140" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
+  <text x="344" y="274" font-size="9" font-weight="600" fill="#1D5A45">切换演练五步（003 §5）</text>
+  <text x="344" y="294" font-size="7.6" fill="#1D5A45">SENTINEL failover mymaster 手动触发</text>
+  <text x="344" y="312" font-size="7.6" fill="#1D5A45">事件流：+sdown → +odown → +failover → +switch-master</text>
+  <text x="344" y="330" font-size="7.6" fill="#1D5A45">验证新主可写、客户端自动重连</text>
+  <text x="344" y="348" font-size="7.6" fill="#1D5A45">旧主上线自动降为从库并与新主对齐</text>
+  <text x="344" y="366" font-size="7.6" fill="#1D5A45">恢复演练方法见「数据库」005</text>
+
+  <rect x="20" y="404" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="32" y="421" font-size="7.8" font-weight="600" fill="#7A4A12">★ 哨兵 ≥3 个奇数、跨机器部署；repl_backlog-size 调大防全量同步风暴；客户端必须用 sentinel 模式</text>
+
+  <text x="32" y="452" font-size="8.6" fill="#8C8980">切换全程秒级到分钟级（failover-timeout 上限 180s）——SLO 承诺要按这个窗口算（「SRE」001）。</text>
+  </g>
+</svg>
