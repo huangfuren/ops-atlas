@@ -113,6 +113,12 @@ scrape_configs:
 
 三类探测模块：`http_2xx`（HTTP 状态码 200）、`tcp_connect`（端口通）、`icmp`（ping）。**探测失败时 `probe_success=0`**——告警表达式 `probe_success == 0`。
 
+**故障取证三招**（黑盒数据的价值远不止"通了没"）：
+
+1. **先分"断路还是报错"**：`probe_success == 0` = 连接层失败（DNS/网络/服务挂）；`probe_http_status_code` 是 5xx = 应用活着但在报错——两者处置方向完全不同，且第一种常伴 `probe_duration_seconds` 秒级即失败（不是超时）。
+2. **`probe_ip_addr_hash` 抓入口切换**：探针记录的目标 IP 指纹——hash 变了 = 解析或入口被切过（切流/劫持/故障转移），配 `changes(probe_success[3h])` 把故障窗口定到分钟。
+3. **多异地探针交叉**：单个探针归零可能是探针自己网络抖动；**多个独立位置探针同时归零 = 目标侧问题**——公网排障的"排除探针自证"标准动作。
+
 ---
 
 ## 7.4 中间件 exporter：mysqld / redis / kafka
