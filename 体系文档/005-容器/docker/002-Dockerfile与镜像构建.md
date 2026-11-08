@@ -82,6 +82,16 @@ RUN curl -LJO https://example.com/pkg.tar.gz \
 
 **铁律二：包管理器的缓存同理。** `apk add` / `apt-get install` 后接 `rm -rf /var/cache/apk/*` 或 `apt-get clean`，同样必须 `&&` 在同一条里。
 
+### 进阶指令四讲：ONBUILD / USER 落地 / HEALTHCHECK 细节 / 多服务保活
+
+**ONBUILD——延迟到子镜像构建时触发。** 带 ONBUILD 的镜像被用作 `FROM` 基础时，那些指令才在子镜像的构建期执行（本镜像自己构建时不执行）。适合"框架类基础镜像"：约定"用我的人记得把代码放进 /app"，子镜像构建时自动完成。排查用 `docker inspect --format '{{.Config.OnBuild}}' img`。副作用：继承链一深行为难追踪——**应用镜像里别用**。
+
+**USER 的落地细节——一行 `USER app` 前面还有三件事。** 非 root 运行不是写一行就完：先在镜像里建用户（`RUN adduser -D app`），再把应用要写的目录**属主改给它**（`RUN chown -R app /run/nginx /var/lib/nginx /var/cache/nginx`），否则 USER 切过去后程序写日志/临时文件直接报权限错误——nginx 的 `mkdir /var/cache/nginx failed` 就是这么来的。建目录加属主有现成一条命令：`install -d -o app -g app /run/nginx`。坑：容器里 sshd 以普通用户起不来（要绑 22 特权端口、要主机密钥），别用 USER 硬跑 sshd。
+
+**HEALTHCHECK 的四个参数。** `--interval` 检查间隔、`--timeout` 单次超时、`--retries` 连续失败几次才判不健康，最容易漏的是 **`--start-period`——启动宽限期**：期内的失败不计数，给慢启动应用（JVM 预热、大配置加载）留初始化时间。没有 start-period，慢启动应用会在启动期被误判 unhealthy 而被编排系统反复重启。
+
+**多服务镜像的保活套路。** 一个容器要同时跑 sshd + nginx？写一个 `start.sh` 把两个都拉起，**末尾 `tail -f /dev/null` 阻塞保活**——PID 1 是 start.sh，它不退容器就不退。但要想清楚：这违反"一容器一进程"的粒度约定，存量老应用捆绑部署才值得用；新设计拆成两个容器交给 Compose 编排。
+
 ---
 
 ## 2.3 CMD 与 ENTRYPOINT 在 Dockerfile 里的组合写法
@@ -167,6 +177,8 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 
 `scratch` 是空镜像——静态二进制直接放进去，极致瘦身，代价是没有 `sh`、没有 CA 证书（需要 HTTPS 出站时要自己拷 `ca-certificates`）。
 
+`scratch` 还有进阶玩法：`FROM scratch` + `ADD rootfs.tar.xz /`，把手工准备的 rootfs（busybox 静态编译版只有 2~3MB）直接灌进空镜像——等于自制了一个 2MB 的"发行版"。配套的取证工具是 `docker history --no-trunc myapp`：逐层列出每条构建指令，**别人的镜像也能用它反推出 Dockerfile 长什么样**——查一个来路不明的镜像里有没有可疑命令，这是第一工具。
+
 ---
 
 ## 2.7 .dockerignore：把 .git 和依赖目录挡在构建上下文外
@@ -187,6 +199,8 @@ docker-compose*.yml
 ```
 
 两个细节：**`.env` 和密钥文件必须列进去**（`COPY . .` 是随手一写，什么都能卷进来）；上下文瘦身不只是快——`COPY . .` 的镜像里不该有 `.git` 历史，那等于把代码仓库连提交记录发给所有拉镜像的人。
+
+体感一下差距：在项目里 `dd if=/dev/zero of=bigfile bs=1M count=1000` 造一个 1GB 文件，`docker build` 的第一行会显示 `Sending build context 1.087GB`——上下文把大文件全打包传给了构建器；配上 .dockerignore 排除后，上下文缩到几 MB。构建"起步就慢"的排障，先看这一行。
 
 ---
 

@@ -133,6 +133,15 @@ services:
 
 容器日志的纪律只有一句：**应用把日志打到 stdout/stderr，不要自己写文件**。理由在 001 §1.8 已兑现一半（`docker logs` 才看得到），这里补全另一半——集中采集：宿主上的日志采集器（filebeat 等）只需要盯 `/var/lib/docker/containers/*/`log 一处，应用各自写文件的方案要让采集器进每个容器。
 
+老应用不改代码也能被收编：它把日志写在容器内的文件里，那就**在镜像里把文件软链到 stdout/stderr**——
+
+```dockerfile
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+ && ln -sf /dev/stderr /var/log/nginx/error.log
+```
+
+nginx 官方镜像就是这么做的，`docker logs` 与集中采集立即恢复工作。注意软链到 `/dev/stdout` 时每行会带 Docker 的日志前缀，解析规则要留意。
+
 `docker logs` 看到的内容由 **logging driver** 决定，默认 `json-file`，它的两个参数就是轮转：
 
 ```yaml
@@ -179,6 +188,8 @@ services:
 | **CPU** | 被 throttle（限流变慢），不杀进程 | 容器里 CPU 使用率顶格但业务慢 = 被限流了 |
 
 所以：内存 limit 给"正常峰值 × 安全系数"，宁可稍宽（OOM 的代价是进程死）；CPU limit 可以收紧（慢的代价是延迟）。这组判断和「Linux」009 册的五维模型是同一思想。
+
+运行中的容器想改额度，不用重建：`docker update --cpu-quota 100000 --memory 1g 容器名` 热更新（注意内存缩到低于当前已用量会失败）。它改的就是 `/sys/fs/cgroup` 里的 quota 文件——手工玩法与底层原理见 005 册《Docker 网络与隔离底层》。
 
 ---
 
