@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 264.71" width="1200" height="264.71" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系；主页门面横幅（内容为板块地图缩影，不含会过时的数字） -->
+  <g transform="scale(1.7647058824)">
+
+  <title>ops-atlas · 运维工程师知识库主页横幅</title>
+  <desc>左侧为书名与定位：体系化教材、按册速查、术语表与症状反查，角标标注持续更新。右侧为六组板块缩影卡片：地基（Linux、网络、虚拟化）、中间件（数据库、消息队列、Redis、Java 应用）、平台与交付（容器、CICD、接入层、云平台）、可观测（监控、日志、链路）、安全（加固、基线、审计）、方法与语言（Python、Go、SRE），共 18 个板块。</desc>
+
+  <rect width="680" height="150" fill="#FFFFFF"/>
+  <rect x="0.5" y="0.5" width="679" height="149" fill="none" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- 左：书名与定位 -->
+  <text x="26" y="46" font-size="20" font-weight="700" fill="#2B2A27">ops-atlas</text>
+  <text x="26" y="70" font-size="14" font-weight="600" fill="#4A4945">运维工程师知识库</text>
+  <text x="26" y="92" font-size="9.5" fill="#8C8980">体系化教材 · 按册速查 · 术语表与症状反查</text>
+  <rect x="26" y="104" width="88" height="18" rx="9" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="70" y="116.5" font-size="9" fill="#7A4A12" text-anchor="middle">★ 持续更新</text>
+
+  <!-- 分隔线 -->
+  <line x1="318" y1="24" x2="318" y2="126" stroke="#EDEAE2" stroke-width="1"/>
+
+  <!-- 右：六组板块缩影（3×2 卡片） -->
+  <rect x="334" y="30" width="102" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="342" y="43" font-size="8.5" font-weight="600" fill="#1F4468">地基</text>
+  <text x="342" y="56" font-size="8" fill="#4A4945">Linux · 网络</text>
+  <text x="342" y="67" font-size="8" fill="#4A4945">虚拟化</text>
+
+  <rect x="442" y="30" width="102" height="44" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="450" y="43" font-size="8.5" font-weight="600" fill="#46337A">中间件</text>
+  <text x="450" y="56" font-size="8" fill="#4A4945">数据库 · 消息队列</text>
+  <text x="450" y="67" font-size="8" fill="#4A4945">Redis · Java 应用</text>
+
+  <rect x="550" y="30" width="102" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
+  <text x="558" y="43" font-size="8.5" font-weight="600" fill="#1F4468">平台与交付</text>
+  <text x="558" y="56" font-size="8" fill="#4A4945">容器 · CICD</text>
+  <text x="558" y="67" font-size="8" fill="#4A4945">接入层 · 云平台</text>
+
+  <rect x="334" y="80" width="102" height="44" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
+  <text x="342" y="93" font-size="8.5" font-weight="600" fill="#46337A">可观测</text>
+  <text x="342" y="106" font-size="8" fill="#4A4945">监控 · 日志</text>
+  <text x="342" y="117" font-size="8" fill="#4A4945">链路</text>
+
+  <rect x="442" y="80" width="102" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
+  <text x="450" y="93" font-size="8.5" font-weight="600" fill="#7A4A12">安全</text>
+  <text x="450" y="106" font-size="8" fill="#4A4945">加固 · 基线</text>
+  <text x="450" y="117" font-size="8" fill="#4A4945">审计 · 应急</text>
+
+  <rect x="550" y="80" width="102" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
+  <text x="558" y="93" font-size="8.5" font-weight="600" fill="#2B2A27">方法与语言</text>
+  <text x="558" y="106" font-size="8" fill="#4A4945">Python · Go</text>
+  <text x="558" y="117" font-size="8" fill="#4A4945">SRE 方法论</text>
+
+  </g>
+</svg>
