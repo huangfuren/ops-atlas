@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="706" viewBox="0 0 1200 706" xmlns="http://www.w3.org/2000/svg">
+  <title>AI 运维五层骨架与板块地图</title>
+  <desc>上：五层骨架（规约→骨架→连接→安全→交付）；下左：三类回路；下右：安全回路核心三件。来源：AI 协作实践教材化，2026-11-08。</desc>
+  <rect x="0" y="0" width="1200" height="706" fill="#FFFFFF"/>
+  <g transform="scale(1.7647058824)" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+    <defs>
+      <marker id="a0Blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#7FA6D0"/>
+      </marker>
+    </defs>
+
+    <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">AI 运维五层骨架与板块地图</text>
+    <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">「AI 运维」000 · 规约即代码</text>
+
+    <!-- 五层横排 -->
+    <text x="32" y="50" font-size="9.5" fill="#4A4945">五层骨架——一层一册，依此叠加：</text>
+    <rect x="32" y="58" width="104" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="84" y="76" font-size="10" font-weight="600" fill="#1F4468" text-anchor="middle">001 规约</text>
+    <text x="40" y="92" font-size="8" fill="#4A4945">宪法·刑法·规则四层</text>
+    <text x="40" y="104" font-size="8" fill="#4A4945">输出六条·回合闭环</text>
+    <text x="40" y="116" font-size="8" fill="#8C8980">记忆:资产 vs 私产</text>
+    <rect x="160" y="58" width="104" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="212" y="76" font-size="10" font-weight="600" fill="#1F4468" text-anchor="middle">002 骨架</text>
+    <text x="168" y="92" font-size="8" fill="#4A4945">单一事实源+软链接</text>
+    <text x="168" y="104" font-size="8" fill="#4A4945">init 前置检查包</text>
+    <text x="168" y="116" font-size="8" fill="#8C8980">references 五件套</text>
+    <rect x="288" y="58" width="104" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="340" y="76" font-size="10" font-weight="600" fill="#1F4468" text-anchor="middle">003 连接</text>
+    <text x="296" y="92" font-size="8" fill="#4A4945">MCP 三种形态</text>
+    <text x="296" y="104" font-size="8" fill="#4A4945">受管调用四步</text>
+    <text x="296" y="116" font-size="8" fill="#8C8980">失败分流两表</text>
+    <rect x="416" y="58" width="104" height="70" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="468" y="76" font-size="10" font-weight="600" fill="#7A322B" text-anchor="middle">004 安全</text>
+    <text x="424" y="92" font-size="8" fill="#4A4945">授权三件套</text>
+    <text x="424" y="104" font-size="8" fill="#4A4945">永不放行白名单</text>
+    <text x="424" y="116" font-size="8" fill="#8C8980">凭据红线</text>
+    <rect x="544" y="58" width="104" height="70" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
+    <text x="596" y="76" font-size="10" font-weight="600" fill="#46337A" text-anchor="middle">005 交付</text>
+    <text x="552" y="92" font-size="8" fill="#4A4945">能力仓库闭环</text>
+    <text x="552" y="104" font-size="8" fill="#4A4945">交付物成对</text>
+    <text x="552" y="116" font-size="8" fill="#8C8980">版本路由</text>
+    <line x1="136" y1="93" x2="158" y2="93" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+    <line x1="264" y1="93" x2="286" y2="93" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+    <line x1="392" y1="93" x2="414" y2="93" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+    <line x1="520" y1="93" x2="542" y2="93" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+    <text x="340" y="142" font-size="8.5" fill="#8C8980" text-anchor="middle">顺序即依赖：先管行为，再搭骨架，再接工具——安全层贯穿，交付层收口</text>
+
+    <line x1="32" y1="156" x2="648" y2="156" stroke="#EDEAE2" stroke-width="1"/>
+
+    <!-- 下左：三类回路 -->
+    <text x="32" y="176" font-size="9.5" fill="#4A4945">三类回路——把"一次性的聪明"变成"可重复的机制"：</text>
+    <rect x="32" y="186" width="300" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="44" y="203" font-size="9" font-weight="600" fill="#1F4468">回合闭环</text>
+    <text x="44" y="217" font-size="8" fill="#4A4945">就绪卡片 → 影响面声明 → 人贴回 → AI 回填（未实测不填结论）</text>
+    <rect x="32" y="234" width="300" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="44" y="251" font-size="9" font-weight="600" fill="#1F4468">链路守卫</text>
+    <text x="44" y="265" font-size="8" fill="#4A4945">只读探针验通才查 → 不通回修复文档 → 修好重验再回主干</text>
+    <rect x="32" y="282" width="300" height="40" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
+    <text x="44" y="299" font-size="9" font-weight="600" fill="#46337A">能力仓库闭环</text>
+    <text x="44" y="313" font-size="8" fill="#4A4945">建仓 → 使用方克隆即用 → 反馈 → 更新仓库，末端回仓</text>
+
+    <!-- 下右：安全回路核心 -->
+    <text x="356" y="176" font-size="9.5" fill="#4A4945">安全回路核心——贯穿 003/004 的三件：</text>
+    <rect x="356" y="186" width="292" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <text x="368" y="203" font-size="9" font-weight="600" fill="#7A4A12">授权三件套</text>
+    <text x="368" y="217" font-size="8" fill="#4A4945">--write --authorized-by --reason 缺一即拒 · 授权即审计</text>
+    <rect x="356" y="234" width="292" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <text x="368" y="251" font-size="9" font-weight="600" fill="#7A4A12">永不放行白名单</text>
+    <text x="368" y="265" font-size="8" fill="#4A4945">DDL · 权限 · 数据搬运 · 过程与锁——即使授权也结构化拒绝</text>
+    <rect x="356" y="282" width="292" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <text x="368" y="299" font-size="9" font-weight="600" fill="#7A4A12">凭据红线</text>
+    <text x="368" y="313" font-size="8" fill="#4A4945">true/false 通道 · 值不进对话 · 缺了给可复制命令</text>
+
+    <!-- 底部琥珀 -->
+    <rect x="32" y="338" width="616" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <text x="340" y="354" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">规约即代码 · 单一事实源 · 授权三件套 · 链路守卫 · 三态上报——五层五件，缺一层塌一层</text>
+    <text x="32" y="386" font-size="8" fill="#8C8980">来源：AI 协作与安全实践教材化 · 2026-11-08 · 「AI 运维」000 §板块地图 · 不绑定模型厂商</text>
+  </g>
+</svg>
