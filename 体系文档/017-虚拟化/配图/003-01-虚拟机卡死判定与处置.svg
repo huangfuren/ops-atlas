@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="706" viewBox="0 0 1200 706" xmlns="http://www.w3.org/2000/svg">
+  <title>虚拟机卡死判定与处置</title>
+  <desc>左：卡死判定五指标；中：确认真卡死；右：处置顺序六步（优雅关机→僵死任务占锁→终止释放锁→强制下电→开机→三层复核）；底：RRD 走势还原因果链。来源：真实卡死处置事件教材化，2026-11-08。</desc>
+  <rect x="0" y="0" width="1200" height="706" fill="#FFFFFF"/>
+  <g transform="scale(1.7647058824)" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+    <defs>
+      <marker id="a3Blue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#7FA6D0"/>
+      </marker>
+      <marker id="a3Red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#D2948C"/>
+      </marker>
+      <marker id="a3Amber" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#D9A458"/>
+      </marker>
+    </defs>
+
+    <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">虚拟机卡死判定与处置</text>
+    <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">「虚拟化」003 · PVE · API 优先</text>
+
+    <!-- 左列：判定五指标 -->
+    <text x="32" y="50" font-size="9.5" fill="#4A4945">判定五指标（对照日常基线）：</text>
+    <rect x="32" y="58" width="190" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="42" y="72" font-size="9" font-weight="600" fill="#7A322B">CPU</text>
+    <text x="42" y="85" font-size="8" fill="#4A4945">打满（8 vCPU 全占 vs 基线 0.27）</text>
+    <rect x="32" y="102" width="190" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="42" y="116" font-size="9" font-weight="600" fill="#7A322B">Guest Agent</text>
+    <text x="42" y="129" font-size="8" fill="#4A4945">last_update 冻结 = 失联</text>
+    <rect x="32" y="146" width="190" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="42" y="160" font-size="9" font-weight="600" fill="#7A322B">网络</text>
+    <text x="42" y="173" font-size="8" fill="#4A4945">netin / netout 归零</text>
+    <rect x="32" y="190" width="190" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="42" y="204" font-size="9" font-weight="600" fill="#7A322B">磁盘 I/O</text>
+    <text x="42" y="217" font-size="8" fill="#4A4945">读风暴后骤然静默</text>
+    <rect x="32" y="234" width="190" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="42" y="248" font-size="9" font-weight="600" fill="#7A322B">数据盘</text>
+    <text x="42" y="261" font-size="8" fill="#4A4945">100% 写满（前兆）</text>
+    <text x="32" y="288" font-size="8" fill="#8C8980">多条命中即按卡死处置，别等全部命中</text>
+
+    <!-- 汇聚线 -->
+    <line x1="222" y1="75" x2="248" y2="168" stroke="#D2948C" stroke-width="0.8"/>
+    <line x1="222" y1="119" x2="248" y2="172" stroke="#D2948C" stroke-width="0.8"/>
+    <line x1="222" y1="163" x2="248" y2="176" stroke="#D2948C" stroke-width="0.8"/>
+    <line x1="222" y1="207" x2="248" y2="180" stroke="#D2948C" stroke-width="0.8"/>
+    <line x1="222" y1="251" x2="248" y2="184" stroke="#D2948C" stroke-width="0.8"/>
+
+    <!-- 中间判定框 -->
+    <rect x="248" y="150" width="104" height="52" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <text x="300" y="172" font-size="10" font-weight="600" fill="#7A4A12" text-anchor="middle">确认真卡死</text>
+    <text x="300" y="187" font-size="8" fill="#4A4945" text-anchor="middle">判定先于操作</text>
+    <line x1="352" y1="176" x2="382" y2="75" stroke="#D9A458" stroke-width="1.2" marker-end="url(#a3AmberPlaceholder)"/>
+
+    <!-- 右列：处置六步 x=384 w=264 h=34 gap10: y=58,102,146,190,234,278 -->
+    <text x="384" y="50" font-size="9.5" fill="#4A4945">处置顺序（⚠️ 强制断电先说后果）：</text>
+    <rect x="384" y="58" width="264" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="394" y="72" font-size="9" font-weight="600" fill="#1F4468">① 优雅关机 shutdown</text>
+    <text x="394" y="85" font-size="8" fill="#4A4945">ACPI + Guest Agent · 失联则无响应</text>
+    <rect x="384" y="102" width="264" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="394" y="116" font-size="9" font-weight="600" fill="#7A322B">② 僵死任务占锁</text>
+    <text x="394" y="129" font-size="8" fill="#4A4945">后续 stop 全部 lock 冲突失败</text>
+    <rect x="384" y="146" width="264" height="34" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
+    <text x="394" y="160" font-size="9" font-weight="600" fill="#46337A">③ 终止僵死任务释放锁</text>
+    <text x="394" y="173" font-size="8" fill="#4A4945">重试无用，先解锁再动</text>
+    <rect x="384" y="190" width="264" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
+    <text x="394" y="204" font-size="9" font-weight="600" fill="#7A322B">④ stop 强制下电 ⚠️</text>
+    <text x="394" y="217" font-size="8" fill="#4A4945">未落盘丢失 · fsck · 业务负载驱逐</text>
+    <rect x="384" y="234" width="264" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
+    <text x="394" y="248" font-size="9" font-weight="600" fill="#1F4468">⑤ start 开机</text>
+    <text x="394" y="261" font-size="8" fill="#4A4945">exitstatus OK 后进入复核</text>
+    <rect x="384" y="278" width="264" height="34" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
+    <text x="394" y="292" font-size="9" font-weight="600" fill="#46337A">⑥ 三层复核</text>
+    <text x="394" y="305" font-size="8" fill="#4A4945">Agent 心跳 → CPU 回基线 → 业务 Ready</text>
+
+    <!-- 处置主链箭头 -->
+    <line x1="516" y1="92" x2="516" y2="100" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a3Blue)"/>
+    <line x1="516" y1="136" x2="516" y2="144" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a3Blue)"/>
+    <line x1="516" y1="180" x2="516" y2="188" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a3Blue)"/>
+    <line x1="516" y1="224" x2="516" y2="232" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a3Blue)"/>
+    <line x1="516" y1="268" x2="516" y2="276" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a3Blue)"/>
+    <!-- ①到②的失败虚线标注 -->
+    <line x1="652" y1="75" x2="652" y2="119" stroke="#D2948C" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a3Red)"/>
+    <text x="646" y="100" font-size="8" fill="#7A322B" text-anchor="end">Guest 无响应</text>
+
+    <!-- 底部琥珀 -->
+    <rect x="32" y="330" width="616" height="28" rx="3" fill="#FBEEDA" stroke="#D9A458"/>
+    <text x="340" y="347" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">24h RRD 走势还原因果链（读风暴 → 缓存挤掉 → CPU 拉升 → 网络归零）· VNC 控制台登录记录 = 人为操作线索</text>
+    <text x="32" y="380" font-size="8" fill="#8C8980">来源：虚拟机卡死 API 处置全案教材化 · 2026-11-08 · 「虚拟化」003 §3.6 · IP/主机名均为文档段泛型</text>
+  </g>
+</svg>
