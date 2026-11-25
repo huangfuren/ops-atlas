@@ -212,7 +212,7 @@ K8s 场景的纪律：**Pod 加注解自动被发现**——运维不需要手�
 | 5 | 自定义指标无 HELP/TYPE | Grafana 无法识别类型 | 导出时必须包含 |
 | 6 | 服务发现标签没 relabel | 标签名太长或无意义 | relabel 精简为有用的维度 |
 
-第 1 条展开：**两个 Prometheus 同时抓同一个 target**（如 HA 双实例）是正常的高可用做法，但如果查询时没做 `sum` 去重，rate() 会翻倍。解法是 Grafana 里用 `sum by (instance)` 聚合，或用 Thanos Query 的去重功能（008 展开）。
+第 1 条展开：**两个 Prometheus 同时抓同一个 target**（如 HA 双实例）是正常的高可用做法，但如果查询时没做 `sum` 去重，rate() 会翻倍。解法是 Grafana 里用 `sum by (instance)` 聚合，或用 Thanos Query 的去重功能（118 展开）。
 
 ---
 
@@ -231,4 +231,4 @@ K8s 场景的纪律：**Pod 加注解自动被发现**——运维不需要手�
 
 ---
 
-**下一篇**：[008-规模化与高可用](008-规模化与高可用.md) —— 当一台 Prometheus 不够用时。
+**下一篇**：[118-规模化与高可用](118-规模化与高可用.md) —— 当一台 Prometheus 不够用时。

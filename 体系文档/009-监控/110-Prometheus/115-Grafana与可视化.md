@@ -101,7 +101,7 @@ Grafana 10 的 Unified Alerting 把告警规则、通知策略、静默规则统
 - **Notification policies**：按标签路由到不同 IM（钉钉/企微/Slack）——与「SRE」002 的分级响应对齐；
 - **Silences**：计划内维护的静音——与「SRE」002 的 runbook 配合。
 
-但**生产级告警仍推荐 Prometheus rule_files + Alertmanager**（004 §4.4）——规则进 Git 可评审，Alertmanager 的路由/抑制/静默能力更强。Grafana 告警适合"快速起步"或"非 Prometheus 数据源"。
+但**生产级告警仍推荐 Prometheus rule_files + Alertmanager**（114 §4.4）——规则进 Git 可评审，Alertmanager 的路由/抑制/静默能力更强。Grafana 告警适合"快速起步"或"非 Prometheus 数据源"。
 
 ---
 
@@ -148,4 +148,4 @@ Grafana 10 的 Unified Alerting 把告警规则、通知策略、静默规则统
 
 ---
 
-**下一篇**：[006-告警规则实战](006-告警规则实战.md) —— SRE 001 的 burn rate 怎么用 PromQL 写出来。
+**下一篇**：[116-告警规则实战](116-告警规则实战.md) —— SRE 001 的 burn rate 怎么用 PromQL 写出来。
