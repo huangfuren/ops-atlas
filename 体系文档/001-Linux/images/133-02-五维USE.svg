@@ -1,60 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 667.06" width="1200" height="667.06" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>USE 五维模型：每一维问利用率、饱和度、错误三个问题</title>
-  <desc>五个维度分别是 CPU、内存、磁盘、网络、进程状态，对每一维都问三句话：利用率满了吗、有没有东西在排队、有没有报错。CPU 看 us 加 sy、r 队列、%st 与 MCE；内存看 available、si/so 与 OOM 日志；磁盘看会骗人的 %util、await 与 aqu-sz、dmesg 的 IO error；网络看带宽占比与 pps、Recv-Q 积压与重传率、drops 与 conntrack full；进程状态是前四维的结果，看进程总数、D 状态与僵尸个数、fork 失败与 fd 耗尽，是天然的交叉验证点。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 625" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>USE 方法五个维度各自的利用率、饱和度与错误指标</title>
+  <desc>五行分别是 CPU、内存、磁盘、网络与进程状态。每一行按 USE 三问展开：利用率看忙不忙，比如 CPU 的 us 加 sy、内存的 available、磁盘的 util、网络的带宽占比；饱和度看有没有排队，比如运行队列、换页速率、await、接收队列；错误看有没有坏，比如 %st 与 MCE、OOM 日志、IO error、丢包与连接表满。最后一行进程状态不是资源而是前四维的结果，用作交叉验证。</desc>
 
-  <rect width="680" height="378" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">USE 五维：每一维只问三个问题</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">利用率 · 饱和度 · 错误</text>
+  <!-- 坐标表：画布 1200x625 | 表头 y=70 h=34 | 五行 h=64 y=104/168/232/296/360 | 列 维度 x=50 w=140 / 利用率 x=210 / 饱和度 x=540 / 错误 x=870 | 结论块 y=440 h=80 | 图例 y=538 h=65 -->
 
-  <!-- 列头 -->
-  <text x="54" y="58" font-size="8" fill="#8C8980">维度</text>
-  <text x="160" y="58" font-size="8" fill="#8C8980">利用率 · 忙不忙</text>
-  <text x="340" y="58" font-size="8" fill="#8C8980">饱和度 · 排不排队</text>
-  <text x="520" y="58" font-size="8" fill="#8C8980">错误 · 有没有坏</text>
+  <rect x="0" y="0" width="1200" height="625" fill="#ffffff"/>
 
-  <!-- CPU -->
-  <text x="54" y="93" font-size="9.5" font-weight="600" fill="#1F4468">CPU</text>
-  <text x="160" y="93" font-size="8.2" fill="#2B2A27">us + sy</text>
-  <text x="340" y="93" font-size="8.2" fill="#2B2A27">r 队列、runq-sz</text>
-  <text x="520" y="93" font-size="8.2" fill="#2B2A27">%st 被宿主抢、MCE</text>
-  <line x1="40" y1="112" x2="644" y2="112" stroke="#EDEAE2" stroke-width="1"/>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">USE 五维：每一维只问三个问题</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">利用率 · 饱和度 · 错误</text>
 
-  <!-- 内存 -->
-  <text x="54" y="137" font-size="9.5" font-weight="600" fill="#1F4468">内存</text>
-  <text x="160" y="137" font-size="8.2" fill="#2B2A27">available 剩多少</text>
-  <text x="340" y="137" font-size="8.2" fill="#2B2A27">si / so、majflt/s</text>
-  <text x="520" y="137" font-size="8.2" fill="#2B2A27">OOM 日志</text>
-  <line x1="40" y1="156" x2="644" y2="156" stroke="#EDEAE2" stroke-width="1"/>
+  <!-- ============ 表头 ============ -->
+  <rect x="30" y="70" width="1140" height="34" fill="#eceff1"/>
+  <text x="50" y="92" font-size="12.5" font-weight="bold" fill="#37474f">维度</text>
+  <text x="210" y="92" font-size="12.5" font-weight="bold" fill="#37474f">利用率 · 忙不忙</text>
+  <text x="540" y="92" font-size="12.5" font-weight="bold" fill="#37474f">饱和度 · 排不排队</text>
+  <text x="870" y="92" font-size="12.5" font-weight="bold" fill="#37474f">错误 · 有没有坏</text>
 
-  <!-- 磁盘 -->
-  <text x="54" y="181" font-size="9.5" font-weight="600" fill="#1F4468">磁盘</text>
-  <text x="160" y="181" font-size="8.2" fill="#2B2A27">%util（会骗人）</text>
-  <text x="340" y="181" font-size="8.2" fill="#2B2A27">await、aqu-sz</text>
-  <text x="520" y="181" font-size="8.2" fill="#2B2A27">dmesg 的 IO error</text>
-  <line x1="40" y1="200" x2="644" y2="200" stroke="#EDEAE2" stroke-width="1"/>
+  <!-- ============ CPU ============ -->
+  <rect x="30" y="104" width="1140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="132" font-size="14" font-weight="bold" fill="#123314">CPU</text>
+  <text x="50" y="152" font-size="10" fill="#2e5230">（占满不等于不够）</text>
+  <text x="210" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">us + sy</text>
+  <text x="210" y="152" font-size="10" fill="#123314">用户态加内核态，不含 idle 与 wa</text>
+  <text x="540" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">r 队列 / runq-sz</text>
+  <text x="540" y="152" font-size="10" fill="#123314">可运行但没抢到核的进程数</text>
+  <text x="870" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">%st · MCE</text>
+  <text x="870" y="152" font-size="10" fill="#123314">被宿主机抢走的、硬件报错</text>
 
-  <!-- 网络 -->
-  <text x="54" y="225" font-size="9.5" font-weight="600" fill="#1F4468">网络</text>
-  <text x="160" y="225" font-size="8.2" fill="#2B2A27">带宽占比、pps</text>
-  <text x="340" y="225" font-size="8.2" fill="#2B2A27">Recv-Q 积压、重传率</text>
-  <text x="520" y="225" font-size="8.2" fill="#2B2A27">drops、conntrack full</text>
-  <line x1="40" y1="244" x2="644" y2="244" stroke="#EDEAE2" stroke-width="1"/>
+  <!-- ============ 内存 ============ -->
+  <rect x="30" y="168" width="1140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="196" font-size="14" font-weight="bold" fill="#123314">内存</text>
+  <text x="50" y="216" font-size="10" fill="#2e5230">（只看 available）</text>
+  <text x="210" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">available 剩多少</text>
+  <text x="210" y="216" font-size="10" fill="#123314">不是 free，也不是 used</text>
+  <text x="540" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">si / so · majflt/s</text>
+  <text x="540" y="216" font-size="10" fill="#123314">一旦换页就已经在排队了</text>
+  <text x="870" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">OOM 日志</text>
+  <text x="870" y="216" font-size="10" fill="#123314">dmesg 搜 Out of memory</text>
 
-  <!-- 进程状态（交叉验证点，琥珀底） -->
-  <rect x="36" y="247" width="608" height="38" fill="#FBEEDA"/>
-  <text x="54" y="270" font-size="9.5" font-weight="600" fill="#7A4A12">进程状态</text>
-  <text x="160" y="270" font-size="8.2" fill="#7A4A12">进程 / 线程总数</text>
-  <text x="340" y="270" font-size="8.2" fill="#7A4A12">D 状态个数、僵尸个数</text>
-  <text x="520" y="270" font-size="8.2" fill="#7A4A12">fork 失败、fd 耗尽</text>
+  <!-- ============ 磁盘 ============ -->
+  <rect x="30" y="232" width="1140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="260" font-size="14" font-weight="bold" fill="#123314">磁盘</text>
+  <text x="50" y="280" font-size="10" fill="#2e5230">（%util 会骗人）</text>
+  <text x="210" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">%util</text>
+  <text x="210" y="280" font-size="10" fill="#123314">RAID / SSD 上到 100% 也可能还有余量</text>
+  <text x="540" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">await · aqu-sz</text>
+  <text x="540" y="280" font-size="10" fill="#123314">单次等多久、队列里堆了几个</text>
+  <text x="870" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">IO error</text>
+  <text x="870" y="280" font-size="10" fill="#123314">dmesg 里的介质错误，先换盘</text>
 
-  <rect x="40" y="299" width="604" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="316" font-size="8.2" font-weight="600" fill="#7A4A12">三句话问每一维：利用率满了吗？有东西在排队吗？有报错吗？</text>
-  <text x="52" y="331" font-size="7.6" fill="#7A4A12">第一眼看什么：vmstat 的 r · free -m · iostat -x · sar -n DEV · ps -eo stat——30 秒抓完（9.2 的清单）</text>
+  <!-- ============ 网络 ============ -->
+  <rect x="30" y="296" width="1140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="324" font-size="14" font-weight="bold" fill="#123314">网络</text>
+  <text x="50" y="344" font-size="10" fill="#2e5230">（带宽与 pps 分开看）</text>
+  <text x="210" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">带宽占比 · pps</text>
+  <text x="210" y="344" font-size="10" fill="#123314">小包打满 pps 时，带宽数字还很低</text>
+  <text x="540" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">Recv-Q · 重传率</text>
+  <text x="540" y="344" font-size="10" fill="#123314">应用读得慢、链路在重传</text>
+  <text x="870" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">drops · conntrack full</text>
+  <text x="870" y="344" font-size="10" fill="#123314">丢包计数、连接表打满</text>
 
-  <text x="32" y="364" font-size="9" fill="#8C8980">进程状态不是资源，是前四维的结果：CPU 不够是 r 堆积，磁盘慢是 D 堆积，内存紧是 D + si/so——天然的交叉验证点。</text>
+  <!-- ============ 进程状态 ============ -->
+  <rect x="30" y="360" width="1140" height="64" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="2"/>
+  <text x="50" y="388" font-size="14" font-weight="bold" fill="#311b92">进程状态</text>
+  <text x="50" y="408" font-size="10" fill="#311b92">（前四维的结果）</text>
+  <text x="210" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">进程 / 线程总数</text>
+  <text x="210" y="408" font-size="10" fill="#311b92">突增多半是 fork 风暴或泄漏</text>
+  <text x="540" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">D 状态个数 · 僵尸个数</text>
+  <text x="540" y="408" font-size="10" fill="#311b92">D 堆积指向前四维，僵尸指向父进程</text>
+  <text x="870" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">fork 失败 · fd 耗尽</text>
+  <text x="870" y="408" font-size="10" fill="#311b92">Too many open files 就是它</text>
 
-  </g>
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="440" width="1140" height="80" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="464" font-size="12.5" font-weight="bold" fill="#5d4037">三句话问每一维：利用率满了吗？有东西在排队吗？有报错吗？</text>
+  <text x="50" y="486" font-size="11.5" fill="#5d4037">第一眼看什么：vmstat 的 r · free -m 的 available · iostat -x 的 await · sar -n DEV · ps -eo stat。</text>
+  <text x="50" y="508" font-size="11" fill="#616161">进程状态不是资源，是前四维的结果：CPU 不够是 r 堆积，磁盘慢是 D 堆积，内存紧是 D 加 si/so —— 天然的交叉验证点。</text>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="538" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="553" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="72" y="564" font-size="12" fill="#37474f">资源维度（CPU / 内存 / 磁盘 / 网络）</text>
+  <rect x="420" y="553" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="452" y="564" font-size="12" fill="#37474f">结果维度（进程状态，用来交叉验证）</text>
 </svg>

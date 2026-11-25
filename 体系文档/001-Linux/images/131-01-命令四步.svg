@@ -1,85 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 797.65" width="1200" height="797.65" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>一条命令在 shell 里的四步：分词、展开、重定向、执行</title>
-  <desc>上半部分是主链四步：分词按空白切词，展开处理变量、通配符、命令替换与花括号，重定向处理三条流，最后按名字找到程序传参运行。第②步展开被标为关键——通配符是 shell 在进命令前换掉的，命令收到的参数永远是展开后的样子。下半部分是两个经典翻车：find 的 -name 不加引号会被提前展开成多个参数而报错，grep error *.log 会把第一个文件名当成搜索模式；解法都是加引号。底部一句话区分三种引号：单引号全字面、双引号只解释 $ 与 $()、不加引号放手展开。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 710" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>一条命令的四步处理与两个引号翻车案例</title>
+  <desc>上行是 shell 处理一条命令的四个步骤：分词把命令行按空白切成词，展开把变量通配符与命令替换换成实际内容，重定向处理大于号与管道，最后按名字找到程序执行。关键是通配符在第二步就被 shell 换掉，命令本身从没见过星号。下行是 find 与 grep 两个经典翻车：不加引号时星号被提前展开成当前目录的文件名，解决方式是加引号挡住第二步。</desc>
 
-  <rect width="680" height="452" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">一条命令的四步：通配符在进命令前就被换掉了</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">引号挡的是第②步</text>
+  <!-- 坐标表：画布 1200x710 | 四行 h=52 y=100/156/212/268 | 列 序号 x=50 / 步骤 x=90 / 做什么 x=290 / 例 x=610 | 两卡 w=560 y=356 h=170 | 结论块 y=542 h=64 | 图例 y=624 h=65 -->
 
-  <defs>
-    <marker id="a7Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-  </defs>
+  <rect x="0" y="0" width="1200" height="710" fill="#ffffff"/>
 
-  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① 主链：四步，参数在进命令之前就定形</text>
-  <text x="44" y="74" font-size="8" fill="#8C8980">步</text>
-  <text x="170" y="74" font-size="8" fill="#8C8980">shell 在做什么</text>
-  <text x="452" y="74" font-size="8" fill="#8C8980">例：ls -l *.log</text>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">一条命令的四步：通配符在进命令前就被换掉了</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">引号挡的是第 ② 步</text>
 
-  <!-- ① 分词 -->
-  <circle cx="56" cy="90" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="56" y="93" font-size="8.4" fill="#1F4468" text-anchor="middle">1</text>
-  <text x="72" y="93.5" font-size="9.5" font-weight="600" fill="#1F4468">分词</text>
-  <text x="170" y="88" font-size="8.4" font-weight="600" fill="#2B2A27">按空白切成词</text>
-  <text x="170" y="102" font-size="7.4" fill="#4A4945">空格、Tab——先切词，再谈别的</text>
-  <text x="452" y="93" font-size="7.8" fill="#2B2A27">ls · -l · *.log 三个词</text>
-  <line x1="56" y1="103" x2="56" y2="121" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a7Blue)"/>
+  <!-- ============ 区① 四步 ============ -->
+  <text x="30" y="66" font-size="12" fill="#616161">① 主链：四步，参数在进命令之前就定形</text>
 
-  <!-- ② 展开（关键步） -->
-  <circle cx="56" cy="134" r="9" fill="#FFFFFF" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="56" y="137" font-size="8.4" fill="#7A4A12" text-anchor="middle">2</text>
-  <text x="72" y="137.5" font-size="9.5" font-weight="600" fill="#7A4A12">展开</text>
-  <text x="170" y="132" font-size="8.4" font-weight="600" fill="#7A4A12">变量 · 通配符 · $() · 花括号</text>
-  <text x="170" y="146" font-size="7.4" fill="#7A4A12">★ 关键：通配符是 shell 换的，命令没见过 *.log</text>
-  <text x="452" y="137" font-size="7.8" fill="#7A4A12">*.log → a.log b.log c.log</text>
-  <line x1="56" y1="147" x2="56" y2="165" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a7Blue)"/>
+  <rect x="30" y="74" width="1140" height="30" fill="#eceff1"/>
+  <text x="50" y="94" font-size="12" font-weight="bold" fill="#37474f">步</text>
+  <text x="290" y="94" font-size="12" font-weight="bold" fill="#37474f">shell 在做什么</text>
+  <text x="610" y="94" font-size="12" font-weight="bold" fill="#37474f">例：ls -l *.log</text>
 
-  <!-- ③ 重定向 -->
-  <circle cx="56" cy="178" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="56" y="181" font-size="8.4" fill="#1F4468" text-anchor="middle">3</text>
-  <text x="72" y="181.5" font-size="9.5" font-weight="600" fill="#1F4468">重定向</text>
-  <text x="170" y="176" font-size="8.4" font-weight="600" fill="#2B2A27">处理 &gt; 2&gt; &lt; |</text>
-  <text x="170" y="190" font-size="7.4" fill="#4A4945">管道只接 stdout，stderr 仍打在屏幕上</text>
-  <text x="452" y="181" font-size="7.8" fill="#2B2A27">本例没有</text>
-  <line x1="56" y1="191" x2="56" y2="209" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a7Blue)"/>
+  <rect x="30" y="108" width="1140" height="52" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="140" font-size="15" font-weight="bold" fill="#123314">1</text>
+  <text x="90" y="140" font-size="13" font-weight="bold" fill="#123314">分词</text>
+  <text x="290" y="140" font-size="11.5" fill="#123314">按空白切成词：空格、Tab 都算分隔</text>
+  <text x="610" y="140" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">ls · -l · *.log 三个词</text>
 
-  <!-- ④ 执行 -->
-  <circle cx="56" cy="222" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="56" y="225" font-size="8.4" fill="#1F4468" text-anchor="middle">4</text>
-  <text x="72" y="225.5" font-size="9.5" font-weight="600" fill="#1F4468">执行</text>
-  <text x="170" y="220" font-size="8.4" font-weight="600" fill="#2B2A27">按名字找到程序，传参运行</text>
-  <text x="170" y="234" font-size="7.4" fill="#4A4945">参数已经是展开后的样子</text>
-  <text x="452" y="225" font-size="7.8" fill="#2B2A27">ls 收到 a.log b.log c.log</text>
-  <line x1="56" y1="235" x2="56" y2="243" stroke="#7FA6D0" stroke-width="1" marker-end="url(#a7Blue)"/>
-  <text x="68" y="246" font-size="7.4" fill="#8C8980">跑起来了</text>
+  <rect x="30" y="164" width="1140" height="52" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <text x="50" y="196" font-size="15" font-weight="bold" fill="#7f3f00">2</text>
+  <text x="90" y="196" font-size="13" font-weight="bold" fill="#7f3f00">展开 ★</text>
+  <text x="290" y="196" font-size="11.5" fill="#7f3f00">变量 · 通配符 · $( ) · 花括号</text>
+  <text x="610" y="196" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">*.log → a.log b.log c.log</text>
 
-  <!-- ② 两个翻车 -->
-  <text x="32" y="262" font-size="9.5" font-weight="600" fill="#4A4945">② 两个经典翻车，根子都在第②步</text>
+  <rect x="30" y="220" width="1140" height="52" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="252" font-size="15" font-weight="bold" fill="#123314">3</text>
+  <text x="90" y="252" font-size="13" font-weight="bold" fill="#123314">重定向</text>
+  <text x="290" y="252" font-size="11.5" fill="#123314">处理 &gt; 2&gt; &lt; 与管道 —— 管道只接 stdout</text>
+  <text x="610" y="252" font-size="11" fill="#546e7a" font-family="ui-monospace,Menlo,Consolas,monospace">本例没有重定向</text>
 
-  <rect x="40" y="274" width="294" height="94" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="54" y="293" font-size="9.5" font-weight="600" fill="#7A322B">find . -name *.log（不加引号）</text>
-  <text x="54" y="310" font-size="8" fill="#7A322B">当前目录有 a.log、b.log 时，等价于</text>
-  <text x="54" y="325" font-size="8" fill="#7A322B">find . -name a.log b.log</text>
-  <text x="54" y="340" font-size="7.6" fill="#8C8980">报 paths must precede expression，看似语法错</text>
-  <text x="54" y="358" font-size="8" fill="#1D5A45">对：find . -name "*.log"，引号挡住第②步</text>
+  <rect x="30" y="276" width="1140" height="52" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="50" y="308" font-size="15" font-weight="bold" fill="#123314">4</text>
+  <text x="90" y="308" font-size="13" font-weight="bold" fill="#123314">执行</text>
+  <text x="290" y="308" font-size="11.5" fill="#123314">按名字在 PATH 里找到程序，把参数交给它</text>
+  <text x="610" y="308" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">ls 收到 a.log b.log c.log</text>
 
-  <rect x="350" y="274" width="294" height="94" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="364" y="293" font-size="9.5" font-weight="600" fill="#7A322B">grep error *.log（不加引号）</text>
-  <text x="364" y="310" font-size="8" fill="#7A322B">shell 先把 *.log 展开成 100 个文件名</text>
-  <text x="364" y="325" font-size="8" fill="#7A322B">grep 把第一个文件名当模式，其余当文件</text>
-  <text x="364" y="340" font-size="7.6" fill="#8C8980">结果可能是空，也可能在搜「文件名」本身</text>
-  <text x="364" y="358" font-size="8" fill="#1D5A45">对：grep -r "error" --include="*.log" .</text>
+  <!-- ============ 区② 两个翻车 ============ -->
+  <text x="30" y="348" font-size="12" fill="#616161">② 两个经典翻车，根子都在第 ② 步</text>
 
-  <!-- 三种引号 -->
-  <rect x="40" y="382" width="604" height="42" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="399" font-size="8.2" fill="#7A4A12">'单引号' 全字面 · "双引号" 解释 $ 与 $()，不展开通配符 · 不加引号 = 放手展开</text>
-  <text x="52" y="414" font-size="7.6" fill="#7A4A12">awk / sed 程序体永远用单引号；要传变量用 -v 传进去，不要在双引号里拼</text>
+  <rect x="30" y="356" width="560" height="170" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="50" y="382" font-size="12" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">find . -name *.log　（不加引号）</text>
+  <text x="50" y="406" font-size="11.5" fill="#7f0000">当前目录有 a.log、b.log 时，shell 先展开，等价于：</text>
+  <text x="50" y="428" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">find . -name a.log b.log</text>
+  <text x="50" y="450" font-size="11.5" fill="#7f0000">报 paths must precede expression，看着像语法错，其实是参数错位。</text>
+  <line x1="50" y1="464" x2="570" y2="464" stroke="#c62828" stroke-width="1"/>
+  <text x="50" y="486" font-size="12" font-weight="bold" fill="#123314">对：find . -name "*.log"</text>
+  <text x="50" y="508" font-size="11.5" fill="#123314">引号挡住第 ② 步，星号原样交给 find 自己解释。</text>
 
-  <text x="32" y="444" font-size="9" fill="#8C8980">命令收到的参数永远是展开后的样子——所有引号与通配符问题，根都在第②步。</text>
+  <rect x="610" y="356" width="560" height="170" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="630" y="382" font-size="12" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">grep error *.log　（不加引号）</text>
+  <text x="630" y="406" font-size="11.5" fill="#7f0000">shell 先把 *.log 展开成 100 个文件名，于是 grep 把</text>
+  <text x="630" y="426" font-size="11.5" fill="#7f0000">第一个文件名当成「要搜的模式」，其余当成文件。</text>
+  <text x="630" y="450" font-size="11.5" fill="#7f0000">结果可能是空，也可能在搜「文件名」本身 —— 最难查。</text>
+  <line x1="630" y1="464" x2="1150" y2="464" stroke="#c62828" stroke-width="1"/>
+  <text x="630" y="486" font-size="12" font-weight="bold" fill="#123314">对：grep -r "error" --include="*.log" .</text>
+  <text x="630" y="508" font-size="11.5" fill="#123314">让 grep 自己递归找，星号由程序解释，不经 shell。</text>
 
-  </g>
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="542" width="1140" height="64" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="566" font-size="12.5" font-weight="bold" fill="#5d4037">'单引号' 全字面　·　"双引号" 解释 $ 与 $( )，但不展开通配符　·　不加引号 = 放手展开</text>
+  <text x="50" y="590" font-size="11.5" fill="#5d4037">awk / sed 的程序体永远用单引号；要传变量用 -v 传进去，不要在双引号里拼字符串。</text>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="624" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="639" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="72" y="650" font-size="12" fill="#37474f">普通步骤</text>
+  <rect x="264" y="639" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="296" y="650" font-size="12" fill="#37474f">关键步骤（引号作用于此）</text>
+  <rect x="620" y="639" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="652" y="650" font-size="12" fill="#37474f">典型错误写法</text>
 </svg>

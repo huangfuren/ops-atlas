@@ -1,75 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 808.24" width="1200" height="808.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>脚本的四种结束方式殊途同归到 EXIT trap，kill -9 是唯一的旁路</title>
-  <desc>上半部分：正常结束、set -e 拦下失败、Ctrl-C 的 INT、kill 的 TERM 四种结束方式全部汇入 EXIT trap 执行清理，然后进程退出，退出码原样保留。下半部分两个陷阱：kill -9 不可捕获，trap 不执行临时文件留下；trap 里跑了命令会改掉退出码，要先存 rc 再 return 恢复。底部备注防重入：exec 打开文件描述符加 flock 非阻塞锁，拿不到锁退出码用 0，进程退出锁自动释放。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 645" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>trap EXIT 的四种结束路径与两个陷阱</title>
+  <desc>左侧四种结束方式都汇到同一个 EXIT trap：正常 exit 3、set -e 拦下失败、Ctrl-C 的 INT、kill 的 TERM，因为收到信号后脚本结束，EXIT trap 照样会跑。中间是 trap cleanup EXIT 负责清理临时文件、锁与半截包，右侧清理完进程才退出，退出码原样保留。下行两个陷阱：kill -9 不可捕获，trap 里再跑命令会把 $? 改掉导致退出码丢失，正确做法是先存 rc。</desc>
 
-  <rect width="680" height="458" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">trap：四种结束方式殊途同归，kill -9 是唯一旁路</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">清理写在 EXIT 里</text>
+  <!-- 坐标表：画布 1200x645 | 左四块 x=30 w=300 h=48 y=76/132/188/244 | 汇聚线 x=350 | 中卡 x=380 w=270 y=110 h=150 | 右卡 x=700 w=470 y=110 h=150 | 区②两卡 w=560 y=326 h=120 | 结论块 y=462 h=76 | 图例 y=556 h=65 -->
+
+  <rect x="0" y="0" width="1200" height="645" fill="#ffffff"/>
 
   <defs>
-    <marker id="a8Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="a8Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- ① 主时序 -->
-  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① 无论怎么结束，EXIT trap 都会执行</text>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">trap：四种结束方式殊途同归，kill -9 是唯一旁路</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">清理写在 EXIT 里</text>
 
-  <rect x="40" y="70" width="170" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="56" y="91" font-size="8.4" fill="#4A4945">正常结束：exit 3</text>
-  <rect x="40" y="112" width="170" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="56" y="133" font-size="8.4" fill="#4A4945">set -e 拦下失败命令</text>
-  <rect x="40" y="154" width="170" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="56" y="175" font-size="8.4" fill="#4A4945">INT：Ctrl-C</text>
-  <rect x="40" y="196" width="170" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="56" y="217" font-size="8.4" fill="#4A4945">TERM：kill 默认信号</text>
+  <!-- ============ 区① 四种结束 ============ -->
+  <text x="30" y="66" font-size="12" fill="#616161">① 无论怎么结束，EXIT trap 都会执行</text>
 
-  <line x1="215" y1="87" x2="291" y2="138" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a8Blue)"/>
-  <line x1="215" y1="129" x2="291" y2="146" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a8Blue)"/>
-  <line x1="215" y1="171" x2="291" y2="152" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a8Blue)"/>
-  <line x1="215" y1="213" x2="291" y2="160" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a8Blue)"/>
+  <rect x="30" y="76" width="300" height="48" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="46" y="96" font-size="12.5" font-weight="bold" fill="#123314">正常结束</text>
+  <text x="46" y="116" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">exit 3</text>
 
-  <rect x="298" y="110" width="152" height="76" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="374" y="134" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">trap cleanup EXIT</text>
-  <text x="374" y="152" font-size="7.4" fill="#1F4468" text-anchor="middle">清临时文件 · 锁 · 半截包</text>
-  <text x="374" y="168" font-size="7.4" fill="#8C8980" text-anchor="middle">五个信号里必抓的一个</text>
+  <rect x="30" y="132" width="300" height="48" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="46" y="152" font-size="12.5" font-weight="bold" fill="#7f3f00">set -e 拦下失败命令</text>
+  <text x="46" y="172" font-size="11" fill="#7f3f00">非零退出即中止，也算结束</text>
 
-  <line x1="455" y1="148" x2="533" y2="148" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a8Blue)"/>
-  <text x="494" y="140" font-size="7.4" fill="#8C8980" text-anchor="middle">清理完</text>
+  <rect x="30" y="188" width="300" height="48" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="46" y="208" font-size="12.5" font-weight="bold" fill="#311b92">INT：Ctrl-C</text>
+  <text x="46" y="228" font-size="11" fill="#311b92">交互中断，脚本结束</text>
 
-  <rect x="540" y="124" width="104" height="48" rx="3" fill="#E4F0EA" stroke="#1D5A45" stroke-width="1"/>
-  <text x="592" y="145" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">进程退出</text>
-  <text x="592" y="161" font-size="7.4" fill="#1D5A45" text-anchor="middle">退出码 3 原样保留</text>
+  <rect x="30" y="244" width="300" height="48" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="46" y="264" font-size="12.5" font-weight="bold" fill="#311b92">TERM：kill 默认信号</text>
+  <text x="46" y="284" font-size="11" fill="#311b92">systemd stop 发的就是这个</text>
 
-  <text x="32" y="250" font-size="9" fill="#8C8980">EXIT 已覆盖 INT / TERM（收到信号脚本结束，EXIT trap 照样跑）；要区分「是被打断的」才单独抓 INT / TERM。</text>
+  <line x1="350" y1="100" x2="350" y2="268" stroke="#607d8b" stroke-width="2"/>
+  <line x1="338" y1="184" x2="378" y2="184" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- ② 两个陷阱 -->
-  <text x="32" y="270" font-size="9.5" font-weight="600" fill="#4A4945">② 两个陷阱</text>
+  <rect x="380" y="110" width="270" height="150" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2.5"/>
+  <text x="400" y="138" font-size="14" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">trap cleanup EXIT</text>
+  <text x="400" y="166" font-size="11.5" fill="#123314">EXIT 是五种信号里必抓的那一个</text>
+  <text x="400" y="190" font-size="11.5" fill="#123314">清临时文件 · 锁 · 半截包</text>
+  <text x="400" y="214" font-size="11.5" fill="#123314">收到 INT / TERM 后脚本结束，</text>
+  <text x="400" y="236" font-size="11.5" fill="#123314">EXIT trap 照样跑 —— 不用单独抓</text>
 
-  <rect x="40" y="280" width="294" height="76" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="54" y="299" font-size="9.5" font-weight="600" fill="#7A322B">kill -9 拦不住</text>
-  <text x="54" y="316" font-size="7.8" fill="#7A322B">信号 9 不可捕获——trap EXIT 不执行，</text>
-  <text x="54" y="332" font-size="7.8" fill="#7A322B">临时文件留下。放 /tmp 靠系统清，</text>
-  <text x="54" y="348" font-size="7.8" fill="#7A322B">或下次启动先清上一轮残留</text>
+  <line x1="654" y1="185" x2="694" y2="185" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <rect x="350" y="280" width="294" height="76" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="364" y="299" font-size="9.5" font-weight="600" fill="#7A322B">trap 里跑了命令，$? 就被改掉</text>
-  <text x="364" y="316" font-size="7.8" fill="#7A322B">cleanup 里 rm 成功 → 最终退出码变 0。</text>
-  <text x="364" y="332" font-size="7.8" fill="#1D5A45">对：local rc=$? 先存，清理完</text>
-  <text x="364" y="348" font-size="7.8" fill="#1D5A45">return $rc——退出码原样交还</text>
+  <rect x="700" y="110" width="470" height="150" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="720" y="138" font-size="14" font-weight="bold" fill="#1b5e20">清理完，进程才真正退出</text>
+  <text x="720" y="164" font-size="11.5" fill="#1b3d1e">退出码原样保留：exit 3 就是 3，不会被清理动作改掉。</text>
+  <text x="720" y="188" font-size="11.5" fill="#1b3d1e">要区分「正常结束」和「被打断的」，才需要单独抓 INT / TERM，</text>
+  <text x="720" y="210" font-size="11.5" fill="#1b3d1e">否则只写一个 EXIT 就够了。</text>
+  <text x="720" y="238" font-size="11" fill="#2e5230">经验：脚本超过 20 行就该有 trap，哪怕只删一个临时目录。</text>
 
-  <!-- ③ 防重入 -->
-  <rect x="40" y="370" width="604" height="56" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="54" y="388" font-size="8.2" font-weight="600" fill="#7A4A12">防重入是另一类保险（8.9）：两个实例不能同时跑</text>
-  <text x="54" y="406" font-size="7.6" fill="#7A4A12">exec 9&gt;/var/lock/x.lock; flock -n 9 || exit 0 —— 拿不到锁退出码用 0（cron 不告警）；进程退出锁自动释放，kill -9 也放</text>
+  <!-- ============ 区② 两个陷阱 ============ -->
+  <text x="30" y="312" font-size="12" fill="#616161">② 两个陷阱</text>
 
-  <text x="32" y="446" font-size="9" fill="#8C8980">信号备忘：EXIT 必抓 · ERR 配 set -E 打错误日志 · INT / TERM 视需要 · HUP 一般不抓（脚本不该依赖终端）</text>
+  <rect x="30" y="326" width="560" height="120" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="50" y="352" font-size="13" font-weight="bold" fill="#7f0000">kill -9 拦不住</text>
+  <text x="50" y="376" font-size="11.5" fill="#7f0000">信号 9 不可捕获，trap EXIT 不执行，临时文件留下。</text>
+  <text x="50" y="398" font-size="11.5" fill="#7f0000">对策：临时文件放 /tmp 靠系统清，</text>
+  <text x="50" y="420" font-size="11.5" fill="#7f0000">或下次启动时先清上一轮残留（防重入同理）。</text>
+  <text x="50" y="440" font-size="11" fill="#7f0000">这也是「不要用 kill -9 关服务」的一个理由</text>
 
-  </g>
+  <rect x="610" y="326" width="560" height="120" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="630" y="352" font-size="13" font-weight="bold" fill="#7f0000">trap 里跑了命令，$? 就被改掉</text>
+  <text x="630" y="376" font-size="11.5" fill="#7f0000">cleanup 里 rm 成功 → 最终退出码变成 0，</text>
+  <text x="630" y="398" font-size="11.5" fill="#7f0000">监控就看不到真实失败原因。</text>
+  <text x="630" y="420" font-size="11.5" fill="#123314">对：local rc=$? 先存，清理完 return $rc</text>
+  <text x="630" y="440" font-size="11" fill="#7f0000">退出码要原样交还，这是 trap 的基本礼貌</text>
+
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="462" width="1140" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="486" font-size="12.5" font-weight="bold" fill="#5d4037">信号备忘：EXIT 必抓 · ERR 配 set -E 打错误日志 · INT / TERM 视需要 · HUP 一般不抓（脚本不该依赖终端）。</text>
+  <text x="50" y="508" font-size="11.5" fill="#5d4037">防重入是另一道保险：exec 9&gt;/var/lock/x.lock; flock -n 9 || exit 0 —— 拿不到锁退出码用 0，cron 不告警。</text>
+  <text x="50" y="528" font-size="11" fill="#616161">进程退出锁自动释放，kill -9 也会放 —— 所以 flock 比手写 pid 文件可靠。</text>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="556" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="571" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="72" y="582" font-size="12" fill="#37474f">正常结束</text>
+  <rect x="264" y="571" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="296" y="582" font-size="12" fill="#37474f">set -e 中止</text>
+  <rect x="488" y="571" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="520" y="582" font-size="12" fill="#37474f">信号结束（INT / TERM）</text>
+  <rect x="800" y="571" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="832" y="582" font-size="12" fill="#37474f">EXIT trap</text>
+  <rect x="1000" y="571" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="1032" y="582" font-size="12" fill="#37474f">陷阱</text>
 </svg>

@@ -1,75 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 681.18" width="1200" height="681.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>After 管顺序，Requires 管存在：三种写法的启动时间线</title>
-  <desc>三行对比：第一行只写 After=postgresql.service，db 启动失败后 app 照样启动，起来也连不上；第二行只写 Requires=postgresql.service，两个同时启动，app 先就绪而 db 还没好；第三行 After 与 Requires 一起写，db 就绪之后 app 才启动。绿色竖线标记就绪时刻，红色条表示启动失败。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>After 与 Requires 在启动时间线上的差别</title>
+  <desc>三种写法各画一条启动时间线。只写 After 时只管先后不管存在，db 启动失败 app 照样被拉起，起来也连不上。只写 Requires 时只管存在不管先后，app 会先就绪而 db 还没好。两个都写，db 就绪后 app 才启动，顺序与存在都正确。底部强调 After 管先后、Requires 管存亡、WantedBy 管被谁拉起，三者互不替代。</desc>
 
-  <rect width="680" height="386" fill="#FFFFFF"/>
-  <text x="32" y="28" font-size="13.5" font-weight="600" fill="#2B2A27">After 管顺序，Requires 管存在——两个都要写</text>
-  <text x="648" y="28" font-size="9" fill="#8C8980" text-anchor="end">▎绿色 = 就绪时刻</text>
+  <!-- 坐标表：画布 1200x620 | 三行 y=96/216/336 h=110 | 左列写法 x=30 w=300 | 时间线 x=360~900 | 右列现象 x=930 w=240 | 结论块 y=462 h=56 | 图例 y=536 h=65 -->
 
-  <!-- 列头 -->
-  <text x="40" y="66" font-size="8.4" fill="#8C8980">写法</text>
-  <text x="200" y="66" font-size="8.4" fill="#8C8980">启动时间线 →</text>
-  <text x="510" y="66" font-size="8.4" fill="#8C8980">现象</text>
+  <rect x="0" y="0" width="1200" height="620" fill="#ffffff"/>
 
-  <!-- ========== 行1：只写 After ========== -->
-  <rect x="40" y="96" width="146" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="52" y="113" font-size="8.6" fill="#4A4945">After=postgresql.service</text>
-  <text x="52" y="128" font-size="7.6" fill="#8C8980">只写顺序</text>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
 
-  <rect x="200" y="100" width="120" height="16" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="208" y="112" font-size="8" fill="#7A322B">db 启动失败</text>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">After 管顺序，Requires 管存在 —— 两个都要写</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">绿色 = 就绪时刻</text>
 
-  <rect x="330" y="124" width="140" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="338" y="136" font-size="8" fill="#1F4468">app</text>
-  <line x1="470" y1="121" x2="470" y2="143" stroke="#1D5A45" stroke-width="2"/>
+  <!-- ============ 表头 ============ -->
+  <text x="30" y="76" font-size="12.5" font-weight="bold" fill="#37474f">写法</text>
+  <text x="360" y="76" font-size="12.5" font-weight="bold" fill="#37474f">启动时间线 →</text>
+  <text x="930" y="76" font-size="12.5" font-weight="bold" fill="#37474f">现象</text>
 
-  <text x="510" y="112" font-size="8.6" fill="#7A322B">db 失败，app 照样起</text>
-  <text x="510" y="128" font-size="8.6" fill="#7A322B">起来也连不上</text>
+  <!-- ============ 行1 只写 After ============ -->
+  <rect x="30" y="96" width="300" height="110" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="50" y="124" font-size="12" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">After=postgresql.service</text>
+  <text x="50" y="150" font-size="13" font-weight="bold" fill="#7f3f00">只写顺序</text>
+  <text x="50" y="176" font-size="11.5" fill="#7f3f00">只管谁先谁后，</text>
+  <text x="50" y="194" font-size="11.5" fill="#7f3f00">不管对方有没有起来</text>
 
-  <line x1="24" y1="166" x2="656" y2="166" stroke="#EFEBE2" stroke-width="1"/>
+  <rect x="360" y="121" width="200" height="26" rx="4" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="374" y="139" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">db 启动失败 ✗</text>
 
-  <!-- ========== 行2：只写 Requires ========== -->
-  <rect x="40" y="184" width="146" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="52" y="201" font-size="8.6" fill="#4A4945">Requires=postgresql.service</text>
-  <text x="52" y="216" font-size="7.6" fill="#8C8980">只写存在</text>
+  <rect x="360" y="159" width="200" height="26" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="374" y="177" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app 照样被拉起</text>
 
-  <rect x="200" y="188" width="160" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="208" y="200" font-size="8" fill="#1F4468">db</text>
-  <line x1="360" y1="185" x2="360" y2="207" stroke="#1D5A45" stroke-width="2"/>
+  <text x="580" y="139" font-size="11" fill="#616161">两者同时开始</text>
 
-  <rect x="200" y="212" width="100" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="208" y="224" font-size="8" fill="#1F4468">app</text>
-  <line x1="300" y1="209" x2="300" y2="231" stroke="#1D5A45" stroke-width="2"/>
+  <text x="930" y="146" font-size="12" font-weight="bold" fill="#7f0000">起来也连不上</text>
+  <text x="930" y="168" font-size="11" fill="#616161">app 起来了，但 db 不在，</text>
+  <text x="930" y="186" font-size="11" fill="#616161">请求全部超时</text>
 
-  <text x="510" y="200" font-size="8.6" fill="#7A322B">app 先就绪</text>
-  <text x="510" y="216" font-size="8.6" fill="#7A322B">db 还没好，连不上</text>
+  <!-- ============ 行2 只写 Requires ============ -->
+  <rect x="30" y="216" width="300" height="110" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="50" y="244" font-size="12" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">Requires=postgresql.service</text>
+  <text x="50" y="270" font-size="13" font-weight="bold" fill="#7f3f00">只写存在</text>
+  <text x="50" y="296" font-size="11.5" fill="#7f3f00">只管对方必须在，</text>
+  <text x="50" y="314" font-size="11.5" fill="#7f3f00">不管谁先谁后</text>
 
-  <line x1="24" y1="254" x2="656" y2="254" stroke="#EFEBE2" stroke-width="1"/>
+  <rect x="360" y="241" width="420" height="26" rx="4" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="374" y="259" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">db 还在启动中，没就绪</text>
 
-  <!-- ========== 行3：两个一起写 ========== -->
-  <rect x="40" y="272" width="146" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="52" y="289" font-size="8.6" fill="#4A4945">After= + Requires=</text>
-  <text x="52" y="304" font-size="7.6" fill="#8C8980">两个都写</text>
+  <rect x="360" y="279" width="200" height="26" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="374" y="297" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app 先就绪</text>
 
-  <rect x="200" y="276" width="140" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="208" y="288" font-size="8" fill="#1F4468">db</text>
-  <line x1="340" y1="273" x2="340" y2="295" stroke="#1D5A45" stroke-width="2"/>
+  <text x="794" y="259" font-size="11" fill="#616161">同时开始</text>
 
-  <line x1="342" y1="308" x2="348" y2="308" stroke="#1D5A45" stroke-width="1.2"/>
-  <polygon points="348,304.8 353.5,308 348,311.2" fill="#1D5A45"/>
-  <rect x="356" y="300" width="140" height="16" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="364" y="312" font-size="8" fill="#1F4468">app</text>
-  <line x1="496" y1="297" x2="496" y2="319" stroke="#1D5A45" stroke-width="2"/>
+  <text x="930" y="266" font-size="12" font-weight="bold" fill="#7f0000">db 还没好，连不上</text>
+  <text x="930" y="288" font-size="11" fill="#616161">两条几乎同时起，app 抢在前面</text>
 
-  <text x="510" y="288" font-size="8.6" fill="#1D5A45">db 就绪后 app 才起</text>
-  <text x="510" y="304" font-size="8.6" fill="#1D5A45">顺序与存在都对</text>
+  <!-- ============ 行3 两个都写 ============ -->
+  <rect x="30" y="336" width="300" height="110" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="50" y="364" font-size="12" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">After= + Requires=</text>
+  <text x="50" y="390" font-size="13" font-weight="bold" fill="#123314">两个都写</text>
+  <text x="50" y="416" font-size="11.5" fill="#123314">顺序与存在都要，</text>
+  <text x="50" y="434" font-size="11.5" fill="#123314">这才是正确写法</text>
 
-  <!-- 底部结论 -->
-  <text x="32" y="354" font-size="8.6" fill="#4A4945">After 管先后，Requires 管存亡，WantedBy 管被谁拉起——三者互不替代。</text>
-  <text x="32" y="370" font-size="8" fill="#8C8980">enable 只是在 target 里建一条链接，start 才真正按依赖拉起。</text>
+  <rect x="360" y="361" width="300" height="26" rx="4" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="374" y="379" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">db 启动并就绪 ✓</text>
 
-  </g>
+  <rect x="660" y="399" width="200" height="26" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2"/>
+  <text x="674" y="417" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app 才开始起</text>
+
+  <line x1="660" y1="374" x2="660" y2="395" stroke="#388e3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="930" y="386" font-size="12" font-weight="bold" fill="#123314">顺序与存在都对</text>
+  <text x="930" y="408" font-size="11" fill="#616161">db 就绪之后 app 才启动，</text>
+  <text x="930" y="426" font-size="11" fill="#616161">这是唯一不靠重试的写法</text>
+
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="462" width="1140" height="56" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="486" font-size="12.5" font-weight="bold" fill="#5d4037">After 管先后，Requires 管存亡，WantedBy 管被谁拉起 —— 三者互不替代。</text>
+  <text x="50" y="508" font-size="11.5" fill="#5d4037">enable 只是在 target 里建一条链接，start 才真正按依赖拉起；改了 unit 记得 daemon-reload。</text>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="536" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="551" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="72" y="562" font-size="12" fill="#37474f">db 已就绪</text>
+  <rect x="264" y="551" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="296" y="562" font-size="12" fill="#37474f">db 未就绪 / 只管一头的写法</text>
+  <rect x="610" y="551" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="642" y="562" font-size="12" fill="#37474f">db 启动失败</text>
+  <rect x="836" y="551" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="868" y="562" font-size="12" fill="#37474f">app 进程</text>
 </svg>

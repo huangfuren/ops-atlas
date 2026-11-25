@@ -1,68 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 818.82" width="1200" height="818.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>整机排障四步：确认影响面、抓现场、vmstat 定维度、进故障树</title>
-  <desc>从用户报障开始四步：第一步确认影响面，只有某个功能慢大概率是应用或数据库，只有某个用户慢看网络与限流，整机都慢才继续；第二步用 30 秒抓现场清单把数落下来，重启之前先取数；第三步看 vmstat 三行定维度，r 持续大于核数是 CPU，b 持续大于 0 且 wa 高是磁盘 IO，b 大但 wa 不高是锁或回收，si/so 非 0 是内存，都正常但慢是单核瓶颈网络或抖动；第四步进对应故障树按判据决断，一次只改一个变量。三条纪律：先取数再动手、先整机再进程、一次只改一个变量。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 735" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>整机排障的四步流程与 vmstat 维度判定</title>
+  <desc>第一步先用影响面缩小范围：只有某个功能慢，问题多半在应用；只有某个来源慢，看网络与限流；整机都慢才继续往下。第二步是 30 秒抓现场，因为重启能解决问题也会销毁证据。第三步看 vmstat 的 r、b、wa、si so 四个字段定维度，每行给出该看哪一节。第四步进对应故障树，一次只改一个变量。</desc>
 
-  <rect width="680" height="464" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">整机排障：四步走完再动手</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">顺序错了全白查</text>
+  <!-- 坐标表：画布 1200x735 | 入口胶囊 x=430 w=340 y=76 h=44 | 三分支 w=360 pitch=390 y=140 h=56 | 第二步条 y=216 h=56 | 第三步表 表头 y=302 h=28 + 5 行 h=30 自 330 | 第四步条 y=500 h=56 | 结论块 y=572 h=56 | 图例 y=646 h=65 -->
+
+  <rect x="0" y="0" width="1200" height="735" fill="#ffffff"/>
 
   <defs>
-    <marker id="a9Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
     </marker>
   </defs>
 
-  <!-- 起点 -->
-  <rect x="242" y="44" width="200" height="26" rx="13" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.4"/>
-  <text x="342" y="61" font-size="9" font-weight="600" fill="#37474F" text-anchor="middle">用户报障「系统很慢」</text>
-  <line x1="342" y1="74" x2="342" y2="80" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a9Blue)"/>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">整机排障：四步走完再动手</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">顺序错了全白查</text>
 
-  <!-- 第一步 -->
-  <rect x="40" y="84" width="604" height="88" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="102" font-size="9.5" font-weight="600" fill="#4A4945">第一步 · 确认影响面</text>
-  <text x="54" y="121" font-size="8" fill="#4A4945">只有某个功能慢</text>
-  <text x="250" y="121" font-size="8" fill="#4A4945">大概率是应用 / DB——看应用日志，本册只管「整机是否拖累」</text>
-  <text x="54" y="139" font-size="8" fill="#4A4945">只有某个用户 / 来源慢</text>
-  <text x="250" y="139" font-size="8" fill="#4A4945">看网络与限流（05 册）</text>
-  <text x="54" y="157" font-size="8" font-weight="600" fill="#1D5A45">整机所有操作都慢</text>
-  <text x="250" y="157" font-size="8" font-weight="600" fill="#1D5A45">↓ 继续第二步</text>
-  <line x1="342" y1="176" x2="342" y2="184" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a9Blue)"/>
+  <!-- ============ 第一步 ============ -->
+  <text x="30" y="68" font-size="12" font-weight="bold" fill="#1565c0">第一步 · 确认影响面</text>
 
-  <!-- 第二步 -->
-  <rect x="40" y="188" width="604" height="54" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="208" font-size="9.5" font-weight="600" fill="#4A4945">第二步 · 30 秒抓现场（9.2 的一屏清单）</text>
-  <text x="54" y="226" font-size="8" fill="#7A322B">重启能解决 90% 的故障，也能销毁 100% 的现场——动手之前，数先落地</text>
-  <line x1="342" y1="246" x2="342" y2="254" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a9Blue)"/>
+  <rect x="430" y="76" width="340" height="44" rx="22" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="600" y="104" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">用户报障「系统很慢」</text>
 
-  <!-- 第三步 -->
-  <rect x="40" y="258" width="604" height="120" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="276" font-size="9.5" font-weight="600" fill="#4A4945">第三步 · 看 vmstat 三行，定维度</text>
-  <text x="54" y="295" font-size="8.2" fill="#2B2A27">r 持续 &gt; 核数</text>
-  <text x="252" y="295" font-size="8.2" font-weight="600" fill="#1F4468">CPU 维度</text>
-  <text x="470" y="295" font-size="8" fill="#8C8980">§9.5</text>
-  <text x="54" y="313" font-size="8.2" fill="#2B2A27">b 持续 &gt; 0，wa 高</text>
-  <text x="252" y="313" font-size="8.2" font-weight="600" fill="#1F4468">磁盘 / IO 维度</text>
-  <text x="470" y="313" font-size="8" fill="#8C8980">§9.4 → §9.8</text>
-  <text x="54" y="331" font-size="8.2" fill="#2B2A27">b 持续 &gt; 0，wa 不高</text>
-  <text x="252" y="331" font-size="8.2" font-weight="600" fill="#1F4468">锁 / NFS / 内存回收</text>
-  <text x="470" y="331" font-size="8" fill="#8C8980">§9.4</text>
-  <text x="54" y="349" font-size="8.2" fill="#2B2A27">si / so 非 0</text>
-  <text x="252" y="349" font-size="8.2" font-weight="600" fill="#1F4468">内存维度</text>
-  <text x="470" y="349" font-size="8" fill="#8C8980">§9.6</text>
-  <text x="54" y="367" font-size="8.2" fill="#2B2A27">都正常但用户说慢</text>
-  <text x="252" y="367" font-size="8.2" font-weight="600" fill="#1F4468">单核瓶颈 / 网络 / 抖动</text>
-  <text x="470" y="367" font-size="8" fill="#8C8980">§9.5 / §9.9 / §9.12</text>
-  <line x1="342" y1="382" x2="342" y2="390" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a9Blue)"/>
+  <line x1="470" y1="120" x2="210" y2="136" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="600" y1="120" x2="600" y2="136" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="730" y1="120" x2="990" y2="136" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- 第四步 -->
-  <rect x="40" y="394" width="604" height="40" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="54" y="412" font-size="9" font-weight="600" fill="#7A4A12">第四步 · 进对应的故障树（9.10），按树取数、按判据决断</text>
-  <text x="54" y="427" font-size="7.8" fill="#7A4A12">一次只改一个变量：改一个、测一次、记一笔——同时改五个，就不知道哪个起效哪个闯祸</text>
+  <rect x="30" y="140" width="360" height="56" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="50" y="162" font-size="12.5" font-weight="bold" fill="#7f3f00">只有某个功能慢</text>
+  <text x="50" y="182" font-size="11" fill="#7f3f00">多半是应用 / DB，看应用日志，不是整机问题</text>
 
-  <text x="32" y="452" font-size="9" fill="#8C8980">先定维度再找进程——「CPU 最高的进程」常常是无辜的，它可能只是在等一块坏盘。</text>
+  <rect x="420" y="140" width="360" height="56" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="440" y="162" font-size="12.5" font-weight="bold" fill="#7f3f00">只有某个用户 / 来源慢</text>
+  <text x="440" y="182" font-size="11" fill="#7f3f00">看网络与限流，转 121 册的网络排查</text>
 
-  </g>
+  <rect x="810" y="140" width="360" height="56" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="830" y="162" font-size="12.5" font-weight="bold" fill="#123314">整机所有操作都慢</text>
+  <text x="830" y="182" font-size="11" fill="#123314">继续第二步 —— 这才是本册要处理的</text>
+
+  <line x1="990" y1="196" x2="990" y2="212" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- ============ 第二步 ============ -->
+  <rect x="30" y="216" width="1140" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="50" y="240" font-size="12.5" font-weight="bold" fill="#0d2f5c">第二步 · 30 秒抓现场（一屏清单）</text>
+  <text x="50" y="262" font-size="11.5" fill="#0d2f5c">重启能解决 90% 的故障，也能销毁 100% 的现场 —— 动手之前，数先落地。</text>
+  <text x="700" y="262" font-size="11" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">uptime · free · vmstat 1 5 · iostat -x · ss -s</text>
+
+  <!-- ============ 第三步 ============ -->
+  <text x="30" y="292" font-size="12" font-weight="bold" fill="#1565c0">第三步 · 看 vmstat 三行，定维度</text>
+
+  <rect x="30" y="302" width="1140" height="28" fill="#eceff1"/>
+  <text x="50" y="321" font-size="11.5" font-weight="bold" fill="#37474f">判据</text>
+  <text x="460" y="321" font-size="11.5" font-weight="bold" fill="#37474f">维度</text>
+  <text x="740" y="321" font-size="11.5" font-weight="bold" fill="#37474f">接着看哪一节 / 哪张图</text>
+
+  <rect x="30" y="330" width="1140" height="30" fill="#ffffff"/>
+  <text x="50" y="350" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">r 持续 &gt; 核数</text>
+  <text x="460" y="350" font-size="11.5" fill="#37474f">CPU 维度</text>
+  <text x="740" y="350" font-size="11.5" fill="#616161">CPU 那张图：从 us/sy 拆到单核</text>
+
+  <rect x="30" y="360" width="1140" height="30" fill="#fafafa"/>
+  <text x="50" y="380" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">b 持续 &gt; 0，wa 高</text>
+  <text x="460" y="380" font-size="11.5" fill="#37474f">磁盘 / IO 维度</text>
+  <text x="740" y="380" font-size="11.5" fill="#616161">iostat -x 看 await 与 %util，再查是慢盘还是队列</text>
+
+  <rect x="30" y="390" width="1140" height="30" fill="#ffffff"/>
+  <text x="50" y="410" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">b 持续 &gt; 0，wa 不高</text>
+  <text x="460" y="410" font-size="11.5" fill="#37474f">锁 / NFS / 内存回收</text>
+  <text x="740" y="410" font-size="11.5" fill="#616161">看 D 状态进程的 wchan，不要只看磁盘</text>
+
+  <rect x="30" y="420" width="1140" height="30" fill="#fafafa"/>
+  <text x="50" y="440" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">si / so 非 0</text>
+  <text x="460" y="440" font-size="11.5" fill="#37474f">内存维度</text>
+  <text x="740" y="440" font-size="11.5" fill="#616161">已经换页了，看 available 与 OOM 日志</text>
+
+  <rect x="30" y="450" width="1140" height="30" fill="#ffffff"/>
+  <text x="50" y="470" font-size="11" fill="#546e7a">都正常，用户还说慢</text>
+  <text x="460" y="470" font-size="11.5" fill="#546e7a">单核瓶颈 / 网络 / 抖动</text>
+  <text x="740" y="470" font-size="11.5" fill="#546e7a">多核平均掩盖了单核打满，看 mpstat -P ALL</text>
+
+  <!-- ============ 第四步 ============ -->
+  <rect x="30" y="500" width="1140" height="56" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="50" y="524" font-size="12.5" font-weight="bold" fill="#311b92">第四步 · 进对应的故障树，按树取数、按判据决断</text>
+  <text x="50" y="546" font-size="11.5" fill="#311b92">一次只改一个变量：改一个、测一次、记一笔 —— 同时改五个，就不知道哪个起效、哪个闯祸。</text>
+
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="572" width="1140" height="56" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="596" font-size="12.5" font-weight="bold" fill="#5d4037">先定维度，再找进程 —— 「CPU 最高的进程」常常是无辜的，它可能只是在等一块坏盘。</text>
+  <text x="50" y="618" font-size="11.5" fill="#5d4037">反过来也一样：D 状态堆一片时，先看谁在往那块盘写，别急着怪 IO 调度器。</text>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="646" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="661" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="72" y="672" font-size="12" fill="#37474f">报障入口</text>
+  <rect x="264" y="661" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="296" y="672" font-size="12" fill="#37474f">与本册无关，转出去</text>
+  <rect x="560" y="661" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="592" y="672" font-size="12" fill="#37474f">本册处理</text>
+  <rect x="760" y="661" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="792" y="672" font-size="12" fill="#37474f">抓现场</text>
+  <rect x="920" y="661" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="952" y="672" font-size="12" fill="#37474f">按故障树处置</text>
 </svg>
