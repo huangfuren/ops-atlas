@@ -1,113 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>进程的六个状态及它们之间的转换关系</title>
-  <desc>上半部分是主链：R 运行、S 可中断睡眠、D 不可中断睡眠三个状态靠「在等什么」互相转换。下半部分是三个例外：T 被信号暂停、Z 已退出等父进程收尸、I 空闲内核线程。图的下半部并排对比 S 与 D：S 睡在用户态信号能打断，D 睡在内核态信号投不进去，所以 kill -9 对 D 无效，而平均负载把 R 和 D 一起算进去。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 710" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>进程六个状态与 S、D 两种睡眠的区别</title>
+  <desc>上行是三个主状态 R 运行、S 可中断睡眠、D 不可中断睡眠，靠「在等什么」互相转换，并给出各自的判断意义。中行是三个旁支状态：T 暂停、Z 僵尸、I 空闲内核线程。下行对比 S 与 D 两种睡眠的本质区别：S 睡在用户态信号一投就醒，D 睡在内核态连 kill -9 都要等它从内核返回。底部说明平均负载算的是 R 加 D 的进程数。</desc>
 
-  <rect width="680" height="400" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">进程状态：六个字母里只有一个杀不掉</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">load 算的是 R + D</text>
+  <!-- 坐标表：画布 1200x710 | 主链三卡 w=340 h=110 y=70 x=30/430/830 | 旁支三卡 w=360 h=110 y=224 x=30/420/810 | 对比两卡 w=560 h=130 y=378 x=30/610 | 结论块 y=526 h=76 | 图例 y=622 h=65 -->
+
+  <rect x="0" y="0" width="1200" height="710" fill="#ffffff"/>
 
   <defs>
-    <marker id="a2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="a2BlueS" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M10,0 L0,5 L10,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="a2Amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D9A458"/>
-    </marker>
-    <marker id="a2AmberS" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M10,0 L0,5 L10,10 z" fill="#D9A458"/>
-    </marker>
-    <marker id="a2Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
-    </marker>
-    <marker id="a2Purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#9C8ACB"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <text x="32" y="56" font-size="9.5" font-weight="600" fill="#4A4945">① 主链：三个状态靠「在等什么」互相转换</text>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">进程状态：六个字母里只有一个杀不掉</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">load 算的是 R + D</text>
 
-  <!-- R -->
-  <rect x="40" y="70" width="160" height="64" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="56" y="106" font-size="20" font-weight="600" fill="#1F4468">R</text>
-  <text x="84" y="90" font-size="9.4" font-weight="600" fill="#1F4468">Running / Runnable</text>
-  <text x="84" y="106" font-size="7.8" fill="#1F4468">在 CPU 上，或在队列里等</text>
-  <text x="84" y="122" font-size="7.8" fill="#8C8980">R 长期多于核数 = CPU 不够</text>
+  <!-- ============ 主链 ============ -->
+  <text x="30" y="62" font-size="12" fill="#616161">① 主链：三个状态靠「在等什么」互相转换</text>
 
-  <!-- S -->
-  <rect x="260" y="70" width="160" height="64" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="276" y="106" font-size="20" font-weight="600" fill="#1F4468">S</text>
-  <text x="304" y="90" font-size="9.4" font-weight="600" fill="#1F4468">Interruptible</text>
-  <text x="304" y="106" font-size="7.8" fill="#1F4468">等事件：包、锁、定时器</text>
-  <text x="304" y="122" font-size="7.8" fill="#8C8980">空闲中的服务几乎都是 S</text>
+  <rect x="30" y="70" width="340" height="110" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="56" y="122" font-size="26" font-weight="bold" fill="#123314">R</text>
+  <text x="108" y="108" font-size="13" font-weight="bold" fill="#123314">Running / Runnable</text>
+  <text x="108" y="132" font-size="11.5" fill="#123314">在 CPU 上，或在运行队列里等</text>
+  <text x="108" y="156" font-size="11" fill="#2e5230">长期多于核数 = CPU 不够</text>
 
-  <!-- D -->
-  <rect x="480" y="70" width="160" height="64" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="496" y="106" font-size="20" font-weight="600" fill="#7A4A12">D</text>
-  <text x="524" y="90" font-size="9.4" font-weight="600" fill="#7A4A12">Uninterruptible</text>
-  <text x="524" y="106" font-size="7.8" fill="#7A4A12">等 IO：磁盘、NFS、驱动</text>
-  <text x="524" y="122" font-size="7.8" fill="#7A4A12">信号一律不响应</text>
+  <line x1="374" y1="125" x2="426" y2="125" stroke="#607d8b" stroke-width="2"
+        marker-start="url(#arrow)" marker-end="url(#arrow)"/>
 
-  <!-- 双向箭头 R-S -->
-  <line x1="204" y1="102" x2="256" y2="102" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a2Blue)" marker-start="url(#a2BlueS)"/>
-  <text x="230" y="92" font-size="7.4" fill="#4A4945" text-anchor="middle">等事件</text>
-  <text x="230" y="118" font-size="7.4" fill="#4A4945" text-anchor="middle">被唤醒</text>
+  <rect x="430" y="70" width="340" height="110" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+  <text x="456" y="122" font-size="26" font-weight="bold" fill="#0d2f5c">S</text>
+  <text x="508" y="108" font-size="13" font-weight="bold" fill="#0d2f5c">Interruptible</text>
+  <text x="508" y="132" font-size="11.5" fill="#0d2f5c">等事件：数据包、锁、定时器</text>
+  <text x="508" y="156" font-size="11" fill="#1b5e20">空闲中的服务几乎都是 S，正常</text>
 
-  <!-- 双向箭头 S-D -->
-  <line x1="424" y1="102" x2="476" y2="102" stroke="#D9A458" stroke-width="1.2" marker-end="url(#a2Amber)" marker-start="url(#a2AmberS)"/>
-  <text x="450" y="92" font-size="7.4" fill="#7A4A12" text-anchor="middle">发起 IO</text>
-  <text x="450" y="118" font-size="7.4" fill="#7A4A12" text-anchor="middle">IO 完成</text>
+  <line x1="774" y1="105" x2="826" y2="105" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="826" y1="145" x2="774" y2="145" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="800" y="92" font-size="10" fill="#616161" text-anchor="middle">发起 IO</text>
+  <text x="800" y="166" font-size="10" fill="#616161" text-anchor="middle">IO 完成</text>
 
-  <!-- 下行箭头到 T -->
-  <line x1="120" y1="134" x2="120" y2="172" stroke="#9C8ACB" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#a2Purple)"/>
-  <text x="128" y="158" font-size="7.6" fill="#46337A">SIGSTOP / Ctrl+Z / gdb</text>
+  <rect x="830" y="70" width="340" height="110" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <text x="856" y="122" font-size="26" font-weight="bold" fill="#7f3f00">D</text>
+  <text x="908" y="108" font-size="13" font-weight="bold" fill="#7f3f00">Uninterruptible</text>
+  <text x="908" y="132" font-size="11.5" fill="#7f3f00">等 IO：磁盘、NFS、驱动</text>
+  <text x="908" y="156" font-size="11" fill="#7f3f00">信号一律不响应 —— 这就是关键</text>
 
-  <!-- 下行箭头到 Z -->
-  <line x1="340" y1="134" x2="340" y2="172" stroke="#D2948C" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#a2Red)"/>
-  <text x="348" y="152" font-size="7.6" fill="#7A322B">exit() 后</text>
-  <text x="348" y="164" font-size="7.6" fill="#7A322B">父进程不 wait</text>
+  <!-- ============ 旁支 ============ -->
+  <text x="30" y="210" font-size="12" fill="#616161">② 旁支：三个不是「在等」的状态</text>
 
-  <!-- T -->
-  <rect x="40" y="176" width="160" height="60" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
-  <text x="56" y="208" font-size="17" font-weight="600" fill="#46337A">T</text>
-  <text x="76" y="196" font-size="9" font-weight="600" fill="#46337A">Stopped 已暂停</text>
-  <text x="76" y="212" font-size="7.6" fill="#46337A">SIGCONT 恢复，回到 R / S</text>
-  <text x="76" y="226" font-size="7.6" fill="#8C8980">不占 CPU，但占着内存</text>
+  <rect x="30" y="224" width="360" height="110" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="46" y="252" font-size="17" font-weight="bold" fill="#311b92">T　Stopped 已暂停</text>
+  <text x="46" y="280" font-size="11.5" fill="#311b92">SIGSTOP / Ctrl+Z / gdb 打断点</text>
+  <text x="46" y="302" font-size="11.5" fill="#311b92">SIGCONT 恢复；不占 CPU 但占内存</text>
+  <text x="46" y="322" font-size="11" fill="#311b92">调试时看到 T，是它被暂停了，不是卡住</text>
 
-  <!-- Z -->
-  <rect x="260" y="176" width="160" height="60" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="276" y="208" font-size="17" font-weight="600" fill="#7A322B">Z</text>
-  <text x="296" y="196" font-size="9" font-weight="600" fill="#7A322B">Zombie 僵尸</text>
-  <text x="296" y="212" font-size="7.6" fill="#7A322B">只剩表项，kill 无效</text>
-  <text x="296" y="226" font-size="7.6" fill="#8C8980">重启它的父进程才会消失</text>
+  <rect x="420" y="224" width="360" height="110" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="436" y="252" font-size="17" font-weight="bold" fill="#7f0000">Z　Zombie 僵尸</text>
+  <text x="436" y="280" font-size="11.5" fill="#7f0000">只剩进程表项，kill 无效</text>
+  <text x="436" y="302" font-size="11.5" fill="#7f0000">父进程 wait 之后才消失</text>
+  <text x="436" y="322" font-size="11" fill="#7f0000">重启它的父进程，不是重启它</text>
 
-  <!-- I -->
-  <rect x="480" y="176" width="160" height="60" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="496" y="208" font-size="17" font-weight="600" fill="#4A4945">I</text>
-  <text x="516" y="196" font-size="9" font-weight="600" fill="#4A4945">Idle 空闲内核线程</text>
-  <text x="516" y="212" font-size="7.6" fill="#4A4945">内核 4.14 起才有这个字母</text>
-  <text x="516" y="226" font-size="7.6" fill="#8C8980">与上面五个无关，不用管</text>
+  <rect x="810" y="224" width="360" height="110" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="826" y="252" font-size="17" font-weight="bold" fill="#546e7a">I　Idle 空闲内核线程</text>
+  <text x="826" y="280" font-size="11.5" fill="#546e7a">内核 4.14 起才有这个字母</text>
+  <text x="826" y="302" font-size="11.5" fill="#546e7a">与上面五个不是一套体系</text>
+  <text x="826" y="322" font-size="11" fill="#546e7a">看到 I 不用管，它不是你的进程</text>
 
-  <!-- ② -->
-  <text x="32" y="266" font-size="9.5" font-weight="600" fill="#4A4945">② 两个「睡眠」的区别，决定了两个经典困惑</text>
+  <!-- ============ S 与 D 的对比 ============ -->
+  <text x="30" y="364" font-size="12" fill="#616161">③ 两个「睡眠」的区别，决定了两个经典困惑</text>
 
-  <rect x="40" y="278" width="290" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="54" y="296" font-size="10" font-weight="600" fill="#1F4468">S 睡在用户态</text>
-  <text x="54" y="312" font-size="8" fill="#1F4468">等的是可中断事件，信号一投就醒</text>
-  <text x="54" y="328" font-size="8" fill="#1F4468">kill 一下立刻有反应，正常退出</text>
+  <rect x="30" y="378" width="560" height="130" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="50" y="404" font-size="14" font-weight="bold" fill="#0d2f5c">S 睡在用户态</text>
+  <text x="50" y="430" font-size="11.5" fill="#0d2f5c">等的是可中断事件，信号一投就醒</text>
+  <text x="50" y="454" font-size="11.5" fill="#0d2f5c">kill 一下立刻有反应，能正常退出</text>
+  <text x="50" y="480" font-size="11.5" fill="#0d2f5c">所以「服务卡着不动」多数是它，直接 restart 就行</text>
+  <text x="50" y="500" font-size="11" fill="#0d2f5c">判据：ps 的 STAT 列是 S，wchan 显示在等某个可中断对象</text>
 
-  <rect x="350" y="278" width="290" height="66" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="364" y="296" font-size="10" font-weight="600" fill="#7A4A12">D 睡在内核态</text>
-  <text x="364" y="312" font-size="8" fill="#7A4A12">信号要等它从内核返回用户态才投递</text>
-  <text x="364" y="328" font-size="8" fill="#7A4A12">kill -9 也没用 —— 它不是卡死，是在等</text>
+  <rect x="610" y="378" width="560" height="130" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="630" y="404" font-size="14" font-weight="bold" fill="#7f3f00">D 睡在内核态</text>
+  <text x="630" y="430" font-size="11.5" fill="#7f3f00">信号要等它从内核返回用户态才投递</text>
+  <text x="630" y="454" font-size="11.5" fill="#7f3f00">kill -9 也没用 —— 它不是卡死，是在等</text>
+  <text x="630" y="480" font-size="11.5" fill="#7f3f00">所以「kill 不掉」不是权限问题，是它在等 IO</text>
+  <text x="630" y="500" font-size="11" fill="#7f3f00">判据：看 /proc/&lt;pid&gt;/wchan 与 /proc/&lt;pid&gt;/stack</text>
 
-  <text x="32" y="366" font-size="9" fill="#8C8980">平均负载算的是 R + D 的进程数：一堆 D 能把 load 顶到 20，而 CPU 使用率只有 3%。</text>
-  <text x="32" y="382" font-size="9" fill="#8C8980">所以「负载高但 CPU 空」先数 D，「kill -9 不掉」先看 /proc/&lt;pid&gt;/wchan。</text>
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="526" width="1140" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="550" font-size="13" font-weight="bold" fill="#5d4037">平均负载算的是 R + D 的进程数：一堆 D 能把 load 顶到 20，而 CPU 使用率只有 3%。</text>
+  <text x="50" y="572" font-size="11.5" fill="#5d4037">所以「负载高但 CPU 空」先数 D，别急着加 CPU；「kill -9 不掉」先看 wchan，别急着调权限。</text>
+  <text x="50" y="592" font-size="11" fill="#616161">ps -eo stat,pid,comm | grep -c '^D' 一行就能数出 D 的个数，比 top 里翻屏快。</text>
 
-  </g>
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="622" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="637" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="72" y="648" font-size="12" fill="#37474f">R 运行 / 可运行</text>
+  <rect x="226" y="637" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="258" y="648" font-size="12" fill="#37474f">S 可中断睡眠</text>
+  <rect x="412" y="637" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="444" y="648" font-size="12" fill="#37474f">D 不可中断睡眠</text>
+  <rect x="598" y="637" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="630" y="648" font-size="12" fill="#37474f">T 暂停</text>
+  <rect x="784" y="637" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="816" y="648" font-size="12" fill="#37474f">Z 僵尸</text>
+  <rect x="970" y="637" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="1002" y="648" font-size="12" fill="#37474f">I 空闲内核线程</text>
 </svg>

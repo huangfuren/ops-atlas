@@ -1,93 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 712.94" width="1200" height="712.94" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 等比放大：整体 scale(1.764706)，内部坐标未改动 -->
-  <g transform="scale(1.7647058824)">
-  <title>systemd 作为 PID 1 的组织方式与 target 的四层降级关系</title>
-  <desc>上半部分说明 systemd 怎么工作：内核最后 exec 的 /sbin/init 就是 systemd，它因此永远是 PID 1；它按 unit 的依赖关系并行拉起服务。unit 有六种后缀，最常用的是 service、socket、target。下半部分是 target 的四层降级：graphical 依赖 multi-user，而 rescue、emergency 是从 normal 降下去时 isolate 的独立目标，越往里被拉起的服务越少。graphical 与 multi-user 是正常态，rescue 与 emergency 是降级态，后者才是救命的入口。嵌套只表示服务集合收窄，不表示 target 定义上的依赖包含。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 740" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>systemd 作为 PID 1 的职责与 target 四层降级</title>
+  <desc>上行是内核交棒给 systemd 的三步：内核完成硬件初始化与挂根分区后 exec /sbin/init，systemd 以 PID 1 身份接管。右侧说明它为什么杀不掉：进程号永远是 1、负责收养孤儿、要等全部服务退出才关机。中行是六种 unit 类型及其用途。下行是 target 四层降级，从图形界面到只挂根分区的 emergency，越往里被拉起的服务越少，底部说明嵌套只表示服务集合收窄而非依赖包含。</desc>
 
-  <rect width="680" height="404" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">systemd：PID 1 按依赖把系统拉起来</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">target 就是一组 unit</text>
+  <!-- 坐标表：画布 1200x740 | 内容区 x=30~1170 | 区①左三卡 x=30 w=540 h=52 y=76/140/204 | 右底板 x=590 w=580 y=76 h=180 | 区②六卡 w=170 pitch=194 y=304 h=72 | 区③四卡 w=270 pitch=290 y=420 h=96 | 结论块 y=536 h=92 | 图例 y=648 h=65 -->
+
+  <rect x="0" y="0" width="1200" height="740" fill="#ffffff"/>
 
   <defs>
-    <marker id="arrBlue3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- ============ 上半：内核到 unit ============ -->
-  <rect x="40" y="52" width="150" height="42" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="52" y="70" font-size="9.5" font-weight="600" fill="#1D5A45">内核 vmlinuz</text>
-  <text x="52" y="85" font-size="8" fill="#1D5A45">最后一步 exec /sbin/init</text>
+  <!-- ============ 标题 ============ -->
+  <text x="30" y="42" font-size="20" font-weight="bold" fill="#263238">systemd：PID 1 按依赖把系统拉起来</text>
+  <text x="1170" y="42" font-size="12" fill="#616161" text-anchor="end">target 就是一组 unit</text>
 
-  <line x1="192" y1="73" x2="216" y2="73" stroke="#6BAF95" stroke-width="1.2" marker-end="url(#arrBlue3)"/>
+  <!-- ============ 区① 左侧：内核交棒三步 ============ -->
+  <rect x="30" y="76" width="540" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="50" y="98" font-size="15" font-weight="bold" fill="#0d2f5c">内核 vmlinuz</text>
+  <text x="50" y="118" font-size="11.5" fill="#0d2f5c">初始化硬件、挂上根分区、启动 initramfs 里的一切</text>
 
-  <rect x="220" y="52" width="172" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="232" y="70" font-size="10.5" font-weight="600" fill="#1F4468">systemd　PID 1</text>
-  <text x="232" y="85" font-size="8" fill="#1F4468">永远是 1 号，因为内核直接 exec 它</text>
+  <line x1="300" y1="130" x2="300" y2="138" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <rect x="404" y="52" width="244" height="42" rx="3" fill="#FAF9F5" stroke="#E8E6DE" stroke-width="1"/>
-  <text x="416" y="68" font-size="8.4" fill="#4A4945">收养孤儿、转发信号、全退才关机</text>
-  <text x="416" y="82" font-size="8.4" fill="#4A4945">所以它杀不掉，也不该杀</text>
+  <rect x="30" y="140" width="540" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="50" y="162" font-size="15" font-weight="bold" fill="#0d2f5c">exec /sbin/init</text>
+  <text x="50" y="182" font-size="11.5" fill="#0d2f5c">内核用 exec 直接顶替自己 —— 不是 fork 出一个新进程</text>
 
-  <!-- 总线 -->
-  <line x1="86" y1="104" x2="591" y2="104" stroke="#7FA6D0" stroke-width="1"/>
-  <line x1="306" y1="94" x2="306" y2="104" stroke="#7FA6D0" stroke-width="1"/>
+  <line x1="300" y1="194" x2="300" y2="202" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- 六个 unit 框 -->
-  <line x1="86" y1="104" x2="86" y2="112" stroke="#7FA6D0" stroke-width="0.8"/>
-  <rect x="40" y="112" width="91" height="38" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="85.5" y="128" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">.service</text>
-  <text x="85.5" y="142" font-size="7.8" fill="#4A4945" text-anchor="middle">一条守护进程</text>
+  <rect x="30" y="204" width="540" height="52" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="50" y="226" font-size="15" font-weight="bold" fill="#123314">systemd　PID 1</text>
+  <text x="50" y="246" font-size="11.5" fill="#123314">用户态的第一个进程，之后整个系统由它拉起</text>
 
-  <line x1="187" y1="104" x2="187" y2="112" stroke="#7FA6D0" stroke-width="0.8"/>
-  <rect x="141" y="112" width="91" height="38" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="186.5" y="128" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">.socket</text>
-  <text x="186.5" y="142" font-size="7.8" fill="#4A4945" text-anchor="middle">按需唤醒</text>
+  <!-- ============ 区① 右侧：为什么杀不掉 ============ -->
+  <rect x="590" y="76" width="580" height="180" rx="8" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="610" y="102" font-size="14" font-weight="bold" fill="#1b5e20">它为什么杀不掉，也不该杀</text>
+  <text x="610" y="130" font-size="11.5" fill="#1b3d1e">· 进程号永远是 1：内核 exec 它，没有第二个进程能顶这个号</text>
+  <text x="610" y="156" font-size="11.5" fill="#1b3d1e">· 收养孤儿：父进程退出后，子进程挂到 PID 1 名下</text>
+  <text x="610" y="182" font-size="11.5" fill="#1b3d1e">· 转发信号、回收退出码，要等全部服务退出才关机</text>
+  <text x="610" y="208" font-size="11.5" fill="#1b3d1e">· 所以 kill 它不是「重启服务」，是把整个系统拆掉</text>
+  <line x1="610" y1="222" x2="1150" y2="222" stroke="#a5d6a7" stroke-width="1"/>
+  <text x="610" y="244" font-size="11" fill="#2e5230">想重启某个服务：systemctl restart 名字 —— 永远不要动 PID 1</text>
 
-  <line x1="288" y1="104" x2="288" y2="112" stroke="#7FA6D0" stroke-width="0.8"/>
-  <rect x="242" y="112" width="91" height="38" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="1"/>
-  <text x="287.5" y="128" font-size="8.8" font-weight="600" fill="#46337A" text-anchor="middle">.target</text>
-  <text x="287.5" y="142" font-size="7.8" fill="#46337A" text-anchor="middle">一组 unit</text>
+  <!-- ============ 区② unit 类型 ============ -->
+  <text x="30" y="290" font-size="14" font-weight="bold" fill="#263238">systemd 管六类 unit，后缀就是类型</text>
 
-  <line x1="389" y1="104" x2="389" y2="112" stroke="#7FA6D0" stroke-width="0.8"/>
-  <rect x="343" y="112" width="91" height="38" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="388.5" y="128" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">.timer</text>
-  <text x="388.5" y="142" font-size="7.8" fill="#4A4945" text-anchor="middle">cron 的替代</text>
+  <rect x="30" y="304" width="170" height="72" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="46" y="330" font-size="15" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">.service</text>
+  <text x="46" y="352" font-size="11.5" fill="#123314">一条守护进程</text>
 
-  <line x1="490" y1="104" x2="490" y2="112" stroke="#7FA6D0" stroke-width="0.8"/>
-  <rect x="444" y="112" width="91" height="38" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="489.5" y="128" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">.mount</text>
-  <text x="489.5" y="142" font-size="7.8" fill="#4A4945" text-anchor="middle">挂载点</text>
+  <rect x="224" y="304" width="170" height="72" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="240" y="330" font-size="15" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">.socket</text>
+  <text x="240" y="352" font-size="11.5" fill="#123314">按需唤醒</text>
 
-  <line x1="591" y1="104" x2="591" y2="112" stroke="#7FA6D0" stroke-width="0.8"/>
-  <rect x="545" y="112" width="91" height="38" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="590.5" y="128" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">.path</text>
-  <text x="590.5" y="142" font-size="7.8" fill="#4A4945" text-anchor="middle">监视文件变化</text>
+  <rect x="418" y="304" width="170" height="72" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="434" y="330" font-size="15" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">.target</text>
+  <text x="434" y="352" font-size="11.5" fill="#123314">一组 unit</text>
 
-  <!-- ============ 下半：target 嵌套 ============ -->
-  <text x="40" y="172" font-size="10.5" font-weight="600" fill="#2B2A27">target 四层降级：越往里，被拉起的服务越少</text>
+  <rect x="612" y="304" width="170" height="72" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="628" y="330" font-size="15" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">.timer</text>
+  <text x="628" y="352" font-size="11.5" fill="#7f3f00">cron 的替代</text>
 
-  <rect x="40" y="184" width="600" height="156" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="200" font-size="9" font-weight="600" fill="#1F4468">graphical.target</text>
-  <text x="158" y="200" font-size="8.6" fill="#4A4945">旧级别 5 · 图形界面，服务器一般不用</text>
+  <rect x="806" y="304" width="170" height="72" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="822" y="330" font-size="15" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">.mount</text>
+  <text x="822" y="352" font-size="11.5" fill="#123314">挂载点</text>
 
-  <rect x="64" y="210" width="552" height="120" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="76" y="226" font-size="9" font-weight="600" fill="#1F4468">multi-user.target</text>
-  <text x="190" y="226" font-size="8.6" fill="#1F4468">旧级别 3 · 服务器默认目标</text>
+  <rect x="1000" y="304" width="170" height="72" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1016" y="330" font-size="15" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">.path</text>
+  <text x="1016" y="352" font-size="11.5" fill="#123314">监视文件变化</text>
 
-  <rect x="88" y="236" width="528" height="84" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="100" y="252" font-size="9" font-weight="600" fill="#7A4A12">rescue.target</text>
-  <text x="186" y="252" font-size="8.6" fill="#7A4A12">旧级别 1 / s · 挂全部文件系统，起基本服务</text>
+  <!-- ============ 区③ target 四层 ============ -->
+  <text x="30" y="406" font-size="14" font-weight="bold" fill="#263238">target 四层降级：越往里，被拉起的服务越少</text>
+  <text x="1170" y="406" font-size="11" fill="#616161" text-anchor="end">正常开机在左，救援在右</text>
 
-  <rect x="112" y="262" width="504" height="48" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="124" y="278" font-size="9" font-weight="600" fill="#7A322B">emergency.target</text>
-  <text x="228" y="278" font-size="8.6" fill="#7A322B">只挂根分区且只读</text>
-  <text x="124" y="294" font-size="8.4" fill="#7A322B">几乎不起任何服务，连日志都可能不落盘 —— 最后一道门</text>
+  <rect x="30" y="420" width="270" height="96" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="46" y="450" font-size="13" font-weight="bold" fill="#546e7a" font-family="ui-monospace,Menlo,Consolas,monospace">graphical.target</text>
+  <text x="46" y="472" font-size="11.5" fill="#546e7a">旧级别 5 · 图形界面</text>
+  <text x="46" y="494" font-size="11.5" fill="#546e7a">服务器一般不用</text>
 
-  <text x="32" y="360" font-size="9" fill="#8C8980">systemctl isolate xxx 立刻切过去，会停掉不在这条链上的服务；set-default 只改下次开机。</text>
-  <text x="32" y="374" font-size="9" fill="#8C8980">真正救命的是后两层：rescue 挂全盘能改配置，emergency 只读但最不容易继续崩。</text>
-  <text x="32" y="392" font-size="8.6" fill="#7A322B">注意：嵌套只表示「服务集合收窄」，不是依赖包含 —— rescue / emergency 与 multi-user 是并列的，isolate 过去会停掉后者的服务。</text>
+  <line x1="304" y1="468" x2="316" y2="468" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
-  </g>
+  <rect x="320" y="420" width="270" height="96" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="336" y="450" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">multi-user.target</text>
+  <text x="336" y="472" font-size="11.5" fill="#123314">旧级别 3 · 服务器默认</text>
+  <text x="336" y="494" font-size="11.5" fill="#123314">不带图形界面的完整系统</text>
+
+  <line x1="594" y1="468" x2="606" y2="468" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="610" y="420" width="270" height="96" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="626" y="450" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">rescue.target</text>
+  <text x="626" y="472" font-size="11.5" fill="#7f3f00">旧级别 1 / s · 单用户</text>
+  <text x="626" y="494" font-size="11.5" fill="#7f3f00">挂全部文件系统，起基本服务</text>
+
+  <line x1="884" y1="468" x2="896" y2="468" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="900" y="420" width="270" height="96" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="916" y="450" font-size="13" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">emergency.target</text>
+  <text x="916" y="472" font-size="11.5" fill="#7f0000">只挂根分区，而且只读</text>
+  <text x="916" y="494" font-size="11.5" fill="#7f0000">连日志都可能不落盘</text>
+
+  <!-- ============ 结论块 ============ -->
+  <rect x="30" y="536" width="1140" height="92" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="562" font-size="14" font-weight="bold" fill="#5d4037">真正救命的是后两层，另外记住两条命令的区别</text>
+  <text x="50" y="584" font-size="11.5" fill="#5d4037">rescue 挂全盘能改配置，emergency 只读但最不容易继续崩；改 root 密码走 rd.break，见配图 111-03。</text>
+  <text x="50" y="606" font-size="11.5" fill="#5d4037">systemctl isolate xxx 立刻切过去，会停掉不在这条链上的服务；set-default 只改下次开机进哪个 target。</text>
+  <text x="50" y="622" font-size="11" fill="#616161">注意：嵌套只表示「服务集合收窄」，不是依赖包含 —— rescue / emergency 与 multi-user 并列，isolate 过去会停掉后者的服务。</text>
+
+  <!-- ============ 图例 ============ -->
+  <rect x="30" y="648" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="40" y="663" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="72" y="674" font-size="12" fill="#37474f">交棒环节</text>
+  <rect x="264" y="663" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="296" y="674" font-size="12" fill="#37474f">常驻服务 / 默认目标</text>
+  <rect x="560" y="663" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="592" y="674" font-size="12" fill="#37474f">定时 / 可改配置的救援</text>
+  <rect x="836" y="663" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="868" y="674" font-size="12" fill="#37474f">服务器不选</text>
+  <rect x="986" y="663" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="1018" y="674" font-size="12" fill="#37474f">只读的最后一道门</text>
 </svg>
