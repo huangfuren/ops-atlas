@@ -23,7 +23,7 @@
   <text x="30" y="62" font-size="12" fill="#616161">① 主链：三个状态靠「在等什么」互相转换</text>
 
   <rect x="30" y="70" width="340" height="110" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
-  <text x="56" y="122" font-size="26" font-weight="bold" fill="#123314">R</text>
+  <text x="56" y="122" font-size="20" font-weight="bold" fill="#123314">R</text>
   <text x="108" y="108" font-size="13" font-weight="bold" fill="#123314">Running / Runnable</text>
   <text x="108" y="132" font-size="11.5" fill="#123314">在 CPU 上，或在运行队列里等</text>
   <text x="108" y="156" font-size="11" fill="#2e5230">长期多于核数 = CPU 不够</text>
@@ -32,7 +32,7 @@
         marker-start="url(#arrow)" marker-end="url(#arrow)"/>
 
   <rect x="430" y="70" width="340" height="110" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
-  <text x="456" y="122" font-size="26" font-weight="bold" fill="#0d2f5c">S</text>
+  <text x="456" y="122" font-size="20" font-weight="bold" fill="#0d2f5c">S</text>
   <text x="508" y="108" font-size="13" font-weight="bold" fill="#0d2f5c">Interruptible</text>
   <text x="508" y="132" font-size="11.5" fill="#0d2f5c">等事件：数据包、锁、定时器</text>
   <text x="508" y="156" font-size="11" fill="#1b5e20">空闲中的服务几乎都是 S，正常</text>
@@ -43,7 +43,7 @@
   <text x="800" y="166" font-size="10" fill="#616161" text-anchor="middle">IO 完成</text>
 
   <rect x="830" y="70" width="340" height="110" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
-  <text x="856" y="122" font-size="26" font-weight="bold" fill="#7f3f00">D</text>
+  <text x="856" y="122" font-size="20" font-weight="bold" fill="#7f3f00">D</text>
   <text x="908" y="108" font-size="13" font-weight="bold" fill="#7f3f00">Uninterruptible</text>
   <text x="908" y="132" font-size="11.5" fill="#7f3f00">等 IO：磁盘、NFS、驱动</text>
   <text x="908" y="156" font-size="11" fill="#7f3f00">信号一律不响应 —— 这就是关键</text>

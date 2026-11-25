@@ -24,8 +24,8 @@
   <text x="46" y="176" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">no bootable device</text>
 
   <rect x="440" y="104" width="250" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="456" y="140" font-size="15" font-weight="bold" fill="#0d2f5c">① 固件</text>
-  <text x="456" y="164" font-size="11.5" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">UEFI / BIOS</text>
+  <text x="456" y="148" font-size="15" font-weight="bold" fill="#0d2f5c">① 固件</text>
+  <text x="456" y="172" font-size="11.5" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">UEFI / BIOS</text>
 
   <rect x="700" y="104" width="470" height="104" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
   <text x="716" y="132" font-size="11.5" fill="#1b3d1e">进 BIOS 看启动顺序与硬盘识别</text>
@@ -39,8 +39,8 @@
   <text x="46" y="292" font-size="11.5" fill="#7f0000">连启动菜单都不出</text>
 
   <rect x="440" y="220" width="250" height="104" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="456" y="256" font-size="15" font-weight="bold" fill="#7f3f00">② 引导器</text>
-  <text x="456" y="280" font-size="11.5" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">GRUB2</text>
+  <text x="456" y="264" font-size="15" font-weight="bold" fill="#7f3f00">② 引导器</text>
+  <text x="456" y="288" font-size="11.5" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">GRUB2</text>
 
   <rect x="700" y="220" width="470" height="104" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
   <text x="716" y="248" font-size="11.5" fill="#1b3d1e">先在 grub&gt; 里 ls 找分区，确认盘还在</text>
@@ -54,8 +54,8 @@
   <text x="46" y="408" font-size="11.5" fill="#7f0000">内核报错后 panic</text>
 
   <rect x="440" y="336" width="250" height="104" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="456" y="372" font-size="15" font-weight="bold" fill="#123314">③ 内核</text>
-  <text x="456" y="396" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">initramfs</text>
+  <text x="456" y="380" font-size="15" font-weight="bold" fill="#123314">③ 内核</text>
+  <text x="456" y="404" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">initramfs</text>
 
   <rect x="700" y="336" width="470" height="104" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
   <text x="716" y="364" font-size="11.5" fill="#1b3d1e">查根分区、LVM 是否可见</text>
@@ -69,8 +69,8 @@
   <text x="46" y="524" font-size="11.5" fill="#7f0000">等它超时，记下卡住的是哪个 unit</text>
 
   <rect x="440" y="452" width="250" height="104" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="456" y="488" font-size="15" font-weight="bold" fill="#311b92">④ 用户态</text>
-  <text x="456" y="512" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">systemd</text>
+  <text x="456" y="496" font-size="15" font-weight="bold" fill="#311b92">④ 用户态</text>
+  <text x="456" y="520" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">systemd</text>
 
   <rect x="700" y="452" width="470" height="104" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
   <text x="716" y="480" font-size="11.5" fill="#1b3d1e">rescue.target：挂全盘的单用户</text>
