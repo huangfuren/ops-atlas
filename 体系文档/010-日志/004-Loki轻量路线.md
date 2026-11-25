@@ -71,7 +71,7 @@ Grafana（查询界面 · 仪表盘 · 告警）
 
 ## 4.4 LogQL 速成：选择器、管道、统计
 
-LogQL 的结构是"选择器 + 管道"，与「Linux」008 的管道思想同构：
+LogQL 的结构是"选择器 + 管道"，与「Linux」132 的管道思想同构：
 
 ```logql
 {service="myapp", env="prod"}                    # 选择器：圈定日志流

@@ -30,9 +30,9 @@ JVM 内存区域与排障工具映射：
 | 问题 | 去哪 |
 |---|---|
 | Go 程序的 GC 与 pprof | 「Go」013/014——GC 是同一问题的两种解法，对照着学 |
-| JVM 指标进 Prometheus | 「监控」007（JMX exporter/Micrometer）· 001 §3 |
+| JVM 指标进 Prometheus | 「监控」117（JMX exporter/Micrometer）· 001 §3 |
 | 应用日志的采集与治理 | 「日志」001/005——Java 应用日志（logback）是采集对象 |
-| 部署流水线（war/jar 的 CI 发布） | 「CICD」007/008 |
+| 部署流水线（war/jar 的 CI 发布） | 「CICD」131/008 |
 | 数据库连接池背后的数据库 | 「数据库」板块——连接池只是客户端 |
 
 ## 学习路径

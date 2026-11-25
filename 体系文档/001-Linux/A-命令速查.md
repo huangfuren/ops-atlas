@@ -3,7 +3,7 @@
 > **这一册回答**：这个命令叫什么、参数怎么写、在另一个发行版上叫什么名字。**只查不讲。**
 > **怎么用**：按域翻（A.1–A.11），或者 `Ctrl+F` 搜你要的动作（「看端口」「查包」「扩容」）。这里每条只给「命令 + 关键参数」，为什么这么写、坑在哪，回正文对应册。
 > **口径**：左列 **CentOS 7**、右列 **Ubuntu 22.04** 的差异都标出来了；完全相同的只写一行。装包这件事见 A.8，工具名与包名对不上时见 A.13。
-> **不在这里**：为什么这么用、参数背后的行为、故障怎么判 → 回各册正文；文本处理的组合套路 → [007 §7.14](007-命令行与文本处理.md)；性能数据的判读 → [009 §9.14](009-性能分析与排障.md)。
+> **不在这里**：为什么这么用、参数背后的行为、故障怎么判 → 回各册正文；文本处理的组合套路 → [131 §7.14](130-运维进阶/131-命令行与文本处理.md)；性能数据的判读 → [133 §9.14](130-运维进阶/133-性能分析与排障.md)。
 
 > **关于结构**：其他册的「知识点地图 / 排错路径 / 自测」在这一册没有意义——它本身就是索引。所以本册只有三段：**用法说明 → 分域速查 → 双系对照与速记**。
 
@@ -28,13 +28,13 @@
 | 看发行版（旧办法，Ubuntu） | `lsb_release -a` | 需 `redhat-lsb-core` / `lsb-release` |
 | 看主机名 | `hostnamectl`；`hostname` | `hostnamectl` 信息更全 |
 | 改主机名 | `hostnamectl set-hostname <name>` | 两系通用，立即生效 |
-| 看开机多久、负载 | `uptime` | 三个 load 数见 009 §9.3 |
+| 看开机多久、负载 | `uptime` | 三个 load 数见 133 §9.3 |
 | 看时间与时区 | `timedatectl` | 含 NTP 同步状态 |
 | 改时区 | `timedatectl set-timezone Asia/Shanghai` | 两系通用 |
 | 校时（一次性） | `chronyc makestep`；`ntpdate <ip>` | `ntpdate` 已淘汰，优先 `chronyc` |
 | 看 CPU 型号与核数 | `lscpu`；`nproc` | `nproc` 只给可用核数 |
 | 看 CPU 详细信息 | `cat /proc/cpuinfo` | 关注 `flags`、`cpu MHz` |
-| 看内存 | `free -h`；`cat /proc/meminfo` | 看 `available` 而不是 `free`，见 002 §2.8 |
+| 看内存 | `free -h`；`cat /proc/meminfo` | 看 `available` 而不是 `free`，见 112 §2.8 |
 | 看块设备树 | `lsblk`；`lsblk -f` | `-f` 带文件系统与 UUID |
 | 看 PCI 设备 | `lspci -nn` | `-nn` 显示厂商与设备 ID |
 | 看 USB | `lsusb` | |
@@ -57,29 +57,29 @@
 | 看所有进程 | `ps aux`；`ps -ef` | `aux` 是 BSD 风格，`-ef` 是 System V 风格 |
 | 按 CPU 排序前 10 | `ps -eo pid,ppid,stat,pcpu,pmem,comm --sort=-pcpu \| head` | 排内存改 `-rss` |
 | 看进程树 | `pstree -p` | `-p` 显示 pid |
-| 实时看 | `top`；`htop` | `top` 只看三处，见 009 §9.2 |
+| 实时看 | `top`；`htop` | `top` 只看三处，见 133 §9.2 |
 | 看某进程的所有线程 | `top -Hp <pid>`；`ps -T -p <pid>` | 找「哪个线程在跑满一核」 |
 | 看某进程的线程 CPU 明细 | `pidstat -t -p <pid> 1` | |
 | 按名字找进程 | `pgrep -a <name>`；`pgrep -af <pattern>` | `-a` 显示完整命令行 |
 | 杀进程 | `kill <pid>`；`kill -9 <pid>` | 先 `-TERM`（15），实在不行再 `-9` |
 | 按名字杀 | `pkill -f <pattern>`；`killall <name>` | `-f` 匹配完整命令行，危险 |
-| 看 `D` 状态进程 | `ps -eo pid,stat,wchan:30,comm \| awk '$2 ~ /^D/'` | 见 009 §9.4 |
+| 看 `D` 状态进程 | `ps -eo pid,stat,wchan:30,comm \| awk '$2 ~ /^D/'` | 见 133 §9.4 |
 | 看进程在等什么系统调用 | `cat /proc/<pid>/syscall`；`cat /proc/<pid>/stack` | 需 root，比 `strace` 更快 |
 | 跟踪系统调用 | `strace -p <pid> -f -T -e trace=openat,read` | `-T` 显示每次耗时 |
 | 跟踪库调用 | `ltrace -p <pid>` | 需装 |
 | 看进程打开的文件 | `lsof -p <pid>` | |
 | 看谁占着这个端口 | `lsof -i :<port>`；`ss -lntp \| grep <port>` | `ss` 更快 |
 | 看谁占着这个目录 | `lsof +D <dir>` | 很慢，目录大时慎用 |
-| 找「删了但还开着」的文件 | `lsof +L1` | 见 004 §4.5、10.15 |
+| 找「删了但还开着」的文件 | `lsof +L1` | 见 1144.5、10.15 |
 | 看谁在用这个挂载点 | `fuser -vm <dir>` | `-k` 直接杀掉 |
 | 看进程资源限制 | `cat /proc/<pid>/limits`；`ulimit -a` | 前者是实际生效值 |
 | 改优先级 | `nice -n 10 <cmd>`；`renice -n 10 -p <pid>` | 负值需 root |
-| 改 IO 优先级 | `ionice -c2 -n7 -p <pid>` | 现代调度器下多半无效，见 002 §2.11 |
+| 改 IO 优先级 | `ionice -c2 -n7 -p <pid>` | 现代调度器下多半无效，见 112 §2.11 |
 | 看 IO 占用 | `pidstat -d 1`；`iotop -o` | |
-| 看上下文切换 | `pidstat -w 1` | 自愿/非自愿，见 009 §9.5 |
+| 看上下文切换 | `pidstat -w 1` | 自愿/非自愿，见 133 §9.5 |
 | 看 cgroup 树 | `systemd-cgls`；`systemd-cgtop` | |
 | 看进程内存分布 | `pmap -x <pid>`；`cat /proc/<pid>/smaps_rollup` | 后者更快 |
-| 后台跑且退出终端不死 | `nohup <cmd> &`；`setsid <cmd>`；`tmux` | 见 002 §2.12 |
+| 后台跑且退出终端不死 | `nohup <cmd> &`；`setsid <cmd>`；`tmux` | 见 112 §2.12 |
 | 把已跑的任务放后台 | `Ctrl+Z` → `bg` → `disown` | 关终端前必须 `disown` |
 | 看某服务的所有进程 | `systemctl status <svc>`；`systemctl show -p MainPID <svc>` | |
 
@@ -179,10 +179,10 @@
 | 看 UDP 监听 | `ss -lnup` | |
 | 看已建立连接 | `ss -tnp`；`ss -tn state established` | |
 | 看连接汇总 | `ss -s` | 各类连接数 |
-| 看 socket 队列 | `ss -lnt` | `Recv-Q` 含义见 005 §5.6 |
+| 看 socket 队列 | `ss -lnt` | `Recv-Q` 含义见 121 §5.6 |
 | 看某端口谁在用 | `ss -lntp \| grep :<port>` | |
 | 连通性 | `ping -c 4 <ip>` | `-i 0.2` 加快、`-s 1472` 测 MTU |
-| 测 MTU/不分片 | `ping -M do -s 1472 <ip>` | 见 005 §5.11 |
+| 测 MTU/不分片 | `ping -M do -s 1472 <ip>` | 见 121 §5.11 |
 | 路由追踪 | `traceroute <ip>`；`tracepath <ip>`；`mtr <ip>` | `mtr` 最好用 |
 | 查 DNS | `dig <name>`；`dig +short <name>`；`dig @<dns> <name>` | 指定 DNS 服务器排「是不是解析错了」 |
 | 查 DNS（简单） | `nslookup <name>`；`host <name>` | |
@@ -210,7 +210,7 @@
 | 看 iptables 规则 | `iptables -L -n -v --line-numbers` | `-t nat` 看 NAT |
 | 看 nftables | `nft list ruleset` | |
 | 看 conntrack | `cat /proc/sys/net/netfilter/nf_conntrack_count` | 上限在同目录 `nf_conntrack_max` |
-| 看重传/丢包统计 | `nstat -az \| grep -iE 'Retrans\|Drop'` | 见 009 §9.9 |
+| 看重传/丢包统计 | `nstat -az \| grep -iE 'Retrans\|Drop'` | 见 133 §9.9 |
 | 扫描端口（慎用） | `nmap -p 1-1000 <ip>` | 需装；生产上扫之前先报备 |
 
 ## A.6 磁盘与文件系统
@@ -222,7 +222,7 @@
 | 看块设备 | `lsblk -f` | UUID、挂载点、文件系统一起看 |
 | 看分区表 | `parted -l`；`fdisk -l` | |
 | 看 UUID | `blkid` | 写 `fstab` 用它比设备名稳 |
-| 分区（MBR） | `fdisk /dev/sdb` | ⚠️ 交互式，见 004 §4.2 |
+| 分区（MBR） | `fdisk /dev/sdb` | ⚠️ 交互式，见 114 §4.2 |
 | 分区（GPT） | `gdisk /dev/sdb`；`parted /dev/sdb` | |
 | 建文件系统 | `mkfs.ext4 -L <label> /dev/sdb1`；`mkfs.xfs -L <label> /dev/sdb1` | ⚠️ 会清空分区 |
 | 挂载 | `mount /dev/sdb1 <dir>`；`mount -t nfs <srv>:/p <dir>` | |
@@ -233,25 +233,25 @@
 | 重挂为只读 | `mount -o remount,ro <dir>` | 误删抢救第一步，见 10.15 |
 | 看某个进程的挂载命名空间 | `ls -l /proc/<pid>/ns/mnt` | 容器排查 |
 | LVM 查看 | `pvs`；`vgs`；`lvs`；`lvs -a -o name,attr,lv_size,snap_percent` | |
-| 扩逻辑卷（含扩文件系统） | `lvextend -r -L +10G /dev/<vg>/<lv>` | `-r` 自动扩 fs，见 004 §4.7 |
+| 扩逻辑卷（含扩文件系统） | `lvextend -r -L +10G /dev/<vg>/<lv>` | `-r` 自动扩 fs，见 114 §4.7 |
 | 扩 xfs | `xfs_growfs <mountpoint>` | **只能扩不能缩** |
 | 扩 ext4 | `resize2fs /dev/<vg>/<lv>` | 先 `lvextend` 再 `resize2fs` |
 | 建快照 | `lvcreate -s -L 5G -n <snap> /dev/<vg>/<lv>` | 快照区写满即失效 |
 | 合并快照（回滚） | `lvconvert --merge /dev/<vg>/<snap>` | ⚠️ 需卸载后生效 |
 | RAID 状态 | `cat /proc/mdstat`；`mdadm --detail /dev/md0` | |
 | 软 RAID 重建 | `mdadm /dev/md0 --add /dev/sdc1` | |
-| 看 IO 统计 | `iostat -xz 1 3` | 字段与 `%util` 陷阱见 004 §4.11 |
+| 看 IO 统计 | `iostat -xz 1 3` | 字段与 `%util` 陷阱见 114 §4.11 |
 | 看某进程 IO | `iotop -o`；`pidstat -d 1` | |
 | 测顺序写 | `dd if=/dev/zero of=<dir>/test bs=1M count=1024 oflag=direct` | ⚠️ 会写 1G 文件，测完删 |
 | 测随机读 | `fio --name=t --rw=randread --bs=4k --size=1G --numjobs=4 --runtime=30 --time_based` | 需装 `fio` |
-| 看磁盘健康 | `smartctl -H /dev/sda`；`smartctl -a /dev/sda` | 需装 `smartmontools`，见 004 §4.12 |
+| 看磁盘健康 | `smartctl -H /dev/sda`；`smartctl -a /dev/sda` | 需装 `smartmontools`，见 114 §4.12 |
 | 看 ext4 参数 | `tune2fs -l /dev/sda1` | |
 | 看 xfs 参数 | `xfs_info <mountpoint>` | |
 | 检查 ext4 | `e2fsck -f /dev/sda1` | ⚠️ 必须卸载；`-n` 只检查 |
 | 检查 xfs | `xfs_repair -n /dev/sda1` | `-n` 只检查；修复需卸载 |
 | SSD TRIM | `fstrim -av` | |
 | 看 swap | `swapon --show`；`free -h` | |
-| 配额 | `repquota -a`；`quota -u <user>` | 见 004 §4.10 |
+| 配额 | `repquota -a`；`quota -u <user>` | 见 114 §4.10 |
 
 ## A.7 权限与用户
 
@@ -268,7 +268,7 @@
 | 删 ACL | `setfacl -b <path>` | |
 | 看特殊属性 | `lsattr <path>` | |
 | 加不可改/只追加 | `chattr +i <file>`；`chattr +a <file>` | ⚠️ 连 root 也改不动，先记住怎么 `-i` |
-| 看 capabilities | `getcap -r / 2>/dev/null` | 提权排查，见 003 §3.15 |
+| 看 capabilities | `getcap -r / 2>/dev/null` | 提权排查，见 113 §3.15 |
 | 加 capabilities | `setcap cap_net_bind_service=+ep <bin>` | |
 | 我是谁 | `id`；`whoami`；`groups` | |
 | 谁在线 | `who`；`w`；`last`；`lastb` | `lastb` 看失败登录 |
@@ -282,7 +282,7 @@
 | 编辑 sudo 规则 | `visudo`；`visudo -f /etc/sudoers.d/<file>` | 别直接编辑 `sudoers` |
 | 看 SELinux 状态 | `getenforce`；`sestatus` | |
 | 临时关 SELinux | `setenforce 0` | 重启恢复；永久改 `/etc/selinux/config` |
-| 看 SELinux 拒绝记录 | `ausearch -m avc -ts recent`；`journalctl -t audit` | 见 003 §3.11 |
+| 看 SELinux 拒绝记录 | `ausearch -m avc -ts recent`；`journalctl -t audit` | 见 113 §3.11 |
 | 看布尔值 | `getsebool -a \| grep <kw>` | |
 | 改布尔值 | `setsebool -P <bool> on` | `-P` 永久 |
 | 改文件上下文 | `semanage fcontext -a -t <type> '<path>(/.*)?'` → `restorecon -Rv <path>` | `semanage` 需 `policycoreutils-python` |
@@ -370,7 +370,7 @@
 
 | 我要 | 命令 | 备注 |
 | --- | --- | --- |
-| 打包并 gzip | `tar -czf <out>.tar.gz -C <dir> <name>` | `-f` 后必须紧跟文件名，见 007 §7.13 |
+| 打包并 gzip | `tar -czf <out>.tar.gz -C <dir> <name>` | `-f` 后必须紧跟文件名，见 131 §7.13 |
 | 解 gzip 包 | `tar -xzf <file> -C <dir>` | |
 | 只列内容 | `tar -tzf <file> \| head` | |
 | 解到标准输出单个文件 | `tar -xzf <file> -O <path/in/archive>` | 不用解整个包 |
@@ -388,7 +388,7 @@
 | 验 gzip 完整性 | `gzip -t <file>.gz` | |
 | zip | `zip -r <out>.zip <dir>` | |
 | unzip 列表/解压 | `unzip -l <f>.zip`；`unzip <f>.zip -d <dir>` | |
-| 中文名乱码 | `unzip -O CP936 <f>.zip` | 部分版本不支持，改用 `7z x -mcp=936`，见 007 §7.13 |
+| 中文名乱码 | `unzip -O CP936 <f>.zip` | 部分版本不支持，改用 `7z x -mcp=936`，见 131 §7.13 |
 | 7z | `7z a <out>.7z <dir>`；`7z x <f>.7z` | 需 `p7zip` / `p7zip-full` |
 | 分卷 | `split -b 100M -d <file> <prefix>.` | |
 | 合并分卷 | `cat <prefix>.* > <file>` | |
@@ -439,12 +439,12 @@
 
 | 我要 | 命令 | 备注 |
 | --- | --- | --- |
-| 一屏看全景 | `vmstat 1 5` | 第一行是开机均值，必须丢，见 009 §9.2 |
+| 一屏看全景 | `vmstat 1 5` | 第一行是开机均值，必须丢，见 133 §9.2 |
 | 看 CPU 每核 | `mpstat -P ALL 1 3` | |
 | 看 IO | `iostat -xz 1 3` | |
 | 看内存与 swap | `free -m`；`vmstat 1` 的 `si`/`so` | |
 | 看负载与队列 | `uptime`；`vmstat 1` 的 `r`/`b`；`cat /proc/loadavg` | |
-| 看历史（要预装） | `sar -u 1 5`；`sar -r`；`sar -b`；`sar -n DEV`；`sar -q` | `sysstat` 包，见 009 §9.2 |
+| 看历史（要预装） | `sar -u 1 5`；`sar -r`；`sar -b`；`sar -n DEV`；`sar -q` | `sysstat` 包，见 133 §9.2 |
 | 看历史某天 | `sar -f /var/log/sa/sa28 -u` | CentOS；Ubuntu 用 `/var/log/sysstat/sa28` |
 | 看进程 CPU 趋势 | `pidstat -u 1 5` | |
 | 看进程内存趋势 | `pidstat -r 1 5` | |
@@ -456,7 +456,7 @@
 | 看 fd 用量 | `cat /proc/sys/fs/file-nr`；`lsof \| wc -l` | 第一列 → 第三列 |
 | 看某进程 fd 数 | `ls /proc/<pid>/fd \| wc -l` | |
 | 看 inotify 用量 | `sysctl fs.inotify.max_user_watches` | |
-| 30 秒留现场 | 见 009 §9.2 末尾的清单 | 故障时先跑它，再动手 |
+| 30 秒留现场 | 见 133 §9.2 末尾的清单 | 故障时先跑它，再动手 |
 
 ## A.13 工具名与包名对照
 
@@ -565,4 +565,4 @@
 
 ---
 
-**上一篇**：[010 数据备份与共享](010-数据备份与共享.md)　**下一篇**：[B 发行版差异](B-发行版差异.md)
+**上一篇**：[134-数据备份与共享](130-运维进阶/134-数据备份与共享.md)　**下一篇**：[B 发行版差异](B-发行版差异.md)

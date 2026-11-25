@@ -191,4 +191,4 @@ grep -hE '^[[:space:]]*bind' /opt/config/haproxy/*/haproxy.cfg | sed 's/.*://' |
 
 ---
 
-> 下一篇：回到 [README](README.md) 总览——「接入层」十册完成，横向衔接「CICD」007（灰度）与「容器」006（Ingress）。
+> 下一篇：回到 [README](README.md) 总览——「接入层」十册完成，横向衔接「CICD」131（灰度）与「容器」122（Ingress）。

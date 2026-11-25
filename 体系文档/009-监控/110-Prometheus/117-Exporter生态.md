@@ -71,7 +71,7 @@ EOF
 systemctl daemon-reload && systemctl enable --now node_exporter
 ```
 
-运维必看的 **20 个关键指标**（按「Linux」009 五维模型的映射）：
+运维必看的 **20 个关键指标**（按「Linux」133 五维模型的映射）：
 
 | 维度 | 指标 | 含义 |
 |---|---|---|
@@ -80,7 +80,7 @@ systemctl daemon-reload && systemctl enable --now node_exporter
 | 磁盘空间 | `node_filesystem_avail_bytes` | 可用空间——按 mountpoint 分 |
 | 磁盘 IO | `node_disk_io_time_seconds_total` | IO 忙碌时间——`rate` 即利用率 |
 | 网络 | `node_network_receive_bytes_total` | 收发字节数 |
-| 负载 | `node_load1/5/15` | 与「Linux」009 的 load 口径一致 |
+| 负载 | `node_load1/5/15` | 与「Linux」133 的 load 口径一致 |
 | 进程 | `node_procs_running` / `node_procs_blocked` | R 与 D 状态进程数 |
 
 `--collector.systemd` 和 `--collector.processes` 是常用但默认关闭的 collector——按需启用。**禁用不用的**（如 `--no-collector.nfs`）减少指标量。

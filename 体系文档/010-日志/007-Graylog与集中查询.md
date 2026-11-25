@@ -79,7 +79,7 @@ Graylog 用 **Index Set** 管理自己的索引（默认前缀 `graylog`，按�
 
 现象：某索引副本分片长期 `INITIALIZING` 反复卡死；ES 日志刷 `CircuitBreakingException`——**分片恢复预留内存超出断路器上限**。根因链：**机器内存不小，JVM 堆却配得极小**（如 16G 机器只给 2G 堆，断路器约 1.8G）——分片恢复不仅要传磁盘文件，还要**内存里构建索引结构、回放事务日志**，小堆直接被熔断拦截；恢复反复失败 → 残留分片目录 → 初始化卡死；ES 默认恢复并发限流又加剧排队。
 
-处置五步（全程主分片正常读写，无业务中断，仅短暂缺副本）：① 备份 `jvm.options`；② 调整 `-Xms/-Xmx`（机器内存的 **50%** 是 ES 官方口径）；③ 重启 ES；④ 清 swap；⑤ 验证：`curl -s 'http://localhost:9200/_nodes/jvm?pretty' | grep heap_max_in_bytes` 看生效值。**本案最大的认知坑**：改之前看 `free`，"已用 13G"吓人不敢调——**那大部分是 buff/cache，可回收**；真实常驻只有 3G 出头，调到 8G 堆毫无压力。判断内存够不够，看 `available`，不看 `used`（「Linux」003 的 free 三行判读）。
+处置五步（全程主分片正常读写，无业务中断，仅短暂缺副本）：① 备份 `jvm.options`；② 调整 `-Xms/-Xmx`（机器内存的 **50%** 是 ES 官方口径）；③ 重启 ES；④ 清 swap；⑤ 验证：`curl -s 'http://localhost:9200/_nodes/jvm?pretty' | grep heap_max_in_bytes` 看生效值。**本案最大的认知坑**：改之前看 `free`，"已用 13G"吓人不敢调——**那大部分是 buff/cache，可回收**；真实常驻只有 3G 出头，调到 8G 堆毫无压力。判断内存够不够，看 `available`，不看 `used`（「Linux」113 的 free 三行判读）。
 
 ## 7.7 坑表
 

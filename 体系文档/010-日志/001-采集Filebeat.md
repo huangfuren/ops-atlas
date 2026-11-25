@@ -73,7 +73,7 @@ filebeat.inputs:
 
 output.elasticsearch:
   hosts: ["https://es.internal:9200"]
-  username: "filebeat-writer"   # 凭据走密钥管理，不进 Git（「CICD」002 §2.7）
+  username: "filebeat-writer"   # 凭据走密钥管理，不进 Git（「CICD」112 §2.7）
   password: "${ES_PASS}"
   index: "logs-myapp-%{+yyyy.MM.dd}"    # 按天索引（002 §2.5 的 ILM 由此接管）
 
@@ -165,7 +165,7 @@ filebeat.inputs:
                 logs_path: "/var/log/containers/"
 ```
 
-三个要点：**hostPath 挂载**节点的 `/var/log/containers` 与 `/var/lib/docker/containers`（读宿主日志目录是 hostPath 的正当用途——「容器」007 §7.4）；`add_kubernetes_metadata` 把 pod 名、namespace、标签补进事件——**Kibana 里按 namespace/service 过滤就靠它**；采集器自身用 DaemonSet 部署，`NODE_NAME` 由 Downward API 注入。容器 stdout 的轮转由 kubelet/docker 负责，采集器跟随轮转文件即可（「容器」004 §4.5 的 json-file 轮转在这里被消费）。
+三个要点：**hostPath 挂载**节点的 `/var/log/containers` 与 `/var/lib/docker/containers`（读宿主日志目录是 hostPath 的正当用途——「容器」123 §7.4）；`add_kubernetes_metadata` 把 pod 名、namespace、标签补进事件——**Kibana 里按 namespace/service 过滤就靠它**；采集器自身用 DaemonSet 部署，`NODE_NAME` 由 Downward API 注入。容器 stdout 的轮转由 kubelet/docker 负责，采集器跟随轮转文件即可（「容器」114 §4.5 的 json-file 轮转在这里被消费）。
 
 ---
 
@@ -195,7 +195,7 @@ registry（offset 账本）保证的是**至少一次（at-least-once）**：har
 | 7 | 采集器版本与 ES 差两个大版本 | 兼容性断崖 | 升级顺序：先 ES 后采集器 |
 | 8 | 只配 input 不测 output | 以为在收，实际静默失败 | `filebeat test output` 进部署流程 |
 
-第 8 条展开：静默失败是日志系统最常见的病（与「CICD」009 §9.7 的静默失败同型）——Filebeat 进程活着、日志文件在涨、**ES 里就是没数据**。标准取证顺序：`filebeat test output`（连通与凭据）→ 查 registry（offset 在动吗）→ 查 ES 索引是否存在（ILM/模板问题）→ 查 Kibana 数据视图（时间字段对不对）。每一段都有明确命令，别跳段（006 §6.1 的四段取证在采集段的落地）。
+第 8 条展开：静默失败是日志系统最常见的病（与「CICD」133 §9.7 的静默失败同型）——Filebeat 进程活着、日志文件在涨、**ES 里就是没数据**。标准取证顺序：`filebeat test output`（连通与凭据）→ 查 registry（offset 在动吗）→ 查 ES 索引是否存在（ILM/模板问题）→ 查 Kibana 数据视图（时间字段对不对）。每一段都有明确命令，别跳段（006 §6.1 的四段取证在采集段的落地）。
 
 ---
 

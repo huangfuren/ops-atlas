@@ -53,7 +53,7 @@ MQ 场景的传播同理：生产者把上下文注入**消息头**（AMQP heade
 
 ## 4.3 数据库与 MQ 的 span：客户端埋点与异步关联
 
-**数据库 span**：自动埋点会为每次 SQL 创建 CLIENT span（`db.system=mysql`、`db.statement=…`）——瀑布图里"订单服务内嵌一条 MySQL 慢查询"直接可见，与「数据库」007 的慢查询取证互相印证。注意 `db.statement` 可能含敏感数据——脱敏策略（「日志」005 §5.4 同源）。
+**数据库 span**：自动埋点会为每次 SQL 创建 CLIENT span（`db.system=mysql`、`db.statement=…`）——瀑布图里"订单服务内嵌一条 MySQL 慢查询"直接可见，与「数据库」131 的慢查询取证互相印证。注意 `db.statement` 可能含敏感数据——脱敏策略（「日志」005 §5.4 同源）。
 
 **MQ 的异步关联**：MQ 是"发出去先不等人"——生产侧 PRODUCER span 与消费侧 CONSUMER span **在时间上不嵌套**，可能跨秒甚至跨分钟。OTel 的处理：消费侧新建 trace/自成一段，并用 **span link** 指回生产侧的 span——瀑布图上能看到"来自订单服务 P0 的消息"的关联标识。**运维验收点**：MQ instrumentation 是否启用、消息头是否携带上下文（自研客户端是高频漏点）。
 
