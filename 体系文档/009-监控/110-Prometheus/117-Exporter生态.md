@@ -1,4 +1,4 @@
-# 007 Exporter 生态
+# 117 Exporter 生态
 
 > **解决**：该监控什么、怎么采——从主机到中间件到自定义业务指标。  
 > **范围**：node_exporter 深入 · blackbox_exporter · 中间件 exporter · 自定义 exporter · 服务发现。  
@@ -131,7 +131,7 @@ scrape_configs:
 | Redis | redis_exporter | 9121 | `redis_up`、`redis_memory_used_bytes`、`redis_keyspace_hits/misses` |
 | Kafka | kafka_exporter | 9308 | `kafka_consumergroup_lag`（堆积）、`kafka_broker Brokers` |
 
-运维验收点：**exporter 的 `*_up` 指标必须进告警**——它为 0 说明 exporter 或目标服务挂了。**lag 告警**对接「消息队列」002 §2.6 的最小集。
+运维验收点：**exporter 的 `*_up` 指标必须进告警**——它为 0 说明 exporter 或目标服务挂了。**lag 告警**对接「消息队列」012 §2.6 的最小集。
 
 ---
 

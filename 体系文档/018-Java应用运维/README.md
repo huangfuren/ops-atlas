@@ -17,7 +17,7 @@
 | [002 Tomcat 与应用交付](002-Tomcat与应用交付.md) | war/fat jar 两种交付、Tomcat 配置、部署与回滚 |
 | [00 术语表](00-术语表.md) | 词汇 · 缩写 · 易混对 · 症状反查 |
 
-> **与「Go」的对照**：Go 的 GC（013）与 JVM GC 解决同一问题；pprof（014）与 jstack/jmap 是同思想的两国语言——对照着学最快。  
+> **与「Go」的对照**：Go 的 GC（132）与 JVM GC 解决同一问题；pprof（014）与 jstack/jmap 是同思想的两国语言——对照着学最快。  
 > **与「监控」的衔接**：JVM 指标走 Micrometer/JMX exporter → Prometheus（007 同思路）。
 
 ## 阅读约定

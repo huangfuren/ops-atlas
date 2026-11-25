@@ -60,7 +60,7 @@ docker run -d --name jenkins \
 
 首次初始化三步：`docker logs jenkins` 里拿初始管理员密码 → Web 界面装"建议安装的插件" → 建管理员账号。生产接入的两件事：
 
-1. **反代接入**：套 Nginx 提供域名与 TLS（「接入层」002 的 proxy 配置；Jenkins 的 CSRF 防护要求转发 `X-Forwarded-Proto` 头——那册 §2.4 的 Host 头三件套在这里兑现）；
+1. **反代接入**：套 Nginx 提供域名与 TLS（「接入层」112 的 proxy 配置；Jenkins 的 CSRF 防护要求转发 `X-Forwarded-Proto` 头——那册 §2.4 的 Host 头三件套在这里兑现）；
 2. **备份对象只有一个目录**：`/var/jenkins_home`（配置、凭据、job 定义全在里面），定期备份它。**Job 定义也尽量 Jenkinsfile 化**——进了 Git 的部分不需要备份（001 §0.6 的制品思维）。
 
 ---

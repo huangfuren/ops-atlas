@@ -71,7 +71,7 @@ war 流程（对接「CICD」131 发布纪律）：
 
 | 步 | 动作 | 纪律 |
 |---|---|---|
-| 1 | 新 war 上传到 deploy 目录（不直接覆盖） | 制品带版本号（不可变制品，CICD 006） |
+| 1 | 新 war 上传到 deploy 目录（不直接覆盖） | 制品带版本号（不可变制品，CICD 123） |
 | 2 | `mv webapps/app webapps/app.bak.$(date +%s)` 备份旧版 | 回滚=换回目录 |
 | 3 | 放入新 war → Tomcat 自动解压；或用管理界面 | 生产建议停应用再部署（数据一致性） |
 | 4 | 验证：localhost.log 无异常 + health 接口 200 | 验证不通过 → 步骤 5 |
@@ -86,7 +86,7 @@ fat jar 流程（systemd 管理）：`systemctl stop app` → 替换 jar → `sy
 | 启动失败 | localhost.log | 端口占用、配置错误、依赖缺失 |
 | 部署后 404 | webapps 目录与 war 名 | context 路径与预期不符 |
 | 503/502（SLB 后） | 应用线程池打满 / 应用假死 | 线程池耗尽、下游阻塞（001 §3 jstack） |
-| 频繁 Full GC | GC 日志（001） | 内存泄漏或缓存过大 |
+| 频繁 Full GC | GC 日志（111） | 内存泄漏或缓存过大 |
 | 内存持续涨 | jmap 直方图 + dump | 001 §4 |
 
 ## 6. 坑表

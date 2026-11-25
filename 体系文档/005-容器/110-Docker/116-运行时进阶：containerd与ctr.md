@@ -1,6 +1,6 @@
-# 122 运行时进阶：containerd 与 ctr
+# 116 运行时进阶：containerd 与 ctr
 
-> **解决**：把 000 册的"运行时栈"从概念变成亲手操作——containerd 怎么部署、怎么与 Docker 集成、ctr 三层模型怎么用，以及它和 K8s 的 CRI 是什么关系。  
+> **解决**：把 001 册的"运行时栈"从概念变成亲手操作——containerd 怎么部署、怎么与 Docker 集成、ctr 三层模型怎么用，以及它和 K8s 的 CRI 是什么关系。  
 > **范围**：containerd 定位与部署 · config.toml 三要点 · Docker 集成 · ctr 三层模型（namespace → container → task）· 与 K8s CRI 的衔接。  
 > **口径**：containerd 1.7.x（cri-containerd-cni 二进制包）；ctr 为调试与管理工具，生产常态用 docker/K8s 间接使用。  
 > **更新**：2026-11-08
@@ -21,7 +21,7 @@
 
 ## 6.1 containerd 的定位：从 Docker 拆出来的那一层
 
-000 册 §0.3 的调用链在这里落地：**Docker 引擎（构建/API/网络）之下是 containerd（拉镜像、管生命周期、快照），之下才是 runc（真正 exec 出容器进程）**。containerd 2016 年从 Docker 捐给 CNCF，如今是 K8s 节点上的标配运行时——**K8s 1.24 移除 dockershim 之后，kubelet 直连的就是它**（001 §0.3）。
+001 册 §0.3 的调用链在这里落地：**Docker 引擎（构建/API/网络）之下是 containerd（拉镜像、管生命周期、快照），之下才是 runc（真正 exec 出容器进程）**。containerd 2016 年从 Docker 捐给 CNCF，如今是 K8s 节点上的标配运行时——**K8s 1.24 移除 dockershim 之后，kubelet 直连的就是它**（001 §0.3）。
 
 两个使用场景：**独立部署**（给 K8s 或裸 containerd 环境用，docker 不装）与**与 Docker 共存集成**（让 docker 用的就是外部 containerd）。本册两个都做。
 

@@ -80,7 +80,7 @@ docker compose down         # 整组停掉并删容器（卷默认保留）
 
 | 字段 | 作用 | 备注 |
 |---|---|---|
-| `image` / `build` | 用现成镜像 / 现场构建 | `build: .` 配合 002 册的 Dockerfile；两者都写时默认 build 后用 image 名打 tag |
+| `image` / `build` | 用现成镜像 / 现场构建 | `build: .` 配合 112 册的 Dockerfile；两者都写时默认 build 后用 image 名打 tag |
 | `ports` | 端口发布 | 写法同 `docker run -p`；对外服务记得只绑需要的地址 |
 | `volumes` | 挂载 | 具名卷（在顶层 `volumes:` 声明）或 bind mount；`:ro` 同样适用 |
 | `environment` | 环境变量 | 列表或映射两种写法；敏感值用 `env_file` 或 secrets，别明文进 Git |
@@ -189,7 +189,7 @@ services:
 
 所以：内存 limit 给"正常峰值 × 安全系数"，宁可稍宽（OOM 的代价是进程死）；CPU limit 可以收紧（慢的代价是延迟）。这组判断和「Linux」133 册的五维模型是同一思想。
 
-运行中的容器想改额度，不用重建：`docker update --cpu-quota 100000 --memory 1g 容器名` 热更新（注意内存缩到低于当前已用量会失败）。它改的就是 `/sys/fs/cgroup` 里的 quota 文件——手工玩法与底层原理见 121 册《Docker 网络与隔离底层》。
+运行中的容器想改额度，不用重建：`docker update --cpu-quota 100000 --memory 1g 容器名` 热更新（注意内存缩到低于当前已用量会失败）。它改的就是 `/sys/fs/cgroup` 里的 quota 文件——手工玩法与底层原理见 115 册《Docker 网络与隔离底层》。
 
 ---
 

@@ -19,7 +19,7 @@
 | [121-Docker 网络与隔离底层](115-Docker网络与隔离底层.md) | 五种网络模型、端口转发的 iptables 链路、namespace/cgroup 手工实验 |
 | [122-运行时进阶：containerd 与 ctr](116-运行时进阶：containerd与ctr.md) | 运行时栈实体化：containerd 部署、ctr 三层模型、与 K8s 的 CRI 关系 |
 
-> **与「Linux」112 的衔接**：namespace/cgroup 的内核底子在 Linux 册 §2，本线 005 册是它的容器场景实验课。
+> **与「Linux」112 的衔接**：namespace/cgroup 的内核底子在 Linux 册 §2，本线 115 册是它的容器场景实验课。
 
 ## 阅读约定
 

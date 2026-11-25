@@ -39,7 +39,7 @@ Helm cli **直连 apiserver**（kubeconfig 就是凭证）——helm 命令的�
 
 v2 的架构是 C/S：**tiller** 作为服务端跑在集群里替你执行——RBAC 时代这个设计成了灾难（tiller 常常 cluster-admin，谁拿到 tiller 就拿到了整个集群）。**v3 移除 tiller**：helm 直接用本地 kubeconfig 调 apiserver，不再需要 `helm init`、不再需要 SA。
 
-对使用者的实际意义：**权限就是你的 kubeconfig 权限，审计就是你自己的操作**——v3 的架构修正本身就是 RBAC 时代安全模型的教学案例（012 册的活样本）。
+对使用者的实际意义：**权限就是你的 kubeconfig 权限，审计就是你自己的操作**——v3 的架构修正本身就是 RBAC 时代安全模型的教学案例（133 册的活样本）。
 
 ---
 
@@ -86,7 +86,7 @@ Namespace → NetworkPolicy → ResourceQuota → LimitRange → PodSecurityPoli
 → Ingress → APIService
 ```
 
-两个用途：**自己写 chart 时，被依赖的资源（ns/配置/凭据）天然排在依赖方之前**；排查"装一半失败"时，对照顺序表看卡在哪一层——前面没起，后面全 Pending。这份顺序表也是 005 册"对象作用域三类"的实操映射。
+两个用途：**自己写 chart 时，被依赖的资源（ns/配置/凭据）天然排在依赖方之前**；排查"装一半失败"时，对照顺序表看卡在哪一层——前面没起，后面全 Pending。这份顺序表也是 121 册"对象作用域三类"的实操映射。
 
 ---
 
