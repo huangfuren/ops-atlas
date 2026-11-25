@@ -42,7 +42,7 @@ ENTRYPOINT ["/bin/app"]
 ```bash
 docker build -t myapp:1.0.0 .
 docker run -d --name myapp -p 8080:8080 myapp:1.0.0
-docker logs myapp          # 应用日志打到 stdout，1111.8 的纪律
+docker logs myapp          # 应用日志打到 stdout，111 §1.8 的纪律
 ```
 
 十行里有三处先标出来，后面各节展开：**两个 FROM 是两个阶段**（2.5）、**`COPY . .` 前面其实还欠一个 `.dockerignore`**（2.7）、**`ENTRYPOINT` 用的是 exec 形式**（111 §1.6 的信号问题）。

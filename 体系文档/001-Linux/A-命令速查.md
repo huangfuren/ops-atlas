@@ -70,7 +70,7 @@
 | 看进程打开的文件 | `lsof -p <pid>` | |
 | 看谁占着这个端口 | `lsof -i :<port>`；`ss -lntp \| grep <port>` | `ss` 更快 |
 | 看谁占着这个目录 | `lsof +D <dir>` | 很慢，目录大时慎用 |
-| 找「删了但还开着」的文件 | `lsof +L1` | 见 1144.5、10.15 |
+| 找「删了但还开着」的文件 | `lsof +L1` | 见 114 §4.5、134 §10.15 |
 | 看谁在用这个挂载点 | `fuser -vm <dir>` | `-k` 直接杀掉 |
 | 看进程资源限制 | `cat /proc/<pid>/limits`；`ulimit -a` | 前者是实际生效值 |
 | 改优先级 | `nice -n 10 <cmd>`；`renice -n 10 -p <pid>` | 负值需 root |

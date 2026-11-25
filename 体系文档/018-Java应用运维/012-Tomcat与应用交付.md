@@ -1,4 +1,4 @@
-# 002 Tomcat 与应用交付
+# 012 Tomcat 与应用交付
 
 > **解决**：Java 应用怎么交付、怎么部署回滚——war/fat jar 两种形态与 Tomcat 配置运维。  
 > **范围**：两种交付形态 · Tomcat 结构与配置 · 日志体系 · 部署与回滚。  
@@ -28,7 +28,7 @@
 | 回滚 | 换回旧 war 目录 | 换回旧 jar |
 | 运维要点 | Tomcat 本身也是被管对象 | systemd 单元 + jar 管理 |
 
-**形态决定运维对象**：war 运维"Tomcat + 应用"两层；fat jar 运维"一个 jar + systemd"——JVM 排障（001）两者通用。
+**形态决定运维对象**：war 运维"Tomcat + 应用"两层；fat jar 运维"一个 jar + systemd"——JVM 排障（011）两者通用。
 
 ## 2. Tomcat 结构与关键配置
 
@@ -52,7 +52,7 @@ server.xml 三个运维关键点：
 | 线程池 | `<Connector maxThreads="500" minSpareThreads="50">` | 线程数 ≈ 并发处理能力；按压测定，不是越大越好 |
 | 连接超时 | `connectionTimeout="20000"` | 与应用处理时长匹配 |
 
-JVM 参数走 `bin/setenv.sh`（`CATALINA_OPTS`）——001 §2 的参数基线放这里。
+JVM 参数走 `bin/setenv.sh`（`CATALINA_OPTS`）——011 §2 的参数基线放这里。
 
 ## 3. Tomcat 日志体系
 
@@ -61,7 +61,7 @@ JVM 参数走 `bin/setenv.sh`（`CATALINA_OPTS`）——001 §2 的参数基线�
 | `catalina.out` | 启动信息 + stdout/stderr + 应用 System.out | 排障主入口（建议 logback 接管） |
 | `localhost.*.log` | 应用初始化/卸载异常 | **启动失败先看这里** |
 | access log | HTTP 访问（需显式配置 AccessLogValve） | 流量分析（格式对接「日志」板块） |
-| GC 日志 | JVM 层（001 §2 配置） | 内存排障 |
+| GC 日志 | JVM 层（011 §2 配置） | 内存排障 |
 
 排障顺序：启动失败 → localhost.log；运行慢 → GC 日志 + thread dump；请求异常 → 应用日志 + access log。
 
@@ -85,9 +85,9 @@ fat jar 流程（systemd 管理）：`systemctl stop app` → 替换 jar → `sy
 |---|---|---|
 | 启动失败 | localhost.log | 端口占用、配置错误、依赖缺失 |
 | 部署后 404 | webapps 目录与 war 名 | context 路径与预期不符 |
-| 503/502（SLB 后） | 应用线程池打满 / 应用假死 | 线程池耗尽、下游阻塞（001 §3 jstack） |
+| 503/502（SLB 后） | 应用线程池打满 / 应用假死 | 线程池耗尽、下游阻塞（011 §3 jstack） |
 | 频繁 Full GC | GC 日志（111） | 内存泄漏或缓存过大 |
-| 内存持续涨 | jmap 直方图 + dump | 001 §4 |
+| 内存持续涨 | jmap 直方图 + dump | 011 §4 |
 
 ## 6. 坑表
 
@@ -109,7 +109,7 @@ fat jar 流程（systemd 管理）：`systemctl stop app` → 替换 jar → `sy
 | 3 | 部署五步与回滚路径写在文档里了吗？ |
 | 4 | 线程池 maxThreads 与数据库连接池匹配吗？ |
 | 5 | catalina.out 的轮转方案在跑吗？ |
-| 6 | JVM 参数（001）在 setenv.sh 里统一管理吗？ |
+| 6 | JVM 参数（011）在 setenv.sh 里统一管理吗？ |
 
 ---
 

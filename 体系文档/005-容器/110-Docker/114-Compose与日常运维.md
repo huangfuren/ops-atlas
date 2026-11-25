@@ -125,7 +125,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PW}
 ```
 
-`.env`（同目录自动加载）或 `--env-file prod.env` 提供值，`.env` 进 `.gitignore`——这正好是 1122.9"密钥走通道不进 Git"在编排层的延续。
+`.env`（同目录自动加载）或 `--env-file prod.env` 提供值，`.env` 进 `.gitignore`——这正好是 112 §2.9"密钥走通道不进 Git"在编排层的延续。
 
 ---
 

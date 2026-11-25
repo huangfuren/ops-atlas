@@ -158,7 +158,7 @@ agent {                          // 容器内构建：环境即代码
 }
 ```
 
-容器内构建的吸引力在于**环境确定性**：构建机只装 Docker，Go/Node/Python 版本全部由镜像锁死——「容器」1122.6 的同一思想在 CI 侧的翻版。全局级 agent（pipeline 顶层）与 stage 级 agent（某阶段换环境）可以混用，如编译用 golang 镜像、发布阶段用装了 kubectl 的镜像。
+容器内构建的吸引力在于**环境确定性**：构建机只装 Docker，Go/Node/Python 版本全部由镜像锁死——「容器」112 §2.6 的同一思想在 CI 侧的翻版。全局级 agent（pipeline 顶层）与 stage 级 agent（某阶段换环境）可以混用，如编译用 golang 镜像、发布阶段用装了 kubectl 的镜像。
 
 ---
 
