@@ -1,50 +1,73 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 529.41" width="1200" height="529.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>连接数的三层限制</title>
-  <desc>应用层连接池、进程层 fd 上限、系统层内核上限三层叠加，任何一层先到顶都会表现为连不上，但报错文案不同。</desc>
-  <rect width="680" height="300" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
   <defs>
-    <marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#9A978D"/>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
-  <g>
-    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">连接数的三层天花板：报错文案决定先查哪一层</text>
-    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">从上到下，越往下越难改</text>
+  <rect x="0" y="0" width="1200" height="650" fill="#ffffff"/>
 
-    <rect x="40" y="50" width="600" height="56" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="60" y="72" font-size="12" font-weight="600" fill="#2C2C2A">应用层</text>
-    <text x="60" y="88" font-size="8.5" fill="#8A8880">连接池与并发配置</text>
-    <text x="170" y="72" font-size="10" fill="#2C2C2A">max_connections、worker_connections</text>
-    <text x="170" y="88" font-size="8.5" fill="#6B6A65">应用自己就能限住，到顶时请求在应用内部排队</text>
-    <text x="628" y="72" font-size="9.5" fill="#7A4A12" text-anchor="end">表现：排队、等超时</text>
-    <text x="628" y="88" font-size="8.5" fill="#8A8880" text-anchor="end">连接根本没出去</text>
+  <text x="30" y="44" font-size="20" font-weight="bold" fill="#0d47a1" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连接数的三层天花板：报错文案决定先查哪一层</text>
+  <text x="30" y="68" font-size="12" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">自上而下，越往下越难改　·　三层都要够，但真正生效的永远是先到顶的那一层</text>
+  <line x1="30" y1="86" x2="1170" y2="86" stroke="#cfd8dc" stroke-width="1"/>
 
-    <line x1="340" y1="106" x2="340" y2="124" stroke="#9A978D" stroke-width="1" marker-end="url(#ar5)"/>
+  <rect x="30" y="104" width="1140" height="110" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="58" y="140" font-size="17" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">① 应用层</text>
+  <text x="58" y="164" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">好改，改配置</text>
+  <text x="58" y="186" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">重启即生效</text>
+  <line x1="230" y1="120" x2="230" y2="198" stroke="#1565c0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="252" y="136" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连接池与并发配置</text>
+  <text x="252" y="160" font-size="11" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">max_connections · worker_connections</text>
+  <text x="252" y="184" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">应用自己就能限住 —— 到顶时请求根本不会发出主机</text>
+  <line x1="680" y1="120" x2="680" y2="198" stroke="#1565c0" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="702" y="136" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">到顶表现</text>
+  <text x="702" y="160" font-size="11.5" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">排队、等超时；上游看不到新连接</text>
+  <text x="702" y="184" font-size="11.5" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">ss 里连接数不涨，日志里只有慢</text>
 
-    <rect x="40" y="126" width="600" height="56" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="60" y="148" font-size="12" font-weight="600" fill="#2C2C2A">进程层</text>
-    <text x="60" y="164" font-size="8.5" fill="#8A8880">每进程 fd 上限</text>
-    <text x="170" y="148" font-size="10" fill="#2C2C2A">ulimit -n（systemd 服务看 LimitNOFILE）</text>
-    <text x="170" y="164" font-size="8.5" fill="#6B6A65">每条连接占一个 fd，到顶后连 accept 都拿不到 fd</text>
-    <text x="628" y="148" font-size="9.5" fill="#7A4A12" text-anchor="end">报错：Too many open files</text>
-    <text x="628" y="164" font-size="8.5" fill="#8A8880" text-anchor="end">改 shell 的 ulimit 对 systemd 无效</text>
+  <line x1="600" y1="214" x2="600" y2="222" stroke="#607d8b" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <line x1="600" y1="222" x2="600" y2="230" stroke="#607d8b" stroke-width="2"/>
 
-    <line x1="340" y1="182" x2="340" y2="200" stroke="#9A978D" stroke-width="1" marker-end="url(#ar5)"/>
+  <rect x="30" y="230" width="1140" height="110" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="58" y="266" font-size="17" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">② 进程层</text>
+  <text x="58" y="290" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">改这里常踩坑</text>
+  <text x="58" y="312" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">见右侧红字</text>
+  <line x1="230" y1="246" x2="230" y2="324" stroke="#f9a825" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="252" y="262" font-size="15" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">每进程 fd 上限</text>
+  <text x="252" y="286" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">ulimit -n　·　systemd 服务看 LimitNOFILE</text>
+  <text x="252" y="310" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">每条连接占一个 fd —— 到顶后连 accept() 都拿不到 fd</text>
+  <line x1="680" y1="246" x2="680" y2="324" stroke="#f9a825" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="702" y="262" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">报错原文</text>
+  <text x="702" y="286" font-size="11.5" font-weight="bold" fill="#bf360c" font-family="ui-monospace,Menlo,Consolas,monospace">Too many open files</text>
+  <text x="702" y="310" font-size="11" fill="#bf360c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">坑：改 shell 的 ulimit 对 systemd 服务无效，改的是 shell 自己</text>
 
-    <rect x="40" y="202" width="600" height="56" rx="3" fill="#F8F6F1" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="60" y="224" font-size="12" font-weight="600" fill="#2C2C2A">系统层</text>
-    <text x="60" y="240" font-size="8.5" fill="#8A8880">内核与全机上限</text>
-    <text x="170" y="224" font-size="10" fill="#2C2C2A">fs.file-max、nf_conntrack_max、somaxconn</text>
-    <text x="170" y="240" font-size="8.5" fill="#6B6A65">还有本地临时端口范围：32768–60999</text>
-    <text x="628" y="224" font-size="9.5" fill="#7A4A12" text-anchor="end">表现：建连变慢、SYN 被丢</text>
-    <text x="628" y="240" font-size="8.5" fill="#8A8880" text-anchor="end">Cannot assign requested address</text>
+  <line x1="600" y1="340" x2="600" y2="348" stroke="#607d8b" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <line x1="600" y1="348" x2="600" y2="356" stroke="#607d8b" stroke-width="2"/>
 
-    <text x="40" y="280" font-size="9.5" fill="#4A4945">三层都要够，但真正生效的永远是先到顶的那一层——所以排查从报错文案反推，比从参数正推快得多。</text>
-  </g>
+  <rect x="30" y="356" width="1140" height="120" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="58" y="392" font-size="17" font-weight="bold" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">③ 系统层</text>
+  <text x="58" y="416" font-size="11" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">最难改</text>
+  <text x="58" y="438" font-size="11" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">影响全机</text>
+  <line x1="230" y1="372" x2="230" y2="468" stroke="#c62828" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="252" y="388" font-size="15" font-weight="bold" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">内核与全机上限</text>
+  <text x="252" y="412" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">fs.file-max · nf_conntrack_max · somaxconn</text>
+  <text x="252" y="434" font-size="11" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">还有本地临时端口范围：</text>
+  <text x="386" y="434" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">32768–60999</text>
+  <text x="252" y="454" font-size="11" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">主动出去建连时，源端口也有限</text>
+  <line x1="680" y1="372" x2="680" y2="468" stroke="#c62828" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="702" y="388" font-size="11" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">到顶表现</text>
+  <text x="702" y="410" font-size="11.5" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">建连变慢、SYN 被丢</text>
+  <text x="702" y="432" font-size="11.5" font-weight="bold" fill="#bf360c" font-family="ui-monospace,Menlo,Consolas,monospace">Cannot assign requested address</text>
+  <text x="702" y="454" font-size="11" fill="#bf360c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">源端口耗尽 —— 短连接高频建连时最典型</text>
 
-  </g>
+  <rect x="30" y="502" width="1140" height="68" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="528" font-size="15" font-weight="bold" fill="#e65100" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">排查顺序：从报错文案反推，比从参数正推快得多</text>
+  <text x="50" y="552" font-size="11.5" fill="#5d4037" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">Too many open files → 查 ② 进程层　·　Cannot assign requested address / SYN 被丢 → 查 ③ 系统层　·　只排队不报错 → 查 ① 应用层</text>
+
+  <rect x="30" y="602" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+  <text x="62" y="613" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">应用层</text>
+  <rect x="160" y="602" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <text x="192" y="613" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">进程层</text>
+  <rect x="290" y="602" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+  <text x="322" y="613" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">系统层</text>
+  <rect x="420" y="602" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="452" y="613" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">结论与排查顺序</text>
 </svg>

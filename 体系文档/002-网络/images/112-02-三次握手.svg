@@ -1,56 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>三次握手的报文与时序</title>
-  <desc>客户端与服务端两条时间轴，三次报文交换 SYN、SYN+ACK、ACK，两侧状态同步推进到 ESTABLISHED，之后才开始数据传输。</desc>
-  <rect width="680" height="470" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="730" viewBox="0 0 1200 730">
   <defs>
-    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#6B6A65"/>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
     </marker>
   </defs>
-  <g>
-    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">三次握手：三个报文，确认双向都能收能发</text>
-    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">时间向下，左侧＝本端状态，右侧＝对端状态</text>
+  <rect x="0" y="0" width="1200" height="730" fill="#ffffff"/>
 
-    <rect x="140" y="46" width="120" height="30" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="200" y="66" font-size="11.5" font-weight="600" fill="#2C2C2A" text-anchor="middle">客户端</text>
-    <rect x="420" y="46" width="120" height="30" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="480" y="66" font-size="11.5" font-weight="600" fill="#2C2C2A" text-anchor="middle">服务端</text>
+  <text x="30" y="44" font-size="20" font-weight="bold" fill="#0d47a1" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">三次握手：三个报文，确认双向都能收能发</text>
+  <text x="30" y="68" font-size="12" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">时间向下　·　蓝线＝建连报文，绿线＝确认完成　·　状态名与 ss -tan 的 State 列一一对应</text>
+  <line x1="30" y1="86" x2="1170" y2="86" stroke="#cfd8dc" stroke-width="1"/>
 
-    <line x1="200" y1="76" x2="200" y2="340" stroke="#D5D2C8" stroke-width="1"/>
-    <line x1="480" y1="76" x2="480" y2="340" stroke="#D5D2C8" stroke-width="1"/>
+  <rect x="280" y="104" width="200" height="48" rx="24" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="380" y="134" font-size="17" font-weight="bold" fill="#37474f" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">客户端</text>
+  <rect x="720" y="104" width="200" height="48" rx="24" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="820" y="134" font-size="17" font-weight="bold" fill="#37474f" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">服务端</text>
 
-    <text x="95" y="94" font-size="8.5" fill="#8A8880" text-anchor="middle">本端状态</text>
-    <text x="585" y="94" font-size="8.5" fill="#8A8880" text-anchor="middle">对端状态</text>
+  <line x1="380" y1="152" x2="380" y2="500" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="820" y1="152" x2="820" y2="500" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="4 3"/>
 
-    <path d="M200,112 L476,127" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar2)"/>
-    <text x="340" y="104" font-size="10.5" fill="#2C2C2A" text-anchor="middle">① SYN   seq=x</text>
-    <rect x="49" y="119" width="92" height="22" rx="11" fill="#F1EFE8"/>
-    <text x="95" y="134" font-size="9.5" fill="#4A4945" text-anchor="middle">SYN_SENT</text>
+  <text x="600" y="190" font-size="13" font-weight="bold" fill="#0d47a1" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">① SYN　seq=x　（我发起，我的初始序号是 x）</text>
+  <line x1="380" y1="202" x2="808" y2="202" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="366" y="228" font-size="11" fill="#1565c0" text-anchor="end" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">SYN_SENT</text>
+  <text x="834" y="228" font-size="11" fill="#1565c0" text-anchor="start" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">SYN_RCVD</text>
 
-    <path d="M480,186 L206,201" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar2)"/>
-    <text x="340" y="178" font-size="10.5" fill="#2C2C2A" text-anchor="middle">② SYN+ACK   seq=y  ack=x+1</text>
-    <rect x="539" y="151" width="92" height="22" rx="11" fill="#F1EFE8"/>
-    <text x="585" y="166" font-size="9.5" fill="#4A4945" text-anchor="middle">SYN_RCVD</text>
+  <text x="600" y="292" font-size="13" font-weight="bold" fill="#0d47a1" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">② SYN+ACK　seq=y　ack=x+1　（我收到，我也能发，我的序号是 y）</text>
+  <line x1="820" y1="304" x2="392" y2="304" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="366" y="330" font-size="11" fill="#1565c0" text-anchor="end" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">SYN_SENT</text>
+  <text x="834" y="330" font-size="11" fill="#1565c0" text-anchor="start" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">SYN_RCVD</text>
 
-    <path d="M200,258 L476,273" stroke="#6B6A65" stroke-width="1" fill="none" marker-end="url(#ar2)"/>
-    <text x="340" y="250" font-size="10.5" fill="#2C2C2A" text-anchor="middle">③ ACK   seq=x+1  ack=y+1</text>
+  <text x="600" y="394" font-size="13" font-weight="bold" fill="#388e3c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">③ ACK　seq=x+1　ack=y+1　（你的我也收到了，双向确认完毕）</text>
+  <line x1="380" y1="406" x2="808" y2="406" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="366" y="432" font-size="11" fill="#388e3c" text-anchor="end" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">ESTABLISHED</text>
+  <text x="834" y="432" font-size="11" fill="#388e3c" text-anchor="start" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">ESTABLISHED</text>
 
-    <rect x="49" y="293" width="92" height="22" rx="11" fill="#E1F5EE"/>
-    <text x="95" y="308" font-size="9" fill="#14584A" text-anchor="middle">ESTABLISHED</text>
-    <rect x="539" y="293" width="92" height="22" rx="11" fill="#E1F5EE"/>
-    <text x="585" y="308" font-size="9" fill="#14584A" text-anchor="middle">ESTABLISHED</text>
+  <rect x="120" y="456" width="960" height="56" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="140" y="480" font-size="15" font-weight="bold" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">数据传输</text>
+  <text x="140" y="500" font-size="11.5" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">此刻起双向都能收能发，应用数据才开始流动 —— tcpdump 里第一个带 payload 的包，一定在 ③ 之后。</text>
 
-    <rect x="60" y="330" width="560" height="34" rx="3" fill="#F1EFE8"/>
-    <text x="340" y="352" font-size="10.5" fill="#4A4945" text-anchor="middle">数据传输 —— 此刻起双向都能收发，应用数据才开始流动</text>
+  <text x="30" y="552" font-size="15" font-weight="bold" fill="#8d6e00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">为什么必须是三次，不能两次</text>
 
-    <rect x="40" y="388" width="600" height="62" rx="3" fill="#F1EFE8"/>
-    <text x="56" y="410" font-size="9.8" fill="#2C2C2A">两次握手只能确认「客户端能发、服务端能收」，确认不了客户端的接收能力；第三次 ACK 补的正是这一半。</text>
-    <text x="56" y="430" font-size="9.8" fill="#6B6A65">否则一个滞留的旧 SYN 就能让服务端提前分配资源等数据，而客户端根本不认这条连接。</text>
-  </g>
+  <rect x="30" y="566" width="555" height="104" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="50" y="592" font-size="13" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">两次只能确认一半</text>
+  <text x="50" y="616" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">两次握手只能确认「客户端能发、服务端能收」，</text>
+  <text x="50" y="638" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">确认不了客户端自己的接收能力 —— 客户端还不知道</text>
+  <text x="50" y="658" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">服务端到底收没收到、序号从哪起。</text>
 
-  </g>
+  <rect x="615" y="566" width="555" height="104" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="635" y="592" font-size="13" font-weight="bold" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">少一次会引出旧连接问题</text>
+  <text x="635" y="616" font-size="11.5" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">一个滞留的旧 SYN 就能让服务端提前分配资源等数据，</text>
+  <text x="635" y="638" font-size="11.5" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">而客户端根本不认这条连接 —— 资源被白占，</text>
+  <text x="635" y="658" font-size="11.5" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">这正是 SYN 洪水能打满半连接队列的原理。</text>
+
+  <rect x="30" y="694" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="62" y="705" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">通信实体</text>
+  <rect x="170" y="694" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="202" y="705" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">确认完成 / 可传数据</text>
+  <rect x="330" y="694" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="362" y="705" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">原理说明</text>
+  <rect x="476" y="694" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="508" y="705" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">少一次的后果</text>
 </svg>

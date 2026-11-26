@@ -1,63 +1,80 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect x="0" y="0" width="1200" height="640" fill="#ffffff"/>
 
-  <title>用 curl 的五个时间字段拆开一次请求的耗时</title>
-  <desc>一条时间轴按 DNS、TCP、TLS、服务端思考、传输五段切分，五个刻度分别对应 curl 的 time_namelookup、time_connect、time_appconnect、time_starttransfer、time_total。</desc>
-  <rect width="680" height="400" fill="#FFFFFF"/>
-  <g>
-    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">一条命令拆开耗时：五个数，五段责任</text>
-    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">curl -w · 4.8</text>
+  <text x="30" y="44" font-size="20" font-weight="bold" fill="#0d47a1" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">一条命令拆开耗时：五个数，五段责任</text>
+  <text x="30" y="68" font-size="12" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">curl -w 输出的五个 time_ 字段，都是「从 t0 起算」的累计值　·　轴宽仅为示意，非等比</text>
+  <line x1="30" y1="86" x2="1170" y2="86" stroke="#cfd8dc" stroke-width="1"/>
 
-    <g stroke="#C9C6BC" stroke-width="0.8">
-      <line x1="165" y1="112" x2="165" y2="120"/>
-      <line x1="245" y1="112" x2="245" y2="120"/>
-      <line x1="345" y1="112" x2="345" y2="120"/>
-      <line x1="480" y1="112" x2="480" y2="120"/>
-      <line x1="620" y1="112" x2="620" y2="120"/>
-    </g>
-    <g font-size="8" fill="#8A8880" text-anchor="start">
-      <text x="165" y="112" transform="rotate(-40 165 112)">time_namelookup</text>
-      <text x="245" y="112" transform="rotate(-40 245 112)">time_connect</text>
-      <text x="345" y="112" transform="rotate(-40 345 112)">time_appconnect</text>
-      <text x="480" y="112" transform="rotate(-40 480 112)">time_starttransfer</text>
-      <text x="620" y="112" transform="rotate(-40 620 112)">time_total</text>
-    </g>
+  <text x="190" y="128" font-size="11" fill="#0d2f5c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">DNS</text>
+  <text x="306" y="128" font-size="11" fill="#37474f" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">TCP 握手</text>
+  <text x="473" y="128" font-size="11" fill="#311b92" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">TLS 握手</text>
+  <text x="739" y="128" font-size="11" fill="#123314" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">服务端思考</text>
+  <text x="1023" y="128" font-size="11" fill="#7f3f00" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">传响应体</text>
 
-    <g stroke-width="0.8">
-      <rect x="100" y="120" width="65" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
-      <rect x="165" y="120" width="80" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
-      <rect x="245" y="120" width="100" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
-      <rect x="345" y="120" width="135" height="32" fill="#FAEEDA" stroke="#C08A3E"/>
-      <rect x="480" y="120" width="140" height="32" fill="#F8F6F1" stroke="#C9C6BC"/>
-    </g>
-    <g text-anchor="middle">
-      <text x="132" y="139" font-size="8.5" fill="#4A4945">DNS</text>
-      <text x="205" y="139" font-size="8.5" fill="#4A4945">TCP</text>
-      <text x="295" y="139" font-size="8.5" fill="#4A4945">TLS</text>
-      <text x="412" y="139" font-size="8.5" font-weight="600" fill="#7A4A12">服务端思考</text>
-      <text x="550" y="139" font-size="8.5" fill="#4A4945">传输响应体</text>
-    </g>
-    <g text-anchor="middle" font-size="8" fill="#8A8880">
-      <text x="132" y="172">&gt; 200ms 即慢</text>
-      <text x="205" y="172">RTT 高 / 拥塞</text>
-      <text x="295" y="172">&gt; 300ms 即慢</text>
-      <text x="412" y="172" fill="#7A4A12">最该关注</text>
-      <text x="550" y="172">大 / 带宽不足</text>
-    </g>
+  <rect x="140" y="140" width="100" height="50" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <rect x="240" y="140" width="133" height="50" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <rect x="373" y="140" width="200" height="50" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <rect x="573" y="140" width="333" height="50" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <rect x="906" y="140" width="234" height="50" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="739" y="171" font-size="11" fill="#123314" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">ttfb − tls</text>
+  <text x="1023" y="171" font-size="11" fill="#7f3f00" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">total − ttfb</text>
 
-    <text x="40" y="216" font-size="9.5" fill="#4A4945">五个字段都是「从 t0 起算」的累计值，段耗时要用后一个减前一个：</text>
-    <text x="40" y="234" font-size="9" fill="#6B6A65">dns = namelookup　　tcp = connect − dns　　tls = appconnect − tcp　　ttfb = starttransfer − tls　　down = total − ttfb</text>
+  <text x="240" y="212" font-size="10" fill="#37474f" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">namelookup</text>
+  <text x="373" y="212" font-size="10" fill="#37474f" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">connect</text>
+  <text x="573" y="212" font-size="10" fill="#37474f" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">appconnect</text>
+  <text x="906" y="212" font-size="10" fill="#37474f" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">starttransfer</text>
+  <text x="1140" y="212" font-size="10" fill="#37474f" text-anchor="end" font-family="ui-monospace,Menlo,Consolas,monospace">total</text>
+  <text x="140" y="212" font-size="10" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">t0</text>
 
-    <rect x="40" y="252" width="600" height="64" rx="3" fill="#F1EFE8"/>
-    <text x="56" y="274" font-size="9.8" fill="#2C2C2A">ttfb − tls 就是「服务端思考时间」：算这一个数，就能把「慢」劈成两半——一半网络与握手，一半服务端自己。</text>
-    <text x="56" y="292" font-size="9.8" fill="#6B6A65">再往里拆一层看 rt 与 urt：rt 大而 urt 小 → 慢在 Nginx 或客户端链路；rt ≈ urt 都大 → 慢在后端。</text>
-    <text x="56" y="310" font-size="9.8" fill="#6B6A65">urt 为「-」→ 请求根本没到上游；大量 499 → 后端太慢，用户等不及先走了。</text>
+  <text x="30" y="240" font-size="10" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">注：五个都是累计值，段耗时要用后一个减前一个；横轴上的点就是这五个时刻</text>
 
-    <text x="40" y="344" font-size="9" fill="#8A8880">判读顺序：先看 dns 是否超 200ms，再看 tcp − dns 是否明显偏大，最后看 ttfb − tls —— 绝大多数「慢」落在最后一格。</text>
-    <text x="40" y="362" font-size="9" fill="#8A8880">code=5xx 时不是性能问题，回到状态码那张图定责。</text>
-  </g>
+  <rect x="30" y="262" width="210" height="112" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="48" y="286" font-size="13" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">① DNS</text>
+  <text x="48" y="310" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">超过 200ms 即慢</text>
+  <text x="48" y="334" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">查 resolv.conf</text>
+  <text x="48" y="354" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">与上游 DNS 响应</text>
 
-  </g>
+  <rect x="252" y="262" width="210" height="112" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="270" y="286" font-size="13" font-weight="bold" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">② TCP</text>
+  <text x="270" y="310" font-size="11" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">RTT 高，或链路拥塞</text>
+  <text x="270" y="334" font-size="11" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">跨地域访问天然偏大</text>
+  <text x="270" y="354" font-size="11" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">看是否走了对等链路</text>
+
+  <rect x="474" y="262" width="210" height="112" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="492" y="286" font-size="13" font-weight="bold" fill="#311b92" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">③ TLS</text>
+  <text x="492" y="310" font-size="11" fill="#311b92" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">超过 300ms 即慢</text>
+  <text x="492" y="334" font-size="11" fill="#311b92" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">两次 RTT 起，慢在</text>
+  <text x="492" y="354" font-size="11" fill="#311b92" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">证书链太长或 OCSP</text>
+
+  <rect x="696" y="262" width="210" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="714" y="286" font-size="13" font-weight="bold" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">④ 服务端</text>
+  <text x="714" y="310" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">最该关注的一格</text>
+  <text x="714" y="334" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">拆 rt 与 urt：都大</text>
+  <text x="714" y="354" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 慢在后端</text>
+
+  <rect x="918" y="262" width="222" height="112" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="936" y="286" font-size="13" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">⑤ 传响应体</text>
+  <text x="936" y="310" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">体大或带宽不足</text>
+  <text x="936" y="334" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">首屏不该受它拖累</text>
+  <text x="936" y="354" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 开压缩、拆分包</text>
+
+  <rect x="30" y="398" width="1140" height="72" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="50" y="422" font-size="13" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">段耗时公式（后一个减前一个）</text>
+  <text x="50" y="448" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">dns = namelookup　　tcp = connect − dns　　tls = appconnect − tcp　　ttfb = starttransfer − tls　　down = total − ttfb</text>
+
+  <rect x="30" y="486" width="1140" height="72" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="50" y="510" font-size="15" font-weight="bold" fill="#e65100" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">判读顺序：两步排除，第三步定位</text>
+  <text x="50" y="534" font-size="11.5" fill="#5d4037" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">先看 dns 是否超 200ms → 再看 tcp − dns 是否明显偏大 → 最后看 ttfb − tls。绝大多数「慢」落在最后一格：算这一个数，就能把慢劈成两半。</text>
+  <text x="50" y="552" font-size="11.5" fill="#5d4037" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">urt 为「-」→ 请求根本没到上游；大量 499 → 后端太慢，用户等不及先走了。code=5xx 时不是性能问题，回到状态码那张图定责。</text>
+
+  <rect x="30" y="576" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="62" y="587" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">DNS</text>
+  <rect x="140" y="576" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="172" y="587" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">TCP 握手</text>
+  <rect x="290" y="576" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="322" y="587" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">TLS 握手</text>
+  <rect x="440" y="576" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="472" y="587" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">服务端思考</text>
+  <rect x="600" y="576" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="632" y="587" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">传响应体</text>
 </svg>

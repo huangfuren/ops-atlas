@@ -1,51 +1,67 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1200 617.65" width="1200" height="617.65" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif" role="img">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <defs>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
+    </marker>
+  </defs>
 
-<title>封装：每往下一层，加一个信封</title>
-<desc>从应用层到链路层逐层添加头部：TCP 头 20 字节、IP 头 20 字节、以太网帧头 14 字节与帧尾 FCS 4 字节。各段宽度按字节数等比绘制。</desc>
-<rect width="680" height="350" fill="#FFFFFF"/>
+  <rect x="0" y="0" width="1200" height="680" fill="#ffffff"/>
 
-<text x="40" y="58" font-size="13" font-weight="500" fill="#444441">应用层</text>
-<text x="40" y="75" font-size="11" fill="#888780">原始数据</text>
-<rect x="170" y="62" width="150" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="245" y="80" font-size="12" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">HTTP 数据</text>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#0d47a1">封装：每往下一层，加一个信封</text>
+  <text x="40" y="78" font-size="11.5" fill="#616161">宽度按字节数等比（1B ≈ 7px），HTTP 数据长度仅示意；向下逐层加头，向上逐层剥头</text>
+  <line x1="40" y1="96" x2="1160" y2="96" stroke="#cfd8dc" stroke-width="1"/>
 
-<text x="40" y="126" font-size="13" font-weight="500" fill="#444441">传输层</text>
-<text x="40" y="143" font-size="11" fill="#0F6E56">加 TCP 头 20B</text>
-<rect x="170" y="130" width="100" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="220" y="148" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">TCP 头 20B</text>
-<rect x="270" y="130" width="150" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="345" y="148" font-size="12" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">HTTP 数据</text>
+  <text x="40" y="138" font-size="15" font-weight="bold" fill="#123314">应用层</text>
+  <text x="40" y="162" font-size="11.5" fill="#616161">原始数据</text>
+  <rect x="180" y="150" width="490" height="44" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="425" y="178" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">HTTP 数据 70B（示意）</text>
 
-<text x="40" y="194" font-size="13" font-weight="500" fill="#444441">网络层</text>
-<text x="40" y="211" font-size="11" fill="#0F6E56">加 IP 头 20B</text>
-<rect x="170" y="198" width="100" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="220" y="216" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">IP 头 20B</text>
-<rect x="270" y="198" width="100" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="320" y="216" font-size="11" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">TCP 头 20B</text>
-<rect x="370" y="198" width="150" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="445" y="216" font-size="12" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">HTTP 数据</text>
+  <text x="40" y="238" font-size="15" font-weight="bold" fill="#0d2f5c">传输层</text>
+  <text x="40" y="262" font-size="11.5" fill="#616161">+ TCP 头 20B</text>
+  <rect x="180" y="250" width="140" height="44" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="250" y="278" font-size="12" font-weight="bold" fill="#0d2f5c" text-anchor="middle">TCP 头 20B</text>
+  <rect x="320" y="250" width="490" height="44" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="565" y="278" font-size="13" fill="#123314" text-anchor="middle">HTTP 数据</text>
 
-<text x="40" y="262" font-size="13" font-weight="500" fill="#444441">链路层</text>
-<text x="40" y="279" font-size="11" fill="#0F6E56">加帧头 14B + FCS 4B</text>
-<rect x="170" y="266" width="70" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="205" y="284" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">帧头 14B</text>
-<rect x="240" y="266" width="100" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="290" y="284" font-size="11" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">IP 头 20B</text>
-<rect x="340" y="266" width="100" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="390" y="284" font-size="11" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">TCP 头 20B</text>
-<rect x="440" y="266" width="134" height="36" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="507" y="284" font-size="12" fill="#5F5E5A" text-anchor="middle" dominant-baseline="central">HTTP 数据</text>
-<rect x="574" y="266" width="36" height="36" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="592" y="284" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">FCS</text>
+  <text x="40" y="338" font-size="15" font-weight="bold" fill="#311b92">网络层</text>
+  <text x="40" y="362" font-size="11.5" fill="#616161">+ IP 头 20B</text>
+  <rect x="180" y="350" width="140" height="44" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="250" y="378" font-size="12" font-weight="bold" fill="#311b92" text-anchor="middle">IP 头 20B</text>
+  <rect x="320" y="350" width="140" height="44" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="390" y="378" font-size="12" fill="#0d2f5c" text-anchor="middle">TCP 头</text>
+  <rect x="460" y="350" width="490" height="44" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="705" y="378" font-size="13" fill="#123314" text-anchor="middle">HTTP 数据</text>
 
-<text x="40" y="328" font-size="11" fill="#888780">宽度按字节数等比绘制（1B ≈ 5px），HTTP 数据长度仅示意</text>
-<rect x="470" y="318" width="12" height="12" rx="2" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="488" y="328" font-size="11" fill="#5F5E5A">本层新增</text>
-<rect x="560" y="318" width="12" height="12" rx="2" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="578" y="328" font-size="11" fill="#5F5E5A">已有内容</text>
+  <text x="40" y="438" font-size="15" font-weight="bold" fill="#7f3f00">链路层</text>
+  <text x="40" y="462" font-size="11.5" fill="#616161">+ 帧头 14B + FCS 4B</text>
+  <rect x="180" y="450" width="98" height="44" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="229" y="478" font-size="12" font-weight="bold" fill="#7f3f00" text-anchor="middle">帧头 14B</text>
+  <rect x="278" y="450" width="140" height="44" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="348" y="478" font-size="12" fill="#311b92" text-anchor="middle">IP 头</text>
+  <rect x="418" y="450" width="140" height="44" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="488" y="478" font-size="12" fill="#0d2f5c" text-anchor="middle">TCP 头</text>
+  <rect x="558" y="450" width="490" height="44" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="803" y="478" font-size="13" fill="#123314" text-anchor="middle">HTTP 数据</text>
+  <rect x="1048" y="450" width="28" height="44" rx="4" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="1090" y="478" font-size="11" fill="#c62828">FCS 4B</text>
 
-  </g>
+  <line x1="150" y1="196" x2="150" y2="246" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="150" y1="296" x2="150" y2="346" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="150" y1="396" x2="150" y2="446" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <rect x="40" y="515" width="1120" height="70" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="543" font-size="13" font-weight="bold" fill="#7f3f00">三个头共 54B（帧头 14 + IP 20 + TCP 20），数据越小头占比越高</text>
+  <text x="64" y="567" font-size="11.5" fill="#5d4037">一个 70B 的请求，光头部就占 54B——这是小包有效载荷率低的根本原因，也是 MTU 与 Nagle 调优的出发点。</text>
+
+  <rect x="40" y="605" width="1120" height="34" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="56" y="615" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="86" y="626" font-size="12" fill="#37474f">应用数据</text>
+  <rect x="186" y="615" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="216" y="626" font-size="12" fill="#37474f">TCP 头（传输层加）</text>
+  <rect x="374" y="615" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="404" y="626" font-size="12" fill="#37474f">IP 头（网络层加）</text>
+  <rect x="562" y="615" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="592" y="626" font-size="12" fill="#37474f">帧头（链路层加）</text>
+  <rect x="750" y="615" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="780" y="626" font-size="12" fill="#37474f">FCS 帧校验</text>
 </svg>

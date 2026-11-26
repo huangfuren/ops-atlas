@@ -1,65 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1200 617.65" width="1200" height="617.65" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif" role="img">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
 
-<title>跨网段：帧头逐跳重写，IP 头端到端不变</title>
-<desc>A 主机 192.168.1.10 访问 10.1.1.20 时经过网关。每一跳帧头的源与目的 MAC 都会改写，而 IP 头的源与目的地址全程保持不变。</desc>
-<rect width="680" height="350" fill="#FFFFFF"/>
-<defs>
-  <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-</defs>
+  <rect x="0" y="0" width="1200" height="700" fill="#ffffff"/>
 
-<rect x="40" y="40" width="150" height="36" rx="6" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="115" y="58" font-size="12" fill="#2C2C2A" text-anchor="middle" dominant-baseline="central">A 主机 192.168.1.10</text>
-<line x1="190" y1="58" x2="257" y2="58" stroke="#888780" stroke-width="1.5" marker-end="url(#ar)"/>
-<rect x="265" y="40" width="150" height="36" rx="6" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="340" y="58" font-size="12" fill="#2C2C2A" text-anchor="middle" dominant-baseline="central">网关 192.168.1.1</text>
-<line x1="415" y1="58" x2="482" y2="58" stroke="#888780" stroke-width="1.5" marker-end="url(#ar)"/>
-<rect x="490" y="40" width="150" height="36" rx="6" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="565" y="58" font-size="12" fill="#2C2C2A" text-anchor="middle" dominant-baseline="central">B 主机 10.1.1.20</text>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#0d47a1">跨网段：帧头逐跳重写，IP 头端到端不变</text>
+  <text x="40" y="78" font-size="11.5" fill="#616161">A 与 B 不同网段，必须过网关；MAC 只描述「这一段链路」，IP 描述「起点到终点」</text>
+  <line x1="40" y1="98" x2="1160" y2="98" stroke="#cfd8dc" stroke-width="1"/>
 
-<line x1="40" y1="96" x2="640" y2="96" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="60" y="130" width="240" height="90" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="180" y="158" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">A 主机</text>
+  <text x="180" y="182" font-size="11" fill="#0d2f5c" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">192.168.1.10</text>
+  <text x="180" y="204" font-size="11" fill="#0d2f5c" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">aa:aa</text>
 
-<text x="52" y="120" font-size="11" fill="#888780">字段</text>
-<text x="322" y="120" font-size="11" fill="#888780" text-anchor="middle">第一跳：A → 网关</text>
-<text x="535" y="120" font-size="11" fill="#888780" text-anchor="middle">第二跳：网关 → B</text>
+  <line x1="308" y1="175" x2="466" y2="175" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="387" y="166" font-size="11" fill="#616161" text-anchor="middle">第一跳</text>
 
-<rect x="40" y="132" width="174" height="38" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="52" y="149" font-size="12" font-weight="500" fill="#412402" dominant-baseline="central">帧 · 目的 MAC</text>
-<text x="52" y="164" font-size="11" fill="#854F0B" dominant-baseline="central">逐跳重写</text>
-<rect x="220" y="132" width="204" height="38" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="322" y="151" font-size="11" fill="#412402" text-anchor="middle" dominant-baseline="central">网关的 MAC</text>
-<rect x="430" y="132" width="210" height="38" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="535" y="151" font-size="11" fill="#412402" text-anchor="middle" dominant-baseline="central">B 的 MAC</text>
+  <rect x="480" y="130" width="240" height="90" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="600" y="158" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">网关</text>
+  <text x="600" y="182" font-size="11" fill="#7f3f00" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">192.168.1.1</text>
+  <text x="600" y="204" font-size="11" fill="#7f3f00" text-anchor="middle">两个网卡 · 改写 MAC</text>
 
-<rect x="40" y="176" width="174" height="38" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="52" y="193" font-size="12" font-weight="500" fill="#412402" dominant-baseline="central">帧 · 源 MAC</text>
-<text x="52" y="208" font-size="11" fill="#854F0B" dominant-baseline="central">逐跳重写</text>
-<rect x="220" y="176" width="204" height="38" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="322" y="195" font-size="11" fill="#412402" text-anchor="middle" dominant-baseline="central">A 的 MAC</text>
-<rect x="430" y="176" width="210" height="38" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="535" y="195" font-size="11" fill="#412402" text-anchor="middle" dominant-baseline="central">网关的 MAC</text>
+  <line x1="728" y1="175" x2="886" y2="175" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="807" y="166" font-size="11" fill="#616161" text-anchor="middle">第二跳</text>
 
-<rect x="40" y="220" width="174" height="38" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="52" y="237" font-size="12" font-weight="500" fill="#04342C" dominant-baseline="central">IP · 目的 IP</text>
-<text x="52" y="252" font-size="11" fill="#0F6E56" dominant-baseline="central">全程不变</text>
-<rect x="220" y="220" width="204" height="38" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="322" y="239" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">10.1.1.20</text>
-<rect x="430" y="220" width="210" height="38" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="535" y="239" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">10.1.1.20</text>
+  <rect x="900" y="130" width="240" height="90" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1020" y="158" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">B 主机</text>
+  <text x="1020" y="182" font-size="11" fill="#311b92" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">10.1.1.20</text>
+  <text x="1020" y="204" font-size="11" fill="#311b92" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">bb:bb</text>
 
-<rect x="40" y="264" width="174" height="38" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="52" y="281" font-size="12" font-weight="500" fill="#04342C" dominant-baseline="central">IP · 源 IP</text>
-<text x="52" y="296" font-size="11" fill="#0F6E56" dominant-baseline="central">全程不变</text>
-<rect x="220" y="264" width="204" height="38" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="322" y="283" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">192.168.1.10</text>
-<rect x="430" y="264" width="210" height="38" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="535" y="283" font-size="11" fill="#04342C" text-anchor="middle" dominant-baseline="central">192.168.1.10</text>
+  <rect x="40" y="270" width="1120" height="284" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="40" y="270" width="1120" height="44" rx="8" fill="#eceff1" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="64" y="298" font-size="13" font-weight="bold" fill="#37474f">字段</text>
+  <text x="404" y="298" font-size="13" font-weight="bold" fill="#37474f">第一跳 · A → 网关</text>
+  <text x="804" y="298" font-size="13" font-weight="bold" fill="#37474f">第二跳 · 网关 → B</text>
 
-<text x="40" y="330" font-size="11" fill="#888780">MAC 只描述当前一段链路，每过一跳重写；IP 描述起点到终点，全程不变</text>
+  <rect x="40" y="314" width="4" height="60" fill="#f9a825"/>
+  <line x1="40" y1="374" x2="1160" y2="374" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="64" y="338" font-size="13" font-weight="bold" fill="#7f3f00">帧 · 目的 MAC</text>
+  <text x="64" y="358" font-size="11" fill="#e65100">逐跳重写</text>
+  <text x="404" y="348" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">网关的 MAC</text>
+  <text x="804" y="348" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">B 的 MAC</text>
 
-  </g>
+  <rect x="40" y="374" width="4" height="60" fill="#f9a825"/>
+  <line x1="40" y1="434" x2="1160" y2="434" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="64" y="398" font-size="13" font-weight="bold" fill="#7f3f00">帧 · 源 MAC</text>
+  <text x="64" y="418" font-size="11" fill="#e65100">逐跳重写</text>
+  <text x="404" y="408" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">A 的 MAC</text>
+  <text x="804" y="408" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">网关的 MAC</text>
+
+  <rect x="40" y="434" width="4" height="60" fill="#2e7d32"/>
+  <line x1="40" y1="494" x2="1160" y2="494" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="64" y="458" font-size="13" font-weight="bold" fill="#123314">IP · 目的 IP</text>
+  <text x="64" y="478" font-size="11" fill="#388e3c">全程不变</text>
+  <text x="404" y="468" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">10.1.1.20</text>
+  <text x="804" y="468" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">10.1.1.20</text>
+
+  <rect x="40" y="494" width="4" height="60" fill="#2e7d32"/>
+  <text x="64" y="518" font-size="13" font-weight="bold" fill="#123314">IP · 源 IP</text>
+  <text x="64" y="538" font-size="11" fill="#388e3c">全程不变</text>
+  <text x="404" y="528" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">192.168.1.10</text>
+  <text x="804" y="528" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">192.168.1.10</text>
+
+  <rect x="40" y="586" width="1120" height="66" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="612" font-size="13" font-weight="bold" fill="#7f3f00">抓包对比两台机器，看到的是两对完全不同的 MAC</text>
+  <text x="64" y="636" font-size="11.5" fill="#5d4037">在 A 上抓到的目的 MAC 是网关的，在 B 上抓到的是 B 自己的——同一份 IP 头，两个不同的帧。这正是「二层只负责一段链路」的含义。</text>
+
+  <rect x="40" y="662" width="1120" height="32" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="56" y="671" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="86" y="682" font-size="12" fill="#37474f">发起方 A</text>
+  <rect x="196" y="671" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1.5"/>
+  <text x="226" y="682" font-size="12" fill="#37474f">网关（重写 MAC 的那一跳）</text>
+  <rect x="446" y="671" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="476" y="682" font-size="12" fill="#37474f">目标方 B</text>
+  <rect x="586" y="671" width="22" height="14" rx="3" fill="#f9a825"/>
+  <text x="616" y="682" font-size="12" fill="#37474f">逐跳重写</text>
+  <rect x="726" y="671" width="22" height="14" rx="3" fill="#2e7d32"/>
+  <text x="756" y="682" font-size="12" fill="#37474f">全程不变</text>
 </svg>

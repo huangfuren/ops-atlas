@@ -1,96 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1235.29" width="1200" height="1235.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>TCP 十一种状态的流转</title>
-  <desc>从 CLOSED 出发，经被动打开与主动打开两列汇入 ESTABLISHED，再按主动关闭与被动关闭两列分叉，最终回到 CLOSED；CLOSING 为双方同时发 FIN 的罕见分支。</desc>
-  <rect width="680" height="700" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="840" viewBox="0 0 1200 840">
   <defs>
-    <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#8A8880"/>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
     </marker>
-    <marker id="ar4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 Z" fill="#C08A3E"/>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
-  <g>
-    <text x="40" y="28" font-size="13" font-weight="600" fill="#2C2C2A">十一种状态：建连两列汇合，关闭两列分叉</text>
-    <text x="640" y="28" font-size="9" fill="#8A8880" text-anchor="end">青＝主动关闭方（背 TIME_WAIT）　琥珀＝被动关闭方（背 CLOSE_WAIT）</text>
+  <rect x="0" y="0" width="1200" height="840" fill="#ffffff"/>
 
-    <g stroke="#8A8880" stroke-width="1" fill="none" marker-end="url(#ar4)">
-      <path d="M340,77 L340,112 L140,112 L140,125"/>
-      <path d="M340,77 L340,112 L540,112 L540,125"/>
-      <path d="M140,159 L140,207"/>
-      <path d="M140,241 L140,310 L272,310"/>
-      <path d="M540,159 L540,310 L408,310"/>
-      <path d="M340,328 L340,355 L140,355 L140,378"/>
-      <path d="M340,355 L540,355 L540,378"/>
-      <path d="M140,412 L140,451"/>
-      <path d="M140,485 L140,524"/>
-      <path d="M140,558 L140,597"/>
-      <path d="M540,412 L540,451"/>
-      <path d="M540,485 L540,524"/>
-    </g>
-    <path d="M199,395 L330,395 L330,451" stroke="#C08A3E" stroke-width="1" stroke-dasharray="4 3" fill="none" marker-end="url(#ar4a)"/>
+  <text x="30" y="44" font-size="20" font-weight="bold" fill="#0d47a1" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">十一种状态：建连两列汇合，关闭两列分叉</text>
+  <text x="30" y="68" font-size="12" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">蓝＝主动方（结束时背 TIME_WAIT）　·　琥珀＝被动方（结束时背 CLOSE_WAIT）　·　状态名即 ss -tan 的 State 列</text>
+  <line x1="30" y1="86" x2="1170" y2="86" stroke="#cfd8dc" stroke-width="1"/>
 
-    <g fill="#6B6A65" font-size="9">
-      <text x="240" y="106" text-anchor="middle">被动打开</text>
-      <text x="440" y="106" text-anchor="middle">主动打开</text>
-      <text x="150" y="188">收到 SYN</text>
-      <text x="150" y="302">收到 ACK</text>
-      <text x="530" y="302" text-anchor="end">收到 SYN+ACK</text>
-      <text x="240" y="349" text-anchor="middle">主动关闭：本端先发 FIN</text>
-      <text x="450" y="349" text-anchor="middle">被动关闭：收到对端 FIN</text>
-      <text x="150" y="435">收到 ACK</text>
-      <text x="150" y="508">收到 FIN</text>
-      <text x="150" y="581">等 2MSL ≈ 60s</text>
-      <text x="550" y="435">应用 close()</text>
-      <text x="550" y="508">收到 ACK</text>
-      <text x="265" y="389" text-anchor="middle" fill="#7A4A12">收到 FIN</text>
-    </g>
+  <text x="215" y="102" font-size="12" font-weight="bold" fill="#0d47a1" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">主动方视角</text>
+  <text x="795" y="102" font-size="12" font-weight="bold" fill="#bf360c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">被动方视角</text>
+  <text x="530" y="102" font-size="12" font-weight="bold" fill="#1b5e20" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">共用状态</text>
 
-    <rect x="281" y="43" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="340" y="64" font-size="10.5" fill="#2C2C2A" text-anchor="middle">CLOSED</text>
+  <rect x="140" y="110" width="150" height="52" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="215" y="142" font-size="15" font-weight="bold" fill="#546e7a" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSED</text>
+  <rect x="720" y="110" width="150" height="52" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="795" y="142" font-size="15" font-weight="bold" fill="#546e7a" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSED</text>
 
-    <rect x="81" y="125" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="140" y="146" font-size="10.5" fill="#2C2C2A" text-anchor="middle">LISTEN</text>
-    <rect x="481" y="125" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="540" y="146" font-size="10.5" fill="#2C2C2A" text-anchor="middle">SYN_SENT</text>
+  <line x1="215" y1="162" x2="215" y2="180" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="228" y="177" font-size="11" fill="#1565c0" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">主动打开（connect）</text>
+  <line x1="795" y1="162" x2="795" y2="180" stroke="#e65100" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="808" y="177" font-size="11" fill="#bf360c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">被动打开（listen）</text>
 
-    <rect x="81" y="207" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="140" y="228" font-size="10.5" fill="#2C2C2A" text-anchor="middle">SYN_RCVD</text>
+  <rect x="140" y="188" width="150" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="215" y="220" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">SYN_SENT</text>
+  <rect x="720" y="188" width="150" height="52" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="795" y="220" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">LISTEN</text>
 
-    <rect x="272" y="292" width="136" height="36" rx="3" fill="#F1EFE8" stroke="#8A8880" stroke-width="1"/>
-    <text x="340" y="314" font-size="11" font-weight="600" fill="#2C2C2A" text-anchor="middle">ESTABLISHED</text>
+  <line x1="795" y1="240" x2="795" y2="258" stroke="#e65100" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="808" y="255" font-size="11" fill="#bf360c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 SYN</text>
 
-    <rect x="81" y="378" width="118" height="34" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
-    <text x="140" y="399" font-size="10.5" fill="#14584A" text-anchor="middle">FIN_WAIT_1</text>
-    <rect x="481" y="378" width="118" height="34" rx="3" fill="#FAEEDA" stroke="#D8B27A" stroke-width="0.8"/>
-    <text x="540" y="399" font-size="10.5" fill="#7A4A12" text-anchor="middle">CLOSE_WAIT</text>
+  <rect x="720" y="266" width="150" height="52" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="795" y="298" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">SYN_RCVD</text>
 
-    <rect x="81" y="451" width="118" height="34" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
-    <text x="140" y="472" font-size="10.5" fill="#14584A" text-anchor="middle">FIN_WAIT_2</text>
-    <rect x="481" y="451" width="118" height="34" rx="3" fill="#FAEEDA" stroke="#D8B27A" stroke-width="0.8"/>
-    <text x="540" y="472" font-size="10.5" fill="#7A4A12" text-anchor="middle">LAST_ACK</text>
+  <path d="M 215 240 L 215 370 L 422 370" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="228" y="330" font-size="11" fill="#1565c0" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 SYN+ACK</text>
+  <path d="M 795 318 L 795 370 L 638 370" fill="none" stroke="#e65100" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="672" y="360" font-size="11" fill="#bf360c" text-anchor="end" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 ACK</text>
 
-    <rect x="271" y="451" width="118" height="34" rx="3" fill="#FFFFFF" stroke="#D8B27A" stroke-width="0.8" stroke-dasharray="4 3"/>
-    <text x="330" y="472" font-size="10.5" fill="#8A8880" text-anchor="middle">CLOSING</text>
-    <text x="330" y="502" font-size="8.5" fill="#8A8880" text-anchor="middle">双方同时发 FIN，极少见</text>
-    <text x="330" y="516" font-size="8.5" fill="#8A8880" text-anchor="middle">收到 ACK 后转 TIME_WAIT</text>
+  <rect x="430" y="344" width="200" height="52" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="530" y="376" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">ESTABLISHED</text>
 
-    <rect x="81" y="524" width="118" height="34" rx="3" fill="#E1F5EE" stroke="#9CCDBC" stroke-width="0.8"/>
-    <text x="140" y="545" font-size="10.5" fill="#14584A" text-anchor="middle">TIME_WAIT</text>
-    <rect x="481" y="524" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="540" y="545" font-size="10.5" fill="#2C2C2A" text-anchor="middle">CLOSED</text>
+  <path d="M 470 396 L 470 414 L 215 414 L 215 418" fill="none" stroke="#607d8b" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="424" y="402" font-size="11" fill="#37474f" text-anchor="end" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">主动关闭</text>
+  <path d="M 590 396 L 590 414 L 795 414 L 795 418" fill="none" stroke="#607d8b" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="636" y="402" font-size="11" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">被动关闭</text>
 
-    <rect x="81" y="597" width="118" height="34" rx="3" fill="#F1EFE8" stroke="#C9C6BC" stroke-width="0.8"/>
-    <text x="140" y="618" font-size="10.5" fill="#2C2C2A" text-anchor="middle">CLOSED</text>
+  <rect x="140" y="422" width="150" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="215" y="454" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">FIN_WAIT_1</text>
+  <rect x="720" y="422" width="150" height="52" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="795" y="454" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSE_WAIT</text>
 
-    <rect x="40" y="648" width="600" height="46" rx="3" fill="#F1EFE8"/>
-    <text x="56" y="668" font-size="9.8" fill="#2C2C2A">CLOSE_WAIT 是应用没 close()，连接会一直累积到 fd 耗尽——去查代码，别调内核参数。</text>
-    <text x="56" y="686" font-size="9.8" fill="#6B6A65">TIME_WAIT 是主动关闭方在等 2MSL，协议的正常行为，约 60 秒自行消失——根治靠连接池、长连接。</text>
-  </g>
+  <line x1="215" y1="474" x2="215" y2="492" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="228" y="489" font-size="11" fill="#1565c0" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 ACK</text>
+  <line x1="795" y1="474" x2="795" y2="492" stroke="#e65100" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="808" y="489" font-size="11" fill="#bf360c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">应用 close()</text>
 
-  </g>
+  <rect x="140" y="500" width="150" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="215" y="532" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">FIN_WAIT_2</text>
+  <rect x="720" y="500" width="150" height="52" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="795" y="532" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">LAST_ACK</text>
+
+  <line x1="215" y1="552" x2="215" y2="570" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="228" y="567" font-size="11" fill="#1565c0" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 FIN</text>
+  <line x1="795" y1="552" x2="795" y2="570" stroke="#e65100" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="808" y="567" font-size="11" fill="#bf360c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 ACK</text>
+
+  <rect x="140" y="578" width="150" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+  <text x="215" y="610" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">TIME_WAIT</text>
+  <rect x="720" y="578" width="150" height="52" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="795" y="610" font-size="15" font-weight="bold" fill="#546e7a" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSED</text>
+
+  <line x1="215" y1="630" x2="215" y2="648" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="228" y="645" font-size="11" fill="#1565c0" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">等 2MSL ≈ 60s</text>
+
+  <rect x="140" y="656" width="150" height="52" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="215" y="688" font-size="15" font-weight="bold" fill="#546e7a" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSED</text>
+
+  <path d="M 290 448 L 422 448" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="298" y="440" font-size="11" fill="#1565c0" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">同时收 FIN</text>
+
+  <rect x="430" y="578" width="160" height="52" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="510" y="610" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSING</text>
+  <text x="510" y="654" font-size="11" fill="#5e35b1" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">双方几乎同时发 FIN，极少见</text>
+
+  <line x1="430" y1="604" x2="298" y2="604" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="364" y="596" font-size="11" fill="#1565c0" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">收 ACK</text>
+
+  <rect x="30" y="716" width="555" height="76" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="50" y="740" font-size="13" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSE_WAIT 堆积 = 代码问题</text>
+  <text x="50" y="762" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">对端已关，本端应用没调 close() —— 连接会一直累积到</text>
+  <text x="50" y="782" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">fd 耗尽。去查代码的连接释放逻辑，别调内核参数。</text>
+
+  <rect x="615" y="716" width="555" height="76" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="635" y="740" font-size="13" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">TIME_WAIT 堆积 = 正常行为或短连接</text>
+  <text x="635" y="762" font-size="11.5" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">主动关闭方在等 2MSL，约 60 秒自行消失。数量大说明</text>
+  <text x="635" y="782" font-size="11.5" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">短连接多 —— 根治靠连接池与长连接，不是调内核。</text>
+
+  <rect x="30" y="810" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="62" y="821" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">主动方状态</text>
+  <rect x="190" y="810" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="222" y="821" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">被动方状态</text>
+  <rect x="350" y="810" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="382" y="821" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">已建立</text>
+  <rect x="480" y="810" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="512" y="821" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">少见分支</text>
+  <rect x="620" y="810" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="652" y="821" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">已关闭</text>
 </svg>

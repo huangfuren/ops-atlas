@@ -1,68 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1200 917.65" width="1200" height="917.65" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif" role="img">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 870" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <defs>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
+    </marker>
+    <marker id="arrowGreenStart" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 10 0 L 0 5 L 10 10 z" fill="#388e3c"/>
+    </marker>
+  </defs>
 
-<title>ping 同网段的九步交互</title>
-<desc>A 主机 192.168.1.10 与 B 主机 192.168.1.20 处于同一网段，经交换机完成构造报文、查路由、ARP 解析、封装帧、查表转发与应答的九个步骤。</desc>
-<rect width="680" height="520" fill="#FFFFFF"/>
-<defs>
-  <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </marker>
-</defs>
+  <rect x="0" y="0" width="1200" height="870" fill="#ffffff"/>
 
-<line x1="120" y1="64" x2="120" y2="500" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 4"/>
-<line x1="340" y1="64" x2="340" y2="500" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 4"/>
-<line x1="560" y1="64" x2="560" y2="500" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="3 4"/>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#0d47a1">ping 同网段：九步交互</text>
+  <text x="40" y="78" font-size="11.5" fill="#616161">自上而下是时间顺序；绿色箭头＝跨设备报文，灰色框＝设备本地动作</text>
+  <line x1="40" y1="98" x2="1160" y2="98" stroke="#cfd8dc" stroke-width="1"/>
 
-<rect x="40" y="20" width="160" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="120" y="38" font-size="13" font-weight="500" fill="#04342C" text-anchor="middle" dominant-baseline="central">A 主机</text>
-<text x="120" y="55" font-size="11" fill="#085041" text-anchor="middle" dominant-baseline="central">192.168.1.10 · aa:aa</text>
+  <rect x="490" y="120" width="160" height="52" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="570" y="142" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">A 主机</text>
+  <text x="570" y="162" font-size="11" fill="#0d2f5c" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">192.168.1.10</text>
 
-<rect x="260" y="20" width="160" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="340" y="38" font-size="13" font-weight="500" fill="#412402" text-anchor="middle" dominant-baseline="central">交换机</text>
-<text x="340" y="55" font-size="11" fill="#633806" text-anchor="middle" dominant-baseline="central">P3 入 · 查表转发</text>
+  <rect x="760" y="120" width="120" height="52" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="820" y="142" font-size="14" font-weight="bold" fill="#7f3f00" text-anchor="middle">交换机</text>
+  <text x="820" y="162" font-size="11" fill="#7f3f00" text-anchor="middle">查 MAC 表转发</text>
 
-<rect x="480" y="20" width="160" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-<text x="560" y="38" font-size="13" font-weight="500" fill="#04342C" text-anchor="middle" dominant-baseline="central">B 主机</text>
-<text x="560" y="55" font-size="11" fill="#085041" text-anchor="middle" dominant-baseline="central">192.168.1.20 · bb:bb</text>
+  <rect x="990" y="120" width="160" height="52" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1070" y="142" font-size="14" font-weight="bold" fill="#311b92" text-anchor="middle">B 主机</text>
+  <text x="1070" y="162" font-size="11" fill="#311b92" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">192.168.1.20</text>
 
-<line x1="120" y1="100" x2="130" y2="100" stroke="#888780" stroke-width="0.5"/>
-<rect x="130" y="87" width="200" height="26" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="140" y="100" font-size="11" fill="#444441" dominant-baseline="central">① 构造 ICMP 请求，Type=8</text>
+  <line x1="570" y1="172" x2="570" y2="742" stroke="#bbdefb" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="820" y1="172" x2="820" y2="742" stroke="#ffcc80" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="1070" y1="172" x2="1070" y2="742" stroke="#d1c4e9" stroke-width="1.5" stroke-dasharray="5 4"/>
 
-<line x1="120" y1="142" x2="130" y2="142" stroke="#888780" stroke-width="0.5"/>
-<rect x="130" y="129" width="200" height="26" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="140" y="142" font-size="11" fill="#444441" dominant-baseline="central">② 封装 IP 头，TTL=64</text>
+  <text x="60" y="218" font-size="12" font-weight="bold" fill="#1565c0">①</text>
+  <text x="84" y="218" font-size="12" fill="#37474f">构造 ICMP 请求，Type=8</text>
+  <rect x="500" y="192" width="140" height="36" rx="4" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="570" y="215" font-size="11" fill="#546e7a" text-anchor="middle">ICMP Type=8</text>
 
-<line x1="120" y1="184" x2="130" y2="184" stroke="#888780" stroke-width="0.5"/>
-<rect x="130" y="171" width="200" height="26" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="140" y="184" font-size="11" fill="#444441" dominant-baseline="central">③ 查路由：本网段直连</text>
+  <text x="60" y="280" font-size="12" font-weight="bold" fill="#1565c0">②</text>
+  <text x="84" y="280" font-size="12" fill="#37474f">封装 IP 头，TTL=64</text>
+  <rect x="500" y="254" width="140" height="36" rx="4" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="570" y="277" font-size="11" fill="#546e7a" text-anchor="middle">IP 头 TTL=64</text>
 
-<text x="340" y="223" font-size="11" fill="#444441" text-anchor="middle">④ ARP 广播：Who has 192.168.1.20?</text>
-<line x1="120" y1="232" x2="552" y2="232" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="60" y="342" font-size="12" font-weight="bold" fill="#1565c0">③</text>
+  <text x="84" y="342" font-size="12" fill="#37474f">查路由：本网段直连</text>
+  <rect x="500" y="316" width="140" height="36" rx="4" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="570" y="339" font-size="11" fill="#546e7a" text-anchor="middle">查路由：直连</text>
 
-<text x="340" y="269" font-size="11" fill="#444441" text-anchor="middle">⑤ 单播应答：192.168.1.20 is at bb:bb</text>
-<line x1="560" y1="278" x2="128" y2="278" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="60" y="404" font-size="12" font-weight="bold" fill="#1565c0">④</text>
+  <text x="84" y="404" font-size="12" fill="#37474f">ARP 广播：Who has 192.168.1.20?</text>
+  <line x1="662" y1="396" x2="752" y2="396" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="888" y1="396" x2="982" y2="396" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="820" y="386" font-size="10" fill="#388e3c" text-anchor="middle">ARP 广播泛洪</text>
 
-<line x1="120" y1="322" x2="130" y2="322" stroke="#888780" stroke-width="0.5"/>
-<rect x="130" y="309" width="200" height="26" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="140" y="322" font-size="11" fill="#444441" dominant-baseline="central">⑥ 封以太网帧，目的 MAC=bb:bb</text>
+  <text x="60" y="466" font-size="12" font-weight="bold" fill="#1565c0">⑤</text>
+  <text x="84" y="466" font-size="12" fill="#37474f">单播应答：192.168.1.20 is at bb:bb</text>
+  <line x1="982" y1="458" x2="888" y2="458" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="752" y1="458" x2="662" y2="458" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="820" y="448" font-size="10" fill="#388e3c" text-anchor="middle">ARP 单播应答</text>
 
-<text x="340" y="359" font-size="11" fill="#444441" text-anchor="middle">⑦ 请求帧经交换机转发</text>
-<line x1="120" y1="368" x2="552" y2="368" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#ar)"/>
-<rect x="348" y="378" width="180" height="26" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-<text x="356" y="391" font-size="11" fill="#412402" dominant-baseline="central">查 MAC 表：bb:bb → P5</text>
+  <text x="60" y="528" font-size="12" font-weight="bold" fill="#1565c0">⑥</text>
+  <text x="84" y="528" font-size="12" fill="#37474f">封以太网帧，目的 MAC=bb:bb</text>
+  <rect x="500" y="502" width="140" height="36" rx="4" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="570" y="525" font-size="11" fill="#546e7a" text-anchor="middle">帧 dst=bb:bb</text>
 
-<line x1="552" y1="420" x2="560" y2="420" stroke="#888780" stroke-width="0.5"/>
-<rect x="360" y="407" width="192" height="26" rx="4" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<text x="368" y="420" font-size="11" fill="#444441" dominant-baseline="central">⑧ 解包，回 Type=0</text>
+  <text x="60" y="590" font-size="12" font-weight="bold" fill="#1565c0">⑦</text>
+  <text x="84" y="590" font-size="12" fill="#37474f">请求帧经交换机转发</text>
+  <line x1="662" y1="582" x2="752" y2="582" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="888" y1="582" x2="982" y2="582" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="820" y="572" font-size="10" fill="#388e3c" text-anchor="middle">查表：bb:bb → 对应端口</text>
 
-<text x="340" y="457" font-size="11" fill="#444441" text-anchor="middle">⑨ 收到 Reply，算 RTT</text>
-<line x1="560" y1="466" x2="128" y2="466" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="60" y="652" font-size="12" font-weight="bold" fill="#1565c0">⑧</text>
+  <text x="84" y="652" font-size="12" fill="#37474f">解包，回 Type=0</text>
+  <rect x="1000" y="626" width="140" height="36" rx="4" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="1070" y="649" font-size="11" fill="#546e7a" text-anchor="middle">解包 Type=0</text>
 
-<text x="40" y="512" font-size="11" fill="#888780">虚线为时间轴，自上而下；绿色箭头为跨设备报文，灰框为设备本地动作</text>
+  <text x="60" y="714" font-size="12" font-weight="bold" fill="#1565c0">⑨</text>
+  <text x="84" y="714" font-size="12" fill="#37474f">收到 Reply，算 RTT</text>
+  <rect x="500" y="688" width="140" height="36" rx="4" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="570" y="711" font-size="11" fill="#546e7a" text-anchor="middle">收到 Reply</text>
+  <line x1="982" y1="706" x2="888" y2="706" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="752" y1="706" x2="662" y2="706" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
 
-  </g>
+  <rect x="40" y="758" width="1120" height="62" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="784" font-size="13" font-weight="bold" fill="#7f3f00">④⑤ 两步是 ARP，不在 ping 的三次往返里</text>
+  <text x="64" y="806" font-size="11.5" fill="#5d4037">同网段 ping 的第一次往往慢一拍，就是先做了一次 ARP；ARP 表已有记录时直接跳到 ⑥。这也是 ping 首包延迟高于后续包的原因。</text>
+
+  <rect x="40" y="830" width="1120" height="32" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="56" y="839" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="86" y="850" font-size="12" fill="#37474f">发起方 A</text>
+  <rect x="186" y="839" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1.5"/>
+  <text x="216" y="850" font-size="12" fill="#37474f">交换机</text>
+  <rect x="306" y="839" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="336" y="850" font-size="12" fill="#37474f">目标方 B</text>
+  <rect x="426" y="839" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="456" y="850" font-size="12" fill="#37474f">本地动作</text>
+  <line x1="566" y1="846" x2="606" y2="846" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="616" y="850" font-size="12" fill="#37474f">跨设备报文</text>
 </svg>

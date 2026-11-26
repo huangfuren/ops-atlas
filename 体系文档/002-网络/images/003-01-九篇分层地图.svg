@@ -1,86 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 864.71" width="1200" height="864.71" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" width="1960" height="890" viewBox="0 0 1960 890">
+  <defs>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#607d8b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1960" height="890" fill="#ffffff"/>
 
-  <title>网络板块九篇分层地图：按层定位，009 收口</title>
-  <desc>九篇按网络分层归位：跨层场景篇是负载均衡、NAT 防火墙、容器云与企业网络；应用层是 DNS、HTTP、HTTPS 与 TLS；传输层是 TCP 与连接状态；网络层与二层是 IP 路由与 ARP。右侧 009 排障抓包与性能贯穿各层，是争议时刻的第一证据。读法是先按层定位再进对应篇。</desc>
+  <text x="60" y="52" font-size="20" font-weight="bold" fill="#0f172a" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">网络九册分层地图：报障先按层定位，131 收口</text>
+  <text x="60" y="84" font-size="12" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">图中自下而上是依赖顺序：连通层是应用层的前提，防护层横切两者，131 以全部八册为弹药库</text>
+  <line x1="60" y1="106" x2="1900" y2="106" stroke="#cfd8dc" stroke-width="1"/>
 
-  <rect width="680" height="490" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">网络九篇分层地图：报障先按层定位，009 收口</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+  <rect x="40" y="126" width="1830" height="212" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#1565c0" stroke-width="2"/>
+  <text x="60" y="152" font-size="17" font-weight="bold" fill="#0d47a1" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">应用与防护　5 册</text>
+  <text x="300" y="152" font-size="12" fill="#546e7a" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">协议语义 → 加密信任链 → 流量分发 → 边界管控 → 环境形态</text>
 
-  <!-- 场景篇 -->
-  <rect x="20" y="54" width="480" height="96" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="28" y="70" font-size="8" font-weight="600" fill="#8C8980">场景篇 · 跨层机制</text>
-  <rect x="36" y="78" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="106" y="96" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">006 负载均衡与高可用</text>
-  <text x="106" y="112" font-size="7.2" fill="#4A4945" text-anchor="middle">四层七层 · LVS · 健康检查</text>
-  <text x="106" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">会话保持 · 调度算法</text>
-  <rect x="186" y="78" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="256" y="96" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">007 NAT 防火墙</text>
-  <text x="256" y="112" font-size="7.2" fill="#4A4945" text-anchor="middle">conntrack · 四表五链</text>
-  <text x="256" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">安全组与 ACL</text>
-  <rect x="336" y="78" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="406" y="96" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">008 容器云企业网络</text>
-  <text x="406" y="112" font-size="7.2" fill="#4A4945" text-anchor="middle">veth 网桥 · VXLAN 一览</text>
-  <text x="406" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">云上网络 · AD 域</text>
+  <rect x="60" y="168" width="340" height="152" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="80" y="196" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">121 HTTP</text>
+  <text x="80" y="220" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">状态码 · keep-alive</text>
+  <text x="80" y="240" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">队头阻塞 · 缓存判断</text>
+  <line x1="80" y1="256" x2="380" y2="256" stroke="#1565c0" stroke-width="1"/>
+  <text x="80" y="278" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">5xx 定责与首屏耗时</text>
+  <text x="80" y="300" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 502/504 分不清时进</text>
 
-  <!-- 应用层 -->
-  <rect x="20" y="160" width="480" height="96" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="28" y="176" font-size="8" font-weight="600" fill="#8C8980">应用层</text>
-  <rect x="36" y="184" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="106" y="202" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">003 DNS 与域名解析</text>
-  <text x="106" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">缓存层级 · 解析路径</text>
-  <text x="106" y="232" font-size="7.2" fill="#4A4945" text-anchor="middle">hosts 与 resolv.conf</text>
-  <rect x="186" y="184" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="256" y="202" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">004 HTTP</text>
-  <text x="256" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">状态码 · keep-alive</text>
-  <text x="256" y="232" font-size="7.2" fill="#4A4945" text-anchor="middle">队头阻塞</text>
-  <rect x="336" y="184" width="140" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="406" y="202" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">005 HTTPS 与 TLS</text>
-  <text x="406" y="218" font-size="7.2" fill="#4A4945" text-anchor="middle">握手 · 证书链</text>
-  <text x="406" y="232" font-size="7.2" fill="#4A4945" text-anchor="middle">证书告警怎么读</text>
+  <rect x="425" y="168" width="340" height="152" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="445" y="196" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">122 HTTPS 与 TLS</text>
+  <text x="445" y="220" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">握手 · 证书链</text>
+  <text x="445" y="240" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">过期 · 域名不匹配</text>
+  <line x1="445" y1="256" x2="745" y2="256" stroke="#1565c0" stroke-width="1"/>
+  <text x="445" y="278" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">浏览器证书告警怎么读</text>
+  <text x="445" y="300" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 证书告警时进</text>
 
-  <!-- 传输层 -->
-  <rect x="20" y="266" width="480" height="78" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="28" y="282" font-size="8" font-weight="600" fill="#8C8980">传输层</text>
-  <rect x="36" y="290" width="190" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="131" y="308" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">002 TCP 与连接状态</text>
-  <text x="131" y="324" font-size="7.2" fill="#4A4945" text-anchor="middle">状态机 · 握手挥手 · 队列</text>
-  <text x="244" y="306" font-size="7.4" fill="#4A4945">端口不通的三种表现各指一个方向：</text>
-  <text x="244" y="322" font-size="7.4" fill="#4A4945">拒绝（服务没听）· 超时（路不通）· 被拦（007）</text>
+  <rect x="790" y="168" width="340" height="152" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="810" y="196" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">123 负载均衡</text>
+  <text x="810" y="220" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">四层 / 七层 · LVS</text>
+  <text x="810" y="240" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">健康检查 · 会话保持</text>
+  <line x1="810" y1="256" x2="1110" y2="256" stroke="#1565c0" stroke-width="1"/>
+  <text x="810" y="278" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">调度算法与后端摘除</text>
+  <text x="810" y="300" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 只有部分后端报错时进</text>
 
-  <!-- 网络层与二层 -->
-  <rect x="20" y="354" width="480" height="78" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="28" y="370" font-size="8" font-weight="600" fill="#8C8980">网络层与二层</text>
-  <rect x="36" y="378" width="190" height="46" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="131" y="396" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">001 IP 路由与二层</text>
-  <text x="131" y="412" font-size="7.2" fill="#4A4945" text-anchor="middle">路由表 · ARP · 二层连通</text>
-  <text x="244" y="394" font-size="7.4" fill="#4A4945">90% 的乱查从这里省掉：ARP 失败=二层问题，</text>
-  <text x="244" y="410" font-size="7.4" fill="#4A4945">先看 ip neigh 再谈 IP、路由、防火墙。</text>
+  <rect x="1155" y="168" width="340" height="152" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1175" y="196" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">124 NAT 与防火墙</text>
+  <text x="1175" y="220" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">conntrack · 四表五链</text>
+  <text x="1175" y="240" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">安全组与 ACL</text>
+  <line x1="1175" y1="256" x2="1475" y2="256" stroke="#1565c0" stroke-width="1"/>
+  <text x="1175" y="278" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连接被拦与表满</text>
+  <text x="1175" y="300" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 端口通但连不上时进</text>
 
-  <!-- 009 贯穿条 -->
-  <rect x="515" y="54" width="145" height="378" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
-  <text x="587" y="86" font-size="14" font-weight="600" fill="#7A4A12" text-anchor="middle">009</text>
-  <text x="587" y="104" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">排障、抓包与性能</text>
-  <line x1="533" y1="120" x2="642" y2="120" stroke="#D9A458" stroke-width="0.8"/>
-  <text x="587" y="140" font-size="7.4" fill="#7A4A12" text-anchor="middle">分层决策树</text>
-  <text x="587" y="156" font-size="7.4" fill="#7A4A12" text-anchor="middle">tcpdump 抓包</text>
-  <text x="587" y="172" font-size="7.4" fill="#7A4A12" text-anchor="middle">性能四要素</text>
-  <text x="587" y="188" font-size="7.4" fill="#7A4A12" text-anchor="middle">MTU / PMTUD</text>
-  <text x="587" y="216" font-size="8" font-weight="600" fill="#7A4A12" text-anchor="middle">★ 贯穿各层</text>
-  <text x="587" y="236" font-size="7.2" fill="#7A4A12" text-anchor="middle">建议读完 001~005</text>
-  <text x="587" y="250" font-size="7.2" fill="#7A4A12" text-anchor="middle">就先读一遍 009，</text>
-  <text x="587" y="264" font-size="7.2" fill="#7A4A12" text-anchor="middle">再用它回看各篇</text>
-  <text x="587" y="296" font-size="7.4" font-weight="600" fill="#7A4A12" text-anchor="middle">争议时刻的第一证据</text>
-  <text x="587" y="312" font-size="7.2" fill="#7A4A12" text-anchor="middle">日志会说谎，</text>
-  <text x="587" y="326" font-size="7.2" fill="#7A4A12" text-anchor="middle">包不会</text>
+  <rect x="1520" y="168" width="340" height="152" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1540" y="196" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">125 容器云网络</text>
+  <text x="1540" y="220" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">veth · 网桥 · VXLAN</text>
+  <text x="1540" y="240" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">云上网络 · AD 域</text>
+  <line x1="1540" y1="256" x2="1840" y2="256" stroke="#1565c0" stroke-width="1"/>
+  <text x="1540" y="278" font-size="11" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">跨主机 / 跨容器形态</text>
+  <text x="1540" y="300" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 容器内不通而主机通时进</text>
 
-  <rect x="20" y="440" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="32" y="457" font-size="7.8" font-weight="600" fill="#7A4A12">读法：报障先按层定位（009 决策树）→ 进对应篇；跨主机 / 容器场景先看 008 的形态图。</text>
+  <line x1="560" y1="374" x2="560" y2="342" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1240" y1="374" x2="1240" y2="342" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="580" y="362" font-size="12" fill="#2e7d32" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">下层是上层的前提</text>
 
-  <text x="32" y="482" font-size="8.6" fill="#8C8980">分界：主机网卡配置 → Linux 005；K8s 网络深入 → 容器 006；转发规则与证书卸载 → 接入层板块。</text>
+  <rect x="40" y="376" width="1830" height="212" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="60" y="402" font-size="17" font-weight="bold" fill="#1b5e20" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连通与传输　3 册</text>
+  <text x="300" y="402" font-size="12" fill="#546e7a" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">包到不到 → 连接建不建得起 → 名字怎么解</text>
 
-  </g>
+  <rect x="60" y="418" width="580" height="152" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="80" y="446" font-size="15" font-weight="bold" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">111 IP 路由与二层</text>
+  <text x="80" y="470" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">路由表 · ARP · 二层连通 · 封装与 MTU</text>
+  <line x1="80" y1="484" x2="620" y2="484" stroke="#2e7d32" stroke-width="1"/>
+  <text x="80" y="506" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">90% 的乱查从这里省掉：ARP 失败＝二层问题，先看 ip neigh 再谈 IP、路由、防火墙。</text>
+  <text x="80" y="530" font-size="11" fill="#2e5230" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">端口不通的三种表现各指一个方向：拒绝（服务没听）· 超时（路不通）· 被拦（124）</text>
+  <text x="80" y="552" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 同网段 ping 不通、或跨网段时好时坏，先翻这一册</text>
+
+  <rect x="670" y="418" width="580" height="152" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="690" y="446" font-size="15" font-weight="bold" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">112 TCP 与连接状态</text>
+  <text x="690" y="470" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">十一种状态 · 握手挥手 · 半连接 / 全连接队列</text>
+  <line x1="690" y1="484" x2="1230" y2="484" stroke="#2e7d32" stroke-width="1"/>
+  <text x="690" y="506" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连接数三层天花板：应用层 → 进程层 fd → 系统层内核。报错文案决定先查哪一层。</text>
+  <text x="690" y="530" font-size="11" fill="#2e5230" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">CLOSE_WAIT 堆积查代码；TIME_WAIT 堆积是短连接太多 —— 两件事，别混。</text>
+  <text x="690" y="552" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 连不上、连上了断、连接数打满，先翻这一册</text>
+
+  <rect x="1280" y="418" width="580" height="152" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1300" y="446" font-size="15" font-weight="bold" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">113 DNS 与域名解析</text>
+  <text x="1300" y="470" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">缓存层级 · 解析路径 · hosts 与 resolv.conf</text>
+  <line x1="1300" y1="484" x2="1840" y2="484" stroke="#2e7d32" stroke-width="1"/>
+  <text x="1300" y="506" font-size="11" fill="#123314" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">解析耗时计入 time_namelookup，超过 200ms 就是慢 —— 但它常常被误算进「应用慢」。</text>
+  <text x="1300" y="530" font-size="11" fill="#2e5230" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">同一业务有的机器快有的慢，先比对各自的 resolv.conf 与 DNS 上游。</text>
+  <text x="1300" y="552" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">→ 域名解析慢、解析结果不一致时进</text>
+
+  <rect x="40" y="616" width="1180" height="164" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="60" y="646" font-size="17" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">131 排障、抓包与性能　★ 贯穿各层</text>
+  <text x="60" y="674" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">分层决策树 · tcpdump 抓包 · 性能四要素 · MTU / PMTUD</text>
+  <line x1="60" y1="688" x2="1200" y2="688" stroke="#e65100" stroke-width="1"/>
+  <text x="60" y="712" font-size="12" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">不确定在层几时，从这里进入：按决策树逐层排除，再回到对应册精读。</text>
+  <text x="60" y="738" font-size="12" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">建议读完 111~125 后先通读一遍这一册，之后每次报障都从它的决策树起步。</text>
+  <text x="60" y="764" font-size="11" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">争议时刻的第一证据：日志会说谎，包不会。</text>
+
+  <rect x="1250" y="616" width="620" height="164" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="1270" y="646" font-size="17" font-weight="bold" fill="#546e7a" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">190 术语表</text>
+  <text x="1270" y="674" font-size="11" fill="#546e7a" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">术语 · 缩写 · 易混对 · 症状反查</text>
+  <line x1="1270" y1="688" x2="1850" y2="688" stroke="#90a4ae" stroke-width="1"/>
+  <text x="1270" y="712" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">看到不认识的缩写、或分不清「网关 / 路由器 / 交换机」这类词，先查这里。</text>
+  <text x="1270" y="738" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">症状反查表：从「ping 不通」这类现象反推到该读哪一册。</text>
+
+  <text x="60" y="816" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">读法：报障先按层定位（131 决策树）→ 进对应册；跨主机 / 容器场景先看 125 的形态图。</text>
+  <text x="60" y="838" font-size="11" fill="#616161" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">分界：主机网卡配置 → Linux 板块；K8s 网络深入 → 容器板块；转发规则与证书卸载 → 接入层板块。</text>
+
+  <rect x="60" y="856" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="92" y="867" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">应用与防护</text>
+  <rect x="230" y="856" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="262" y="867" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连通与传输</text>
+  <rect x="400" y="856" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1.5"/>
+  <text x="432" y="867" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">排障入口（贯穿）</text>
+  <rect x="600" y="856" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="632" y="867" font-size="12" fill="#37474f" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">附录</text>
 </svg>
