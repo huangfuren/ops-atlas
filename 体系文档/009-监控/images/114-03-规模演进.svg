@@ -1,51 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 582.35" width="1200" height="582.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>部署拓扑的四档规模演进</title>
-  <desc>L1 单机适用于五十万 series 以下；L2 双实例靠同配置冗余；L3 分片需要全局查询层；L4 联邦只上卷预聚合结果。紫色由浅到深表示量级递增，柱高不代表性能。</desc>
+  <desc>L1 单机适用于 50 万 series 以下，一 Prometheus 加一 Alertmanager；L2 双实例靠同配置冗余，各抓全量、统一查询要去重；L3 分片用 hashmod 加全局查询层，分片后 sum 必须上移到查询层，这是真正的门槛档；L4 联邦只上卷预聚合结果，不搬原始数据。四档按 series 量级递进，不是能力等级。来源为 009-监控 114 §4.5 与 118 规模化，截止 2026-11-26。</desc>
 
-  <rect width="680" height="330" fill="#FFFFFF"/>
-  <text x="40" y="28" font-size="13" font-weight="500" fill="#2B2A27">四档拓扑：不是能力等级，是量级门槛</text>
-  <text x="640" y="28" font-size="9.5" fill="#9A9791" text-anchor="end">颜色越深，series 量级越大</text>
+  <rect x="0" y="0" width="1200" height="640" fill="#ffffff"/>
 
-  <g font-size="9.5" font-weight="500" text-anchor="middle">
-    <text x="110" y="182" fill="#6B5C8E">&lt; 50 万 series</text>
-    <text x="265" y="137" fill="#5D4B85">50–200 万</text>
-    <text x="420" y="92" fill="#4E3C78">200–1000 万</text>
-    <text x="575" y="47" fill="#3B2B60">&gt; 1000 万</text>
-  </g>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
 
-  <g stroke-width="1">
-    <rect x="40" y="190" width="140" height="60" rx="3" fill="#E4DEF2" stroke="#A192C6"/>
-    <rect x="195" y="145" width="140" height="105" rx="3" fill="#D9D0EE" stroke="#9A87C2"/>
-    <rect x="350" y="100" width="140" height="150" rx="3" fill="#CDBFE8" stroke="#8E77BB"/>
-    <rect x="505" y="55" width="140" height="195" rx="3" fill="#C0ACE2" stroke="#8168B0"/>
-  </g>
-  <g stroke-width="3" stroke-linecap="round">
-    <line x1="46" y1="195" x2="174" y2="195" stroke="#A192C6"/>
-    <line x1="201" y1="150" x2="329" y2="150" stroke="#9A87C2"/>
-    <line x1="356" y1="105" x2="484" y2="105" stroke="#8E77BB"/>
-    <line x1="511" y1="60" x2="639" y2="60" stroke="#8168B0"/>
-  </g>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">四档拓扑：不是能力等级，是量级门槛</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：009-监控 114 §4.5 · 118 规模化与高可用 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#bf360c" text-anchor="end">★ 标出真正的门槛档</text>
 
-  <line x1="30" y1="250" x2="650" y2="250" stroke="#CFCCC2" stroke-width="1"/>
+  <!-- L1 -->
+  <rect x="40" y="150" width="250" height="230" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="165" y="180" font-size="11" font-weight="bold" fill="#311b92" text-anchor="middle">50 万以下 series</text>
+  <text x="165" y="226" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">L1 单机</text>
+  <line x1="70" y1="242" x2="260" y2="242" stroke="#5e35b1" stroke-width="2"/>
+  <text x="60" y="276" font-size="11.5" fill="#311b92">1 Prometheus + 1 AM</text>
+  <text x="60" y="304" font-size="11.5" fill="#311b92">最省事，接受单点</text>
+  <text x="60" y="334" font-size="11" fill="#311b92">先解决基数，再谈拓扑</text>
+  <text x="60" y="360" font-size="11" fill="#311b92">出问题直接看本机</text>
 
-  <g font-size="11.5" font-weight="500" text-anchor="middle">
-    <text x="110" y="270" fill="#2B2A27">L1 单机</text>
-    <text x="265" y="270" fill="#2B2A27">L2 双实例</text>
-    <text x="420" y="270" fill="#2B2A27">L3 分片</text>
-    <text x="575" y="270" fill="#2B2A27">L4 联邦</text>
-  </g>
-  <g fill="#6B6A65" font-size="9" text-anchor="middle">
-    <text x="110" y="287">1 Prom + 1 AM</text>
-    <text x="265" y="287">2 Prom 各抓全量</text>
-    <text x="420" y="287">hashmod + 全局查询</text>
-    <text x="575" y="287">边缘 + 上卷</text>
-  </g>
+  <!-- L2 -->
+  <rect x="330" y="150" width="250" height="230" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="455" y="180" font-size="11" font-weight="bold" fill="#311b92" text-anchor="middle">50–200 万 series</text>
+  <text x="455" y="226" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">L2 双实例</text>
+  <line x1="360" y1="242" x2="550" y2="242" stroke="#5e35b1" stroke-width="2"/>
+  <text x="350" y="276" font-size="11.5" fill="#311b92">2 Prom 各抓全量</text>
+  <text x="350" y="304" font-size="11.5" fill="#311b92">2 AM 集群做冗余</text>
+  <text x="350" y="334" font-size="11" fill="#311b92">无一致性协议，靠同配置</text>
+  <text x="350" y="360" font-size="11" fill="#311b92">查询层按 replica-label 去重</text>
 
-  <text x="40" y="312" font-size="9" fill="#9A9791">先解决基数，再换拓扑。L1→L2 只是加了冗余，真正的门槛在 L3：分片后 sum() 必须上移到查询层。</text>
+  <!-- L3 门槛档 -->
+  <rect x="620" y="150" width="250" height="230" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="745" y="180" font-size="11" font-weight="bold" fill="#7f3f00" text-anchor="middle">200–1000 万 series</text>
+  <text x="745" y="226" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">L3 分片 ★</text>
+  <line x1="650" y1="242" x2="840" y2="242" stroke="#e65100" stroke-width="2"/>
+  <text x="630" y="276" font-size="11.5" fill="#7f3f00">hashmod 决定谁抓</text>
+  <text x="630" y="304" font-size="11.5" fill="#7f3f00">Thanos / Mimir 全局查询</text>
+  <text x="630" y="334" font-size="11" fill="#7f3f00">分片后 sum 必须上移到查询层</text>
+  <text x="630" y="360" font-size="11" fill="#7f3f00">真正的门槛在这一档</text>
 
-  </g>
+  <!-- L4 -->
+  <rect x="910" y="150" width="250" height="230" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1035" y="180" font-size="11" font-weight="bold" fill="#311b92" text-anchor="middle">1000 万以上 series</text>
+  <text x="1035" y="226" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">L4 联邦</text>
+  <line x1="940" y1="242" x2="1130" y2="242" stroke="#5e35b1" stroke-width="2"/>
+  <text x="920" y="276" font-size="11.5" fill="#311b92">边缘 Prom + federation</text>
+  <text x="920" y="304" font-size="11.5" fill="#311b92">只上卷预聚合结果</text>
+  <text x="920" y="334" font-size="11" fill="#311b92">不搬原始样本</text>
+  <text x="920" y="360" font-size="11" fill="#311b92">多集群按域切分</text>
+
+  <line x1="290" y1="266" x2="326" y2="266" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="580" y1="266" x2="616" y2="266" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="870" y1="266" x2="906" y2="266" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 结论块 -->
+  <rect x="40" y="404" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="434" font-size="14" font-weight="bold" fill="#bf360c">★ 先解决基数，再换拓扑：L1→L2 只是加冗余，真正门槛在 L3</text>
+  <text x="60" y="460" font-size="12.5" fill="#5d4037">判断该升哪一档看两个数字：head series 持续超上限、查询延迟或内存顶不住；hashmod 只改谁抓，不改抓到什么</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="500" width="1120" height="120" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="60" y="526" font-size="12" fill="#37474f">四档按 series 量级递进，并非能力等级；判断依据是 head series 数与查询压力</text>
+  <rect x="60" y="548" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="92" y="559" font-size="12" fill="#37474f">常规档位</text>
+  <rect x="300" y="548" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="332" y="559" font-size="12" fill="#37474f">门槛档 ★</text>
+  <text x="60" y="600" font-size="12" fill="#37474f">L3 的分片后聚合是最常踩的坑：每个实例只看到自己那一片，sum 必须落在全局查询层</text>
 </svg>

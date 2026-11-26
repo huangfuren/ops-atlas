@@ -1,66 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600.0" width="1200" height="600.0" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>四种指标类型：形态差异决定查询方式</title>
+  <desc>Counter 单调递增，归零即进程重启，用 rate 看斜率；Gauge 可增可减，直接取值或 avg_over_time；Histogram 是带 le 标签的累计分桶，可跨实例合并后算分位；Summary 的分位在客户端算好，多实例求和无意义。四者用四种语义色区分，形态线只示意差异，纵轴不代表同一量纲。来源为 009-监控 112 §2.2，截止 2026-11-26。</desc>
 
-  <title>四种指标类型的形态差异</title>
-  <desc>Counter 单调递增，Gauge 上下起伏，Histogram 是分桶累计计数，Summary 是客户端算好的若干分位线。四者用四种颜色区分，颜色在其余各图中保持一致。</desc>
+  <rect x="0" y="0" width="1200" height="760" fill="#ffffff"/>
 
-  <rect width="680" height="340" fill="#FFFFFF"/>
-  <text x="40" y="30" font-size="13" font-weight="500" fill="#2B2A27">四种指标类型：长什么样，决定怎么查</text>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">四种指标类型：长什么样，决定怎么查</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：009-监控 112 §2.2 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">形态示意，纵轴不同量纲</text>
 
   <!-- Counter -->
-  <rect x="40" y="50" width="290" height="118" rx="3" fill="#F7FCFA" stroke="#6BAF95" stroke-width="1"/>
-  <text x="56" y="72" font-size="11.5" font-weight="500" fill="#173D30">Counter 计数器</text>
-  <text x="56" y="88" font-size="9" fill="#4F7264">只增不减，归零即进程重启；用 rate() 看斜率</text>
-  <path d="M56,142 L104,142 L104,134 L152,134 L152,122 L200,122 L200,112 L248,112 L248,102 L314,102"
-        fill="none" stroke="#3F7F66" stroke-width="1.6"/>
-  <line x1="56" y1="152" x2="314" y2="152" stroke="#CFE8DE" stroke-width="1"/>
+  <rect x="40" y="110" width="540" height="250" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="60" y="142" font-size="15" font-weight="bold" fill="#123314">Counter 计数器</text>
+  <text x="60" y="168" font-size="11.5" fill="#123314">只增不减，归零即进程重启；用 rate() 看斜率</text>
+  <path d="M 70 340 L 150 340 L 150 322 L 230 322 L 230 298 L 310 298 L 310 270 L 390 270 L 390 238 L 470 238 L 470 200 L 550 200"
+        fill="none" stroke="#2e7d32" stroke-width="2"/>
+  <line x1="70" y1="340" x2="550" y2="340" stroke="#388e3c" stroke-width="1"/>
+  <text x="60" y="290" font-size="11" fill="#123314">阶梯只上不下</text>
+  <text x="60" y="316" font-size="11" fill="#123314">典型：http_requests_total</text>
 
   <!-- Gauge -->
-  <rect x="350" y="50" width="290" height="118" rx="3" fill="#F6FAFD" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="366" y="72" font-size="11.5" font-weight="500" fill="#1F4468">Gauge 瞬时值</text>
-  <text x="366" y="88" font-size="9" fill="#5A7590">可增可减；直接取值或 avg_over_time()</text>
-  <path d="M366,132 L400,114 L430,130 L460,106 L492,124 L524,110 L560,126 L600,114 L624,120"
-        fill="none" stroke="#5285B4" stroke-width="1.6"/>
-  <line x1="366" y1="152" x2="624" y2="152" stroke="#D3E0F0" stroke-width="1"/>
+  <rect x="620" y="110" width="540" height="250" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="640" y="142" font-size="15" font-weight="bold" fill="#0d2f5c">Gauge 瞬时值</text>
+  <text x="640" y="168" font-size="11.5" fill="#0d2f5c">可增可减；直接取值或 avg_over_time()</text>
+  <path d="M 650 260 L 700 222 L 750 250 L 800 202 L 850 236 L 900 208 L 950 244 L 1000 216 L 1050 240 L 1120 224"
+        fill="none" stroke="#1565c0" stroke-width="2"/>
+  <line x1="650" y1="340" x2="1120" y2="340" stroke="#1565c0" stroke-width="1"/>
+  <text x="640" y="290" font-size="11" fill="#0d2f5c">上下起伏，没有累积语义</text>
+  <text x="640" y="316" font-size="11" fill="#0d2f5c">典型：node_memory_MemAvailable_bytes</text>
 
   <!-- Histogram -->
-  <rect x="40" y="184" width="290" height="122" rx="3" fill="#FAF8FD" stroke="#9C8ACB" stroke-width="1"/>
-  <text x="56" y="206" font-size="11.5" font-weight="500" fill="#46337A">Histogram 直方图</text>
-  <text x="56" y="222" font-size="9" fill="#6B5C8E">累计计数，带 le 标签；柱高是该桶的累计值</text>
-  <g fill="#E4DBF4" stroke="#9C8ACB" stroke-width="0.9">
-    <rect x="60" y="268" width="34" height="12"/>
-    <rect x="110" y="260" width="34" height="20"/>
-    <rect x="160" y="252" width="34" height="28"/>
-    <rect x="210" y="244" width="34" height="36"/>
-    <rect x="260" y="236" width="34" height="44"/>
+  <rect x="40" y="380" width="540" height="250" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="60" y="412" font-size="15" font-weight="bold" fill="#311b92">Histogram 直方图</text>
+  <text x="60" y="438" font-size="11.5" fill="#311b92">累计计数带 le 标签；唯一能跨实例合并后再算分位</text>
+  <g fill="#5e35b1" stroke="#311b92" stroke-width="1">
+    <rect x="70" y="560" width="60" height="36"/>
+    <rect x="160" y="540" width="60" height="56"/>
+    <rect x="250" y="516" width="60" height="80"/>
+    <rect x="340" y="488" width="60" height="108"/>
+    <rect x="430" y="456" width="60" height="140"/>
   </g>
-  <line x1="56" y1="280" x2="314" y2="280" stroke="#D8CEEE" stroke-width="1"/>
-  <g font-size="8" fill="#8A8880" text-anchor="middle">
-    <text x="77" y="294">0.1</text>
-    <text x="127" y="294">0.5</text>
-    <text x="177" y="294">1</text>
-    <text x="227" y="294">5</text>
-    <text x="277" y="294">+Inf</text>
+  <line x1="70" y1="596" x2="550" y2="596" stroke="#5e35b1" stroke-width="1"/>
+  <g font-size="11" fill="#311b92" text-anchor="middle">
+    <text x="100" y="614">0.1</text>
+    <text x="190" y="614">0.5</text>
+    <text x="280" y="614">1</text>
+    <text x="370" y="614">5</text>
+    <text x="460" y="614">+Inf</text>
   </g>
+  <text x="60" y="512" font-size="11" fill="#311b92">柱高是该 le 桶的累计值</text>
 
   <!-- Summary -->
-  <rect x="350" y="184" width="290" height="122" rx="3" fill="#FEFBF4" stroke="#D9A458" stroke-width="1"/>
-  <text x="366" y="206" font-size="11.5" font-weight="500" fill="#7A4A12">Summary 摘要</text>
-  <text x="366" y="222" font-size="9" fill="#8A6B3C">分位在客户端算好；多实例求和无意义</text>
-  <g stroke="#C08A3E" stroke-width="1.3" fill="none" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M400,244 L424,232 L448,250 L472,236 L496,254 L520,238 L544,248 L568,230 L592,246 L624,236"/>
-    <path d="M400,258 L424,250 L448,262 L472,252 L496,264 L520,254 L544,262 L568,248 L592,260 L624,252" stroke-opacity="0.72"/>
-    <path d="M400,272 L424,268 L448,274 L472,266 L496,276 L520,270 L544,278 L568,266 L592,274 L624,270" stroke-opacity="0.5"/>
+  <rect x="620" y="380" width="540" height="250" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="640" y="412" font-size="15" font-weight="bold" fill="#7f3f00">Summary 摘要</text>
+  <text x="640" y="438" font-size="11.5" fill="#7f3f00">分位在客户端算好；多实例求和无意义</text>
+  <path d="M 680 510 L 740 494 L 800 516 L 860 500 L 920 520 L 980 504 L 1040 514 L 1100 496"
+        fill="none" stroke="#e65100" stroke-width="2"/>
+  <path d="M 680 542 L 740 532 L 800 548 L 860 536 L 920 550 L 980 538 L 1040 546 L 1100 534"
+        fill="none" stroke="#bf360c" stroke-width="1.5"/>
+  <path d="M 680 570 L 740 564 L 800 574 L 860 566 L 920 576 L 980 568 L 1040 574 L 1100 566"
+        fill="none" stroke="#7f3f00" stroke-width="1.5"/>
+  <g font-size="11" fill="#7f3f00" text-anchor="end">
+    <text x="670" y="514">p99</text>
+    <text x="670" y="546">p90</text>
+    <text x="670" y="574">p50</text>
   </g>
-  <g font-size="8.5" fill="#8A6B3C" text-anchor="end">
-    <text x="394" y="245">p99</text>
-    <text x="394" y="259">p90</text>
-    <text x="394" y="273">p50</text>
-  </g>
+  <text x="640" y="600" font-size="11" fill="#7f3f00">典型：rpc_duration_seconds{quantile="0.99"}</text>
 
-  <text x="40" y="328" font-size="9" fill="#9A9791">图仅示意形态差异，纵轴不代表同一量纲。选型不确定时优先 Histogram：它是唯一能跨实例合并后再算分位的类型。</text>
+  <!-- 结论块 -->
+  <rect x="40" y="650" width="1120" height="62" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="676" font-size="13" font-weight="bold" fill="#bf360c">★ 选型不确定时优先 Histogram：它是唯一能跨实例合并后再算分位的类型</text>
+  <text x="60" y="700" font-size="12.5" fill="#5d4037">Summary 的 0.99 加 0.99 还是 0.99，且无法回溯任意分位；平均值会掩盖长尾，SLO 场景看分位</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="726" width="1120" height="34" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="736" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="92" y="747" font-size="12" fill="#37474f">Counter</text>
+  <rect x="260" y="736" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="292" y="747" font-size="12" fill="#37474f">Gauge</text>
+  <rect x="460" y="736" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="492" y="747" font-size="12" fill="#37474f">Histogram</text>
+  <rect x="680" y="736" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="712" y="747" font-size="12" fill="#37474f">Summary</text>
 </svg>

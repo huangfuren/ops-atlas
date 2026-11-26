@@ -1,69 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 900" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>监控四层模型与可观测三支柱</title>
-  <desc>监控四层自上而下：采集（Prometheus 拉、Exporter、Pushgateway）到存储（TSDB、Thanos 长期）到可视化（Grafana）到响应（Alertmanager、值班、runbook），每层标注对应分册。右侧可观测三支柱：指标发现问题且是唯一告警源（本板块），日志解释为什么（日志板块），链路定位哪一跳（链路板块）。底部提示两个头号杀手：基数爆炸与自监控缺失。</desc>
+  <desc>左侧四层主管道：采集（Prometheus 拉取、Exporter、Pushgateway）到存储（本地 TSDB、长期存储、容量口径）到可视化（Grafana、内置 UI、看板分层）到响应（Alertmanager、规则五要素、响应纪律），每层标注监控册号。右侧三支柱：指标是本板块，负责发现问题且是唯一告警源；日志解释原因；链路定位跳点。底部警示两个头号杀手：基数爆炸与自监控缺失。来源为 009-监控 001、003 与 190 术语表，截止 2026-11-26。</desc>
 
-  <rect width="680" height="470" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">监控四层模型与可观测三支柱</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+  <rect x="0" y="0" width="1960" height="900" fill="#ffffff"/>
 
   <defs>
-    <marker id="m0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
     </marker>
   </defs>
 
-  <!-- 四层主管道 -->
-  <rect x="30" y="56" width="400" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="48" y="78" font-size="9.5" font-weight="600" fill="#1F4468">① 采集</text>
-  <text x="48" y="96" font-size="7.6" fill="#4A4945">Prometheus（pull）· Exporter · Pushgateway</text>
-  <text x="48" y="112" font-size="7.4" font-weight="600" fill="#1D5A45">册：003 部署 · 007 Exporter 生态</text>
-  <line x1="230" y1="126" x2="230" y2="140" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
+  <text x="60" y="50" font-size="20" font-weight="bold" fill="#0f172a">监控四层模型与可观测三支柱</text>
+  <text x="60" y="78" font-size="12" fill="#616161">来源：009-监控 001 监控全貌 · 003 架构图 · 190 术语表 · 截止 2026-11-26</text>
+  <text x="1900" y="78" font-size="12" fill="#616161" text-anchor="end">左＝四层主管道　右＝三支柱分工</text>
 
-  <rect x="30" y="144" width="400" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="48" y="166" font-size="9.5" font-weight="600" fill="#1F4468">② 存储</text>
-  <text x="48" y="184" font-size="7.6" fill="#4A4945">本地 TSDB · Thanos/Mimir/VictoriaMetrics 长期</text>
-  <text x="48" y="200" font-size="7.4" font-weight="600" fill="#1D5A45">册：004 TSDB 与容量 · 008 规模化</text>
-  <line x1="230" y1="214" x2="230" y2="228" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
+  <!-- 左分区：四层主管道 -->
+  <rect x="20" y="110" width="920" height="600" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="40" y="140" font-size="17" font-weight="bold" fill="#1b5e20">监控四层</text>
+  <text x="176" y="140" font-size="11.5" fill="#4e6b50">采集 → 存储 → 可视化 → 响应，故障时按层定位</text>
 
-  <rect x="30" y="232" width="400" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="48" y="254" font-size="9.5" font-weight="600" fill="#1F4468">③ 可视化</text>
-  <text x="48" y="272" font-size="7.6" fill="#4A4945">Grafana 看板 · 变量模板 · 面板选型</text>
-  <text x="48" y="288" font-size="7.4" font-weight="600" fill="#1D5A45">册：005 Grafana 与可视化</text>
-  <line x1="230" y1="302" x2="230" y2="316" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
+  <rect x="40" y="160" width="880" height="118" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="182" font-size="14" font-weight="bold" fill="#0d47a1">① 采集：把目标状态变成指标</text>
+  <rect x="55" y="190" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="191" y="220" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">Prometheus 拉取</text>
+  <text x="191" y="241" font-size="11.5" fill="#0d2f5c" text-anchor="middle">主动 pull /metrics</text>
+  <text x="191" y="259" font-size="11" fill="#0d2f5c" text-anchor="middle">监控 113 配置 · 111 原理</text>
+  <rect x="344" y="190" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="480" y="220" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">Exporter 生态</text>
+  <text x="480" y="241" font-size="11.5" fill="#0d2f5c" text-anchor="middle">node / blackbox / mysqld</text>
+  <text x="480" y="259" font-size="11" fill="#0d2f5c" text-anchor="middle">监控 117 Exporter</text>
+  <rect x="633" y="190" width="272" height="82" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="769" y="220" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">Pushgateway</text>
+  <text x="769" y="241" font-size="11.5" fill="#0d2f5c" text-anchor="middle">短命任务先推再被拉</text>
+  <text x="769" y="259" font-size="11" fill="#0d2f5c" text-anchor="middle">监控 111 §1.3</text>
+  <line x1="480" y1="278" x2="480" y2="296" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
 
-  <rect x="30" y="320" width="400" height="70" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="48" y="342" font-size="9.5" font-weight="600" fill="#7A4A12">④ 响应 —— 监控的终点是行动</text>
-  <text x="48" y="360" font-size="7.6" fill="#7A4A12">Alertmanager 路由分组 · 告警五要素 · runbook</text>
-  <text x="48" y="376" font-size="7.4" font-weight="600" fill="#7A4A12">册：006 告警规则实战 + 「SRE」002 响应纪律</text>
+  <rect x="40" y="298" width="880" height="118" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="320" font-size="14" font-weight="bold" fill="#1b5e20">② 存储：写进去、留得住、查得动</text>
+  <rect x="55" y="328" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="191" y="358" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">本地 TSDB</text>
+  <text x="191" y="379" font-size="11.5" fill="#123314" text-anchor="middle">Head 与持久 Block</text>
+  <text x="191" y="397" font-size="11" fill="#123314" text-anchor="middle">监控 114 §4.1</text>
+  <rect x="344" y="328" width="272" height="82" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="480" y="358" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">长期存储</text>
+  <text x="480" y="379" font-size="11.5" fill="#311b92" text-anchor="middle">Thanos / Mimir / VM</text>
+  <text x="480" y="397" font-size="11" fill="#311b92" text-anchor="middle">监控 114 §4.3</text>
+  <rect x="633" y="328" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="769" y="358" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">容量口径</text>
+  <text x="769" y="379" font-size="11.5" fill="#123314" text-anchor="middle">按 series 与保留期估</text>
+  <text x="769" y="397" font-size="11" fill="#123314" text-anchor="middle">监控 114 §4.2</text>
+  <line x1="480" y1="416" x2="480" y2="434" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
 
-  <!-- 三支柱 -->
-  <rect x="460" y="56" width="190" height="334" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="555" y="78" font-size="9" font-weight="600" fill="#2B2A27" text-anchor="middle">可观测三支柱</text>
-  <rect x="472" y="90" width="166" height="86" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="555" y="110" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">指标 ★ 本板块</text>
-  <text x="555" y="126" font-size="7.2" fill="#4A4945" text-anchor="middle">发现问题 · 实时可聚合</text>
-  <text x="555" y="140" font-size="7.2" font-weight="600" fill="#1D5A45" text-anchor="middle">唯一适合做告警源</text>
-  <text x="555" y="156" font-size="7" fill="#8C8980" text-anchor="middle">告警 → 人 / 自动化</text>
-  <rect x="472" y="186" width="166" height="86" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="555" y="206" font-size="8.8" font-weight="600" fill="#2B2A27" text-anchor="middle">日志 ·「日志」板块</text>
-  <text x="555" y="222" font-size="7.2" fill="#4A4945" text-anchor="middle">解释为什么出事</text>
-  <text x="555" y="236" font-size="7.2" fill="#4A4945" text-anchor="middle">四段取证以告警为起点</text>
-  <text x="555" y="252" font-size="7" fill="#8C8980" text-anchor="middle">日志 006</text>
-  <rect x="472" y="282" width="166" height="86" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="555" y="302" font-size="8.8" font-weight="600" fill="#2B2A27" text-anchor="middle">链路 ·「链路」板块</text>
-  <text x="555" y="318" font-size="7.2" fill="#4A4945" text-anchor="middle">定位慢 / 错在哪一跳</text>
-  <text x="555" y="332" font-size="7.2" fill="#4A4945" text-anchor="middle">trace 贯通与采样</text>
-  <text x="555" y="348" font-size="7" fill="#8C8980" text-anchor="middle">链路 006</text>
+  <rect x="40" y="436" width="880" height="118" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="458" font-size="14" font-weight="bold" fill="#8d6e00">③ 可视化：把数据摆成人能读的面板</text>
+  <rect x="55" y="466" width="272" height="82" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="191" y="496" font-size="15" font-weight="bold" fill="#5d4700" text-anchor="middle">Grafana 看板</text>
+  <text x="191" y="517" font-size="11.5" fill="#5d4700" text-anchor="middle">变量模板与面板选型</text>
+  <text x="191" y="535" font-size="11" fill="#5d4700" text-anchor="middle">监控 115 可视化</text>
+  <rect x="344" y="466" width="272" height="82" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="480" y="496" font-size="15" font-weight="bold" fill="#5d4700" text-anchor="middle">内置 UI</text>
+  <text x="480" y="517" font-size="11.5" fill="#5d4700" text-anchor="middle">临时查询接口</text>
+  <text x="480" y="535" font-size="11" fill="#5d4700" text-anchor="middle">监控 111 §1.3</text>
+  <rect x="633" y="466" width="272" height="82" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="769" y="496" font-size="15" font-weight="bold" fill="#5d4700" text-anchor="middle">看板分层</text>
+  <text x="769" y="517" font-size="11.5" fill="#5d4700" text-anchor="middle">总览 → 业务 → 单实例</text>
+  <text x="769" y="535" font-size="11" fill="#5d4700" text-anchor="middle">监控 115</text>
+  <line x1="480" y1="554" x2="480" y2="572" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
 
-  <!-- 底部 -->
-  <rect x="30" y="402" width="620" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="42" y="422" font-size="7.8" font-weight="600" fill="#7A4A12">★ 两个头号杀手：无界标签的基数爆炸（008 基数治理）· 监控系统自身无监控（008 自监控）</text>
+  <rect x="40" y="574" width="880" height="118" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="56" y="596" font-size="14" font-weight="bold" fill="#bf360c">④ 响应：监控的终点是行动</text>
+  <rect x="55" y="604" width="272" height="82" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="191" y="634" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">Alertmanager</text>
+  <text x="191" y="655" font-size="11.5" fill="#7f3f00" text-anchor="middle">去重 分组 抑制 路由</text>
+  <text x="191" y="673" font-size="11" fill="#7f3f00" text-anchor="middle">监控 114 §4.4</text>
+  <rect x="344" y="604" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="480" y="634" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">规则五要素</text>
+  <text x="480" y="655" font-size="11.5" fill="#123314" text-anchor="middle">每条告警挂 runbook</text>
+  <text x="480" y="673" font-size="11" fill="#123314" text-anchor="middle">监控 116 告警实战</text>
+  <rect x="633" y="604" width="272" height="82" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="769" y="634" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">响应纪律</text>
+  <text x="769" y="655" font-size="11.5" fill="#123314" text-anchor="middle">on-call 与复盘闭环</text>
+  <text x="769" y="673" font-size="11" fill="#123314" text-anchor="middle">SRE 011~004</text>
 
-  <text x="32" y="456" font-size="8.6" fill="#8C8980">告警没有动作项就不该存在——每条规则挂 runbook（006 规则五要素）；SLO 的 SLI 全部来自指标（「SRE」001）。</text>
+  <!-- 右分区：三支柱 -->
+  <rect x="1020" y="110" width="920" height="600" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1040" y="140" font-size="17" font-weight="bold" fill="#1b5e20">可观测三支柱</text>
+  <text x="1200" y="140" font-size="11.5" fill="#4e6b50">指标发现问题，日志解释原因，链路定位跳点</text>
 
-  </g>
+  <rect x="1040" y="160" width="880" height="550" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="1055" y="180" width="850" height="148" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+  <text x="1075" y="214" font-size="15" font-weight="bold" fill="#0d2f5c">指标 ★ 本板块</text>
+  <text x="1075" y="244" font-size="12.5" fill="#0d2f5c">发现问题：实时、可聚合、成本低，是三支柱里唯一适合做告警源的一根</text>
+  <text x="1075" y="272" font-size="12.5" fill="#0d2f5c">告警去向：人或自动化动作；SLI 全部来自指标，见 SRE 001</text>
+  <text x="1075" y="302" font-size="11.5" fill="#0d2f5c">对应册：监控 001~190 与 111~119（Prometheus 路线）</text>
+
+  <rect x="1055" y="352" width="850" height="148" rx="6" fill="#fafafa" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="1075" y="386" font-size="15" font-weight="bold" fill="#616161">日志 · 日志板块</text>
+  <text x="1075" y="416" font-size="12.5" fill="#37474f">解释为什么出事：留存事件细节，回答告警发生那一刻系统里到底写了什么</text>
+  <text x="1075" y="444" font-size="12.5" fill="#37474f">四段取证以告警为起点，不要从日志反推有没有故障</text>
+  <text x="1075" y="474" font-size="11.5" fill="#616161">跨板块：日志 001~006</text>
+
+  <rect x="1055" y="524" width="850" height="148" rx="6" fill="#fafafa" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="1075" y="558" font-size="15" font-weight="bold" fill="#616161">链路 · 链路板块</text>
+  <text x="1075" y="588" font-size="12.5" fill="#37474f">定位慢在哪一跳：一次请求跨过哪些服务、在哪一段耗时或报错</text>
+  <text x="1075" y="616" font-size="12.5" fill="#37474f">trace 贯通与采样决定能不能把零散指标串成一条请求路径</text>
+  <text x="1075" y="646" font-size="11.5" fill="#616161">跨板块：链路 001 与 111~124</text>
+
+  <!-- 分区间连线 -->
+  <line x1="944" y1="410" x2="1014" y2="410" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="944" y1="600" x2="1014" y2="600" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 警示块 -->
+  <rect x="40" y="730" width="1880" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="760" font-size="15" font-weight="bold" fill="#bf360c">★ 两个头号杀手：无界标签的基数爆炸 · 监控系统自身无监控</text>
+  <text x="60" y="788" font-size="12.5" fill="#5d4037">基数治理见监控 118，自监控见监控 118；告警没有动作项就不该存在，每条规则挂 runbook（监控 116）</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="818" width="1880" height="60" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="836" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="92" y="847" font-size="12" fill="#37474f">主体层 / 响应动作</text>
+  <rect x="436" y="836" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="468" y="847" font-size="12" fill="#37474f">采集端 / 本板块支柱</text>
+  <rect x="812" y="836" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="844" y="847" font-size="12" fill="#37474f">可视化层</text>
+  <rect x="1188" y="836" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="1220" y="847" font-size="12" fill="#37474f">扩展：长期存储</text>
+  <rect x="1564" y="836" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="1596" y="847" font-size="12" fill="#37474f">枢纽：告警出口</text>
 </svg>

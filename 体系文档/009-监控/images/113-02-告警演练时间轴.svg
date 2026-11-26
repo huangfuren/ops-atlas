@@ -1,85 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 656.47" width="1200" height="656.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>一条告警从触达到收到通知的时间轴</title>
-  <desc>上行是 Prometheus 的规则状态：0 秒首次求值为真进入 pending，60 秒满足 for，因规则 interval 为 15 秒，实际转 firing 落在 60~75 秒之间。下行是 Alertmanager 的通知投递：firing 之后才启动 group_wait 30 秒，因此收到通知最快 90 秒、最坏 105 秒。底部说明恢复方向的时间语义：告警立即消失，但 resolved 通知受 group_interval 约束。</desc>
+  <desc>口径为 for 1 分钟、group_wait 30 秒、规则 interval 15 秒。上行 Prometheus 规则状态：0 秒首次求值为真进入 pending，60 秒满足 for，因 15 秒判定粒度实际转 firing 落在 60 到 75 秒之间。下行 Alertmanager 投递：firing 之后才启动 group_wait 30 秒，收到通知最快 90 秒、最坏 105 秒。恢复方向另起时间：告警立即消失，但 resolved 通知受 group_interval 约束。来源为 009-监控 113 §3.11，截止 2026-11-26。</desc>
 
-  <rect width="680" height="372" fill="#FFFFFF"/>
-  <text x="40" y="30" font-size="13" font-weight="500" fill="#2B2A27">一条告警从触达到收到通知的时间轴</text>
-  <text x="640" y="30" font-size="9" fill="#8C8980" text-anchor="end">口径：for 1m · group_wait 30s · 规则 interval 15s</text>
+  <rect x="0" y="0" width="1200" height="660" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">一条告警从触达到收到通知的时间轴</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：009-监控 113 §3.11 · 114 §4.4 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">口径：for 1m · group_wait 30s · interval 15s</text>
 
   <!-- 行标题 -->
-  <text x="24" y="106" font-size="10.5" font-weight="500" fill="#2B2A27">Prometheus</text>
-  <text x="24" y="121" font-size="9" fill="#8C8980">规则状态</text>
-  <text x="24" y="168" font-size="10.5" font-weight="500" fill="#2B2A27">Alertmanager</text>
-  <text x="24" y="183" font-size="9" fill="#8C8980">通知投递</text>
+  <text x="40" y="122" font-size="13" font-weight="bold" fill="#1b5e20">Prometheus · 规则状态</text>
+  <text x="40" y="222" font-size="13" font-weight="bold" fill="#311b92">Alertmanager · 通知投递</text>
 
   <!-- 上行：pending -->
-  <rect x="104" y="88" width="225.8" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="0.8"/>
-  <text x="112" y="107" font-size="11.5" font-weight="500" fill="#7A4A12">pending</text>
-  <text x="112" y="123" font-size="9.5" fill="#7A4A12">首次为真即进入，未满 for 不发通知</text>
+  <rect x="110" y="130" width="480" height="64" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="126" y="156" font-size="13" font-weight="bold" fill="#5d4700">pending · 0s 起</text>
+  <text x="126" y="180" font-size="11.5" fill="#5d4700">首次求值为真即进入，未满 for 不发通知</text>
 
-  <!-- 上行：for 判定抖动区 -->
-  <rect x="329.8" y="88" width="56.4" height="44" rx="3" fill="#FEF8EE" stroke="#D9A458" stroke-width="0.8" stroke-dasharray="3 2"/>
-  <text x="358" y="110" font-size="10" font-weight="500" fill="#7A4A12" text-anchor="middle">±15s</text>
-  <text x="358" y="124" font-size="9" fill="#A9803F" text-anchor="middle">抖动</text>
+  <!-- 抖动区 -->
+  <rect x="590" y="130" width="120" height="64" rx="4" fill="#fafafa" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="650" y="156" font-size="11.5" font-weight="bold" fill="#616161" text-anchor="middle">±15s 抖动</text>
+  <text x="650" y="180" font-size="11" fill="#616161" text-anchor="middle">interval 粒度</text>
 
-  <!-- 上行：firing -->
-  <rect x="386.2" y="88" width="225.8" height="44" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="0.8"/>
-  <text x="393" y="107" font-size="11.5" font-weight="500" fill="#8C3A32">firing</text>
-  <text x="393" y="123" font-size="9.5" fill="#8C3A32">转为 firing，同时 POST 给 Alertmanager</text>
+  <!-- firing -->
+  <rect x="710" y="130" width="390" height="64" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="726" y="156" font-size="13" font-weight="bold" fill="#7f0000">firing · 60~75s</text>
+  <text x="726" y="180" font-size="11.5" fill="#7f0000">转 firing，同时 POST 给 Alertmanager</text>
 
   <!-- 下行：空档 -->
-  <text x="112" y="172" font-size="9.5" fill="#A9A69C">通知链路尚未启动：Alertmanager 还没收到任何告警</text>
+  <rect x="110" y="230" width="600" height="64" rx="6" fill="#fafafa" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="126" y="256" font-size="11.5" fill="#616161">通知链路尚未启动：Alertmanager 还没收到任何告警</text>
+  <text x="126" y="280" font-size="11" fill="#616161">这段时间再长也不会有通知</text>
 
-  <!-- 下行：group_wait -->
-  <rect x="386.2" y="150" width="112.9" height="44" rx="3" fill="#ECE7F7" stroke="#9C8ACB" stroke-width="0.8"/>
-  <text x="392" y="169" font-size="10.5" font-weight="500" fill="#46337A">group_wait 30s</text>
-  <text x="392" y="185" font-size="9.5" fill="#46337A">凑齐同组再发出</text>
+  <!-- group_wait -->
+  <rect x="710" y="230" width="240" height="64" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="726" y="256" font-size="12.5" font-weight="bold" fill="#311b92">group_wait 30s</text>
+  <text x="726" y="280" font-size="11.5" fill="#311b92">凑齐同组再发出</text>
 
-  <!-- 下行：投递点 -->
-  <circle cx="499.1" cy="172" r="5" fill="#9C8ACB"/>
-  <text x="509" y="168" font-size="10" font-weight="500" fill="#46337A">收到 POST</text>
-  <text x="509" y="182" font-size="9.5" fill="#8C8980">演练成功</text>
+  <!-- 收到通知 -->
+  <rect x="950" y="230" width="150" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1025" y="256" font-size="12.5" font-weight="bold" fill="#123314" text-anchor="middle">收到通知</text>
+  <text x="1025" y="280" font-size="11" fill="#123314" text-anchor="middle">演练成功</text>
 
-  <!-- 连接线 -->
-  <line x1="386.2" y1="132" x2="386.2" y2="150" stroke="#C9C4B6" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <!-- 跨行连接 -->
+  <line x1="905" y1="194" x2="905" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="920" y="216" font-size="11" fill="#616161">firing 才开始计时</text>
 
   <!-- 时间轴 -->
-  <line x1="104" y1="210" x2="612" y2="210" stroke="#DCD9CE" stroke-width="0.8"/>
-  <text x="612" y="204" font-size="9" fill="#8C8980" text-anchor="end">秒</text>
+  <line x1="110" y1="322" x2="1100" y2="322" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1100" y="312" font-size="11" fill="#616161" text-anchor="end">秒</text>
+  <g stroke="#607d8b" stroke-width="1">
+    <line x1="110" y1="316" x2="110" y2="328"/>
+    <line x1="350" y1="316" x2="350" y2="328"/>
+    <line x1="590" y1="316" x2="590" y2="328"/>
+    <line x1="710" y1="316" x2="710" y2="328"/>
+    <line x1="950" y1="316" x2="950" y2="328"/>
+    <line x1="1070" y1="316" x2="1070" y2="328"/>
+  </g>
+  <g font-size="11" fill="#616161" text-anchor="middle">
+    <text x="110" y="344">0</text>
+    <text x="350" y="344">30</text>
+    <text x="590" y="344">60</text>
+    <text x="710" y="344">75</text>
+    <text x="950" y="344">105</text>
+    <text x="1070" y="344">120</text>
+  </g>
 
-  <line x1="104" y1="206" x2="104" y2="214" stroke="#DCD9CE" stroke-width="0.8"/>
-  <text x="104" y="228" font-size="9" fill="#8C8980" text-anchor="middle">0</text>
-
-  <line x1="216.9" y1="206" x2="216.9" y2="214" stroke="#DCD9CE" stroke-width="0.8"/>
-  <text x="216.9" y="228" font-size="9" fill="#8C8980" text-anchor="middle">30</text>
-
-  <line x1="329.8" y1="206" x2="329.8" y2="214" stroke="#DCD9CE" stroke-width="0.8"/>
-  <text x="329.8" y="228" font-size="9" fill="#8C8980" text-anchor="middle">60</text>
-
-  <line x1="386.2" y1="206" x2="386.2" y2="214" stroke="#D9A458" stroke-width="0.8"/>
-  <text x="386.2" y="228" font-size="9" fill="#A9803F" text-anchor="middle">75</text>
-
-  <line x1="499.1" y1="204" x2="499.1" y2="216" stroke="#9C8ACB" stroke-width="1"/>
-  <text x="499.1" y="228" font-size="9" font-weight="500" fill="#46337A" text-anchor="middle">105</text>
-
-  <line x1="555.6" y1="206" x2="555.6" y2="214" stroke="#DCD9CE" stroke-width="0.8"/>
-  <text x="555.6" y="228" font-size="9" fill="#8C8980" text-anchor="middle">120</text>
-
-  <!-- 说明 -->
-  <text x="40" y="254" font-size="9.5" fill="#6B6A65">最快 90s（60 + 30），最坏 105s（75 + 30）。那 15s 的差来自规则 interval：</text>
-  <text x="40" y="270" font-size="9.5" fill="#6B6A65">for: 1m 保证的是「满 1 分钟后第一次求值才转 firing」，不是精确 60 秒；interval 越粗，抖动越大。</text>
-
-  <line x1="40" y1="288" x2="640" y2="288" stroke="#DCD9CE" stroke-width="0.8"/>
+  <!-- 说明块 -->
+  <rect x="40" y="362" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="390" font-size="14" font-weight="bold" fill="#bf360c">★ 最快 90 秒（60 + 30），最坏 105 秒（75 + 30）</text>
+  <text x="60" y="416" font-size="12.5" fill="#5d4037">那 15 秒来自规则 interval：for: 1m 保证的是满 1 分钟后第一次求值才转 firing，不是精确 60 秒</text>
 
   <!-- 恢复方向 -->
-  <rect x="24" y="300" width="632" height="60" rx="4" fill="#F4F2EC" stroke="#E2DED1" stroke-width="0.8"/>
-  <text x="36" y="318" font-size="10" font-weight="500" fill="#2B2A27">恢复方向（时间另起，与前段无累加关系）</text>
-  <text x="36" y="336" font-size="9.5" fill="#6B6A65">告警消失：规则变假后的下一轮求值，在 Status → Alerts 里立即不再显示。</text>
-  <text x="36" y="352" font-size="9.5" fill="#6B6A65">恢复通知：受 group_interval 约束，演练 30s 后到、生产常见 5m —— 这就是「故障已恢复但群里消息还挂着」的原因。</text>
+  <rect x="40" y="456" width="1120" height="88" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="484" font-size="13" font-weight="bold" fill="#263238">恢复方向：时间另起，与前段无累加关系</text>
+  <text x="60" y="510" font-size="12" fill="#37474f">告警消失：规则变假后的下一轮求值，在 Status → Alerts 里立即不再显示</text>
+  <text x="60" y="534" font-size="12" fill="#7f0000">恢复通知：受 group_interval 约束，演练 30s 后到、生产常见 5m——这就是故障已恢复但群里消息还挂着的原因</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="562" width="1120" height="84" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="580" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="92" y="591" font-size="12" fill="#37474f">pending</text>
+  <rect x="280" y="580" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="312" y="591" font-size="12" fill="#37474f">firing</text>
+  <rect x="480" y="580" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="512" y="591" font-size="12" fill="#37474f">group_wait</text>
+  <rect x="720" y="580" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="752" y="591" font-size="12" fill="#37474f">通知到达</text>
+  <text x="60" y="626" font-size="12" fill="#37474f">时间轴刻度按 for=1m、group_wait=30s、interval=15s 的演练口径绘制；改配置后刻度需重算</text>
 </svg>

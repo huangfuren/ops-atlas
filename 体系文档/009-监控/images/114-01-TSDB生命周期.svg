@@ -1,63 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 423.53" width="1200" height="423.53" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>TSDB 生命周期：从内存到删除</title>
+  <desc>样本同时写入内存 Head Block 与 WAL 预写日志，二者并行不是先后；Head 每约 2 小时落盘为不可变持久 Block，后台 compaction 合并成更大的块，最终按保留期整块删除。WAL 分段保存用于崩溃恢复，删 series 只写 tombstones，磁盘空间不会立刻释放。颜色语义：蓝为内存、紫为磁盘、橙为预写日志、红为已删除。来源为 009-监控 114 §4.1，截止 2026-11-26。</desc>
 
-  <title>TSDB 生命周期</title>
-  <desc>样本写入 Head Block（蓝色，内存约两小时），同时并行写 WAL（琥珀色，用于崩溃恢复）；Head 定期落盘为不可变的持久 Block（紫色），后台 compaction 合并成更大的块，最终按保留期整块删除（赭色）。</desc>
+  <rect x="0" y="0" width="1200" height="700" fill="#ffffff"/>
 
   <defs>
-    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B0A9C9"/>
-    </marker>
-    <marker id="a4b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <rect width="680" height="240" fill="#FFFFFF"/>
-  <text x="40" y="28" font-size="13" font-weight="500" fill="#2B2A27">TSDB 生命周期：从内存到删除</text>
-  <text x="640" y="28" font-size="9.5" fill="#9A9791" text-anchor="end">蓝 = 内存 · 紫 = 磁盘 · 赭 = 已删除</text>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">TSDB 生命周期：从内存到删除</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：009-监控 114 §4.1 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">蓝＝内存　紫＝磁盘　橙＝预写日志</text>
 
-  <g stroke-width="1">
-    <rect x="40" y="58" width="180" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0"/>
-    <rect x="250" y="58" width="180" height="72" rx="3" fill="#ECE7F7" stroke="#9C8ACB"/>
-    <rect x="460" y="58" width="180" height="72" rx="3" fill="#FAE6E4" stroke="#D2948C"/>
-  </g>
-  <g font-size="11" font-weight="500">
-    <text x="54" y="80" fill="#1F4468">Head Block（内存）</text>
-    <text x="264" y="80" fill="#46337A">持久 Block</text>
-    <text x="474" y="80" fill="#7A322B">保留期清理</text>
-  </g>
-  <g font-size="8.5" fill="#5A6570">
-    <text x="54" y="98">最近约 2 小时的数据</text>
-    <text x="54" y="114">内存占用主战场</text>
+  <!-- 三阶段主链 -->
+  <rect x="40" y="110" width="340" height="160" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="60" y="142" font-size="15" font-weight="bold" fill="#0d2f5c">Head Block · 内存</text>
+  <text x="60" y="170" font-size="11.5" fill="#0d2f5c">最近约 2 小时数据，内存主战场</text>
+  <text x="60" y="196" font-size="11.5" fill="#0d2f5c">内存 + mmap，可按 series 估算容量</text>
+  <text x="60" y="222" font-size="11" fill="#0d2f5c">样本先到这里，再定期落盘</text>
+  <text x="60" y="248" font-size="11" fill="#0d2f5c">chunks_head/ 目录</text>
 
-    <text x="264" y="98">每 2h 落盘，不可变</text>
-    <text x="264" y="114">后台 compaction 合并</text>
+  <rect x="430" y="110" width="340" height="160" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="450" y="142" font-size="15" font-weight="bold" fill="#311b92">持久 Block · 磁盘</text>
+  <text x="450" y="170" font-size="11.5" fill="#311b92">每 2 小时落盘，不可变</text>
+  <text x="450" y="196" font-size="11.5" fill="#311b92">后台 compaction 合并成大块</text>
+  <text x="450" y="222" font-size="11" fill="#311b92">2h → 6h → 18h，上限保留期 10%</text>
+  <text x="450" y="248" font-size="11" fill="#311b92">或 31 天，取小者</text>
 
-    <text x="474" y="98">整块删除</text>
-    <text x="474" y="114">时间 / 大小先到先算</text>
-  </g>
+  <rect x="820" y="110" width="340" height="160" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="840" y="142" font-size="15" font-weight="bold" fill="#7f0000">保留期清理 · 整块删除</text>
+  <text x="840" y="170" font-size="11.5" fill="#7f0000">超出保留期的块整块删除</text>
+  <text x="840" y="196" font-size="11.5" fill="#7f0000">「保留 15 天」不精确到秒</text>
+  <text x="840" y="222" font-size="11" fill="#7f0000">后台进行，最多再等约 2 小时</text>
+  <text x="840" y="248" font-size="11" fill="#7f0000">删 series 只写 tombstones</text>
 
-  <g stroke-width="1" marker-end="url(#a4)">
-    <line x1="220" y1="94" x2="248" y2="94" stroke="#9C8ACB"/>
-    <line x1="430" y1="94" x2="458" y2="94" stroke="#D2948C" marker-end="url(#a4b)"/>
-  </g>
+  <line x1="382" y1="190" x2="426" y2="190" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="772" y1="190" x2="816" y2="190" stroke="#c62828" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <line x1="130" y1="132" x2="130" y2="150" stroke="#D9A458" stroke-width="1" stroke-dasharray="3 3"/>
-  <text x="140" y="145" font-size="7.5" fill="#8A6B3C">与 Head 并行写，不是先后</text>
-  <rect x="40" y="152" width="180" height="58" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="54" y="172" font-size="10.5" font-weight="500" fill="#7A4A12">WAL 预写日志</text>
-  <text x="54" y="188" font-size="8.5" fill="#8A6B3C">128MB 分段 · 最少 3 段</text>
-  <text x="54" y="202" font-size="8.5" fill="#8A6B3C">崩溃后从最近的检查点重放</text>
+  <!-- WAL 并行写入 -->
+  <rect x="40" y="300" width="340" height="128" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="60" y="332" font-size="15" font-weight="bold" fill="#7f3f00">WAL 预写日志 ★ 并行写</text>
+  <text x="60" y="360" font-size="11.5" fill="#7f3f00">先写日志再返回成功，崩溃后重放恢复</text>
+  <text x="60" y="386" font-size="11.5" fill="#7f3f00">128MB 分段，最少保留 3 段</text>
+  <text x="60" y="410" font-size="11" fill="#7f3f00">保证至少覆盖 2 小时原始数据</text>
+  <line x1="210" y1="270" x2="210" y2="296" stroke="#e65100" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="226" y="290" font-size="11" fill="#7f3f00">与 Head 并行，不是先后</text>
 
-  <rect x="250" y="152" width="390" height="58" rx="3" fill="#F8F6F1" stroke="#DCD9CE" stroke-width="0.8"/>
-  <text x="264" y="172" font-size="9.5" fill="#4A4945">块合并：2h → 6h → 18h → … 上限为保留期的 10% 或 31 天，取小者</text>
-  <text x="264" y="188" font-size="9.5" fill="#4A4945">「保留 15 天」不精确：块必须整体过期，清理在后台进行，最多再等 2 小时</text>
-  <text x="264" y="202" font-size="8.5" fill="#9A9791">删 series 只写 tombstones，数据不会立即消失，磁盘空间也不立刻释放</text>
+  <!-- 说明块 -->
+  <rect x="430" y="300" width="730" height="128" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="450" y="332" font-size="13" font-weight="bold" fill="#263238">磁盘布局与容量口径</text>
+  <text x="450" y="360" font-size="11.5" fill="#37474f">目录：data/01BK…/{chunks,index,tombstones,meta.json} + chunks_head/ + wal/</text>
+  <text x="450" y="386" font-size="11.5" fill="#37474f">块合并上限：保留期的 10% 或 31 天取小者；配 90 天保留最终也就是 31 天一块</text>
+  <text x="450" y="412" font-size="11.5" fill="#7f0000">删 series 只写 tombstone，不会立即回收磁盘空间——这是「删了指标磁盘没降」的原因</text>
 
-  <text x="40" y="230" font-size="9" fill="#9A9791">磁盘布局：data/01BK.../{chunks,index,tombstones,meta.json} + chunks_head/ + wal/</text>
+  <!-- 结论块 -->
+  <rect x="40" y="452" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="482" font-size="14" font-weight="bold" fill="#bf360c">★ 记法：WAL 保崩溃恢复，Head 吃内存，Block 落磁盘，保留期按整块清</text>
+  <text x="60" y="508" font-size="12.5" fill="#5d4037">容量先按 head series 数估内存，再按采集频率与保留期估磁盘；远程写入不替代本地 WAL 的作用</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="550" width="1120" height="130" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="60" y="574" font-size="12" fill="#37474f">Head 与 WAL 同时写：WAL 用于崩溃重放，Head 用于查询最近数据；块不可变，过期清理按整块进行</text>
+  <rect x="60" y="600" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="92" y="611" font-size="12" fill="#37474f">Head · 内存</text>
+  <rect x="300" y="600" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="332" y="611" font-size="12" fill="#37474f">Block · 磁盘</text>
+  <rect x="540" y="600" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="572" y="611" font-size="12" fill="#37474f">WAL · 预写日志</text>
+  <rect x="800" y="600" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="832" y="611" font-size="12" fill="#37474f">保留期清理</text>
 </svg>
