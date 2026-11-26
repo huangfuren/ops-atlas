@@ -1,93 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 776.47" width="1200" height="776.47" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 810"
+     font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>K8s 集群架构：控制平面决策，节点执行</title>
+  <desc>顶部 kubectl 把请求发给控制平面：apiserver 是唯一入口负责认证校验并读写 etcd，scheduler 决定新 Pod 落在哪个节点，controller-manager 持续把现实掰向期望状态。两个工作节点上 kubelet 按指令拉起容器并上报状态，kube-proxy 维护 Service 转发规则，containerd 真正跑容器。控制平面挂掉不影响存量业务。</desc>
 
-  <title>K8s 集群架构：控制平面决策，节点执行，一切通信过 apiserver</title>
-  <desc>顶部的 kubectl 把请求发给控制平面：apiserver 是唯一入口负责认证校验并写入 etcd，scheduler 决定新 Pod 落在哪个节点，controller-manager 里的控制器持续把现实掰向期望状态。两个工作节点上 kubelet 按指令拉起容器并上报状态，kube-proxy 维护 Service 转发规则，containerd 真正跑容器。控制平面挂掉不影响存量业务。</desc>
+  <!-- 坐标表：画布 1200x810 | 标题 52 / 副标题 84 | kubectl 胶囊 y=110 h=40 |
+       控制面外框 x=40 y=176 w=1120 h=150 | 控制面卡 x=60/335/610/885 w=250 h=94 y=214 |
+       节点外框 x=40 / 620，y=360 w=540 h=220 | 节点卡 w=240 h=68，x=60/320 与 640/900，y=400/480 |
+       结论块 y=600 h=100 | 图例 y=724 h=65 -->
 
-  <rect width="680" height="440" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">K8s 架构：控制平面决策，节点执行</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">一切通信过 apiserver</text>
+  <rect x="0" y="0" width="1200" height="810" fill="#ffffff"/>
+
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#0f172a">K8s 架构：控制平面决策，节点执行</text>
+  <text x="40" y="84" font-size="12" fill="#616161">一切通信过 apiserver；控制面挂掉 ≠ 业务挂，存量照跑</text>
+
+  <rect x="500" y="110" width="200" height="40" rx="20" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="600" y="136" font-size="12" font-weight="bold" fill="#37474f" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">kubectl apply -f app.yaml</text>
+  <line x1="600" y1="150" x2="600" y2="172" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="176" width="1120" height="150" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="60" y="202" font-size="14" font-weight="bold" fill="#1b5e20">控制平面：决策与事实来源</text>
+
+  <rect x="60" y="214" width="250" height="94" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="78" y="240" font-size="13" font-weight="bold" fill="#0d2f5c">kube-apiserver</text>
+  <text x="78" y="264" font-size="11.5" fill="#37474f">唯一入口：认证 · 校验</text>
+  <text x="78" y="286" font-size="11" fill="#37474f">读写 etcd</text>
+
+  <rect x="335" y="214" width="250" height="94" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="353" y="240" font-size="13" font-weight="bold" fill="#7f3f00">etcd ★</text>
+  <text x="353" y="264" font-size="11.5" fill="#7f3f00">集群唯一事实来源</text>
+  <text x="353" y="286" font-size="11" fill="#7f3f00">备份它 = 备份集群</text>
+
+  <rect x="610" y="214" width="250" height="94" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="628" y="240" font-size="13" font-weight="bold" fill="#0d2f5c">kube-scheduler</text>
+  <text x="628" y="264" font-size="11.5" fill="#37474f">决定新 Pod 落点</text>
+  <text x="628" y="286" font-size="11" fill="#37474f">挂了 → 全部 Pending</text>
+
+  <rect x="885" y="214" width="250" height="94" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="903" y="240" font-size="13" font-weight="bold" fill="#0d2f5c">controller-manager</text>
+  <text x="903" y="264" font-size="11.5" fill="#37474f">现实 → 期望状态</text>
+  <text x="903" y="286" font-size="11" fill="#37474f">挂了 → 不自愈</text>
+
+  <line x1="300" y1="326" x2="300" y2="356" stroke="#607d8b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <line x1="900" y1="326" x2="900" y2="356" stroke="#607d8b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="312" y="348" font-size="11" fill="#616161">指令下发 / 状态上报</text>
+  <text x="912" y="348" font-size="11" fill="#616161">指令下发 / 状态上报</text>
+
+  <rect x="40" y="360" width="540" height="220" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="60" y="386" font-size="14" font-weight="bold" fill="#1b5e20">工作节点 1</text>
+  <rect x="60" y="400" width="240" height="68" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="78" y="426" font-size="13" font-weight="bold" fill="#123314">kubelet</text>
+  <text x="78" y="448" font-size="11.5" fill="#37474f">拉起容器 · 上报状态</text>
+  <rect x="320" y="400" width="240" height="68" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="338" y="426" font-size="13" font-weight="bold" fill="#123314">kube-proxy</text>
+  <text x="338" y="448" font-size="11.5" fill="#37474f">Service 转发规则</text>
+  <rect x="60" y="480" width="240" height="68" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="78" y="506" font-size="13" font-weight="bold" fill="#123314">containerd</text>
+  <text x="78" y="528" font-size="11.5" fill="#37474f">真正跑容器（CRI）</text>
+  <rect x="320" y="480" width="240" height="68" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="338" y="506" font-size="13" font-weight="bold" fill="#37474f">Pod × N</text>
+  <text x="338" y="528" font-size="11.5" fill="#616161">业务负载</text>
+
+  <rect x="620" y="360" width="540" height="220" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="640" y="386" font-size="14" font-weight="bold" fill="#1b5e20">工作节点 2</text>
+  <rect x="640" y="400" width="240" height="68" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="658" y="426" font-size="13" font-weight="bold" fill="#123314">kubelet</text>
+  <text x="658" y="448" font-size="11.5" fill="#37474f">拉起容器 · 上报状态</text>
+  <rect x="900" y="400" width="240" height="68" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="918" y="426" font-size="13" font-weight="bold" fill="#123314">kube-proxy</text>
+  <text x="918" y="448" font-size="11.5" fill="#37474f">Service 转发规则</text>
+  <rect x="640" y="480" width="240" height="68" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="658" y="506" font-size="13" font-weight="bold" fill="#123314">containerd</text>
+  <text x="658" y="528" font-size="11.5" fill="#37474f">真正跑容器（CRI）</text>
+  <rect x="900" y="480" width="240" height="68" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="918" y="506" font-size="13" font-weight="bold" fill="#37474f">Pod × N</text>
+  <text x="918" y="528" font-size="11.5" fill="#616161">业务负载</text>
+
+  <rect x="40" y="600" width="1120" height="100" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="628" font-size="15" font-weight="bold" fill="#bf360c">★ 控制面决策，节点执行；组件挂掉表现各异</text>
+  <text x="60" y="654" font-size="12.5" fill="#5d4037">· apiserver 失联 · scheduler 全 Pending · kubelet 单节点 NotReady</text>
+  <text x="60" y="676" font-size="12.5" fill="#5d4037">· 自愈分两层：节点 kubelet 重启崩掉的容器；控制面 Deployment 补齐副本数</text>
+  <text x="60" y="694" font-size="12.5" fill="#5d4037">· 控制面挂掉不影响存量业务，但无法新建、调度与自愈</text>
+
+  <rect x="40" y="724" width="1120" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="745" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="92" y="756" font-size="12" fill="#37474f">控制面组件</text>
+  <rect x="280" y="745" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="312" y="756" font-size="12" fill="#37474f">关键存储 etcd ★</text>
+  <rect x="560" y="745" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="592" y="756" font-size="12" fill="#37474f">节点组件</text>
+  <rect x="820" y="745" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1"/>
+  <text x="852" y="756" font-size="12" fill="#37474f">业务负载</text>
 
   <defs>
-    <marker id="a5Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="a5BlueS" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M10,0 L0,5 L10,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
-
-  <!-- kubectl -->
-  <rect x="268" y="46" width="144" height="28" rx="14" fill="#ECEFF1" stroke="#607D8B" stroke-width="1.4"/>
-  <text x="340" y="65" font-size="9" font-weight="600" fill="#37474F" text-anchor="middle">kubectl apply -f app.yaml</text>
-  <line x1="340" y1="74" x2="340" y2="90" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a5Blue)"/>
-
-  <!-- 控制平面 -->
-  <rect x="40" y="94" width="604" height="110" rx="10" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="56" y="114" font-size="10" font-weight="600" fill="#1F4468">控制平面（挂了 ≠ 业务挂，存量照跑）</text>
-
-  <rect x="56" y="124" width="138" height="66" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="125" y="144" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">kube-apiserver</text>
-  <text x="125" y="158" font-size="7.4" fill="#4A4945" text-anchor="middle">唯一入口：认证·校验</text>
-  <text x="125" y="172" font-size="7.4" fill="#4A4945" text-anchor="middle">读写 etcd</text>
-
-  <rect x="206" y="124" width="138" height="66" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="275" y="144" font-size="8.8" font-weight="600" fill="#7A4A12" text-anchor="middle">etcd ★</text>
-  <text x="275" y="158" font-size="7.4" fill="#7A4A12" text-anchor="middle">集群数据库</text>
-  <text x="275" y="172" font-size="7.4" fill="#7A4A12" text-anchor="middle">备份它=备份集群</text>
-
-  <rect x="356" y="124" width="138" height="66" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="425" y="144" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">kube-scheduler</text>
-  <text x="425" y="158" font-size="7.4" fill="#4A4945" text-anchor="middle">决定新 Pod 落点</text>
-  <text x="425" y="172" font-size="7.4" fill="#4A4945" text-anchor="middle">挂了→全部 Pending</text>
-
-  <rect x="506" y="124" width="122" height="66" rx="3" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="567" y="144" font-size="8.8" font-weight="600" fill="#1F4468" text-anchor="middle">controller-mgr</text>
-  <text x="567" y="158" font-size="7.4" fill="#4A4945" text-anchor="middle">现实→期望</text>
-  <text x="567" y="172" font-size="7.4" fill="#4A4945" text-anchor="middle">挂了→不自愈</text>
-
-  <!-- apiserver 到两节点 -->
-  <line x1="220" y1="204" x2="187" y2="252" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a5Blue)" marker-start="url(#a5BlueS)"/>
-  <line x1="460" y1="204" x2="493" y2="252" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a5Blue)" marker-start="url(#a5BlueS)"/>
-  <text x="168" y="236" font-size="7.4" fill="#8C8980">指令↓ 状态↑</text>
-  <text x="500" y="236" font-size="7.4" fill="#8C8980">指令↓ 状态↑</text>
-
-  <!-- 节点 1 -->
-  <rect x="40" y="256" width="294" height="118" rx="10" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="56" y="276" font-size="9.5" font-weight="600" fill="#1b5e20">工作节点 1</text>
-  <rect x="56" y="284" width="126" height="34" rx="3" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="119" y="299" font-size="8" font-weight="600" fill="#123314" text-anchor="middle">kubelet</text>
-  <text x="119" y="312" font-size="7" fill="#4A4945" text-anchor="middle">拉起容器 · 上报状态</text>
-  <rect x="192" y="284" width="126" height="34" rx="3" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="255" y="299" font-size="8" font-weight="600" fill="#123314" text-anchor="middle">kube-proxy</text>
-  <text x="255" y="312" font-size="7" fill="#4A4945" text-anchor="middle">Service 转发规则</text>
-  <rect x="56" y="324" width="126" height="34" rx="3" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="119" y="339" font-size="8" font-weight="600" fill="#123314" text-anchor="middle">containerd</text>
-  <text x="119" y="352" font-size="7" fill="#4A4945" text-anchor="middle">真正跑容器（CRI）</text>
-  <rect x="192" y="324" width="126" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="255" y="339" font-size="8" font-weight="600" fill="#4A4945" text-anchor="middle">Pod × N</text>
-  <text x="255" y="352" font-size="7" fill="#8C8980" text-anchor="middle">业务负载</text>
-
-  <!-- 节点 2 -->
-  <rect x="350" y="256" width="294" height="118" rx="10" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="366" y="276" font-size="9.5" font-weight="600" fill="#1b5e20">工作节点 2</text>
-  <rect x="366" y="284" width="126" height="34" rx="3" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="429" y="299" font-size="8" font-weight="600" fill="#123314" text-anchor="middle">kubelet</text>
-  <text x="429" y="312" font-size="7" fill="#4A4945" text-anchor="middle">拉起容器 · 上报状态</text>
-  <rect x="502" y="284" width="126" height="34" rx="3" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="565" y="299" font-size="8" font-weight="600" fill="#123314" text-anchor="middle">kube-proxy</text>
-  <text x="565" y="312" font-size="7" fill="#4A4945" text-anchor="middle">Service 转发规则</text>
-  <rect x="366" y="324" width="126" height="34" rx="3" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="429" y="339" font-size="8" font-weight="600" fill="#123314" text-anchor="middle">containerd</text>
-  <text x="429" y="352" font-size="7" fill="#4A4945" text-anchor="middle">真正跑容器（CRI）</text>
-  <rect x="502" y="324" width="126" height="34" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="565" y="339" font-size="8" font-weight="600" fill="#4A4945" text-anchor="middle">Pod × N</text>
-  <text x="565" y="352" font-size="7" fill="#8C8980" text-anchor="middle">业务负载</text>
-
-  <text x="32" y="402" font-size="9" fill="#8C8980">自愈分两层：节点上 kubelet 重启崩掉的容器（005 §5.2），控制面 Deployment 补齐副本数——命令式动作先想清楚自愈会怎么反应（005 §5.10）。</text>
-  <text x="32" y="424" font-size="9" fill="#8C8980">组件挂掉表现：apiserver 失联 · scheduler 全 Pending · kubelet 单节点 NotReady——对号入座见 009 §9.4。</text>
-
-  </g>
 </svg>

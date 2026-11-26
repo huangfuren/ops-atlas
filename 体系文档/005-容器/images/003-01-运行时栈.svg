@@ -1,62 +1,249 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 935"
+     font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>容器运行时栈全景：三册总览、Docker 六册、K8s 十册与一条调用链</title>
+  <desc>五行：① 总览与附录 4 册；② 110-Docker 单机线 6 册；③ 120-K8s 核心线 5 册；④ 130-K8s 进阶与交付线 5 册；⑤ 运行时调用链：docker CLI 或 kubectl → dockerd 或 apiserver → kubelet 与 containerd → runc → 容器进程。学习自底向上先建直觉，排障自顶向下把现象落到节点运行时。K8s 1.24 起 kubelet 经 CRI 直连 containerd，不再经过 Docker。</desc>
 
-  <title>容器运行时栈：docker CLI 到容器进程的四层调用链</title>
-  <desc>自上而下四层：docker CLI 是用户敲的命令，dockerd 是引擎负责构建与管理，containerd 是容器生命周期管家，runc 按 OCI 规范配置 namespace 与 cgroup 后 exec 出容器进程。右侧注明 Kubernetes 1.24 起通过 CRI 直接对接 containerd，不再经过 Docker。每层可替换，OCI 标准让同一镜像处处能跑。</desc>
+  <!-- 坐标表：画布 1960x935 | 行容器 x=60 w=1840 h=96 | y=104/232/360/488/616 | 行间距 32 |
+       行间箭头 x=980，线 +4~+28 | 卡片 y=行y+13 h=70 | 4 册行 x=270 w=380 gap=30（270/680/1090/1500）
+       6 册行 x=270 w=250 gap=22（270/542/814/1086/1358/1630）| 5 册行 x=270 w=306 gap=20（270/596/922/1248/1574）
+       结论块 y=736 h=90 | 图例 y=850 h=65 -->
 
-  <rect width="680" height="380" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">运行时栈：一条 docker run 的四层调用链</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">每层可替换</text>
+  <rect x="0" y="0" width="1960" height="935" fill="#ffffff"/>
 
   <defs>
-    <marker id="a0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- ① CLI -->
-  <rect x="40" y="52" width="300" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="71" font-size="9.5" font-weight="600" fill="#4A4945">① docker CLI</text>
-  <text x="54" y="87" font-size="7.8" fill="#8C8980">你敲的命令：run · build · ps</text>
+  <!-- ========== 标题 ========== -->
+  <text x="60" y="52" font-size="20" font-weight="bold" fill="#0f172a">容器全景：一条运行时栈，三层册</text>
+  <text x="60" y="84" font-size="12" fill="#616161">五行自上而下是阅读顺序，① → ② → ③ → ④ → ⑤。★ = 全例与关键节点</text>
 
-  <line x1="190" y1="96" x2="190" y2="112" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+  <!-- ========== ① 总览与附录 ========== -->
+  <rect x="60" y="104" width="1840" height="96" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="80" y="139" font-size="17" font-weight="bold" fill="#37474f">① 总览与附录</text>
+  <text x="80" y="161" font-size="11" fill="#4e6b50">4 册 · 先看地图再进线</text>
+  <text x="80" y="181" font-size="11" fill="#4e6b50">190 只查不读</text>
 
-  <!-- ② dockerd -->
-  <rect x="40" y="116" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="54" y="135" font-size="9.5" font-weight="600" fill="#1F4468">② dockerd —— Docker 引擎</text>
-  <text x="54" y="151" font-size="7.8" fill="#4A4945">构建 · API · 网络 · 卷（常驻守护进程）</text>
+  <rect x="270" y="117" width="380" height="70" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="288" y="139" font-size="13" font-weight="bold" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">001</text>
+  <text x="332" y="139" font-size="15" font-weight="bold" fill="#0d2f5c">容器全貌</text>
+  <text x="288" y="159" font-size="11.5" fill="#37474f">容器是什么 · OCI · 运行时栈</text>
+  <text x="288" y="175" font-size="11" fill="#37474f">两条工具线 · 学习路径</text>
 
-  <line x1="190" y1="160" x2="190" y2="176" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+  <rect x="680" y="117" width="380" height="70" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="698" y="139" font-size="13" font-weight="bold" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">002</text>
+  <text x="742" y="139" font-size="15" font-weight="bold" fill="#0d2f5c">容器方法论</text>
+  <text x="698" y="159" font-size="11.5" fill="#37474f">镜像思维 · 声明式期望状态</text>
+  <text x="698" y="175" font-size="11" fill="#37474f">危险操作先说后果 · 改动有回滚</text>
 
-  <!-- ③ containerd -->
-  <rect x="40" y="180" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="54" y="199" font-size="9.5" font-weight="600" fill="#1F4468">③ containerd —— 生命周期管家</text>
-  <text x="54" y="215" font-size="7.8" fill="#4A4945">拉镜像 · 管容器 · 快照（K8s 对接点）</text>
+  <rect x="1090" y="117" width="380" height="70" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2"/>
+  <text x="1108" y="139" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">003</text>
+  <text x="1152" y="139" font-size="15" font-weight="bold" fill="#123314">全景图 · 你在这里</text>
+  <text x="1108" y="159" font-size="11.5" fill="#37474f">16 册三层分工 · 运行时栈</text>
+  <text x="1108" y="175" font-size="11" fill="#2e5230">学习自底向上，排障自顶向下</text>
 
-  <line x1="190" y1="224" x2="190" y2="240" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+  <rect x="1500" y="117" width="380" height="70" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="1518" y="139" font-size="13" font-weight="bold" fill="#5d4700" font-family="ui-monospace,Menlo,Consolas,monospace">190</text>
+  <text x="1562" y="139" font-size="15" font-weight="bold" fill="#5d4700">术语表</text>
+  <text x="1518" y="159" font-size="11.5" fill="#5d4700">领域词 12 · 缩写 13</text>
+  <text x="1518" y="175" font-size="11" fill="#5d4700">易混 16 · 症状反查 16</text>
 
-  <!-- ④ runc -->
-  <rect x="40" y="244" width="300" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="54" y="263" font-size="9.5" font-weight="600" fill="#7A4A12">④ runc —— 按 OCI 规范拉起</text>
-  <text x="54" y="279" font-size="7.8" fill="#7A4A12">配好 namespace + cgroup，然后 exec</text>
+  <line x1="980" y1="208" x2="980" y2="228" stroke="#607d8b" stroke-width="2"
+        marker-start="url(#arrow)" marker-end="url(#arrow)"/>
 
-  <line x1="190" y1="288" x2="190" y2="304" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#a0Blue)"/>
+  <!-- ========== ② 110-Docker 单机线 ========== -->
+  <rect x="60" y="232" width="1840" height="96" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="80" y="267" font-size="17" font-weight="bold" fill="#1b5e20">② 110-Docker 单机线</text>
+  <text x="80" y="289" font-size="11" fill="#4e6b50">6 册 · 单机地基，先建直觉</text>
+  <text x="80" y="309" font-size="11" fill="#4e6b50">镜像 → 构建 → 数据 → 编排</text>
 
-  <!-- ⑤ 容器=进程 -->
-  <rect x="40" y="308" width="300" height="44" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="54" y="327" font-size="9.5" font-weight="600" fill="#1D5A45">容器 = 一个普通进程</text>
-  <text x="54" y="343" font-size="7.8" fill="#1D5A45">namespace 视图 + cgroup 额度 + 镜像根文件系统</text>
+  <rect x="270" y="245" width="250" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="288" y="267" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">111</text>
+  <text x="332" y="267" font-size="15" font-weight="bold" fill="#123314">镜像与容器</text>
+  <text x="288" y="287" font-size="11.5" fill="#37474f">镜像分层 · overlay2</text>
+  <text x="288" y="303" font-size="11" fill="#2e5230">读穿透，写拷贝</text>
 
-  <!-- 右侧：K8s CRI 注记 -->
-  <rect x="380" y="180" width="264" height="76" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="394" y="202" font-size="9" font-weight="600" fill="#1F4468">K8s 1.24+ 的对接点</text>
-  <text x="394" y="219" font-size="7.8" fill="#4A4945">kubelet ──CRI──▶ containerd</text>
-  <text x="394" y="236" font-size="7.8" fill="#4A4945">不再经过 Docker，节点可不装 Docker</text>
-  <line x1="380" y1="202" x2="344" y2="202" stroke="#9C8ACB" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#a0Blue)"/>
+  <rect x="542" y="245" width="250" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="560" y="267" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">112</text>
+  <text x="604" y="267" font-size="15" font-weight="bold" fill="#123314">Dockerfile</text>
+  <text x="560" y="287" font-size="11.5" fill="#37474f">多阶段构建 ★</text>
+  <text x="560" y="303" font-size="11" fill="#2e5230">250MB 进，12MB 出</text>
 
-  <text x="32" y="372" font-size="9" fill="#8C8980">分层的好处：OCI 标准让 Docker、Podman、containerd 跑同一个镜像——镜像成为通用交付物（000 §0.4）。</text>
+  <rect x="814" y="245" width="250" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="832" y="267" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">113</text>
+  <text x="876" y="267" font-size="15" font-weight="bold" fill="#123314">数据卷</text>
+  <text x="832" y="287" font-size="11.5" fill="#37474f">持久化 · 具名卷</text>
+  <text x="832" y="303" font-size="11" fill="#2e5230">rm 容器数据还在</text>
 
-  </g>
+  <rect x="1086" y="245" width="250" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1104" y="267" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">114</text>
+  <text x="1148" y="267" font-size="15" font-weight="bold" fill="#123314">Compose</text>
+  <text x="1104" y="287" font-size="11.5" fill="#37474f">单机编排 · 服务名互访</text>
+  <text x="1104" y="303" font-size="11" fill="#2e5230">不写 IP</text>
+
+  <rect x="1358" y="245" width="250" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1376" y="267" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">115</text>
+  <text x="1420" y="267" font-size="15" font-weight="bold" fill="#123314">网络与隔离</text>
+  <text x="1376" y="287" font-size="11.5" fill="#37474f">namespace / cgroup</text>
+  <text x="1376" y="303" font-size="11" fill="#2e5230">底层边界</text>
+
+  <rect x="1630" y="245" width="250" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1648" y="267" font-size="13" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">116</text>
+  <text x="1692" y="267" font-size="15" font-weight="bold" fill="#123314">运行时进阶</text>
+  <text x="1648" y="287" font-size="11.5" fill="#37474f">containerd · ctr</text>
+  <text x="1648" y="303" font-size="11" fill="#2e5230">CRI 对接点</text>
+
+  <line x1="980" y1="336" x2="980" y2="356" stroke="#607d8b" stroke-width="2"
+        marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+
+  <!-- ========== ③ 120-K8s 核心线 ========== -->
+  <rect x="60" y="360" width="1840" height="96" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="80" y="395" font-size="17" font-weight="bold" fill="#1b5e20">③ 120-K8s 核心线</text>
+  <text x="80" y="417" font-size="11" fill="#4e6b50">5 册 · 架构、网络、存储、发布、排障</text>
+  <text x="80" y="437" font-size="11" fill="#4e6b50">集群运维主干</text>
+
+  <rect x="270" y="373" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="288" y="395" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">121</text>
+  <text x="332" y="395" font-size="15" font-weight="bold" fill="#311b92">架构与核心对象</text>
+  <text x="288" y="415" font-size="11.5" fill="#311b92">控制平面 · 节点组件</text>
+  <text x="288" y="431" font-size="11" fill="#311b92">一切通信过 apiserver</text>
+
+  <rect x="596" y="373" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="614" y="395" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">122</text>
+  <text x="658" y="395" font-size="15" font-weight="bold" fill="#311b92">K8s 网络</text>
+  <text x="614" y="415" font-size="11.5" fill="#311b92">外部流量六跳 ★</text>
+  <text x="614" y="431" font-size="11" fill="#311b92">每一跳断了是什么现象</text>
+
+  <rect x="922" y="373" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="940" y="395" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">123</text>
+  <text x="984" y="395" font-size="15" font-weight="bold" fill="#311b92">存储与配置</text>
+  <text x="940" y="415" font-size="11.5" fill="#311b92">PV / PVC / StorageClass</text>
+  <text x="940" y="431" font-size="11" fill="#311b92">申请与供给分离</text>
+
+  <rect x="1248" y="373" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1266" y="395" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">124</text>
+  <text x="1310" y="395" font-size="15" font-weight="bold" fill="#311b92">发布与资源</text>
+  <text x="1266" y="415" font-size="11.5" fill="#311b92">滚动更新四帧 ★</text>
+  <text x="1266" y="431" font-size="11" fill="#311b92">readiness = 放行闸门</text>
+
+  <rect x="1574" y="373" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1592" y="395" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">125</text>
+  <text x="1636" y="395" font-size="15" font-weight="bold" fill="#311b92">排障与生产实践</text>
+  <text x="1592" y="415" font-size="11.5" fill="#311b92">三板斧 · 状态字典</text>
+  <text x="1592" y="431" font-size="11" fill="#311b92">上生产十项自查</text>
+
+  <line x1="980" y1="464" x2="980" y2="484" stroke="#607d8b" stroke-width="2"
+        marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+
+  <!-- ========== ④ 130-K8s 进阶与交付 ========== -->
+  <rect x="60" y="488" width="1840" height="96" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="80" y="523" font-size="17" font-weight="bold" fill="#1b5e20">④ 130-K8s 进阶与交付</text>
+  <text x="80" y="545" font-size="11" fill="#4e6b50">5 册 · 从能跑到能交付</text>
+  <text x="80" y="565" font-size="11" fill="#4e6b50">调度、入口、安全、安装、Helm</text>
+
+  <rect x="270" y="501" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="288" y="523" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">131</text>
+  <text x="332" y="523" font-size="15" font-weight="bold" fill="#311b92">生命周期与调度</text>
+  <text x="288" y="543" font-size="11.5" fill="#311b92">Probe · 调度约束</text>
+  <text x="288" y="559" font-size="11" fill="#311b92">Pod 为什么落在这</text>
+
+  <rect x="596" y="501" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="614" y="523" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">132</text>
+  <text x="658" y="523" font-size="15" font-weight="bold" fill="#311b92">Ingress-nginx</text>
+  <text x="614" y="543" font-size="11.5" fill="#311b92">域名路径 · TLS 终止</text>
+  <text x="614" y="559" font-size="11" fill="#311b92">外部入口配置</text>
+
+  <rect x="922" y="501" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="940" y="523" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">133</text>
+  <text x="984" y="523" font-size="15" font-weight="bold" fill="#311b92">安全与准入</text>
+  <text x="940" y="543" font-size="11.5" fill="#311b92">RBAC · ServiceAccount</text>
+  <text x="940" y="559" font-size="11" fill="#311b92">谁能改什么</text>
+
+  <rect x="1248" y="501" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1266" y="523" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">134</text>
+  <text x="1310" y="523" font-size="15" font-weight="bold" fill="#311b92">安装与高可用 ★</text>
+  <text x="1266" y="543" font-size="11.5" fill="#311b92">kubeadm · etcd 备份</text>
+  <text x="1266" y="559" font-size="11" fill="#311b92">控制面怎么撑住</text>
+
+  <rect x="1574" y="501" width="306" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1592" y="523" font-size="13" font-weight="bold" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">135</text>
+  <text x="1636" y="523" font-size="15" font-weight="bold" fill="#311b92">Helm 应用交付</text>
+  <text x="1592" y="543" font-size="11.5" fill="#311b92">Chart · 升级 · 回滚</text>
+  <text x="1592" y="559" font-size="11" fill="#311b92">一整套资源的版本</text>
+
+  <line x1="980" y1="592" x2="980" y2="612" stroke="#607d8b" stroke-width="2"
+        marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+
+  <!-- ========== ⑤ 运行时调用链 ========== -->
+  <rect x="60" y="616" width="1840" height="96" rx="12"
+        fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="80" y="651" font-size="17" font-weight="bold" fill="#1b5e20">⑤ 运行时调用链</text>
+  <text x="80" y="673" font-size="11" fill="#4e6b50">排障自顶向下穿透</text>
+  <text x="80" y="693" font-size="11" fill="#4e6b50">每层可替换，OCI 通用</text>
+
+  <rect x="270" y="629" width="306" height="70" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="288" y="651" font-size="13" font-weight="bold" fill="#0d2f5c">docker CLI / kubectl</text>
+  <text x="288" y="671" font-size="11.5" fill="#37474f">用户入口：run · build · apply</text>
+  <text x="288" y="687" font-size="11" fill="#37474f">命令从这里下来</text>
+
+  <line x1="580" y1="664" x2="588" y2="664" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="596" y="629" width="306" height="70" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="614" y="651" font-size="13" font-weight="bold" fill="#0d2f5c">dockerd / apiserver</text>
+  <text x="614" y="671" font-size="11.5" fill="#37474f">引擎构建 · 集群唯一入口</text>
+  <text x="614" y="687" font-size="11" fill="#37474f">决策与校验</text>
+
+  <line x1="906" y1="664" x2="914" y2="664" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="922" y="629" width="306" height="70" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="940" y="651" font-size="13" font-weight="bold" fill="#123314">kubelet → containerd</text>
+  <text x="940" y="671" font-size="11.5" fill="#37474f">CRI 对接 · 拉镜像管生命周期</text>
+  <text x="940" y="687" font-size="11" fill="#2e5230">K8s 1.24+ 不经 Docker</text>
+
+  <line x1="1232" y1="664" x2="1240" y2="664" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="1248" y="629" width="306" height="70" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="1266" y="651" font-size="13" font-weight="bold" fill="#7f3f00">runc ★</text>
+  <text x="1266" y="671" font-size="11.5" fill="#7f3f00">按 OCI 规范 exec 出进程</text>
+  <text x="1266" y="687" font-size="11" fill="#7f3f00">关键交接点</text>
+
+  <line x1="1558" y1="664" x2="1566" y2="664" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="1574" y="629" width="306" height="70" rx="6" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2"/>
+  <text x="1592" y="651" font-size="13" font-weight="bold" fill="#123314">容器 = 进程</text>
+  <text x="1592" y="671" font-size="11.5" fill="#37474f">namespace 视图 + cgroup 额度</text>
+  <text x="1592" y="687" font-size="11" fill="#2e5230">加镜像根文件系统</text>
+
+  <!-- ========== 结论块 ========== -->
+  <rect x="60" y="736" width="1840" height="90" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="80" y="764" font-size="15" font-weight="bold" fill="#bf360c">★ 学习自底向上：111~116 先建单机直觉，再进 121~135；排障自顶向下：K8s 现象最终落到节点运行时</text>
+  <text x="80" y="788" font-size="12.5" fill="#5d4037">· Docker 线按 111 → 112 → 113 → 114 → 115 → 116 顺序读，跳过单机地基学 K8s 会缺一层直觉</text>
+  <text x="80" y="809" font-size="12.5" fill="#5d4037">· 术语三份：190 管领域词，110 术语表管 Docker 词，120 术语表管 K8s 词</text>
+  <text x="1000" y="788" font-size="12.5" fill="#5d4037">· K8s 1.24+ 通过 CRI 直连 containerd，docker ps 看不到 K8s 容器，要用 crictl</text>
+  <text x="1000" y="809" font-size="12.5" fill="#5d4037">· 镜像都是 OCI 格式：本地 build → 推仓库 → 集群拉，这条路径不受运行时替换影响</text>
+
+  <!-- ========== 图例 ========== -->
+  <rect x="60" y="850" width="1840" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+
+  <rect x="80" y="865" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="112" y="876" font-size="12" fill="#37474f">总览 / 命令入口</text>
+  <rect x="393" y="865" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1"/>
+  <text x="425" y="876" font-size="12" fill="#37474f">你在这里 / 容器进程</text>
+  <rect x="707" y="865" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="739" y="876" font-size="12" fill="#37474f">Docker 与执行层</text>
+  <rect x="1020" y="865" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="1052" y="876" font-size="12" fill="#37474f">K8s 线</text>
+  <rect x="1333" y="865" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="1365" y="876" font-size="12" fill="#37474f">关键节点 ★</text>
+  <rect x="1647" y="865" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="1679" y="876" font-size="12" fill="#37474f">术语查阅</text>
 </svg>
