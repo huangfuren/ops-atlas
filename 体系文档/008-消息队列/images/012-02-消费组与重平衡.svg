@@ -1,72 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>消费者组与重平衡：一个分区同组只归一个消费者</title>
+  <desc>正常态：topic orders 六个分区被消费组的三个消费者分摊，每人两个分区，分区数就是组内最大并行度，实例多于分区会闲置。重平衡三大诱因：单批处理超过 max.poll.interval 间隔、心跳超时、成员上下线。风暴循环是处理超时被判死亡、分区分给他人、它处理完提交又把自己拉回组、再次重平衡。治理是缩小 max.poll.records 并给足 max.poll.interval，让单批处理时间永远小于上限（012 §2.4 / §2.7）。</desc>
 
-  <title>消费者组与重平衡：分配机制与风暴循环</title>
-  <desc>左侧是正常态：topic 六个分区被消费组的三个消费者分摊，每个消费者负责两个分区，一个分区同组内只归一个消费者。右侧是重平衡的三大诱因：单批处理超过最大轮询间隔、心跳超时、成员上下线。重平衡风暴的循环是：处理超时被判死亡、分区分给他人、它处理完提交又把自己拉回组、再次重平衡。治理是缩小单批处理量并给足轮询间隔。</desc>
-
-  <rect width="680" height="380" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">消费者组：一个分区，同组只归一个消费者</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">重平衡 = 全组暂停</text>
+  <rect x="0" y="0" width="1200" height="800" fill="#ffffff"/>
 
   <defs>
-    <marker id="m2bBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
+  <!-- 标题 + 数据来源 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">消费者组：一个分区，同组只归一个消费者</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：008-消息队列 012 §2.4 消费者组与重平衡 · §2.7 六个坑 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">重平衡 ＝ 全组暂停</text>
+
   <!-- 分区行 -->
-  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#4A4945">topic orders（6 分区）× 消费者组（3 消费者）</text>
+  <text x="40" y="112" font-size="15" font-weight="bold" fill="#263238">正常态：topic orders（6 分区）× 消费者组（3 消费者）</text>
+  <rect x="40" y="128" width="176" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="128" y="162" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P0</text>
+  <rect x="228" y="128" width="176" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="316" y="162" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P1</text>
+  <rect x="416" y="128" width="176" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="504" y="162" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P2</text>
+  <rect x="604" y="128" width="176" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="692" y="162" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P3</text>
+  <rect x="792" y="128" width="176" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="880" y="162" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P4</text>
+  <rect x="980" y="128" width="176" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1068" y="162" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P5</text>
 
-  <rect x="40" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="85" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P0</text>
-  <rect x="138" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="183" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P1</text>
-  <rect x="236" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="281" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P2</text>
-  <rect x="334" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="379" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P3</text>
-  <rect x="432" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="477" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P4</text>
-  <rect x="530" y="66" width="90" height="34" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="575" y="87" font-size="8" font-weight="600" fill="#1F4468" text-anchor="middle">P5</text>
+  <!-- 分配线（每两个分区汇到一个消费者） -->
+  <line x1="128" y1="188" x2="222" y2="236" stroke="#607d8b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="316" y1="188" x2="222" y2="236" stroke="#607d8b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="504" y1="188" x2="600" y2="236" stroke="#607d8b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="692" y1="188" x2="600" y2="236" stroke="#607d8b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="880" y1="188" x2="978" y2="236" stroke="#607d8b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="1068" y1="188" x2="978" y2="236" stroke="#607d8b" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-  <!-- 分配线 -->
-  <line x1="85" y1="100" x2="130" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
-  <line x1="183" y1="100" x2="130" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
-  <line x1="281" y1="100" x2="340" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
-  <line x1="379" y1="100" x2="340" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
-  <line x1="477" y1="100" x2="550" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
-  <line x1="575" y1="100" x2="550" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#m2bBlue)"/>
+  <rect x="134" y="240" width="176" height="64" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="222" y="266" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">consumer-1</text>
+  <text x="222" y="290" font-size="11.5" fill="#123314" text-anchor="middle">P0 + P1</text>
+  <rect x="512" y="240" width="176" height="64" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="600" y="266" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">consumer-2</text>
+  <text x="600" y="290" font-size="11.5" fill="#123314" text-anchor="middle">P2 + P3</text>
+  <rect x="890" y="240" width="176" height="64" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="978" y="266" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">consumer-3</text>
+  <text x="978" y="290" font-size="11.5" fill="#123314" text-anchor="middle">P4 + P5</text>
 
-  <rect x="90" y="132" width="86" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="133" y="151" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">consumer-1</text>
-  <rect x="297" y="132" width="86" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="340" y="151" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">consumer-2</text>
-  <rect x="507" y="132" width="86" height="30" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="550" y="151" font-size="8" font-weight="600" fill="#1D5A45" text-anchor="middle">consumer-3</text>
-
-  <text x="40" y="182" font-size="8" fill="#8C8980">分区数 = 组内最大并行度：6 分区最多 6 个消费者并行；消费实例多于分区数的会闲置。</text>
+  <rect x="40" y="324" width="1120" height="52" rx="6" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="60" y="348" font-size="12.5" fill="#37474f">分区数 ＝ 组内最大并行度：6 分区最多 6 个消费者并行；消费实例多于分区数的会闲置</text>
+  <text x="60" y="368" font-size="11.5" fill="#616161">不同消费组各自维护 offset，同组内才做分区分配——两组 consumer 可以对同一 topic 各读一遍</text>
 
   <!-- 重平衡 -->
-  <text x="40" y="212" font-size="9.5" font-weight="600" fill="#7A322B">重平衡：三大诱因与风暴循环</text>
+  <text x="40" y="408" font-size="15" font-weight="bold" fill="#7f0000">重平衡：三大诱因与风暴循环</text>
 
-  <rect x="40" y="224" width="290" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="54" y="244" font-size="8.2" font-weight="600" fill="#7A322B">诱因一：单批处理超 max.poll.interval</text>
-  <text x="54" y="260" font-size="7.4" fill="#7A322B">被判死亡 → 重平衡 → 分区分给他人</text>
-  <text x="54" y="274" font-size="7.4" fill="#7A322B">→ 它处理完再提交 → 又把自己拉回组 → 循环</text>
+  <rect x="40" y="424" width="540" height="120" rx="8" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="60" y="452" font-size="13" font-weight="bold" fill="#7f0000">诱因一：单批处理超 max.poll.interval</text>
+  <text x="60" y="480" font-size="11.5" fill="#7f0000">处理超时被判死亡 → 触发重平衡 → 分区分给他人</text>
+  <text x="60" y="504" font-size="11.5" fill="#7f0000">它处理完提交 offset → 又把自己拉回组</text>
+  <text x="60" y="528" font-size="11.5" fill="#7f0000">再次重平衡 → 循环（风暴）</text>
 
-  <rect x="346" y="224" width="298" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="360" y="244" font-size="8.2" font-weight="600" fill="#7A322B">诱因二/三：心跳超时 · 成员上下线</text>
-  <text x="360" y="260" font-size="7.4" fill="#7A322B">session.timeout 内没心跳 = 死亡；</text>
-  <text x="360" y="274" font-size="7.4" fill="#7A322B">发布扩容/实例崩溃都会触发重分配</text>
+  <rect x="600" y="424" width="560" height="120" rx="8" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="620" y="452" font-size="13" font-weight="bold" fill="#7f0000">诱因二 / 三：心跳超时 · 成员上下线</text>
+  <text x="620" y="480" font-size="11.5" fill="#7f0000">session.timeout 内没心跳 ＝ 判死亡；处理消息时心跳线程仍在</text>
+  <text x="620" y="504" font-size="11.5" fill="#7f0000">发布扩容 / 实例崩溃都会触发重分配，全组暂停消费</text>
+  <text x="620" y="528" font-size="11.5" fill="#7f0000">重平衡期间 lag 会短暂跳升，属正常现象</text>
 
-  <rect x="40" y="292" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="311" font-size="8.2" fill="#7A4A12">治理：缩小 max.poll.records（单批更少）+ 给足 max.poll.interval —— 让单批处理时间永远小于上限（002 §2.7 第 3 坑）</text>
+  <!-- 治理 -->
+  <rect x="40" y="560" width="1120" height="70" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="60" y="590" font-size="15" font-weight="bold" fill="#123314">★ 治理：缩小 max.poll.records（单批更少）+ 给足 max.poll.interval（012 §2.7）</text>
+  <text x="60" y="614" font-size="11.5" fill="#123314">让单批处理时间永远小于上限——比反复调大超时更治本，也不牺牲故障发现速度</text>
 
-  <text x="32" y="346" font-size="9" fill="#8C8980">观测：消费组 lag 用 kafka-consumer-groups.sh --describe 或 kafka-exporter 进「监控」——lag 持续增长即堆积（003 §3.3）。</text>
-  <text x="32" y="366" font-size="9" fill="#8C8980">offset 提交：先提交后处理会丢消息，处理完再提交会重复——重复靠消费端幂等兜底（003 §3.2）。</text>
+  <!-- 结论块 -->
+  <rect x="40" y="646" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="676" font-size="15" font-weight="bold" fill="#bf360c">★ 反复重平衡先看单批耗时，不要先加消费者——加人只会让全组暂停更频繁</text>
+  <text x="60" y="702" font-size="12.5" fill="#5d4037">· lag 持续增长用 kafka-consumer-groups.sh --describe 或 exporter 观测；先提交后处理会丢，处理完再提交会重（013 §3.2）</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="738" width="1120" height="62" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="754" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="92" y="765" font-size="12" fill="#37474f">分区</text>
+  <rect x="250" y="754" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="282" y="765" font-size="12" fill="#37474f">消费者 / 治理 ★</text>
+  <rect x="500" y="754" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="532" y="765" font-size="12" fill="#37474f">重平衡诱因</text>
+  <rect x="720" y="754" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="752" y="765" font-size="12" fill="#37474f">并行度说明</text>
+  <text x="960" y="765" font-size="12" fill="#7f0000">重平衡＝全组暂停</text>
 </svg>

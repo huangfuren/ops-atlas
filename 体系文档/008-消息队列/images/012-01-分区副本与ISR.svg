@@ -1,77 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 688.24" width="1200" height="688.24" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>分区、副本与 ISR：acks=all 的可靠性来自三件一体</title>
+  <desc>topic orders 有三个分区，每分区三副本分散在三个 broker：P0 的主副本在 Broker-1，跟随副本在 Broker-2 与 Broker-3，三者共同构成 ISR 同步集合。生产者配置 acks=all 加 min.insync.replicas=2 加副本数三，三者是一个整体，只设 acks=all 而副本为一等于没设。ISR 收缩说明副本掉队可靠性降级；unclean.leader.election 打开会用掉队副本选主，默认关闭（012 §2.3）。</desc>
 
-  <title>Kafka 分区副本与 ISR：acks=all 的可靠性来自三件一体</title>
-  <desc>topic orders 有三个分区，每分区三副本分散在三个 broker：分零的主副本在 broker 一，跟随副本在 broker 二与三，三者共同构成 ISR 同步集合。生产者配置 acks=all 加 min.insync.replicas=2 加副本数三，三者是一个整体，只设 acks=all 而副本为一等于没设。ISR 收缩说明副本掉队可靠性降级。</desc>
-
-  <rect width="680" height="390" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">分区、副本与 ISR：acks=all 的可靠性来自三件一体</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">副本 3 · 分散节点</text>
+  <rect x="0" y="0" width="1200" height="790" fill="#ffffff"/>
 
   <defs>
-    <marker id="m2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- broker 列 -->
-  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#4A4945">topic orders（3 分区 × 3 副本，分散在 3 个 broker）</text>
+  <!-- 标题 + 数据来源 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">分区、副本与 ISR：acks=all 的可靠性来自三件一体</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：008-消息队列 012 §2.1 模型 · §2.3 副本与 ISR · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">副本 3 · 分散节点</text>
 
-  <rect x="40" y="66" width="193" height="128" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="136" y="86" font-size="8.6" font-weight="600" fill="#1b5e20" text-anchor="middle">Broker-1</text>
-  <rect x="54" y="94" width="165" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="136" y="110" font-size="7.6" font-weight="600" fill="#1D5A45" text-anchor="middle">P0 · leader ★</text>
-  <rect x="54" y="122" width="165" height="24" rx="2" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="136" y="138" font-size="7.6" fill="#1D5A45" text-anchor="middle">P1 · follower</text>
-  <rect x="54" y="150" width="165" height="24" rx="2" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="136" y="166" font-size="7.6" fill="#1D5A45" text-anchor="middle">P2 · follower</text>
+  <!-- 主题说明 -->
+  <text x="40" y="112" font-size="15" font-weight="bold" fill="#263238">topic orders：3 分区 × 3 副本，分散在 3 个 broker</text>
 
-  <rect x="245" y="66" width="193" height="128" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="341" y="86" font-size="8.6" font-weight="600" fill="#1b5e20" text-anchor="middle">Broker-2</text>
-  <rect x="259" y="94" width="165" height="24" rx="2" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="341" y="110" font-size="7.6" fill="#1D5A45" text-anchor="middle">P0 · follower</text>
-  <rect x="259" y="122" width="165" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="341" y="138" font-size="7.6" font-weight="600" fill="#1D5A45" text-anchor="middle">P1 · leader ★</text>
-  <rect x="259" y="150" width="165" height="24" rx="2" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="341" y="166" font-size="7.6" fill="#1D5A45" text-anchor="middle">P2 · follower</text>
+  <!-- broker 三列 -->
+  <rect x="40" y="128" width="360" height="188" rx="8" fill="#f1f8e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="220" y="158" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">Broker-1</text>
+  <rect x="60" y="174" width="320" height="42" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="220" y="201" font-size="12.5" font-weight="bold" fill="#123314" text-anchor="middle">P0 · leader ★（本分区主副本）</text>
+  <rect x="60" y="224" width="320" height="42" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="220" y="251" font-size="12.5" fill="#123314" text-anchor="middle">P1 · follower</text>
+  <rect x="60" y="274" width="320" height="42" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="220" y="301" font-size="12.5" fill="#123314" text-anchor="middle">P2 · follower</text>
 
-  <rect x="450" y="66" width="193" height="128" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="546" y="86" font-size="8.6" font-weight="600" fill="#1b5e20" text-anchor="middle">Broker-3</text>
-  <rect x="464" y="94" width="165" height="24" rx="2" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="546" y="110" font-size="7.6" fill="#1D5A45" text-anchor="middle">P0 · follower</text>
-  <rect x="464" y="122" width="165" height="24" rx="2" fill="#FFFFFF" stroke="#a5d6a7" stroke-width="1"/>
-  <text x="546" y="138" font-size="7.6" fill="#1D5A45" text-anchor="middle">P1 · follower</text>
-  <rect x="464" y="150" width="165" height="24" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="546" y="166" font-size="7.6" font-weight="600" fill="#1D5A45" text-anchor="middle">P2 · leader ★</text>
+  <rect x="420" y="128" width="360" height="188" rx="8" fill="#f1f8e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="600" y="158" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">Broker-2</text>
+  <rect x="440" y="174" width="320" height="42" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="600" y="201" font-size="12.5" fill="#123314" text-anchor="middle">P0 · follower</text>
+  <rect x="440" y="224" width="320" height="42" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="600" y="251" font-size="12.5" font-weight="bold" fill="#123314" text-anchor="middle">P1 · leader ★</text>
+  <rect x="440" y="274" width="320" height="42" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="600" y="301" font-size="12.5" fill="#123314" text-anchor="middle">P2 · follower</text>
+
+  <rect x="800" y="128" width="360" height="188" rx="8" fill="#f1f8e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="980" y="158" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">Broker-3</text>
+  <rect x="820" y="174" width="320" height="42" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="980" y="201" font-size="12.5" fill="#123314" text-anchor="middle">P0 · follower</text>
+  <rect x="820" y="224" width="320" height="42" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="980" y="251" font-size="12.5" fill="#123314" text-anchor="middle">P1 · follower</text>
+  <rect x="820" y="274" width="320" height="42" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="980" y="301" font-size="12.5" font-weight="bold" fill="#123314" text-anchor="middle">P2 · leader ★</text>
 
   <!-- ISR 标注 -->
-  <rect x="40" y="202" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="221" font-size="8.2" fill="#7A4A12">P0 的 ISR = {Broker-1, 2, 3} —— 全部跟上 leader 才算同步；ISR 收缩 = 可靠性降级（持续收缩必查节点）</text>
+  <rect x="40" y="332" width="1120" height="56" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="358" font-size="13" font-weight="bold" fill="#bf360c">P0 的 ISR = {Broker-1, Broker-2, Broker-3}：全部跟上 leader 才算同步</text>
+  <text x="60" y="378" font-size="11.5" fill="#5d4037">ISR 收缩 ＝ 可靠性降级（持续收缩必查节点：慢 / 挂 / 磁盘满）；unclean leader 选举默认关闭，不拿掉队副本选主</text>
 
   <!-- 写入流程 -->
-  <text x="40" y="258" font-size="9.5" font-weight="600" fill="#4A4945">acks=all 的写入流程（以 P0 为例）</text>
-  <rect x="40" y="268" width="120" height="36" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="100" y="290" font-size="7.8" font-weight="600" fill="#4A4945" text-anchor="middle">生产者</text>
-  <line x1="160" y1="286" x2="216" y2="286" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m2Blue)"/>
-  <text x="188" y="278" font-size="7" fill="#8C8980" text-anchor="middle">写 leader</text>
-  <rect x="220" y="268" width="130" height="36" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="285" y="290" font-size="7.8" font-weight="600" fill="#1F4468" text-anchor="middle">P0 leader（Broker-1）</text>
-  <line x1="350" y1="286" x2="396" y2="286" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m2Blue)"/>
-  <text x="373" y="278" font-size="7" fill="#8C8980" text-anchor="middle">复制到 ISR</text>
-  <rect x="400" y="268" width="140" height="36" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="470" y="290" font-size="7.8" font-weight="600" fill="#1F4468" text-anchor="middle">ISR 全部写入</text>
-  <line x1="540" y1="286" x2="556" y2="286" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m2Blue)"/>
-  <text x="570" y="278" font-size="7" fill="#1D5A45" text-anchor="middle">确认</text>
-  <rect x="560" y="268" width="84" height="36" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="602" y="290" font-size="7.8" font-weight="600" fill="#1D5A45" text-anchor="middle">ack ✓</text>
+  <text x="40" y="424" font-size="15" font-weight="bold" fill="#263238">acks=all 的写入流程（以 P0 为例）</text>
+  <rect x="40" y="440" width="200" height="76" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="140" y="472" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">生产者</text>
+  <text x="140" y="496" font-size="11.5" fill="#37474f" text-anchor="middle">acks=all</text>
+  <line x1="244" y1="478" x2="286" y2="478" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="265" y="468" font-size="11" fill="#616161" text-anchor="middle">写 leader</text>
+
+  <rect x="290" y="440" width="240" height="76" rx="8" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="410" y="472" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">P0 leader</text>
+  <text x="410" y="496" font-size="11.5" fill="#0d2f5c" text-anchor="middle">Broker-1 先落盘</text>
+  <line x1="534" y1="478" x2="576" y2="478" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="555" y="468" font-size="11" fill="#616161" text-anchor="middle">复制</text>
+
+  <rect x="580" y="440" width="280" height="76" rx="8" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="720" y="472" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">ISR 跟随副本写入</text>
+  <text x="720" y="496" font-size="11.5" fill="#0d2f5c" text-anchor="middle">达到 min.insync.replicas=2</text>
+  <line x1="864" y1="478" x2="906" y2="478" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="885" y="468" font-size="11" fill="#616161" text-anchor="middle">确认</text>
+
+  <rect x="910" y="440" width="250" height="76" rx="8" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="1035" y="472" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">返回 ack 给生产者</text>
+  <text x="1035" y="496" font-size="11.5" fill="#123314" text-anchor="middle">这条消息才算提交成功</text>
 
   <!-- 三件一体 -->
-  <rect x="40" y="316" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="335" font-size="8.2" fill="#7A4A12">三件一体：acks=all + min.insync.replicas=2 + 副本数 3 —— 只设 acks=all 而副本为 1，等于没设（002 §2.3）</text>
+  <rect x="40" y="540" width="1120" height="70" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="60" y="570" font-size="15" font-weight="bold" fill="#7f3f00">★ 三件一体：acks=all + min.insync.replicas=2 + 副本数 3（012 §2.3）</text>
+  <text x="60" y="594" font-size="11.5" fill="#7f3f00">只设 acks=all 而副本为 1，等于没设：ISR 里只有 leader，ack 的可靠性打折</text>
 
-  <text x="32" y="374" font-size="9" fill="#8C8980">ISR 收缩 = 有副本掉队（节点慢/挂/磁盘满）；unclean.leader.election 打开会用掉队副本选主——不丢换可用，默认关闭。</text>
+  <!-- 结论块 -->
+  <rect x="40" y="626" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="656" font-size="15" font-weight="bold" fill="#bf360c">★ 副本分散在不同 broker 才有意义：三副本挤一台机器，宕机照样全丢</text>
+  <text x="60" y="682" font-size="12.5" fill="#5d4037">· ISR 是「跟上了的副本集合」而不是「配置的副本数」——acks=all 等的是 ISR 全部落盘，不是副本数个</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="718" width="1120" height="62" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="734" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="92" y="745" font-size="12" fill="#37474f">leader ★</text>
+  <rect x="250" y="734" width="22" height="14" rx="3" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="282" y="745" font-size="12" fill="#37474f">follower 副本</text>
+  <rect x="450" y="734" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="482" y="745" font-size="12" fill="#37474f">写入链路</text>
+  <rect x="650" y="734" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="682" y="745" font-size="12" fill="#37474f">三件一体 ★</text>
+  <text x="920" y="745" font-size="12" fill="#7f0000">ISR 收缩＝可靠性降级</text>
 </svg>

@@ -1,90 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 950" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>消息队列全景：九册 + 术语表，落到两大模型与四段消息旅程</title>
+  <desc>上三行是 008-消息队列板块的阅读顺序：总览与查阅 4 册（001-003 与 190）、存储环 2 册（011 RabbitMQ / 012 Kafka）、治理故障对照 3 册（013-015）。底部四段是消息旅程：发送、存储复制、投递、确认，每段标注丢失或重复断点。结论：丢失可能 = 发送/存储/确认，重复可能 = 投递/确认，所以至少一次 + 消费端幂等是默认约定。</desc>
 
-  <title>两大模型对照与消息旅程：丢失与重复发生的位置</title>
-  <desc>上半部分对照两种模型：RabbitMQ 是消息代理，消息按路由投递、消费确认后删除；Kafka 是分布式日志，消息追加进分区、消费只移动指针、到期才清理。下半部分是四段通用旅程：发送、存储复制、投递、确认——丢失只可能发生在发送、存储、确认三个环节，重复只可能发生在投递与确认环节。结论：至少一次是默认语义，消费端幂等是标配。</desc>
-
-  <rect width="680" height="420" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">两大模型与消息旅程：丢、重发生的位置</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">两种思想，不是竞品</text>
+  <rect x="0" y="0" width="1960" height="950" fill="#ffffff"/>
 
   <defs>
-    <marker id="m0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
     </marker>
   </defs>
 
-  <!-- RabbitMQ 模型 -->
-  <text x="40" y="58" font-size="9" font-weight="600" fill="#1F4468">RabbitMQ · 消息代理：投递确认后删除</text>
-  <rect x="40" y="66" width="130" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="105" y="84" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">生产者</text>
-  <text x="105" y="100" font-size="7" fill="#8C8980" text-anchor="middle">发到 exchange</text>
-  <rect x="190" y="66" width="170" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="275" y="84" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">exchange → queue</text>
-  <text x="275" y="100" font-size="7" fill="#8C8980" text-anchor="middle">路由 · 排队 · 消费确认后删除</text>
-  <rect x="380" y="66" width="130" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="445" y="84" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">消费者</text>
-  <text x="445" y="100" font-size="7" fill="#8C8980" text-anchor="middle">ack / 重复投递</text>
-  <rect x="530" y="66" width="114" height="42" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="587" y="84" font-size="8.4" font-weight="600" fill="#4A4945" text-anchor="middle">单条状态</text>
-  <text x="587" y="100" font-size="7" fill="#8C8980" text-anchor="middle">在不在队列里</text>
-  <line x1="170" y1="87" x2="186" y2="87" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
-  <line x1="360" y1="87" x2="376" y2="87" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
-  <line x1="510" y1="87" x2="526" y2="87" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
+  <!-- 标题 + 数据来源 -->
+  <text x="60" y="50" font-size="20" font-weight="bold" fill="#0f172a">消息队列全景：九册 + 术语表，落到两大模型与四段消息旅程</text>
+  <text x="60" y="78" font-size="12" fill="#616161">来源：008-消息队列 README 体系总览表 · 003 全景图图例表 · 001 §0.2 / §0.3 · 截止 2026-11-26</text>
+  <text x="1900" y="78" font-size="12" fill="#616161" text-anchor="end">三行＝阅读顺序　底部＝消息方向</text>
 
-  <!-- Kafka 模型 -->
-  <text x="40" y="136" font-size="9" font-weight="600" fill="#1F4468">Kafka · 分布式日志：消费移指针，到期才清</text>
-  <rect x="40" y="144" width="130" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="105" y="162" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">生产者</text>
-  <text x="105" y="178" font-size="7" fill="#8C8980" text-anchor="middle">按 key 选分区</text>
-  <rect x="190" y="144" width="170" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="275" y="162" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">partition 追加写</text>
-  <text x="275" y="178" font-size="7" fill="#8C8980" text-anchor="middle">分区内有序 · 保留期</text>
-  <rect x="380" y="144" width="130" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="445" y="162" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">消费者组</text>
-  <text x="445" y="178" font-size="7" fill="#8C8980" text-anchor="middle">移动 offset 指针</text>
-  <rect x="530" y="144" width="114" height="42" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="587" y="162" font-size="8.4" font-weight="600" fill="#4A4945" text-anchor="middle">分区健康</text>
-  <text x="587" y="178" font-size="7" fill="#8C8980" text-anchor="middle">ISR · lag</text>
-  <line x1="170" y1="165" x2="186" y2="165" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
-  <line x1="360" y1="165" x2="376" y2="165" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
-  <line x1="510" y1="165" x2="526" y2="165" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#m0Blue)"/>
+  <!-- 行① 总览与查阅 -->
+  <rect x="60" y="112" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="150" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">总览与查阅</text>
+  <text x="170" y="176" font-size="11.5" fill="#4e6b50" text-anchor="middle">先读 001-003</text>
+  <text x="170" y="196" font-size="11" fill="#4e6b50" text-anchor="middle">190 最后查</text>
 
-  <line x1="32" y1="204" x2="648" y2="204" stroke="#EDEAE2" stroke-width="1" stroke-dasharray="4 3"/>
+  <rect x="300" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="485" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 消息队列全貌</text>
+  <text x="485" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">两大模型 · 消息旅程 · 可靠性</text>
+  <text x="485" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">代理 vs 日志 · 选型分界</text>
 
-  <!-- 旅程 -->
-  <text x="40" y="228" font-size="9.5" font-weight="600" fill="#4A4945">通用旅程四段：丢、重发生的位置</text>
+  <rect x="710" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="895" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 消息方法论</text>
+  <text x="895" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">可靠性三环节 · 堆积归因两步</text>
+  <text x="895" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">幂等即协议</text>
 
-  <rect x="40" y="240" width="130" height="76" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="105" y="262" font-size="8.6" font-weight="600" fill="#7A322B" text-anchor="middle">① 发送</text>
-  <text x="105" y="280" font-size="7.4" fill="#7A322B" text-anchor="middle">丢：fire-and-forget</text>
-  <text x="105" y="296" font-size="7.4" fill="#7A322B" text-anchor="middle">无确认/无重试</text>
+  <rect x="1120" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1305" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">003 消息队列全景图</text>
+  <text x="1305" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">一图看清九册位置</text>
+  <text x="1305" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">看图定段，再回 001 选册</text>
 
-  <rect x="186" y="240" width="130" height="76" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="251" y="262" font-size="8.6" font-weight="600" fill="#7A322B" text-anchor="middle">② 存储/复制</text>
-  <text x="251" y="280" font-size="7.4" fill="#7A322B" text-anchor="middle">丢：未持久化/未复制</text>
-  <text x="251" y="296" font-size="7.4" fill="#7A322B" text-anchor="middle">单副本即宕机丢</text>
+  <rect x="1530" y="112" width="370" height="106" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1715" y="150" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">190 术语表</text>
+  <text x="1715" y="178" font-size="11.5" fill="#311b92" text-anchor="middle">38 术语 · 6 缩写 · 12 易混</text>
+  <text x="1715" y="200" font-size="11" fill="#311b92" text-anchor="middle">12 条症状反查 · 查的不是读的</text>
 
-  <rect x="332" y="240" width="130" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="397" y="262" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">③ 投递</text>
-  <text x="397" y="280" font-size="7.4" fill="#7A4A12" text-anchor="middle">重：投了消费者没确认</text>
-  <text x="397" y="296" font-size="7.4" fill="#7A4A12" text-anchor="middle">→ 重投（at-least-once）</text>
+  <!-- 行①→② -->
+  <line x1="980" y1="222" x2="980" y2="258" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="244" font-size="11" fill="#616161">先读总览，再进存储环两大产品册</text>
 
-  <rect x="478" y="240" width="130" height="76" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="543" y="262" font-size="8.6" font-weight="600" fill="#7A322B" text-anchor="middle">④ 确认</text>
-  <text x="543" y="280" font-size="7.4" fill="#7A322B" text-anchor="middle">丢：先提交后处理</text>
-  <text x="543" y="296" font-size="7.4" fill="#7A322B" text-anchor="middle">重：处理完再提交</text>
+  <!-- 行② 存储环 两大产品 -->
+  <rect x="60" y="266" width="220" height="112" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="306" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">存储环</text>
+  <text x="170" y="332" font-size="11.5" fill="#4e6b50" text-anchor="middle">两大产品</text>
+  <text x="170" y="352" font-size="11" fill="#4e6b50" text-anchor="middle">消息代理 vs 分布式日志</text>
 
-  <rect x="620" y="240" width="24" height="76" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="632" y="282" font-size="7.4" font-weight="600" fill="#1D5A45" text-anchor="middle" transform="rotate(90 632 282)">完成</text>
+  <rect x="300" y="266" width="780" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="690" y="306" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">011 RabbitMQ 运维</text>
+  <text x="690" y="336" font-size="11.5" fill="#123314" text-anchor="middle">消息代理：exchange 按规则路由进 queue，确认后删除</text>
+  <text x="690" y="360" font-size="11" fill="#123314" text-anchor="middle">盯单条状态与水位 · durable/quorum · prefetch · vhost 隔离</text>
 
-  <rect x="40" y="330" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="349" font-size="8.2" fill="#7A4A12">结论：丢失可能 = ①②④　重复可能 = ③④　——所以「至少一次 + 消费端幂等」是默认约定（003 §3.2）</text>
+  <rect x="1120" y="266" width="780" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1510" y="306" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">012 Kafka 运维</text>
+  <text x="1510" y="336" font-size="11.5" fill="#123314" text-anchor="middle">分布式日志：追加写分区，消费只移指针，到期才清</text>
+  <text x="1510" y="360" font-size="11" fill="#123314" text-anchor="middle">盯分区健康与 lag · ISR · acks=all · 消费者组</text>
 
-  <text x="32" y="390" font-size="9" fill="#8C8980">运维关注点随模型不同：RabbitMQ 盯单条消息状态与水位（001 §1.5），Kafka 盯分区健康与消费 lag（002 §2.6）。</text>
-  <text x="32" y="408" font-size="9" fill="#8C8980">选型口诀：任务可靠交付选 RabbitMQ；事件流多方消费、需要回放选 Kafka——共存常见（000 §0.2）。</text>
+  <!-- 行②→③ -->
+  <line x1="980" y1="382" x2="980" y2="418" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="404" font-size="11" fill="#616161">产品之外，还要能治堆积、能救故障、能做选型对照</text>
 
-  </g>
+  <!-- 行③ 治理故障对照 三册 -->
+  <rect x="60" y="426" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="464" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">治理故障</text>
+  <text x="170" y="490" font-size="11.5" fill="#4e6b50" text-anchor="middle">与对照</text>
+  <text x="170" y="510" font-size="11" fill="#4e6b50" text-anchor="middle">出事时的主战场</text>
+
+  <rect x="300" y="426" width="513" height="106" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="556" y="464" font-size="14" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ 013 堆积与可靠性治理</text>
+  <text x="556" y="492" font-size="11" fill="#7f3f00" text-anchor="middle">丢失三环节对账 · 幂等消费</text>
+  <text x="556" y="514" font-size="11" fill="#7f3f00" text-anchor="middle">堆积归因 · 顺序 · 死信</text>
+
+  <rect x="843" y="426" width="513" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1099" y="464" font-size="14" font-weight="bold" fill="#123314" text-anchor="middle">014 故障剧本</text>
+  <text x="1099" y="492" font-size="11" fill="#123314" text-anchor="middle">排障总纲 · RabbitMQ 四剧本</text>
+  <text x="1099" y="514" font-size="11" fill="#123314" text-anchor="middle">Kafka 四剧本 · 通用两剧本</text>
+
+  <rect x="1386" y="426" width="513" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1642" y="464" font-size="14" font-weight="bold" fill="#123314" text-anchor="middle">015 RocketMQ</text>
+  <text x="1642" y="492" font-size="11" fill="#123314" text-anchor="middle">事务消息 · 延时消息 · 堆积</text>
+  <text x="1642" y="514" font-size="11" fill="#123314" text-anchor="middle">第三极 · 与 Kafka/RabbitMQ 对照</text>
+
+  <!-- 行③→④ -->
+  <line x1="980" y1="536" x2="980" y2="572" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="558" font-size="11" fill="#616161">九册落到同一条消息旅程，丢与重只发生在这四段</text>
+
+  <!-- 行④ 四段消息旅程 -->
+  <rect x="60" y="580" width="1840" height="180" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="84" y="610" font-size="13" font-weight="bold" fill="#1b5e20">四段消息旅程</text>
+  <text x="1900" y="610" font-size="11" fill="#4e6b50" text-anchor="end">消息从左到右 · 红字＝该段断点 · 丢在 ①②④，重在 ③④</text>
+
+  <rect x="84" y="622" width="415" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="291" y="652" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">① 发送</text>
+  <text x="291" y="682" font-size="11" fill="#0d2f5c" text-anchor="middle">生产者把消息发出去</text>
+  <text x="291" y="710" font-size="11" fill="#7f0000" text-anchor="middle">丢：fire-and-forget，无确认无重试</text>
+  <text x="291" y="730" font-size="11" fill="#0d2f5c" text-anchor="middle">验收：acks=all + 失败重试 + 日志</text>
+
+  <rect x="543" y="622" width="415" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="750" y="652" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">② 存储 / 复制</text>
+  <text x="750" y="682" font-size="11" fill="#0d2f5c" text-anchor="middle">broker 落盘并复制到副本</text>
+  <text x="750" y="710" font-size="11" fill="#7f0000" text-anchor="middle">丢：未持久化 / 未复制就宕机</text>
+  <text x="750" y="730" font-size="11" fill="#0d2f5c" text-anchor="middle">验收：仲裁队列 / 副本 3 + ISR</text>
+
+  <rect x="1002" y="622" width="415" height="120" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="1209" y="652" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ ③ 投递</text>
+  <text x="1209" y="682" font-size="11" fill="#7f3f00" text-anchor="middle">broker 把消息交给消费者</text>
+  <text x="1209" y="710" font-size="11" fill="#7f0000" text-anchor="middle">重：投了没确认，重投（至少一次）</text>
+  <text x="1209" y="730" font-size="11" fill="#7f3f00" text-anchor="middle">验收：消费端幂等兜底</text>
+
+  <rect x="1461" y="622" width="415" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1668" y="652" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">④ 确认</text>
+  <text x="1668" y="682" font-size="11" fill="#0d2f5c" text-anchor="middle">处理完再向 broker 确认</text>
+  <text x="1668" y="710" font-size="11" fill="#7f0000" text-anchor="middle">丢：先提交后处理　重：处理完才提交</text>
+  <text x="1668" y="730" font-size="11" fill="#0d2f5c" text-anchor="middle">验收：处理完再确认 + 幂等</text>
+
+  <line x1="503" y1="682" x2="537" y2="682" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="962" y1="682" x2="996" y2="682" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1421" y1="682" x2="1455" y2="682" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- 结论块 -->
+  <rect x="60" y="772" width="1840" height="90" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="80" y="802" font-size="15" font-weight="bold" fill="#bf360c">★ 两大模型不是竞品：RabbitMQ 消息代理（确认后删）盯单条状态，Kafka 分布式日志（移指针）盯分区健康</text>
+  <text x="80" y="828" font-size="12.5" fill="#5d4037">· 四段旅程：丢失可能 = ①发送 ②存储 ④确认；重复可能 = ③投递 ④确认——按段对账，不靠猜（013 §3.1）</text>
+  <text x="80" y="850" font-size="12.5" fill="#5d4037">· 默认约定：至少一次（at-least-once）+ 消费端幂等；堆积先归因再扩容（013 §3.3），静默丢消息比 MQ 崩了更难发现</text>
+
+  <!-- 图例 -->
+  <rect x="60" y="876" width="1840" height="60" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="80" y="896" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="112" y="907" font-size="12" fill="#37474f">导览 / 旅程段</text>
+  <rect x="386" y="896" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="418" y="907" font-size="12" fill="#37474f">能力册 / 产品册</text>
+  <rect x="692" y="896" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="724" y="907" font-size="12" fill="#37474f">本板块主线 ★</text>
+  <text x="1004" y="907" font-size="12" fill="#7f0000">红字＝该段断点，红框＝本板块主线</text>
+  <rect x="1450" y="896" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="1482" y="907" font-size="12" fill="#37474f">术语查阅（最后查）</text>
 </svg>
