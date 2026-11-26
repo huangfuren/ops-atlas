@@ -80,7 +80,7 @@ mqadmin updateTopic -n ns -c cluster -t t -r 8 -w 8   # 扩读写队列数
 | 交易/订单/支付链路（事务+延时刚需） | RocketMQ |
 | 日志采集/流计算/超大吞吐管道 | Kafka（012） |
 | 企业集成、路由复杂、协议多样 | RabbitMQ（011） |
-| 轻量事件流（已在 Redis 体系内） | Redis Stream（「Redis」014 §4——边界注记） |
+| 轻量事件流（已在 Redis 体系内） | Redis Stream（「Redis」111 §4——边界注记） |
 
 ## 7. 坑表
 

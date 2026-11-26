@@ -86,7 +86,7 @@ fat jar 流程（systemd 管理）：`systemctl stop app` → 替换 jar → `sy
 | 启动失败 | localhost.log | 端口占用、配置错误、依赖缺失 |
 | 部署后 404 | webapps 目录与 war 名 | context 路径与预期不符 |
 | 503/502（SLB 后） | 应用线程池打满 / 应用假死 | 线程池耗尽、下游阻塞（011 §3 jstack） |
-| 频繁 Full GC | GC 日志（111） | 内存泄漏或缓存过大 |
+| 频繁 Full GC | GC 日志（011） | 内存泄漏或缓存过大 |
 | 内存持续涨 | jmap 直方图 + dump | 011 §4 |
 
 ## 6. 坑表
