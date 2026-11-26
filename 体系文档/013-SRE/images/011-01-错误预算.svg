@@ -1,71 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>错误预算：从 SLO 到预算政策告警的完整机制</title>
-  <desc>机制四段：SLO 99.9% 配 28 天滚动窗口，错误预算换算约 43 分钟；burn rate 是当前错误率除以允许错误率的倍数，14 倍速意味着约两天烧完预算；双窗口告警一小时窗口乘五分钟窗口都超过十四点四就紧急响应，六小时窗口超过六开工单；预算余额决定发布政策，充足正常迭代，烧完冻结非必要发布。特批可以存在但要记录在案。</desc>
-
-  <rect width="680" height="400" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">错误预算：从承诺到告警到仲裁</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">算术替代争论</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>错误预算：从 SLO 到预算告警到发布仲裁</title>
+  <desc>机制四段：SLO 99.9% 配 28 天滚动窗口，错误预算换算约 43 分钟；burn rate 是当前错误率除以允许错误率的倍数，14 倍速约两天烧完预算；双窗口告警 1h 窗乘 5m 窗都超 14.4 就紧急 page，6h 窗超 6 开工单；预算余额决定发布政策：充足正常迭代，快烧完需评审，烧完冻结非必要发布。特批可以存在但要记录在案，特批三次以上说明 SLO 定得不合理。数据来源：011-SLO 与错误预算册正文。</desc>
 
   <defs>
-    <marker id="s1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="axBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+    <marker id="axOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
     </marker>
   </defs>
 
-  <!-- ① SLO -->
-  <rect x="40" y="52" width="180" height="64" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="130" y="74" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">① SLO：99.9% / 28 天</text>
-  <text x="130" y="92" font-size="7.4" fill="#4A4945" text-anchor="middle">滚动窗口，非自然月</text>
-  <text x="130" y="108" font-size="7.2" fill="#8C8980" text-anchor="middle">起步值 = 现状略好</text>
+  <rect x="0" y="0" width="1200" height="760" fill="#ffffff"/>
 
-  <line x1="220" y1="84" x2="250" y2="84" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s1Blue)"/>
+  <!-- 标题 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">错误预算：从承诺到告警到仲裁</text>
+  <text x="1160" y="48" font-size="11" fill="#757575" text-anchor="end">算术替代争论</text>
 
-  <!-- ② 预算 -->
-  <rect x="254" y="52" width="180" height="64" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="344" y="74" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">② 错误预算 = 1 − SLO</text>
-  <text x="344" y="92" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">0.1% × 30 天 ≈ 43 分钟</text>
-  <text x="344" y="108" font-size="7.2" fill="#8C8980" text-anchor="middle">允许不完美的额度</text>
+  <!-- 上排三卡 -->
+  <rect x="40" y="80" width="330" height="110" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="205" y="110" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">① SLO：99.9% / 28 天</text>
+  <text x="205" y="138" font-size="12" fill="#0d2f5c" text-anchor="middle">滚动窗口，不是自然月</text>
+  <text x="205" y="162" font-size="11" fill="#1565c0" text-anchor="middle">起步值 = 现状略好，逐步收紧</text>
 
-  <line x1="434" y1="84" x2="464" y2="84" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#s1Blue)"/>
+  <rect x="435" y="80" width="330" height="110" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="600" y="110" font-size="14" font-weight="bold" fill="#7f3f00" text-anchor="middle">② 错误预算 = 1 − SLO</text>
+  <text x="600" y="138" font-size="12" fill="#7f3f00" text-anchor="middle">0.1% × 30 天 ≈ 43 分钟</text>
+  <text x="600" y="162" font-size="11" fill="#e65100" text-anchor="middle">允许不完美的额度</text>
 
-  <!-- ③ burn rate -->
-  <rect x="468" y="52" width="176" height="64" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="556" y="74" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">③ burn rate 消耗速率</text>
-  <text x="556" y="92" font-size="7.6" fill="#1F4468" text-anchor="middle">当前错误率 ÷ 允许错误率</text>
-  <text x="556" y="108" font-size="7.2" fill="#8C8980" text-anchor="middle">=1 恰好用满 / =14 两天烧完</text>
+  <rect x="830" y="80" width="330" height="110" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="995" y="110" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">③ burn rate 消耗速率</text>
+  <text x="995" y="138" font-size="12" fill="#0d2f5c" text-anchor="middle">当前错误率 ÷ 允许错误率</text>
+  <text x="995" y="162" font-size="11" fill="#1565c0" text-anchor="middle">=1 恰好用满 / =14 约两天烧完</text>
 
-  <!-- ④ 双窗口告警 -->
-  <rect x="40" y="136" width="300" height="70" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
-  <text x="54" y="158" font-size="8.8" font-weight="600" fill="#7A322B">紧急 page：1h 窗 burn ≥ 14.4 且 5m 同超</text>
-  <text x="54" y="176" font-size="7.6" fill="#7A322B">≈ 2 天烧完 28 天预算 → 立即响应</text>
-  <text x="54" y="194" font-size="7.2" fill="#8C8980">双窗口同时超：既快又持续，排除毛刺</text>
+  <line x1="370" y1="135" x2="431" y2="135" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <line x1="765" y1="135" x2="826" y2="135" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
 
-  <rect x="356" y="136" width="288" height="70" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
-  <text x="370" y="158" font-size="8.8" font-weight="600" fill="#7A4A12">重要工单：6h 窗 burn ≥ 6</text>
-  <text x="370" y="176" font-size="7.6" fill="#7A4A12">≈ 7 天烧完预算 → 当天处理</text>
-  <text x="370" y="194" font-size="7.2" fill="#8C8980">慢烧：不 page，但必须有人认领</text>
+  <!-- 双窗口告警 -->
+  <rect x="40" y="222" width="550" height="104" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="60" y="252" font-size="13" font-weight="bold" fill="#7f0000">紧急 page：1h 窗 burn ≥ 14.4 且 5m 窗同超</text>
+  <text x="60" y="280" font-size="12" fill="#7f0000">约两天烧完 28 天预算 → 立即响应</text>
+  <text x="60" y="306" font-size="11" fill="#c62828">双窗口同时超：既快又持续，排除毛刺</text>
+
+  <rect x="610" y="222" width="550" height="104" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="630" y="252" font-size="13" font-weight="bold" fill="#7f3f00">重要工单：6h 窗 burn ≥ 6</text>
+  <text x="630" y="280" font-size="12" fill="#7f3f00">约七天烧完预算 → 当天处理</text>
+  <text x="630" y="306" font-size="11" fill="#e65100">慢烧：不 page，但必须有人认领</text>
+
+  <line x1="500" y1="190" x2="500" y2="218" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <text x="512" y="210" font-size="9.5" fill="#607d8b">消耗速度驱动告警</text>
 
   <!-- 预算政策 -->
-  <text x="40" y="234" font-size="9.5" font-weight="600" fill="#4A4945">预算余额 → 发布政策（团队负责人签过字）</text>
-  <rect x="40" y="244" width="193" height="54" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="136" y="264" font-size="8.4" font-weight="600" fill="#1D5A45" text-anchor="middle">&lt; 50% 已用</text>
-  <text x="136" y="282" font-size="7.4" fill="#1D5A45" text-anchor="middle">正常迭代发布</text>
-  <rect x="245" y="244" width="193" height="54" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="341" y="264" font-size="8.4" font-weight="600" fill="#7A4A12" text-anchor="middle">&gt; 80% 已用</text>
-  <text x="341" y="282" font-size="7.4" fill="#7A4A12" text-anchor="middle">发布需评审 · 优先修可靠性</text>
-  <rect x="450" y="244" width="193" height="54" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
-  <text x="546" y="264" font-size="8.4" font-weight="600" fill="#7A322B" text-anchor="middle">烧完 100%</text>
-  <text x="546" y="282" font-size="7.4" fill="#7A322B" text-anchor="middle">冻结非必要发布</text>
+  <text x="40" y="372" font-size="14" font-weight="bold" fill="#263238">④ 预算余额 → 发布政策（团队负责人签过字）</text>
 
-  <rect x="40" y="312" width="604" height="30" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="52" y="331" font-size="8" fill="#4A4945">特批通道：负责人书面豁免并记录在案——特批三次以上说明 SLO 定得不合理，回 1.2 重新校准</text>
+  <rect x="40" y="392" width="350" height="96" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="215" y="426" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">已用 &lt; 50%</text>
+  <text x="215" y="454" font-size="12" fill="#123314" text-anchor="middle">正常迭代发布</text>
+  <text x="215" y="476" font-size="11" fill="#388e3c" text-anchor="middle">快与稳都有额度兜着</text>
 
-  <text x="32" y="372" font-size="9" fill="#8C8980">SLA 比 SLO 松一个档（99.5%）——内部目标是外部合同的安全垫；SLO 的数据源是「监控」册的指标体系。</text>
-  <text x="32" y="392" font-size="9" fill="#8C8980">起步纪律：每服务 1–2 个 SLO（可用性 + 延迟），度量诚实先行——假装可靠比不可靠更危险。</text>
+  <rect x="425" y="392" width="350" height="96" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="600" y="426" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">已用 &gt; 80%</text>
+  <text x="600" y="454" font-size="12" fill="#7f3f00" text-anchor="middle">发布需评审 · 优先修可靠性</text>
+  <text x="600" y="476" font-size="11" fill="#e65100" text-anchor="middle">风险动作要多人看过</text>
 
-  </g>
+  <rect x="810" y="392" width="350" height="96" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
+  <text x="985" y="426" font-size="13" font-weight="bold" fill="#7f0000" text-anchor="middle">烧完 100%</text>
+  <text x="985" y="454" font-size="12" fill="#7f0000" text-anchor="middle">冻结非必要发布</text>
+  <text x="985" y="476" font-size="11" fill="#c62828" text-anchor="middle">全员优先恢复可靠性</text>
+
+  <!-- 特批通道 -->
+  <rect x="40" y="520" width="1120" height="64" rx="6" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="60" y="548" font-size="12" font-weight="bold" fill="#37474f">特批通道：负责人书面豁免并记录在案——裁决必须按流程走</text>
+  <text x="60" y="572" font-size="11" fill="#616161">特批三次以上，说明 SLO 定得不合理，回 1.2 重新校准；「必须今天上」的冲突是机制的建立时刻，不是失效时刻</text>
+
+  <!-- 尾注 -->
+  <text x="40" y="622" font-size="11" fill="#616161">SLA 比 SLO 松一个档（如 99.5%）——内部目标是外部合同的安全垫；SLO 的数据源是「监控」114 的指标体系</text>
+  <text x="40" y="646" font-size="11" fill="#616161">起步纪律：每服务 1~2 个 SLO（可用性 + 延迟），度量诚实先行——假装可靠比不可靠更危险</text>
+  <text x="40" y="670" font-size="11" fill="#616161">与「CICD」131 的握手：预算烧尽 → 收紧发布节奏，是 SRE 与交付体系的经典衔接</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="692" width="1120" height="48" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="60" y="708" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="92" y="720" font-size="11" fill="#37474f">机制环节</text>
+  <rect x="220" y="708" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="252" y="720" font-size="11" fill="#37474f">核心换算 / 慢烧</text>
+  <rect x="440" y="708" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="472" y="720" font-size="11" fill="#37474f">快烧 / 冻结</text>
+  <rect x="600" y="708" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="632" y="720" font-size="11" fill="#37474f">额度充足</text>
+  <rect x="760" y="708" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="792" y="720" font-size="11" fill="#37474f">纪律 / 特批通道</text>
 </svg>

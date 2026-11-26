@@ -1,64 +1,133 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>SRE 方法论齿轮：定承诺 → 值守 → 变强 → 减琐事 → 循环</title>
-  <desc>四件机制构成循环齿轮：定承诺建立 SLO 与错误预算，为值守与发布提供裁决依据；值守阶段告警可行动、应急有指挥；故障之后进入无指责复盘，产出带认领人和死线的行动项；行动项的一部分指向减琐事的自动化，自动化反过来改进 SLO 度量，齿轮转动。成熟度诊断四问：有没有承诺、值守有没有纪律、故障有没有产出行动项、行动项是否在消灭琐事。</desc>
-
-  <rect width="680" height="400" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">SRE 方法论齿轮：四件机制循环起来</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">每个故障让系统变强一点</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1040" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>SRE 方法论全景：四件机制的循环齿轮与成熟度诊断</title>
+  <desc>左区是四件机制的循环：定承诺（011）建立 SLO 与错误预算，为值守提供裁决依据；值守（012）告警可行动、应急有指挥；故障之后进入无指责复盘（013），产出带认领人和死线的行动项；行动项一部分指向减琐事（014）的自动化，自动化反过来改进 SLO 度量，齿轮转动。右区是成熟度四问诊断与跨板块数据源衔接。数据来源：13-SRE 板块 001~014 册正文。</desc>
 
   <defs>
-    <marker id="s0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="axBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+    <marker id="axOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
+    </marker>
+    <marker id="axGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
+    </marker>
+    <marker id="axGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
+  <rect x="0" y="0" width="1960" height="1040" fill="#ffffff"/>
+
+  <!-- 标题 -->
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#263238">SRE 方法论全景：四件机制的循环齿轮与成熟度诊断</text>
+  <text x="1920" y="52" font-size="11" fill="#757575" text-anchor="end">数据来源：13-SRE 板块 001~014 册 · 2026-11-25</text>
+
+  <!-- ================= 左区：可靠性循环 ================= -->
+  <rect x="40" y="84" width="1100" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="64" y="120" font-size="15" font-weight="bold" fill="#263238">可靠性循环：四件机制咬合运转</text>
+  <text x="1116" y="120" font-size="11" fill="#757575" text-anchor="end">每个环节的产出是下一个环节的输入</text>
+
   <!-- 中心 -->
-  <circle cx="310" cy="196" r="52" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="310" y="190" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">每个故障</text>
-  <text x="310" y="206" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">让系统变强一点</text>
+  <circle cx="540" cy="360" r="92" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="540" y="348" font-size="14" font-weight="bold" fill="#bf360c" text-anchor="middle">每个故障</text>
+  <text x="540" y="372" font-size="14" font-weight="bold" fill="#bf360c" text-anchor="middle">让系统变强一点</text>
+  <text x="540" y="398" font-size="9.5" fill="#e65100" text-anchor="middle">断掉任何一环 = 退化成救火</text>
 
   <!-- ① 定承诺 -->
-  <rect x="60" y="60" width="170" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="145" y="82" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">① 定承诺（001）</text>
-  <text x="145" y="100" font-size="7.6" fill="#1F4468" text-anchor="middle">SLI / SLO / 错误预算</text>
-  <text x="145" y="116" font-size="7.2" fill="#8C8980" text-anchor="middle">预算烧完 → 停发布</text>
+  <rect x="100" y="170" width="320" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="260" y="202" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">① 定承诺（011）</text>
+  <text x="260" y="232" font-size="12" fill="#0d2f5c" text-anchor="middle">SLI / SLO / 错误预算</text>
+  <text x="260" y="256" font-size="11" fill="#1565c0" text-anchor="middle">99.9% / 28 天 · burn rate 告警</text>
+  <text x="260" y="278" font-size="11" fill="#e65100" text-anchor="middle">预算烧完 → 停非必要发布</text>
 
   <!-- ② 值守 -->
-  <rect x="390" y="60" width="170" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="475" y="82" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">② 值守（002）</text>
-  <text x="475" y="100" font-size="7.6" fill="#1F4468" text-anchor="middle">on-call · IC/CL/COM</text>
-  <text x="475" y="116" font-size="7.2" fill="#8C8980" text-anchor="middle">告警可行动 · 升级有链</text>
+  <rect x="660" y="170" width="320" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="820" y="202" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">② 值守（012）</text>
+  <text x="820" y="232" font-size="12" fill="#0d2f5c" text-anchor="middle">on-call 设计 · 应急指挥 IC / CL / COM</text>
+  <text x="820" y="256" font-size="11" fill="#1565c0" text-anchor="middle">告警可行动 · 升级有链有截止</text>
+  <text x="820" y="278" font-size="11" fill="#e65100" text-anchor="middle">铁律：IC 不亲手修</text>
 
   <!-- ③ 变强 -->
-  <rect x="390" y="266" width="170" height="66" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="475" y="288" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">③ 变强（003）</text>
-  <text x="475" y="306" font-size="7.6" fill="#1F4468" text-anchor="middle">无指责复盘 · 行动项</text>
-  <text x="475" y="322" font-size="7.2" fill="#8C8980" text-anchor="middle">认领人 + 死线 + 验证</text>
+  <rect x="660" y="550" width="320" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="820" y="582" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">③ 变强（013）</text>
+  <text x="820" y="612" font-size="12" fill="#0d2f5c" text-anchor="middle">无指责复盘 · 七部分模板</text>
+  <text x="820" y="636" font-size="11" fill="#1565c0" text-anchor="middle">行动项：认领人 + 死线 + 验证</text>
+  <text x="820" y="658" font-size="11" fill="#e65100" text-anchor="middle">游戏日验证预案才算闭环</text>
 
   <!-- ④ 减琐事 -->
-  <rect x="60" y="266" width="170" height="66" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="145" y="288" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">④ 减琐事（004）</text>
-  <text x="145" y="306" font-size="7.6" fill="#1D5A45" text-anchor="middle">toil 配额 · 自动化</text>
-  <text x="145" y="322" font-size="7.2" fill="#8C8980" text-anchor="middle">幂等安全带</text>
+  <rect x="100" y="550" width="320" height="120" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="260" y="582" font-size="14" font-weight="bold" fill="#123314" text-anchor="middle">④ 减琐事（014）</text>
+  <text x="260" y="612" font-size="12" fill="#123314" text-anchor="middle">toil 审计与配额 · 自动化三级</text>
+  <text x="260" y="636" font-size="11" fill="#388e3c" text-anchor="middle">流程化 → 脚本化 → 平台化</text>
+  <text x="260" y="658" font-size="11" fill="#e65100" text-anchor="middle">幂等安全带：重跑不出事</text>
 
   <!-- 循环箭头 -->
-  <line x1="232" y1="93" x2="386" y2="93" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
-  <text x="310" y="86" font-size="7.2" fill="#8C8980" text-anchor="middle">告警与度量就绪</text>
-  <line x1="475" y1="130" x2="475" y2="262" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
-  <text x="483" y="200" font-size="7.2" fill="#8C8980">故障处置完成</text>
-  <line x1="386" y1="299" x2="234" y2="299" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
-  <text x="310" y="292" font-size="7.2" fill="#8C8980" text-anchor="middle">行动项两类去向</text>
-  <line x1="145" y1="262" x2="145" y2="130" stroke="#7FA6D0" stroke-width="1.4" marker-end="url(#s0Blue)"/>
-  <text x="153" y="200" font-size="7.2" fill="#8C8980">自动化改进度量</text>
+  <line x1="420" y1="230" x2="656" y2="230" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <text x="538" y="222" font-size="9.5" fill="#607d8b" text-anchor="middle">告警与度量就绪</text>
+  <line x1="820" y1="290" x2="820" y2="546" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <text x="832" y="420" font-size="9.5" fill="#607d8b">故障处置完成</text>
+  <line x1="660" y1="610" x2="424" y2="610" stroke="#388e3c" stroke-width="2" marker-end="url(#axGreen)"/>
+  <text x="542" y="602" font-size="9.5" fill="#607d8b" text-anchor="middle">行动项两类去向</text>
+  <line x1="260" y1="550" x2="260" y2="294" stroke="#388e3c" stroke-width="2" marker-end="url(#axGreen)"/>
+  <text x="272" y="420" font-size="9.5" fill="#607d8b">自动化改进度量</text>
 
-  <!-- 右侧成熟度四问 -->
-  <rect x="440" y="200" width="0" height="0" fill="none"/>
-  <text x="60" y="364" font-size="9" fill="#8C8980">成熟度四问：有没有承诺？值守有没有纪律？故障有没有产出行动项？行动项是不是在消灭琐事？——四问全「无」，还在传统运维阶段。</text>
-  <text x="60" y="384" font-size="9" fill="#8C8980">数据源：SLO 的每个度量都是监控查询（「监控」04）；取证的原始材料在日志（「日志」006）。</text>
+  <!-- 左区底部小注 -->
+  <text x="64" y="730" font-size="11" fill="#616161">循环方向自上而下：① 的产出（可度量的承诺）是 ② 的裁决依据，② 的故障流入 ③ 的复盘，</text>
+  <text x="64" y="754" font-size="11" fill="#616161">③ 的行动项一部分落进 ④ 的自动化，④ 解放的人力回流 ① 的度量与承诺。</text>
+  <text x="64" y="800" font-size="11" fill="#616161">成熟度自检：四问全「无」= 还在传统运维阶段（见右区诊断）。</text>
 
-  </g>
+  <!-- ================= 右区：成熟度诊断与衔接 ================= -->
+  <rect x="1180" y="84" width="740" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="1204" y="120" font-size="15" font-weight="bold" fill="#263238">成熟度四问与跨板块衔接</text>
+  <text x="1896" y="120" font-size="11" fill="#757575" text-anchor="end">先如实度量，再谈改进</text>
+
+  <!-- 四问 -->
+  <rect x="1204" y="146" width="692" height="70" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="1"/>
+  <text x="1224" y="174" font-size="12" font-weight="bold" fill="#0d2f5c">问一（承诺）：有没有 SLO 和错误预算？</text>
+  <text x="1224" y="200" font-size="11" fill="#616161">判定：服务有 1~2 个签过字的 SLO，预算政策发布前评审过 —— 否则回 011 册</text>
+
+  <rect x="1204" y="230" width="692" height="70" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="1"/>
+  <text x="1224" y="258" font-size="12" font-weight="bold" fill="#0d2f5c">问二（值守）：值守有没有纪律？</text>
+  <text x="1224" y="284" font-size="11" fill="#616161">判定：每个 page 可行动、升级链有截止时间、大故障 IC 与动手者分开 —— 否则回 012 册</text>
+
+  <rect x="1204" y="314" width="692" height="70" rx="6" fill="#ffffff" stroke="#e65100" stroke-width="1"/>
+  <text x="1224" y="342" font-size="12" font-weight="bold" fill="#7f3f00">问三（变强）：故障有没有产出行动项？</text>
+  <text x="1224" y="368" font-size="11" fill="#616161">判定：48 小时内出复盘、行动项三属性齐全、完成率不低于 80% —— 否则回 013 册</text>
+
+  <rect x="1204" y="398" width="692" height="70" rx="6" fill="#ffffff" stroke="#388e3c" stroke-width="1"/>
+  <text x="1224" y="426" font-size="12" font-weight="bold" fill="#123314">问四（减琐事）：行动项是不是在消灭琐事？</text>
+  <text x="1224" y="452" font-size="11" fill="#616161">判定：toil 配额有度量、自动化按三级顺序推进、不跳级 —— 否则回 014 册</text>
+
+  <!-- 跨板块衔接 -->
+  <rect x="1204" y="496" width="692" height="200" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1224" y="528" font-size="13" font-weight="bold" fill="#5e35b1">跨板块衔接：机制在这里，数据与战术在对应板块</text>
+  <text x="1224" y="560" font-size="11.5" fill="#37474f">数据源：SLO 的每个度量都是监控查询（「监控」114 的指标体系与告警链路）</text>
+  <text x="1224" y="588" font-size="11.5" fill="#37474f">取证材料：复盘时间线的原始材料在日志（「日志」124 的四段取证）</text>
+  <text x="1224" y="616" font-size="11.5" fill="#37474f">发布裁决：预算烧尽收紧发布节奏（「CICD」131 §7.9 的检查单与回滚预案）</text>
+  <text x="1224" y="644" font-size="11.5" fill="#37474f">战术剧本：Linux 133 · 数据库 132 · 日志 124 · 接入层 121——本板块管战略机制</text>
+  <text x="1224" y="676" font-size="11.5" fill="#616161">反模式对照见 002 册：度量先行、无指责文化、toil 配额缺一即空转</text>
+
+  <!-- 右区底部小注 -->
+  <text x="1204" y="730" font-size="11" fill="#616161">阅读顺序建议：001 全貌 → 002 方法论 → 011 定承诺 → 012 值守 →</text>
+  <text x="1204" y="754" font-size="11" fill="#616161">013 变强 → 014 减琐事；术语反查直接进 190 术语表。</text>
+  <text x="1204" y="800" font-size="11" fill="#616161">诚实优先：假装可靠比不可靠更危险——先度量现状，再定目标。</text>
+
+  <!-- ================= 底部汇总 ================= -->
+  <rect x="40" y="878" width="1880" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="912" font-size="13" font-weight="bold" fill="#bf360c">一句话总结：SRE 不是工具栈，是一组可度量的承诺与运转机制——SLO 定承诺，待命守承诺，复盘变强，减琐事省下人力再投入承诺。</text>
+  <text x="64" y="942" font-size="11.5" fill="#7f3f00">自检入口：右区四问逐条对照；任何一问答「无」，就回对应册补机制——而不是先上工具。</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="982" width="1880" height="42" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="64" y="996" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="96" y="1008" font-size="11" fill="#37474f">循环环节（011/012/013）</text>
+  <rect x="340" y="996" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="372" y="1008" font-size="11" fill="#37474f">减琐事（014）</text>
+  <rect x="560" y="996" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="592" y="1008" font-size="11" fill="#37474f">核心 / 风险提示</text>
+  <rect x="800" y="996" width="22" height="14" rx="3" fill="#ffffff" stroke="#5e35b1" stroke-width="1"/>
+  <text x="832" y="1008" font-size="11" fill="#37474f">跨板块衔接</text>
+  <rect x="1010" y="996" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1042" y="1008" font-size="11" fill="#37474f">分区容器</text>
 </svg>
