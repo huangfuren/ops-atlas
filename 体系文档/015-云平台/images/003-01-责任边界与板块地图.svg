@@ -1,57 +1,157 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <title>云上责任边界与板块六册地图</title>
-  <desc>云上责任边界三行：云厂商管底层设施（机房/硬件/虚拟化/托管服务自身），共同区域是安全配置与身份，用户管数据/配置/SQL/容量/账单。下半是板块六册地图：001 云上网络、002 云主机与镜像、003 云数据库与存储、004 Terraform IaC、005 云监控与账单衔接、000 全貌。底部提示接手云账号的第一件事是打标签与开操作审计。</desc>
-  <g transform="scale(1.7647058824)">
-  <rect width="680" height="470" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">云上责任边界与板块六册地图</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1040" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>云上责任边界与板块地图：厂商与用户的分界，正文五册各守一段</title>
+  <desc>左区是责任共担分层：用户责任区（数据与成本、配置与身份、系统与运行时），中间一条虚线是责任边界——虚线以下出事提工单找厂商，虚线以上出事找自己；厂商责任区（托管服务自身、物理与虚拟化）。左区底部是 region/AZ 概念与一切皆可 API 提示。右区是板块地图：总览三件套 001/002/003、正文五册 011~015、附录 190，底部是跨板块分界与接手第一步。数据来源：15-云平台 板块正文。</desc>
 
-  <!-- 责任边界三行 -->
-  <rect x="20" y="50" width="640" height="150" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="30" y="68" font-size="8" font-weight="600" fill="#8C8980">责任共担：每层谁负责什么</text>
-  <rect x="30" y="76" width="600" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="44" y="90" font-size="8" font-weight="600" fill="#1F4468">云厂商 · 底层设施</text>
-  <text x="44" y="104" font-size="7" fill="#4A4945">机房 · 硬件 · 虚拟化 · 托管服务自身的高可用与补丁</text>
-  <rect x="30" y="114" width="600" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="44" y="128" font-size="8" font-weight="600" fill="#7A4A12">共同区域 · 配置与身份</text>
-  <text x="44" y="142" font-size="7" fill="#7A4A12">安全组/防火墙规则 · 账号与 ACL · 备份策略开关——谁配错了算谁的</text>
-  <rect x="30" y="152" width="600" height="34" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="44" y="166" font-size="8" font-weight="600" fill="#7A322B">用户 · 数据与配置</text>
-  <text x="44" y="180" font-size="7" fill="#7A322B">SQL 与索引 · 容量规划 · 数据正确性 · 账单——RDS 接管机器，不接管这些</text>
+  <rect x="0" y="0" width="1960" height="1040" fill="#ffffff"/>
 
-  <!-- 六册地图 -->
-  <rect x="20" y="214" width="640" height="164" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="30" y="232" font-size="8" font-weight="600" fill="#8C8980">板块六册地图</text>
-  <rect x="30" y="240" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="132" y="260" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">000 全貌 ★ 你在这里</text>
-  <text x="132" y="276" font-size="7" fill="#4A4945" text-anchor="middle">责任边界 · 六册地图</text>
-  <text x="132" y="289" font-size="7" fill="#4A4945" text-anchor="middle">分界 · 学习路径</text>
-  <rect x="241" y="240" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="343" y="260" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">001 云上网络</text>
-  <text x="343" y="276" font-size="7" fill="#4A4945" text-anchor="middle">VPC · 安全组 · SLB · NAT</text>
-  <text x="343" y="289" font-size="7" fill="#4A4945" text-anchor="middle">与自建网络对照</text>
-  <rect x="452" y="240" width="196" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="550" y="260" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">002 云主机与镜像</text>
-  <text x="550" y="276" font-size="7" fill="#4A4945" text-anchor="middle">规格族 · 镜像 · 生命周期</text>
-  <text x="550" y="289" font-size="7" fill="#4A4945" text-anchor="middle">释放/停机的数据后果</text>
-  <rect x="30" y="304" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="132" y="324" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">003 云数据库与存储</text>
-  <text x="132" y="340" font-size="7" fill="#4A4945" text-anchor="middle">RDS 责任边界 · 高可用</text>
-  <text x="132" y="353" font-size="7" fill="#4A4945" text-anchor="middle">OSS · 生命周期规则</text>
-  <rect x="241" y="304" width="205" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="343" y="324" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">004 Terraform IaC 基础</text>
-  <text x="343" y="340" font-size="7" fill="#4A4945" text-anchor="middle">HCL · state · plan/apply</text>
-  <text x="343" y="353" font-size="7" fill="#4A4945" text-anchor="middle">漂移 · 与 Ansible 对照</text>
-  <rect x="452" y="304" width="196" height="56" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="550" y="324" font-size="8.2" font-weight="600" fill="#7A4A12" text-anchor="middle">005 云观测与账单衔接</text>
-  <text x="550" y="340" font-size="7" fill="#7A4A12" text-anchor="middle">云监控/操作审计</text>
-  <text x="550" y="353" font-size="7" fill="#7A4A12" text-anchor="middle">与自建体系衔接 · 标签</text>
+  <!-- 标题 -->
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#263238">云上责任边界与板块地图：厂商与用户的分界，正文五册各守一段</text>
+  <text x="1920" y="52" font-size="11" fill="#757575" text-anchor="end">数据来源：15-云平台 板块 001 / 002 / 003、011~015、190 册正文 · 2026-11-26</text>
 
-  <!-- 底部 -->
-  <rect x="20" y="392" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="32" y="409" font-size="7.8" font-weight="600" fill="#7A4A12">★ 接手云账号的第一件事：给全部资源打标签（env/app/owner）+ 开操作审计长存——账单与追溯都靠它们（005）</text>
+  <!-- ================= 左区：责任共担 ================= -->
+  <rect x="40" y="84" width="880" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="64" y="120" font-size="15" font-weight="bold" fill="#263238">责任共担：虚线以下出事提工单，虚线以上出事找自己</text>
+  <text x="896" y="120" font-size="11" fill="#757575" text-anchor="end">每一册都在重划这条线</text>
 
-  <text x="32" y="448" font-size="8.6" fill="#8C8980">分界：K8s 托管深入 → 容器 005~009；SQL 优化 → 数据库 007/010；加固体系 → 安全运维 000~004；备份方法论 → Linux 010。</text>
-  </g>
+  <!-- 用户责任区 -->
+  <rect x="64" y="140" width="832" height="250" rx="8" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="84" y="166" font-size="13" font-weight="bold" fill="#0d47a1">用户责任区：出事找你自己</text>
+
+  <rect x="88" y="178" width="784" height="60" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="108" y="202" font-size="13" font-weight="bold" fill="#0d2f5c">数据与成本（用户）</text>
+  <text x="108" y="224" font-size="11.5" fill="#0d2f5c">数据正确性 · SQL 与索引 · 容量规划 · 账单与分账（013 / 015）</text>
+
+  <rect x="88" y="248" width="784" height="60" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="108" y="272" font-size="13" font-weight="bold" fill="#0d2f5c">配置与身份（用户来配，厂商只给开关）</text>
+  <text x="108" y="294" font-size="11.5" fill="#0d2f5c">安全组规则 · 账号与 ACL · 备份开关——谁配错了算谁的（011 / 013）</text>
+
+  <rect x="88" y="318" width="784" height="60" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="108" y="342" font-size="13" font-weight="bold" fill="#0d2f5c">系统与运行时（用户，ECS 场景）</text>
+  <text x="108" y="364" font-size="11.5" fill="#0d2f5c">OS 加固 · 应用部署 · 登录与密钥——释放 / 停机会丢什么，先搞清再动手（012）</text>
+
+  <!-- 责任边界虚线 -->
+  <line x1="64" y1="410" x2="896" y2="410" stroke="#c62828" stroke-width="2.5" stroke-dasharray="10 6"/>
+  <rect x="300" y="394" width="360" height="32" rx="16" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="480" y="415" font-size="12" font-weight="bold" fill="#7f0000" text-anchor="middle">责任边界 · 以下提工单，以上找自己</text>
+
+  <!-- 厂商责任区 -->
+  <rect x="64" y="436" width="832" height="174" rx="8" fill="#ffffff" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="84" y="462" font-size="13" font-weight="bold" fill="#123314">厂商责任区：出事提工单（SLA 兜底）</text>
+
+  <rect x="88" y="476" width="784" height="60" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="108" y="500" font-size="13" font-weight="bold" fill="#123314">托管服务自身（厂商）</text>
+  <text x="108" y="522" font-size="11.5" fill="#123314">RDS 引擎高可用与补丁 · SLB · OSS 持久性——服务本身挂了找厂商（013）</text>
+
+  <rect x="88" y="546" width="784" height="60" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="108" y="570" font-size="13" font-weight="bold" fill="#123314">物理与虚拟化（厂商）</text>
+  <text x="108" y="592" font-size="11.5" fill="#123314">机房 · 硬件 · 虚拟化层 · 宿主机安全——看不见也管不着，也不需要管</text>
+
+  <!-- region / AZ -->
+  <rect x="64" y="626" width="832" height="72" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="84" y="654" font-size="13" font-weight="bold" fill="#0d2f5c">region 是城市，AZ 是城内物理隔离机房</text>
+  <text x="84" y="680" font-size="11.5" fill="#0d2f5c">高可用的最小跨度是跨 AZ 部署，跨 region 是容灾；同 AZ 部署等于放弃高可用（011 / 012）</text>
+
+  <!-- API / IaC -->
+  <rect x="64" y="714" width="832" height="72" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="84" y="742" font-size="13" font-weight="bold" fill="#5d4700">一切皆可 API：控制台只是 API 的皮</text>
+  <text x="84" y="768" font-size="11.5" fill="#5d4700">运维坚持 CLI / API / IaC，资源才能进流水线；IaC 让资源可评审、可重建，漂移是最大敌人（014）</text>
+
+  <!-- 左区底注 -->
+  <text x="84" y="816" font-size="11" fill="#616161">顺序读：001 → 011 → 012 → 013 → 014 → 015；账单异常直接进 015 §4。</text>
+  <text x="84" y="840" font-size="11" fill="#616161">已有自建经验：重点读 001（责任边界）与 011（网络对照）；012 / 013 按需查。</text>
+
+  <!-- ================= 右区：板块地图 ================= -->
+  <rect x="960" y="84" width="960" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="984" y="120" font-size="15" font-weight="bold" fill="#263238">板块地图：总览三件套 + 正文五册 + 附录</text>
+  <text x="1896" y="120" font-size="11" fill="#757575" text-anchor="end">主线：网络打底 → 主机交付 → 数据托管 → 代码化 → 观测收口</text>
+
+  <!-- 总览三件套 -->
+  <text x="984" y="148" font-size="12" font-weight="bold" fill="#37474f">总览三件套</text>
+  <rect x="984" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1132" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 全貌</text>
+  <text x="1132" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">责任边界 · 六册地图</text>
+  <text x="1132" y="232" font-size="11" fill="#1565c0" text-anchor="middle">分界 · 学习路径</text>
+  <rect x="1292" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 方法论</text>
+  <text x="1440" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">责任共担 · 概念优先</text>
+  <text x="1440" y="232" font-size="11" fill="#1565c0" text-anchor="middle">账单意识 · 对照自建</text>
+  <rect x="1600" y="158" width="296" height="88" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1748" y="188" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">003 全景图 ★ 本图</text>
+  <text x="1748" y="212" font-size="11" fill="#7f3f00" text-anchor="middle">责任边界 + 六册位置</text>
+  <text x="1748" y="232" font-size="11" fill="#bf360c" text-anchor="middle">板块配图唯一持有者</text>
+
+  <!-- 正文五册 -->
+  <text x="984" y="270" font-size="12" font-weight="bold" fill="#37474f">正文五册</text>
+  <rect x="1002" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1084" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">011 云上网络</text>
+  <text x="1084" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">VPC · 安全组</text>
+  <text x="1084" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">SLB · NAT</text>
+  <text x="1084" y="378" font-size="11" fill="#1565c0" text-anchor="middle">与自建防火墙对照</text>
+  <rect x="1180" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1262" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">012 主机镜像</text>
+  <text x="1262" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">规格族 · 镜像</text>
+  <text x="1262" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">生命周期管理</text>
+  <text x="1262" y="378" font-size="11" fill="#1565c0" text-anchor="middle">释放 / 停机的后果</text>
+  <rect x="1358" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">013 数据库存储</text>
+  <text x="1440" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">RDS 责任边界</text>
+  <text x="1440" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">高可用 · 备份</text>
+  <text x="1440" y="378" font-size="11" fill="#1565c0" text-anchor="middle">OSS · 生命周期</text>
+  <rect x="1536" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1618" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">014 IaC 基础</text>
+  <text x="1618" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">HCL · state</text>
+  <text x="1618" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">plan / apply</text>
+  <text x="1618" y="378" font-size="11" fill="#1565c0" text-anchor="middle">漂移 · 先 plan</text>
+  <rect x="1714" y="280" width="164" height="104" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1796" y="308" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">015 观测成本 ★</text>
+  <text x="1796" y="334" font-size="11" fill="#7f3f00" text-anchor="middle">云监控 · 审计</text>
+  <text x="1796" y="356" font-size="11" fill="#7f3f00" text-anchor="middle">账单分账 · 标签</text>
+  <text x="1796" y="378" font-size="11" fill="#bf360c" text-anchor="middle">衔接自建观测体系</text>
+
+  <!-- 附录 -->
+  <rect x="984" y="404" width="912" height="52" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="1440" y="436" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">190 术语表：词汇 · 缩写 · 易混对 · 症状反查——按症状反查册号</text>
+
+  <!-- 跨板块分界 -->
+  <rect x="984" y="476" width="912" height="170" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1004" y="506" font-size="13" font-weight="bold" fill="#5e35b1">跨板块分界：这些问题不归本板块管</text>
+  <text x="1004" y="534" font-size="11.5" fill="#37474f">K8s 托管版（ACK / EKS）的深入 →「容器」121~125——本板块只讲「云上 K8s」形态</text>
+  <text x="1004" y="558" font-size="11.5" fill="#37474f">数据库选型与 SQL 优化 →「数据库」133 / 134——本板块 013 只讲托管形态</text>
+  <text x="1004" y="582" font-size="11.5" fill="#37474f">自建监控体系（Prometheus 全套）→「监控」116 / 117——本板块 015 只讲云产品衔接</text>
+  <text x="1004" y="606" font-size="11.5" fill="#37474f">安全加固与等保完整体系 →「安全运维」015 §4——本板块只讲安全组与网络层</text>
+  <text x="1004" y="630" font-size="11.5" fill="#37474f">云厂商 CLI 完整命令手册 → 以官方文档为准——本册只给概念与最常用命令</text>
+
+  <!-- 接手第一步 -->
+  <rect x="984" y="666" width="912" height="100" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="1004" y="696" font-size="13" font-weight="bold" fill="#bf360c">★ 接手云账号的第一件事</text>
+  <text x="1004" y="722" font-size="12" fill="#5d4037">给全部资源打标签（env / app / owner）+ 开操作审计长保留——账单分账与事后追溯都靠它们（015）</text>
+  <text x="1004" y="746" font-size="11" fill="#616161">没有标签与审计的账号，泄漏与误删都追不回——这两件事拖到资源多了再做就晚了</text>
+
+  <!-- 右区底注 -->
+  <text x="1004" y="794" font-size="11" fill="#616161">按任务进：搭 VPC → 011；开通数据库 → 013；资源用代码管 → 014；账单异常 → 015 §4</text>
+  <text x="1004" y="818" font-size="11" fill="#616161">误解澄清：上云 ≠ 不用运维——接管的是机器与底层，SQL / 容量 / 数据正确性 / 账单全是你（001）</text>
+
+  <!-- 底部汇总 -->
+  <rect x="40" y="878" width="1880" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="912" font-size="13" font-weight="bold" fill="#bf360c">一句话总结：云厂商接管机器与底层，你保留数据、配置、SQL、容量与账单——每一册都在划这条责任边界线。</text>
+  <text x="64" y="942" font-size="11.5" fill="#7f3f00">接手账号先打标签、开审计；资源变化走 IaC（先 plan 后 apply）；出事先分清虚线上下，再决定提工单还是自己修。</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="982" width="1880" height="42" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="64" y="996" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="96" y="1008" font-size="11" fill="#37474f">用户侧 / 板块册卡</text>
+  <rect x="300" y="996" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="332" y="1008" font-size="11" fill="#37474f">厂商侧</text>
+  <rect x="490" y="996" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="522" y="1008" font-size="11" fill="#37474f">共同开关 / API · IaC 提示</text>
+  <rect x="760" y="996" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="792" y="1008" font-size="11" fill="#37474f">责任边界标签</text>
+  <rect x="960" y="996" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="992" y="1008" font-size="11" fill="#37474f">本图 / 观测衔接面（枢纽）</text>
+  <rect x="1230" y="996" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1"/>
+  <text x="1262" y="1008" font-size="11" fill="#37474f">术语表附录</text>
+  <rect x="1430" y="996" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="1462" y="1008" font-size="11" fill="#37474f">警示与结论块</text>
+  <rect x="1650" y="996" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1682" y="1008" font-size="11" fill="#37474f">分区容器</text>
 </svg>
