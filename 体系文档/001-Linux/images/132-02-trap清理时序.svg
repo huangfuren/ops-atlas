@@ -83,13 +83,10 @@
   <!-- ============ 图例 ============ -->
   <rect x="30" y="556" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
   <rect x="40" y="571" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="72" y="582" font-size="12" fill="#37474f">正常结束</text>
-  <rect x="264" y="571" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="296" y="582" font-size="12" fill="#37474f">set -e 中止</text>
-  <rect x="488" y="571" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="520" y="582" font-size="12" fill="#37474f">信号结束（INT / TERM）</text>
-  <rect x="800" y="571" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
-  <text x="832" y="582" font-size="12" fill="#37474f">EXIT trap</text>
-  <rect x="1000" y="571" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="1032" y="582" font-size="12" fill="#37474f">陷阱</text>
+  <text x="72" y="582" font-size="12" fill="#37474f">正常结束</text>  <rect x="226" y="571" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="258" y="582" font-size="12" fill="#37474f">set -e 中止</text>  <rect x="412" y="571" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="444" y="582" font-size="12" fill="#37474f">信号结束</text>  <rect x="598" y="571" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="630" y="582" font-size="12" fill="#37474f">EXIT trap</text>  <rect x="784" y="571" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="816" y="582" font-size="12" fill="#37474f">陷阱</text>  <rect x="970" y="571" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="1002" y="582" font-size="12" fill="#37474f">清理后退出</text>  
 </svg>

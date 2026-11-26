@@ -70,14 +70,11 @@
 
   <!-- ============ 图例 ============ -->
   <rect x="30" y="552" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
-  <rect x="40" y="567" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="72" y="578" font-size="12" fill="#37474f">备份（防删改）</text>
-  <rect x="264" y="567" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="296" y="578" font-size="12" fill="#37474f">归档（防遗忘）</text>
-  <rect x="488" y="567" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="520" y="578" font-size="12" fill="#37474f">快照（防误操作）</text>
-  <rect x="712" y="567" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="744" y="578" font-size="12" fill="#37474f">高可用（防停机）</text>
-  <rect x="936" y="567" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
-  <text x="968" y="578" font-size="12" fill="#37474f">3-2-1 底线</text>
+  <rect x="40" y="567" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="72" y="578" font-size="12" fill="#37474f">备份（防删改）</text>  <rect x="226" y="567" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="258" y="578" font-size="12" fill="#37474f">归档（防遗忘）</text>  <rect x="412" y="567" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="444" y="578" font-size="12" fill="#37474f">快照（防误操作）</text>  <rect x="598" y="567" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="630" y="578" font-size="12" fill="#37474f">高可用（防停机）</text>  <rect x="784" y="567" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+  <text x="816" y="578" font-size="12" fill="#37474f">3-2-1 底线</text>  <rect x="970" y="567" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="1002" y="578" font-size="12" fill="#37474f">反例警示</text>  
 </svg>

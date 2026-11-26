@@ -79,11 +79,9 @@
   <!-- ============ 图例 ============ -->
   <rect x="30" y="646" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
   <rect x="40" y="661" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="72" y="672" font-size="12" fill="#37474f">生效的开关</text>
-  <rect x="264" y="661" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
-  <text x="296" y="672" font-size="12" fill="#37474f">最值钱的一条（-u）</text>
-  <rect x="560" y="661" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="592" y="672" font-size="12" fill="#37474f">-e 拦不住的地方</text>
-  <rect x="836" y="661" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="868" y="672" font-size="12" fill="#37474f">静默失败的写法</text>
+  <text x="72" y="672" font-size="12" fill="#37474f">生效的开关</text>  <rect x="264" y="661" width="22" height="14" rx="3" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2.5"/>
+  <text x="296" y="672" font-size="12" fill="#37474f">最值钱的一条（-u）</text>  <rect x="488" y="661" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="520" y="672" font-size="12" fill="#37474f">-e 拦不住的地方</text>  <rect x="712" y="661" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="744" y="672" font-size="12" fill="#37474f">静默失败的写法</text>  <rect x="936" y="661" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5"/>
+  <text x="968" y="672" font-size="12" fill="#37474f">正确写法</text>  
 </svg>

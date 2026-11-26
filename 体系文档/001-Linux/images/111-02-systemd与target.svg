@@ -113,13 +113,10 @@
   <!-- ============ 图例 ============ -->
   <rect x="30" y="648" width="1140" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
   <rect x="40" y="663" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="72" y="674" font-size="12" fill="#37474f">交棒环节</text>
-  <rect x="264" y="663" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="296" y="674" font-size="12" fill="#37474f">常驻服务 / 默认目标</text>
-  <rect x="560" y="663" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="592" y="674" font-size="12" fill="#37474f">定时 / 可改配置的救援</text>
-  <rect x="836" y="663" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
-  <text x="868" y="674" font-size="12" fill="#37474f">服务器不选</text>
-  <rect x="986" y="663" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="1018" y="674" font-size="12" fill="#37474f">只读的最后一道门</text>
+  <text x="72" y="674" font-size="12" fill="#37474f">交棒环节</text>  <rect x="226" y="663" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="258" y="674" font-size="12" fill="#37474f">常驻服务 / 默认目标</text>  <rect x="412" y="663" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="444" y="674" font-size="12" fill="#37474f">定时 / 可改配置的救援</text>  <rect x="598" y="663" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="630" y="674" font-size="12" fill="#37474f">服务器不选</text>  <rect x="784" y="663" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="816" y="674" font-size="12" fill="#37474f">只读的最后一道门</text>  <rect x="970" y="663" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="1002" y="674" font-size="12" fill="#37474f">杀不掉的常驻区</text>  
 </svg>

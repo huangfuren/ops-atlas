@@ -21,28 +21,28 @@
   <text x="196" y="151" font-size="11" fill="#616161">主流</text>
   <text x="196" y="193" font-size="11" fill="#616161">国产</text>
 
-  <rect x="250" y="128" width="58" height="32" rx="16" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
-  <text x="279" y="149" font-size="11.5" font-weight="bold" fill="#7f3f00" text-anchor="middle">MySQL</text>
-  <rect x="318" y="128" width="90" height="32" rx="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="363" y="149" font-size="11.5" font-weight="bold" fill="#123314" text-anchor="middle">PostgreSQL</text>
-  <rect x="418" y="128" width="64" height="32" rx="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="450" y="149" font-size="11.5" font-weight="bold" fill="#123314" text-anchor="middle">Oracle</text>
-  <rect x="492" y="128" width="90" height="32" rx="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="537" y="149" font-size="11.5" font-weight="bold" fill="#123314" text-anchor="middle">SQL Server</text>
+  <rect x="413" y="128" width="58" height="32" rx="16" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="442" y="149" font-size="11.5" font-weight="bold" fill="#7f3f00" text-anchor="middle">MySQL</text>
+  <rect x="495" y="128" width="90" height="32" rx="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="540" y="149" font-size="11.5" font-weight="bold" fill="#123314" text-anchor="middle">PostgreSQL</text>
+  <rect x="609" y="128" width="64" height="32" rx="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="641" y="149" font-size="11.5" font-weight="bold" fill="#123314" text-anchor="middle">Oracle</text>
+  <rect x="697" y="128" width="90" height="32" rx="16" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="742" y="149" font-size="11.5" font-weight="bold" fill="#123314" text-anchor="middle">SQL Server</text>
 
-  <rect x="250" y="170" width="49" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="274" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">达梦</text>
-  <rect x="309" y="170" width="72" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="345" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">人大金仓</text>
-  <rect x="391" y="170" width="83" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="432" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">openGauss</text>
-  <rect x="484" y="170" width="70" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="519" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">GaussDB</text>
-  <rect x="564" y="170" width="58" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="593" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">TDSQL</text>
-  <rect x="632" y="170" width="77" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
-  <text x="670" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">GBase 8a</text>
-  <text x="725" y="191" font-size="11" fill="#616161">国产库不是一套经验，先看它属于哪一派</text>
+  <rect x="355.5" y="170" width="49" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="380" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">达梦</text>
+  <rect x="420.5" y="170" width="72" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="456.5" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">人大金仓</text>
+  <rect x="508.5" y="170" width="83" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="550" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">openGauss</text>
+  <rect x="607.5" y="170" width="70" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="642.5" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">GaussDB</text>
+  <rect x="693.5" y="170" width="58" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="722.5" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">TDSQL</text>
+  <rect x="767.5" y="170" width="77" height="32" rx="16" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="806" y="191" font-size="11.5" font-weight="bold" fill="#311b92" text-anchor="middle">GBase 8a</text>
+  <text x="860" y="191" font-size="11" fill="#616161">国产库不是一套经验，先看它属于哪一派</text>
 
   <!-- ② 缓存 / 键值 -->
   <rect x="30" y="238" width="1140" height="84" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
