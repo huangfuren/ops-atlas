@@ -1,54 +1,161 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 794.12" width="1200" height="794.12" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <title>虚拟化栈与板块两册地图</title>
-  <desc>虚拟化栈四层：最底层物理硬件，其上是 hypervisor（左侧 ESXi 商业派，右侧 KVM/QEMU/libvirt 开源派），再上是虚拟机（内含客户 OS 与容器），最顶是运维管理层（vCenter 与 libvirt/virsh 两列对应）。下半是板块两册地图：001 VMware vSphere 运维与 002 KVM 运维，两册概念一一对应（vCenter 对 libvirt、vMotion 对 live migration、快照纪律相同）。底部提示容器跑在虚拟机里，两层防御。</desc>
-  <g transform="scale(1.7647058824)">
-  <rect width="680" height="450" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">虚拟化栈与两大流派地图</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1040" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>虚拟化栈与板块地图：硬件到 guest 的栈，三册各管一个平台</title>
+  <desc>左区是虚拟化栈四层，自下而上依赖：物理硬件 → hypervisor（ESXi / KVM / PVE 三平台）→ 虚拟机（完整内核）→ guest OS（归 Linux 板块）。右区是板块地图：总览三件套、正文三册 011/012/013、附录 190、概念对照、跨板块分界与接手要点。数据来源：17-虚拟化 板块正文。</desc>
 
-  <!-- 栈：四层 -->
-  <rect x="20" y="50" width="430" height="60" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="34" y="72" font-size="8.6" font-weight="600" fill="#2B2A27">管理层</text>
-  <text x="34" y="90" font-size="7.4" fill="#4A4945">vCenter（VMware）｜libvirt + virsh + virt-manager（KVM）——集群/模板/迁移的管家</text>
+  <defs>
+    <marker id="axGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
 
-  <rect x="20" y="116" width="430" height="60" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="34" y="138" font-size="8.6" font-weight="600" fill="#1F4468">Hypervisor 层</text>
-  <text x="34" y="156" font-size="7.4" fill="#4A4945">ESXi（商业裸金属）｜KVM 内核模块 + QEMU 设备模拟——类型 1 裸金属架构</text>
+  <rect x="0" y="0" width="1960" height="1040" fill="#ffffff"/>
 
-  <rect x="20" y="182" width="430" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
-  <text x="34" y="204" font-size="8.6" font-weight="600" fill="#7A4A12">虚拟机层 ★ 本板块</text>
-  <text x="34" y="222" font-size="7.4" fill="#7A4A12">VM = 虚拟 CPU/内存/磁盘/网卡 + 客户 OS——与容器共享内核不同，VM 内核完整</text>
-  <text x="34" y="240" font-size="7.4" fill="#7A4A12">guest OS 加固走「Linux」003；容器跑在 VM 里走「容器」板块</text>
+  <!-- 标题 -->
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#263238">虚拟化栈与板块地图：硬件到 guest 的栈，三册各管一个平台</text>
+  <text x="1920" y="52" font-size="11" fill="#757575" text-anchor="end">数据来源：17-虚拟化 板块 001 / 002 / 003、011~013、190 册正文 · 2026-11-26</text>
 
-  <rect x="20" y="264" width="430" height="46" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="34" y="284" font-size="8.6" font-weight="600" fill="#2B2A27">物理硬件层</text>
-  <text x="34" y="300" font-size="7.4" fill="#4A4945">CPU/内存/存储（SAN/NVS）/网卡——NUMA 与 SR-IOV 影响性能</text>
+  <!-- ================= 左区：虚拟化栈 ================= -->
+  <rect x="40" y="84" width="880" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="64" y="120" font-size="15" font-weight="bold" fill="#263238">虚拟化栈：自下而上的依赖链</text>
+  <text x="896" y="120" font-size="11" fill="#757575" text-anchor="end">排障先分层再定位</text>
 
-  <!-- 两大流派对照 -->
-  <rect x="470" y="50" width="190" height="260" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="565" y="72" font-size="8.6" font-weight="600" fill="#2B2A27" text-anchor="middle">两册两流派</text>
-  <rect x="480" y="82" width="170" height="100" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="565" y="102" font-size="8.4" font-weight="600" fill="#1F4468" text-anchor="middle">001 VMware vSphere</text>
-  <text x="565" y="118" font-size="7.2" fill="#4A4945" text-anchor="middle">企业存量王者</text>
-  <text x="565" y="134" font-size="7.2" fill="#4A4945" text-anchor="middle">ESXi · vCenter · DRS/HA</text>
-  <text x="565" y="150" font-size="7.2" fill="#4A4945" text-anchor="middle">VMDK · vMotion · vDS</text>
-  <text x="565" y="166" font-size="7" fill="#8C8980" text-anchor="middle">商业全家桶，纪律为主</text>
-  <rect x="480" y="192" width="170" height="100" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="565" y="212" font-size="8.4" font-weight="600" fill="#1D5A45" text-anchor="middle">002 KVM</text>
-  <text x="565" y="228" font-size="7.2" fill="#1D5A45" text-anchor="middle">开源与云的底座</text>
-  <text x="565" y="244" font-size="7.2" fill="#1D5A45" text-anchor="middle">QEMU/libvirt · virsh</text>
-  <text x="565" y="260" font-size="7.2" fill="#1D5A45" text-anchor="middle">qcow2 · 网桥 · 热迁移</text>
-  <text x="565" y="276" font-size="7" fill="#8C8980" text-anchor="middle">公有云底层同源</text>
+  <!-- guest OS 层（归 Linux 板块） -->
+  <rect x="64" y="150" width="832" height="64" rx="6" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="84" y="176" font-size="13" font-weight="bold" fill="#546e7a">guest OS 内部：账号 / 服务 / 性能 → 归「Linux」板块</text>
+  <text x="84" y="200" font-size="11.5" fill="#546e7a">本板块止步于 hypervisor 与虚拟机层——guest 里的系统问题换板块查（「Linux」111~133）</text>
 
-  <!-- 对照关系 -->
-  <rect x="20" y="322" width="640" height="52" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="34" y="340" font-size="8" font-weight="600" fill="#2B2A27">概念一一对应（对照表在 00 术语表）</text>
-  <text x="34" y="358" font-size="7.4" fill="#4A4945">vCenter ↔ libvirt ｜ vMotion ↔ live migration ｜ VMDK ↔ qcow2 ｜ vSwitch ↔ 网桥 ｜ DRS/HA ↔ 集群调度与故障转移——会一家，另一家按表迁移</text>
+  <line x1="480" y1="214" x2="480" y2="226" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
 
-  <rect x="20" y="384" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="32" y="401" font-size="7.8" font-weight="600" fill="#7A4A12">★ 容器跑在虚拟机里是两层防御：hypervisor 隔离（本板块）+ namespace 隔离（容器板块）——排障先分层再定位</text>
+  <!-- 虚拟机层 -->
+  <rect x="64" y="230" width="832" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="84" y="258" font-size="13" font-weight="bold" fill="#0d2f5c">虚拟机层 ★ 本板块：VM = 完整虚拟内核 + 客户 OS</text>
+  <text x="84" y="282" font-size="11.5" fill="#0d2f5c">vCPU / 内存 / 磁盘 / 网卡全虚拟——与容器共享内核不同，VM 内核完整、隔离重</text>
+  <text x="84" y="306" font-size="11" fill="#1565c0">容器通常跑在 VM 里：hypervisor 隔离 + namespace 隔离 = 两层防御</text>
 
-  <text x="32" y="432" font-size="8.6" fill="#8C8980">分界：guest OS 内部 → Linux 001~009；云主机产品操作 → 云平台 002；容器与编排 → 容器板块。词汇查 00 术语表。</text>
-  </g>
+  <line x1="480" y1="318" x2="480" y2="330" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- hypervisor 层 -->
+  <rect x="64" y="334" width="832" height="176" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="84" y="362" font-size="13" font-weight="bold" fill="#37474f">Hypervisor 层：类型 1 裸金属 = 生产标准（类型 2 宿主型只用于桌面）</text>
+  <rect x="82" y="380" width="257" height="110" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="210" y="408" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">ESXi（011）</text>
+  <text x="210" y="434" font-size="11" fill="#123314" text-anchor="middle">商业裸金属 · vSphere 全家桶</text>
+  <text x="210" y="456" font-size="11" fill="#2e7d32" text-anchor="middle">vCenter 集中管理</text>
+  <text x="210" y="478" font-size="11" fill="#2e7d32" text-anchor="middle">企业存量王者</text>
+  <rect x="351" y="380" width="257" height="110" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="479" y="408" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">KVM（012）</text>
+  <text x="479" y="434" font-size="11" fill="#123314" text-anchor="middle">内核模块 + QEMU 设备模拟</text>
+  <text x="479" y="456" font-size="11" fill="#2e7d32" text-anchor="middle">开源 · 公有云底层同源</text>
+  <text x="479" y="478" font-size="11" fill="#2e7d32" text-anchor="middle">libvirt / virsh 管理面</text>
+  <rect x="620" y="380" width="257" height="110" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="748" y="408" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">PVE（013）</text>
+  <text x="748" y="434" font-size="11" fill="#7f3f00" text-anchor="middle">Debian + KVM 开箱打包</text>
+  <text x="748" y="456" font-size="11" fill="#bf360c" text-anchor="middle">Web 控制台 + 集群 pmxcfs</text>
+  <text x="748" y="478" font-size="11" fill="#bf360c" text-anchor="middle">卡死处置实战（本板块配图）</text>
+
+  <line x1="480" y1="510" x2="480" y2="522" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- 物理硬件层 -->
+  <rect x="64" y="526" width="832" height="72" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
+  <text x="84" y="552" font-size="13" font-weight="bold" fill="#37474f">物理硬件层</text>
+  <text x="84" y="578" font-size="11.5" fill="#37474f">CPU / 内存 / 存储（SAN / NAS）/ 网卡——NUMA 与 SR-IOV 直接影响虚拟机性能（011 / 012 资源节）</text>
+
+  <!-- 核心概念 -->
+  <rect x="64" y="614" width="832" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="84" y="640" font-size="13" font-weight="bold" fill="#0d2f5c">五个核心概念贯穿三册（002 方法论统一口径，正文册按平台落工具）</text>
+  <text x="84" y="664" font-size="11.5" fill="#0d2f5c">类型 1 vs 类型 2 · 快照 ≠ 备份（链式差分 vs 独立副本，011 §2）· 超分双刃剑（ballooning 与准入控制是安全阀）</text>
+  <text x="84" y="688" font-size="11.5" fill="#0d2f5c">迁移是杀手锏（vMotion / live migration——硬件维护不停机）· 虚拟机 vs 容器（两层防御，不是替代关系）</text>
+
+  <!-- 按任务进 -->
+  <rect x="64" y="726" width="832" height="52" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="84" y="748" font-size="12" font-weight="bold" fill="#bf360c">按任务进：快照 / 磁盘满 → 011 §2 / §4；新建 VM → 012 §3；找宿主机 / 卡死处置 → 013 §3 / §6</text>
+  <text x="84" y="770" font-size="11" fill="#7f3f00">迁移 → 各册迁移节；资源告警 → 各册资源节</text>
+
+  <!-- 左区底注 -->
+  <text x="84" y="806" font-size="11" fill="#616161">误解澄清：有快照就不用备份是最贵的一课——快照链依赖母盘，母盘坏全坏；备份才是独立副本（001）</text>
+  <text x="84" y="830" font-size="11" fill="#616161">CPU 超分不是把 vCPU 配平就行：要看 NUMA 与负载特征，盲目超分引入调度延迟；内存超分必须配告警</text>
+
+  <!-- ================= 右区：板块地图 ================= -->
+  <rect x="960" y="84" width="960" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="984" y="120" font-size="15" font-weight="bold" fill="#263238">板块地图：总览三件套 + 正文三册 + 附录</text>
+  <text x="1896" y="120" font-size="11" fill="#757575" text-anchor="end">三册管同一个栈层，工具不同、概念一一对应</text>
+
+  <!-- 总览三件套 -->
+  <text x="984" y="148" font-size="12" font-weight="bold" fill="#37474f">总览三件套</text>
+  <rect x="984" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1132" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 全貌</text>
+  <text x="1132" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">虚拟化栈 · 流派选型</text>
+  <text x="1132" y="232" font-size="11" fill="#1565c0" text-anchor="middle">分界 · 学习路径</text>
+  <rect x="1292" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 方法论</text>
+  <text x="1440" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">快照 / 迁移 / 超分统一口径</text>
+  <text x="1440" y="232" font-size="11" fill="#1565c0" text-anchor="middle">概念对照思维</text>
+  <rect x="1600" y="158" width="296" height="88" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1748" y="188" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">003 全景图 ★ 本图</text>
+  <text x="1748" y="212" font-size="11" fill="#7f3f00" text-anchor="middle">栈分层 + 三册位置</text>
+  <text x="1748" y="232" font-size="11" fill="#bf360c" text-anchor="middle">板块配图唯一持有者</text>
+
+  <!-- 正文三册 -->
+  <text x="984" y="270" font-size="12" font-weight="bold" fill="#37474f">正文三册</text>
+  <rect x="984" y="280" width="296" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1132" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">011 VMware vSphere</text>
+  <text x="1132" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">ESXi / vCenter 架构</text>
+  <text x="1132" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">生命周期 · 快照纪律 · DRS / HA</text>
+  <text x="1132" y="378" font-size="11" fill="#1565c0" text-anchor="middle">企业存量环境王者</text>
+  <rect x="1292" y="280" width="296" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">012 KVM</text>
+  <text x="1440" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">libvirt / virsh · 虚拟机 XML</text>
+  <text x="1440" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">qcow2 · 网桥 · 热迁移</text>
+  <text x="1440" y="378" font-size="11" fill="#1565c0" text-anchor="middle">开源与云上的底座</text>
+  <rect x="1600" y="280" width="296" height="104" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1748" y="308" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">013 PVE ★ 配图所在册</text>
+  <text x="1748" y="334" font-size="11" fill="#7f3f00" text-anchor="middle">集群与 pmxcfs</text>
+  <text x="1748" y="356" font-size="11" fill="#7f3f00" text-anchor="middle">IP→宿主机映射 · API 优先</text>
+  <text x="1748" y="378" font-size="11" fill="#bf360c" text-anchor="middle">卡死判定与处置（013-01）</text>
+
+  <!-- 概念对照 -->
+  <rect x="984" y="404" width="912" height="56" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="1004" y="426" font-size="12" font-weight="bold" fill="#37474f">概念一一对应（完整对照表在 190 术语表）——会一家，另一家按表迁移</text>
+  <text x="1004" y="448" font-size="11.5" fill="#37474f">vCenter ↔ libvirt ｜ vMotion ↔ live migration ｜ VMDK ↔ qcow2 ｜ vSwitch ↔ 网桥 ｜ DRS / HA ↔ 集群调度与故障转移</text>
+
+  <!-- 跨板块分界 -->
+  <rect x="984" y="480" width="912" height="170" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1004" y="510" font-size="13" font-weight="bold" fill="#5e35b1">跨板块分界：这些问题不归本板块管</text>
+  <text x="1004" y="538" font-size="11.5" fill="#37474f">容器与编排（Docker / K8s）→「容器」板块——它们跑在本板块的 VM 里</text>
+  <text x="1004" y="562" font-size="11.5" fill="#37474f">云主机（ECS / EC2）的产品操作 →「云平台」012——云主机就是托管虚拟机，KVM 概念通用</text>
+  <text x="1004" y="586" font-size="11.5" fill="#37474f">主机系统内部（账号 / 服务 / 性能）→「Linux」111~133——guest 里的 OS 归 Linux 板块</text>
+  <text x="1004" y="610" font-size="11.5" fill="#37474f">guest OS 加固 →「Linux」113——与 hypervisor 加固是两层，不能互相替代</text>
+  <text x="1004" y="634" font-size="11.5" fill="#37474f">网络协议层排障 →「网络」板块——本板块只到虚拟交换机这一层</text>
+
+  <!-- 接手要点 -->
+  <rect x="984" y="670" width="912" height="100" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="1004" y="700" font-size="13" font-weight="bold" fill="#bf360c">★ 接手虚拟化平台第一件事</text>
+  <text x="1004" y="726" font-size="12" fill="#5d4037">把「快照 ≠ 备份」刻进脑子：快照链依赖母盘，母盘坏全坏——独立副本才算备份（011 §2）</text>
+  <text x="1004" y="750" font-size="11" fill="#616161">超分必须配告警与准入控制：全部 VM 同时要资源时会互相挤——ballooning 不是无限弹药</text>
+
+  <!-- 右区底注 -->
+  <text x="1004" y="794" font-size="11" fill="#616161">按平台进：只管 VMware → 011；KVM / 开源 → 012；PVE → 013（012 的 KVM 概念是它的底座）</text>
+  <text x="1004" y="818" font-size="11" fill="#616161">都要管：001 → 011 → 012 → 013，重点做各册术语对照表——经验按表迁移，不重学</text>
+
+  <!-- 底部汇总 -->
+  <rect x="40" y="878" width="1880" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="912" font-size="13" font-weight="bold" fill="#bf360c">一句话总结：虚拟化是容器与云主机的共同地基——三册管同一个栈层，概念一一对应，工具按平台落地。</text>
+  <text x="64" y="942" font-size="11.5" fill="#7f3f00">两条铁律：快照不是备份；排障先分层——先定位到栈的哪一层，再进对应板块或对应册。</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="982" width="1880" height="42" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="64" y="996" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="96" y="1008" font-size="11" fill="#37474f">栈层 / 板块册卡</text>
+  <rect x="280" y="996" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="312" y="1008" font-size="11" fill="#37474f">hypervisor 平台（ESXi / KVM）</text>
+  <rect x="590" y="996" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="622" y="1008" font-size="11" fill="#37474f">PVE / 本图 / 配图所在册（枢纽）</text>
+  <rect x="890" y="996" width="22" height="14" rx="3" fill="#eceff1" stroke="#90a4ae" stroke-width="1"/>
+  <text x="922" y="1008" font-size="11" fill="#37474f">物理硬件层</text>
+  <rect x="1070" y="996" width="22" height="14" rx="3" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1102" y="1008" font-size="11" fill="#37474f">guest 层（归其他板块）</text>
+  <rect x="1310" y="996" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="1342" y="1008" font-size="11" fill="#37474f">警示与结论块</text>
+  <rect x="1520" y="996" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1552" y="1008" font-size="11" fill="#37474f">分区容器</text>
 </svg>
