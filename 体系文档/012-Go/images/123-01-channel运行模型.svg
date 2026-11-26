@@ -1,76 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>channel 运行模型与 select：缓冲、阻塞、多路复用</title>
-  <desc>channel 运行模型：无缓冲 channel 发送即阻塞直到接收方就绪；有缓冲 channel 容量满时发送阻塞、空时接收阻塞。select 同时等多个 channel，就绪的随机选一个，default 分支实现非阻塞，time.After 实现超时。坑位提示：向 nil channel 收发永久阻塞、close 后接收得到零值、只由发送方 close。</desc>
-
-  <rect width="680" height="420" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">channel 运行模型与 select</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">009 §2 · 配图</text>
+  <desc>无缓冲 channel 双方就绪才交接；有缓冲 channel 满则发送阻塞、空则接收阻塞。select 同时等多个 channel，就绪的随机选一个，default 非阻塞，time.After 超时。底部四个坑与选型口诀、图例。</desc>
 
   <defs>
-    <marker id="c9Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="c9Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    <marker id="axBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
     </marker>
   </defs>
 
+  <rect x="0" y="0" width="1200" height="720" fill="#ffffff"/>
+
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">channel 运行模型与 select</text>
+  <text x="1160" y="48" font-size="12" fill="#616161" text-anchor="end">123 §2.5</text>
+
   <!-- 无缓冲 -->
-  <rect x="20" y="56" width="315" height="120" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="34" y="76" font-size="8.6" font-weight="600" fill="#2B2A27">无缓冲：make(chan T)</text>
-  <rect x="34" y="86" width="70" height="30" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="69" y="105" font-size="7.6" fill="#1F4468" text-anchor="middle">发送方</text>
-  <rect x="250" y="86" width="70" height="30" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="285" y="105" font-size="7.6" fill="#1F4468" text-anchor="middle">接收方</text>
-  <line x1="106" y1="101" x2="246" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c9Blue)"/>
-  <text x="176" y="94" font-size="7" fill="#4A4945" text-anchor="middle">双方都就绪才交接</text>
-  <text x="34" y="140" font-size="7.2" fill="#7A322B">发送后没人收 → 发送方永久阻塞</text>
-  <text x="34" y="156" font-size="7.2" fill="#4A4945">适合：同步交接点（信号、确认）</text>
+  <rect x="40" y="80" width="540" height="192" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="106" font-size="13" font-weight="bold" fill="#37474f">无缓冲：<tspan font-family="ui-monospace,Menlo,Consolas,monospace">make(chan T)</tspan></text>
+  <rect x="70" y="120" width="110" height="36" rx="4" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="125" y="143" font-size="12" fill="#0d2f5c" text-anchor="middle">发送方</text>
+  <rect x="440" y="120" width="110" height="36" rx="4" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="495" y="143" font-size="12" fill="#0d2f5c" text-anchor="middle">接收方</text>
+  <line x1="184" y1="138" x2="436" y2="138" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <text x="310" y="128" font-size="11" fill="#37474f" text-anchor="middle">双方都就绪才交接</text>
+  <text x="60" y="188" font-size="12" fill="#c62828">发送后没人收 → 发送方永久阻塞</text>
+  <text x="60" y="214" font-size="12" fill="#37474f">适合：同步交接点（信号、确认）</text>
+  <text x="60" y="240" font-size="11.5" fill="#616161">交接 = 一次握手的「 rendezvous 」</text>
 
   <!-- 有缓冲 -->
-  <rect x="345" y="56" width="315" height="120" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="359" y="76" font-size="8.6" font-weight="600" fill="#2B2A27">有缓冲：make(chan T, n)</text>
-  <rect x="359" y="86" width="70" height="30" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="394" y="105" font-size="7.6" fill="#1F4468" text-anchor="middle">发送方</text>
-  <rect x="446" y="88" width="26" height="26" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <rect x="474" y="88" width="26" height="26" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <rect x="502" y="88" width="26" height="26" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <rect x="530" y="88" width="26" height="26" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="501" y="80" font-size="6.8" fill="#8C8980" text-anchor="middle">缓冲区 n=4 · 满则阻塞</text>
-  <rect x="575" y="86" width="70" height="30" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="610" y="105" font-size="7.6" fill="#1F4468" text-anchor="middle">接收方</text>
-  <line x1="431" y1="101" x2="444" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c9Blue)"/>
-  <line x1="558" y1="101" x2="572" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c9Blue)"/>
-  <text x="359" y="140" font-size="7.2" fill="#4A4945">缓冲不满发送不阻塞，空则接收阻塞</text>
-  <text x="359" y="156" font-size="7.2" fill="#4A4945">适合：削峰、生产者消费者解耦</text>
+  <rect x="620" y="80" width="540" height="192" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="640" y="106" font-size="13" font-weight="bold" fill="#37474f">有缓冲：<tspan font-family="ui-monospace,Menlo,Consolas,monospace">make(chan T, n)</tspan></text>
+  <rect x="650" y="120" width="100" height="36" rx="4" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="700" y="143" font-size="12" fill="#0d2f5c" text-anchor="middle">发送方</text>
+  <rect x="774" y="124" width="40" height="28" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="818" y="124" width="40" height="28" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="862" y="124" width="40" height="28" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <rect x="906" y="124" width="40" height="28" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="860" y="170" font-size="11" fill="#616161" text-anchor="middle">缓冲区 n=4 · 满则阻塞</text>
+  <rect x="1020" y="120" width="110" height="36" rx="4" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="1075" y="143" font-size="12" fill="#0d2f5c" text-anchor="middle">接收方</text>
+  <line x1="752" y1="138" x2="770" y2="138" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <line x1="948" y1="138" x2="1016" y2="138" stroke="#1565c0" stroke-width="2" marker-end="url(#axBlue)"/>
+  <text x="640" y="196" font-size="12" fill="#37474f">缓冲不满发送不阻塞，空则接收阻塞</text>
+  <text x="640" y="222" font-size="12" fill="#37474f">适合：削峰、生产者消费者解耦</text>
+  <text x="640" y="248" font-size="11.5" fill="#616161">缓冲只是排队，不改变「满了会堵」的事实</text>
 
   <!-- select -->
-  <rect x="20" y="190" width="640" height="110" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="34" y="210" font-size="8.6" font-weight="600" fill="#2B2A27">select：等多路，就绪的随机选一个</text>
-  <rect x="34" y="222" width="190" height="66" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="129" y="242" font-size="7.4" fill="#1F4468" text-anchor="middle">ch1（数据）</text>
-  <text x="129" y="258" font-size="7.4" fill="#4A4945" text-anchor="middle">case v := &lt;-ch1:</text>
-  <rect x="244" y="222" width="190" height="66" rx="2" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="339" y="242" font-size="7.4" fill="#1F4468" text-anchor="middle">ch2（取消信号）</text>
-  <text x="339" y="258" font-size="7.4" fill="#4A4945" text-anchor="middle">case &lt;-ctx.Done():</text>
-  <rect x="454" y="222" width="190" height="66" rx="2" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1"/>
-  <text x="549" y="242" font-size="7.4" font-weight="600" fill="#1D5A45" text-anchor="middle">default / time.After</text>
-  <text x="549" y="258" font-size="7.4" fill="#1D5A45" text-anchor="middle">非阻塞 · 超时退出</text>
-  <line x1="224" y1="255" x2="242" y2="255" stroke="#7FA6D0" stroke-width="1" marker-end="url(#c9Blue)"/>
-  <line x1="434" y1="255" x2="452" y2="255" stroke="#7FA6D0" stroke-width="1" marker-end="url(#c9Blue)"/>
-  <text x="34" y="296" font-size="7.2" fill="#4A4945">无 default 且都没就绪 → select 阻塞；多个就绪 → 随机选（避免饿死）</text>
+  <rect x="40" y="292" width="1120" height="176" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="318" font-size="13" font-weight="bold" fill="#37474f">select：等多路，就绪的随机选一个</text>
+  <rect x="70" y="332" width="340" height="76" rx="4" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="240" y="358" font-size="12" fill="#0d2f5c" text-anchor="middle">ch1（数据）</text>
+  <text x="240" y="384" font-size="11" fill="#0d2f5c" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">case v := &lt;-ch1:</text>
+  <rect x="430" y="332" width="340" height="76" rx="4" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="600" y="358" font-size="12" fill="#0d2f5c" text-anchor="middle">ch2（取消信号）</text>
+  <text x="600" y="384" font-size="11" fill="#0d2f5c" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">case &lt;-ctx.Done():</text>
+  <rect x="790" y="332" width="340" height="76" rx="4" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="960" y="358" font-size="12" font-weight="bold" fill="#123314" text-anchor="middle">default / time.After</text>
+  <text x="960" y="384" font-size="12" fill="#123314" text-anchor="middle">非阻塞 · 超时退出</text>
+  <text x="60" y="440" font-size="12" fill="#37474f">无 default 且都没就绪 → select 阻塞；多个就绪 → 随机选一个（避免饿死）</text>
 
-  <!-- 坑 -->
-  <rect x="20" y="310" width="640" height="66" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="34" y="330" font-size="8.4" font-weight="600" fill="#7A322B">四个坑</text>
-  <text x="34" y="348" font-size="7.6" fill="#7A322B">① 向 nil channel 收发 = 永久阻塞（未 make 就用）  ② close 后接收得到零值（ok 判断区分）  ③ close 只能由发送方调，接收方 close = panic</text>
-  <text x="34" y="364" font-size="7.6" fill="#7A322B">④ `time.After` 在 for 循环里每轮都新建 Timer——长循环用 NewTimer + Reset（009 §3 坑 3）</text>
+  <!-- 四个坑 -->
+  <rect x="40" y="488" width="1120" height="120" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="60" y="514" font-size="13" font-weight="bold" fill="#7f0000">四个坑</text>
+  <text x="60" y="540" font-size="12" fill="#7f0000">① 向 nil channel 收发 = 永久阻塞（未 make 就用）　　② close 后接收得到零值（用 ok 判断区分）</text>
+  <text x="60" y="566" font-size="12" fill="#7f0000">③ close 只能由发送方调，接收方 close = panic　　④ 多个发送方 close 前，先约定唯一的关闭者</text>
+  <text x="60" y="592" font-size="12" fill="#7f0000">⑤ time.After 在 for 循环里每轮新建 Timer——长循环用 NewTimer + Reset（123 §3 坑 3）</text>
 
-  <text x="32" y="400" font-size="8.6" fill="#8C8980">选型口诀：同步交接用无缓冲；解耦削峰用有缓冲；多路等任一用 select。channel 泄漏排查见 §3。</text>
+  <!-- 尾注 -->
+  <text x="40" y="636" font-size="11.5" fill="#616161">选型口诀：同步交接用无缓冲；解耦削峰用有缓冲；多路等任一用 select。channel 泄漏排查见 123 §3。</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="652" width="1120" height="48" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="60" y="666" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="92" y="678" font-size="12" fill="#37474f">发送 / 接收方与 case</text>
+  <rect x="360" y="666" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="392" y="678" font-size="12" fill="#37474f">default / 超时出口</text>
+  <rect x="620" y="666" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="652" y="678" font-size="12" fill="#37474f">坑块</text>
 </svg>
