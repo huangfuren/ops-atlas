@@ -1,67 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>Jenkins 架构：controller 只调度，构建下放 agent，标签匹配能力</title>
   <desc>GitLab 的 push 通过 webhook 秒级触发 controller；controller 只负责调度、记录与展示，把构建任务按标签派发给对应的 agent——java17 的任务到装了 JDK 17 的机器，docker 标签的到容器构建机。在 controller 上直接构建有三大后遗症：磁盘 CPU 互拖、凭据污染、无法扩容。</desc>
 
-  <rect width="680" height="360" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Jenkins 架构：controller 调度，agent 干活</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">能力匹配靠 label</text>
+  <rect x="0" y="0" width="1200" height="690" fill="#ffffff"/>
 
   <defs>
-    <marker id="e2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
     </marker>
   </defs>
 
-  <!-- GitLab -->
-  <rect x="40" y="70" width="130" height="44" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="105" y="89" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">GitLab</text>
-  <text x="105" y="105" font-size="7.4" fill="#1D5A45" text-anchor="middle">push / MR 事件</text>
+  <!-- 标题 + 数据来源 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#0d47a1">Jenkins 架构：controller 调度，agent 干活</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：006-CICD 112 §2.1 / §2.3 / §2.6 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">能力匹配靠 label</text>
 
-  <line x1="170" y1="92" x2="234" y2="92" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e2Blue)"/>
-  <text x="202" y="84" font-size="7.2" fill="#8C8980" text-anchor="middle">webhook</text>
+  <!-- GitLab 外部 -->
+  <rect x="40" y="130" width="200" height="90" rx="27" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="140" y="166" font-size="15" font-weight="bold" fill="#37474f" text-anchor="middle">GitLab</text>
+  <text x="140" y="192" font-size="11.5" fill="#37474f" text-anchor="middle">push / MR 事件</text>
+
+  <!-- webhook -->
+  <line x1="244" y1="175" x2="306" y2="175" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="275" y="165" font-size="12" font-weight="bold" fill="#0d47a1" text-anchor="middle">webhook</text>
 
   <!-- controller -->
-  <rect x="240" y="52" width="200" height="80" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="340" y="74" font-size="9.5" font-weight="600" fill="#1F4468" text-anchor="middle">controller（2C4G 足够）</text>
-  <text x="340" y="92" font-size="7.6" fill="#1F4468" text-anchor="middle">调度 · 构建记录 · Web UI</text>
-  <text x="340" y="108" font-size="7.6" fill="#1F4468" text-anchor="middle">凭据保管 · Jenkinsfile 读取</text>
-  <text x="340" y="124" font-size="7.6" fill="#7A322B" text-anchor="middle">✗ 不跑构建（三大后遗症）</text>
+  <rect x="310" y="112" width="580" height="126" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="600" y="146" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">controller（2C4G 足够）</text>
+  <text x="600" y="174" font-size="12" fill="#7f3f00" text-anchor="middle">调度 · 构建记录 · Web UI · 凭据保管 · Jenkinsfile 读取</text>
+  <text x="600" y="200" font-size="12" fill="#7f0000" text-anchor="middle">禁止：在 controller 上跑构建——三大后遗症：互拖 / 污染 / 无法扩容</text>
+  <text x="600" y="224" font-size="11.5" fill="#5d4700" text-anchor="middle">备份只需 /var/jenkins_home，进 Git 的 Jenkinsfile 不占备份</text>
 
   <!-- 派发线 -->
-  <line x1="340" y1="132" x2="340" y2="156" stroke="#7FA6D0" stroke-width="1.2"/>
-  <line x1="130" y1="156" x2="550" y2="156" stroke="#7FA6D0" stroke-width="1.2"/>
-  <line x1="130" y1="156" x2="130" y2="184" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e2Blue)"/>
-  <line x1="340" y1="156" x2="340" y2="184" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e2Blue)"/>
-  <line x1="550" y1="156" x2="550" y2="184" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#e2Blue)"/>
-  <text x="228" y="150" font-size="7.2" fill="#8C8980" text-anchor="middle">按 label 派发</text>
+  <line x1="600" y1="238" x2="600" y2="268" stroke="#1565c0" stroke-width="2"/>
+  <line x1="180" y1="268" x2="1020" y2="268" stroke="#1565c0" stroke-width="2"/>
+  <line x1="180" y1="268" x2="180" y2="306" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <line x1="600" y1="268" x2="600" y2="306" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <line x1="1020" y1="268" x2="1020" y2="306" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="810" y="260" font-size="12" fill="#0d47a1">按 label 派发</text>
 
   <!-- agents -->
-  <rect x="60" y="188" width="150" height="88" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="135" y="210" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">agent-1</text>
-  <text x="135" y="228" font-size="7.6" fill="#4A4945" text-anchor="middle">labels: linux, java17</text>
-  <text x="135" y="246" font-size="7.4" fill="#8C8980" text-anchor="middle">装了 JDK 17 的构建机</text>
-  <text x="135" y="262" font-size="7.4" fill="#8C8980" text-anchor="middle">workspace 独立</text>
+  <rect x="40" y="312" width="280" height="132" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="180" y="344" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">agent-1</text>
+  <text x="180" y="370" font-size="11.5" fill="#123314" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">labels: linux, java17</text>
+  <text x="180" y="394" font-size="11.5" fill="#123314" text-anchor="middle">装了 JDK 17 的构建机</text>
+  <text x="180" y="418" font-size="11" fill="#2e5230" text-anchor="middle">workspace 独立</text>
 
-  <rect x="265" y="188" width="150" height="88" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="340" y="210" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">agent-2</text>
-  <text x="340" y="228" font-size="7.6" fill="#4A4945" text-anchor="middle">labels: linux, node18</text>
-  <text x="340" y="246" font-size="7.4" fill="#8C8980" text-anchor="middle">前端项目构建机</text>
-  <text x="340" y="262" font-size="7.4" fill="#8C8980" text-anchor="middle">并发数 = 磁盘与 CPU 阀门</text>
+  <rect x="460" y="312" width="280" height="132" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="600" y="344" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">agent-2</text>
+  <text x="600" y="370" font-size="11.5" fill="#123314" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">labels: linux, node18</text>
+  <text x="600" y="394" font-size="11.5" fill="#123314" text-anchor="middle">前端项目构建机</text>
+  <text x="600" y="418" font-size="11" fill="#2e5230" text-anchor="middle">并发数 = 磁盘与 CPU 阀门</text>
 
-  <rect x="470" y="188" width="150" height="88" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="545" y="210" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">agent-3</text>
-  <text x="545" y="228" font-size="7.6" fill="#7A4A12" text-anchor="middle">labels: docker</text>
-  <text x="545" y="246" font-size="7.4" fill="#7A4A12" text-anchor="middle">容器内构建：环境即代码</text>
-  <text x="545" y="262" font-size="7.4" fill="#7A4A12" text-anchor="middle">推荐的生产形态</text>
+  <rect x="880" y="312" width="280" height="132" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1020" y="344" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ agent-3</text>
+  <text x="1020" y="370" font-size="11.5" fill="#7f3f00" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace">labels: docker</text>
+  <text x="1020" y="394" font-size="11.5" fill="#7f3f00" text-anchor="middle">容器内构建：环境即代码</text>
+  <text x="1020" y="418" font-size="11" fill="#5d4700" text-anchor="middle">推荐的生产形态</text>
 
-  <rect x="40" y="292" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="311" font-size="8.2" fill="#7A4A12">controller 上直接构建的后遗症：磁盘 CPU 互拖 UI 卡死 · 构建代码污染凭据环境 · 构建量涨了无法扩容</text>
+  <!-- 警示条 -->
+  <rect x="40" y="462" width="1120" height="76" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="60" y="490" font-size="15" font-weight="bold" fill="#7f0000">反例：controller 上直接构建的后遗症</text>
+  <text x="60" y="516" font-size="12.5" fill="#7f0000">· 磁盘与 CPU 互拖，Web UI 卡死　· 构建代码污染凭据环境　· 构建量涨了无法横向扩容</text>
 
-  <text x="32" y="346" font-size="9" fill="#8C8980">纪律：能力进标签（换机器流水线零改动），别写死节点名；备份只需 /var/jenkins_home，进 Git 的 Jenkinsfile 不占备份（002 §2.2）。</text>
+  <!-- 结论块 -->
+  <rect x="40" y="556" width="1120" height="72" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="584" font-size="15" font-weight="bold" fill="#bf360c">★ 能力进标签，别写死节点名——换机器流水线零改动（112 §2.3）</text>
+  <text x="60" y="610" font-size="12.5" fill="#5d4037">· 声明式 Jenkinsfile 进 Git，controller 只保管凭据与记录；构建下放 agent 才能扩容（112 §2.5 / §2.7）</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="644" width="1120" height="40" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="655" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1"/>
+  <text x="92" y="666" font-size="12" fill="#37474f">外部事件</text>
+  <rect x="270" y="655" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="302" y="666" font-size="12" fill="#37474f">枢纽 / 推荐形态 ★</text>
+  <rect x="560" y="655" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="592" y="666" font-size="12" fill="#37474f">构建 agent</text>
+  <rect x="820" y="655" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="852" y="666" font-size="12" fill="#37474f">反面：不这么做</text>
 </svg>

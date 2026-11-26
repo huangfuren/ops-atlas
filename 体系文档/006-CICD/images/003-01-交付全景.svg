@@ -1,85 +1,207 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758.82" width="1200" height="758.82" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1055" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>交付全景：四模块十一册 + 九段流水线</title>
+  <desc>上四行是 006-CICD 板块的阅读顺序：总览与查阅 4 册、110 版本与流水线 3 册、120 配置与制品 3 册、130 发布与运维 5 册。底部九段是从提交到观察的交付链，每段的产物是下一段的唯一输入。模块对应交付链三段：110 入口、120 中间件、130 出口。</desc>
 
-  <title>交付全景：从提交到观察的九段流水线</title>
-  <desc>提交触发 webhook 进入构建与自动测试，通过后制品化为不可变 tag 并推送制品库，部署到测试环境冒烟验证，人工审批后按滚动或灰度发布到生产，最后进入观察阶段由指标与告警兜底。每段的产物是下一段的唯一输入，每段失败即停线并通知。</desc>
-
-  <rect width="680" height="430" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">交付全景：九段流水线，段段有门禁</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">产物是下段的唯一输入</text>
+  <rect x="0" y="0" width="1960" height="1055" fill="#ffffff"/>
 
   <defs>
-    <marker id="b0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
     </marker>
   </defs>
 
-  <!-- 九段 -->
-  <circle cx="52" cy="64" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="67" font-size="8.4" fill="#1F4468" text-anchor="middle">1</text>
-  <text x="70" y="60" font-size="9" font-weight="600" fill="#1F4468">提交</text>
-  <text x="70" y="74" font-size="7.4" fill="#4A4945">git push → webhook 秒级触发</text>
-  <text x="460" y="67" font-size="7.8" fill="#8C8980">触发条件：分支规则（003 §3.5）</text>
-  <line x1="52" y1="76" x2="52" y2="90" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <!-- 标题 + 数据来源 -->
+  <text x="60" y="50" font-size="20" font-weight="bold" fill="#0f172a">交付全景：四模块十一册，串成九段流水线</text>
+  <text x="60" y="78" font-size="12" fill="#616161">来源：006-CICD README 体系总览表 · 003 全景图图例表 · 截止 2026-11-26</text>
+  <text x="1900" y="78" font-size="12" fill="#616161" text-anchor="end">四行＝阅读顺序　底部＝交付方向</text>
 
-  <circle cx="52" cy="102" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="105" font-size="8.4" fill="#1F4468" text-anchor="middle">2</text>
-  <text x="70" y="98" font-size="9" font-weight="600" fill="#1F4468">构建</text>
-  <text x="70" y="112" font-size="7.4" fill="#4A4945">编译 · 依赖安装（容器内构建）</text>
-  <text x="460" y="105" font-size="7.8" fill="#8C8980">产物：编译产物（002 §2.5）</text>
-  <line x1="52" y1="114" x2="52" y2="128" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <!-- 行① 总览与查阅 -->
+  <rect x="60" y="112" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="150" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">总览与查阅</text>
+  <text x="170" y="176" font-size="11.5" fill="#4e6b50" text-anchor="middle">先读 001-003</text>
+  <text x="170" y="196" font-size="11" fill="#4e6b50" text-anchor="middle">190 最后查</text>
 
-  <circle cx="52" cy="140" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="143" font-size="8.4" fill="#1F4468" text-anchor="middle">3</text>
-  <text x="70" y="136" font-size="9" font-weight="600" fill="#1F4468">自动测试</text>
-  <text x="70" y="150" font-size="7.4" fill="#7A322B">单元 + 静态检查 —— 门禁：红即停线</text>
-  <text x="460" y="143" font-size="7.8" fill="#8C8980">不绕行是纪律（008 §8.9）</text>
-  <line x1="52" y1="152" x2="52" y2="166" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <rect x="300" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="485" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 自动化全貌</text>
+  <text x="485" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">手工交付痛在哪 · 工具链怎么拼</text>
+  <text x="485" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">CI/CD 概念 · 选型 · 学习路径</text>
 
-  <circle cx="52" cy="178" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="181" font-size="8.4" fill="#1F4468" text-anchor="middle">4</text>
-  <text x="70" y="174" font-size="9" font-weight="600" fill="#1F4468">制品化</text>
-  <text x="70" y="188" font-size="7.4" fill="#4A4945">打镜像 · 不可变 tag：版本-commit（006 §6.4）</text>
-  <text x="460" y="181" font-size="7.8" fill="#8C8980">latest 禁止上生产</text>
-  <line x1="52" y1="190" x2="52" y2="204" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <rect x="710" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="895" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 交付方法论</text>
+  <text x="895" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">可重复 · 可回退 · 可追溯</text>
+  <text x="895" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">交付三性质的落地纪律</text>
 
-  <circle cx="52" cy="216" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="219" font-size="8.4" fill="#1F4468" text-anchor="middle">5</text>
-  <text x="70" y="212" font-size="9" font-weight="600" fill="#1F4468">推送制品库</text>
-  <text x="70" y="226" font-size="7.4" fill="#4A4945">Harbor / Nexus —— 测过的东西在此存证</text>
-  <text x="460" y="219" font-size="7.8" fill="#8C8980">扫描 HIGH 拦截（006 §6.8）</text>
-  <line x1="52" y1="228" x2="52" y2="242" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <rect x="1120" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1305" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">003 CICD 全景图</text>
+  <text x="1305" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">一图看清十一册位置</text>
+  <text x="1305" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">看图定段，再回 001 选册</text>
 
-  <circle cx="52" cy="254" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="257" font-size="8.4" fill="#1F4468" text-anchor="middle">6</text>
-  <text x="70" y="250" font-size="9" font-weight="600" fill="#1F4468">部署测试环境</text>
-  <text x="70" y="264" font-size="7.4" fill="#4A4945">rollout status + 冒烟检查（008 §8.6）</text>
-  <text x="460" y="257" font-size="7.8" fill="#8C8980">部署成功 ≠ 服务可用</text>
-  <line x1="52" y1="266" x2="52" y2="280" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <rect x="1530" y="112" width="370" height="106" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1715" y="150" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">190 术语表</text>
+  <text x="1715" y="178" font-size="11.5" fill="#311b92" text-anchor="middle">79 术语 · 8 缩写 · 14 易混</text>
+  <text x="1715" y="200" font-size="11" fill="#311b92" text-anchor="middle">16 条症状反查 · 查的不是读的</text>
 
-  <circle cx="52" cy="292" r="9" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="52" y="295" font-size="8.4" fill="#7A4A12" text-anchor="middle">7</text>
-  <text x="70" y="288" font-size="9" font-weight="600" fill="#7A4A12">人工审批（input）</text>
-  <text x="70" y="302" font-size="7.4" fill="#7A4A12">唯一的人工节点——业务判断留给人</text>
-  <text x="460" y="295" font-size="7.8" fill="#8C8980">审批人 ≠ 发布人（008 §8.9）</text>
-  <line x1="52" y1="304" x2="52" y2="318" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <!-- 行①→② -->
+  <line x1="980" y1="222" x2="980" y2="258" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="244" font-size="11" fill="#616161">先读总览，再进三段能力册</text>
 
-  <circle cx="52" cy="330" r="9" fill="#FFFFFF" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="52" y="333" font-size="8.4" fill="#1F4468" text-anchor="middle">8</text>
-  <text x="70" y="326" font-size="9" font-weight="600" fill="#1F4468">部署生产</text>
-  <text x="70" y="340" font-size="7.4" fill="#4A4945">滚动打底 · 灰度放量（007 三要素）</text>
-  <text x="460" y="333" font-size="7.8" fill="#8C8980">执行器：K8s 滚动 / 接入层权重</text>
-  <line x1="52" y1="342" x2="52" y2="356" stroke="#7FA6D0" stroke-width="1" marker-end="url(#b0Blue)"/>
+  <!-- 行② 110 版本与流水线 -->
+  <rect x="60" y="266" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="304" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">110 版本</text>
+  <text x="170" y="330" font-size="11.5" fill="#4e6b50" text-anchor="middle">与流水线</text>
+  <text x="170" y="350" font-size="11" fill="#4e6b50" text-anchor="middle">交付链 · 入口</text>
 
-  <circle cx="52" cy="368" r="9" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="52" y="371" font-size="8.4" fill="#1D5A45" text-anchor="middle">9</text>
-  <text x="70" y="364" font-size="9" font-weight="600" fill="#1D5A45">观察</text>
-  <text x="70" y="378" font-size="7.4" fill="#1D5A45">指标 · 告警 · 回滚兜底——发布的三要素之一</text>
-  <text x="460" y="371" font-size="7.8" fill="#8C8980">静默成功最危险（009 §9.7）</text>
+  <rect x="300" y="266" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="550" y="304" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">111 Git 与协作</text>
+  <text x="550" y="332" font-size="11.5" fill="#123314" text-anchor="middle">三区模型 · 分支与合并 · rebase</text>
+  <text x="550" y="354" font-size="11" fill="#123314" text-anchor="middle">分支模型 · 回退三兄弟 · 保护分支</text>
 
-  <text x="32" y="414" font-size="9" fill="#8C8980">两条铁律：每段失败停线并通知；失败的流水线不允许跳段通过——门禁的意义在于它是门禁。</text>
+  <rect x="850" y="266" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1100" y="304" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">112 Jenkins 与流水线</text>
+  <text x="1100" y="332" font-size="11.5" fill="#123314" text-anchor="middle">controller/agent · 声明式 Pipeline</text>
+  <text x="1100" y="354" font-size="11" fill="#123314" text-anchor="middle">凭据 · webhook 触发 · 标签能力匹配</text>
 
-  </g>
+  <rect x="1400" y="266" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1650" y="304" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">113 GitLab CI 对照</text>
+  <text x="1650" y="332" font-size="11.5" fill="#123314" text-anchor="middle">.gitlab-ci.yml · Runner · artifacts</text>
+  <text x="1650" y="354" font-size="11" fill="#123314" text-anchor="middle">cache 与 artifacts · 与 Jenkins 取舍</text>
+
+  <!-- 行②→③ -->
+  <line x1="980" y1="376" x2="980" y2="412" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="398" font-size="11" fill="#616161">代码进流水线之前，先备好环境与制品位</text>
+
+  <!-- 行③ 120 配置与制品 -->
+  <rect x="60" y="420" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="458" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">120 配置</text>
+  <text x="170" y="484" font-size="11.5" fill="#4e6b50" text-anchor="middle">与制品</text>
+  <text x="170" y="504" font-size="11" fill="#4e6b50" text-anchor="middle">交付链 · 中间件</text>
+
+  <rect x="300" y="420" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="550" y="458" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">121 Ansible 批量配置</text>
+  <text x="550" y="486" font-size="11.5" fill="#123314" text-anchor="middle">inventory · ad-hoc · playbook · 模块</text>
+  <text x="550" y="508" font-size="11" fill="#123314" text-anchor="middle">无 agent SSH 推模式 · 幂等</text>
+
+  <rect x="850" y="420" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1100" y="458" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">122 Ansible 工程化</text>
+  <text x="1100" y="486" font-size="11.5" fill="#123314" text-anchor="middle">roles · 变量优先级 · Jinja2 · handlers</text>
+  <text x="1100" y="508" font-size="11" fill="#123314" text-anchor="middle">check mode · vault · 分批上线</text>
+
+  <rect x="1400" y="420" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1650" y="458" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">123 制品与镜像仓库</text>
+  <text x="1650" y="486" font-size="11.5" fill="#123314" text-anchor="middle">Harbor · Nexus · tag 策略</text>
+  <text x="1650" y="508" font-size="11" fill="#123314" text-anchor="middle">不可变 tag · 晋级 · 保留策略</text>
+
+  <!-- 行③→④ -->
+  <line x1="980" y1="530" x2="980" y2="566" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="552" font-size="11" fill="#616161">制品就绪，才轮到发布与运维</text>
+
+  <!-- 行④ 130 发布与运维 -->
+  <rect x="60" y="574" width="220" height="112" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="614" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">130 发布</text>
+  <text x="170" y="640" font-size="11.5" fill="#4e6b50" text-anchor="middle">与运维</text>
+  <text x="170" y="660" font-size="11" fill="#4e6b50" text-anchor="middle">交付链 · 出口</text>
+
+  <rect x="300" y="574" width="304" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="452" y="612" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">131 发布策略</text>
+  <text x="452" y="640" font-size="11" fill="#123314" text-anchor="middle">滚动 · 蓝绿 · 灰度</text>
+  <text x="452" y="662" font-size="11" fill="#123314" text-anchor="middle">回滚预案 · 检查单</text>
+
+  <rect x="624" y="574" width="304" height="112" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="776" y="612" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ 132 流水线实战</text>
+  <text x="776" y="640" font-size="11" fill="#7f3f00" text-anchor="middle">六段 · 门禁 · 产物</text>
+  <text x="776" y="662" font-size="11" fill="#7f3f00" text-anchor="middle">从 push 到上线一条龙</text>
+
+  <rect x="948" y="574" width="304" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1100" y="612" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">133 排错与自测</text>
+  <text x="1100" y="640" font-size="11" fill="#123314" text-anchor="middle">红了 · 静默失败</text>
+  <text x="1100" y="662" font-size="11" fill="#123314" text-anchor="middle">凭据权限坑 · 排错路径</text>
+
+  <rect x="1272" y="574" width="304" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1424" y="612" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">134 GitOps</text>
+  <text x="1424" y="640" font-size="11" fill="#123314" text-anchor="middle">Argo CD · Application</text>
+  <text x="1424" y="662" font-size="11" fill="#123314" text-anchor="middle">漂移 · 渐进发布 · 密钥</text>
+
+  <rect x="1596" y="574" width="304" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1748" y="612" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">135 Harbor 运维</text>
+  <text x="1748" y="640" font-size="11" fill="#123314" text-anchor="middle">主备复制 · 证书 · GC</text>
+  <text x="1748" y="662" font-size="11" fill="#123314" text-anchor="middle">反代接入五坑</text>
+
+  <!-- 行④→⑤ -->
+  <line x1="980" y1="690" x2="980" y2="726" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="712" font-size="11" fill="#616161">十一册落到同一条交付链上，段段有门禁</text>
+
+  <!-- 行⑤ 九段流水线 -->
+  <rect x="60" y="734" width="1840" height="130" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="84" y="764" font-size="13" font-weight="bold" fill="#1b5e20">九段交付链</text>
+  <text x="1900" y="764" font-size="11" fill="#4e6b50" text-anchor="end">每段的产物是下一段的唯一输入 · 失败即停线并通知</text>
+
+  <rect x="84" y="780" width="176" height="64" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="172" y="806" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">① 提交</text>
+  <text x="172" y="830" font-size="11" fill="#0d2f5c" text-anchor="middle">git push → webhook</text>
+
+  <rect x="290" y="780" width="176" height="64" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="378" y="806" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">② 构建</text>
+  <text x="378" y="830" font-size="11" fill="#0d2f5c" text-anchor="middle">容器内编译 · 依赖</text>
+
+  <rect x="496" y="780" width="176" height="64" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="584" y="806" font-size="13" font-weight="bold" fill="#7f0000" text-anchor="middle">③ 自动测试</text>
+  <text x="584" y="830" font-size="11" fill="#7f0000" text-anchor="middle">单元 + 静态 · 红停线</text>
+
+  <rect x="702" y="780" width="176" height="64" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="790" y="806" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">④ 制品化</text>
+  <text x="790" y="830" font-size="11" fill="#0d2f5c" text-anchor="middle">不可变 tag · 123</text>
+
+  <rect x="908" y="780" width="176" height="64" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="996" y="806" font-size="13" font-weight="bold" fill="#7f0000" text-anchor="middle">⑤ 推送制品库</text>
+  <text x="996" y="830" font-size="11" fill="#7f0000" text-anchor="middle">Harbor · 扫描拦截</text>
+
+  <rect x="1114" y="780" width="176" height="64" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1202" y="806" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">⑥ 部署测试</text>
+  <text x="1202" y="830" font-size="11" fill="#0d2f5c" text-anchor="middle">rollout + 冒烟 · 132</text>
+
+  <rect x="1320" y="780" width="176" height="64" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="1408" y="806" font-size="13" font-weight="bold" fill="#5d4700" text-anchor="middle">⑦ 人工审批</text>
+  <text x="1408" y="830" font-size="11" fill="#5d4700" text-anchor="middle">input · 唯一人工节点</text>
+
+  <rect x="1526" y="780" width="176" height="64" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1614" y="806" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">⑧ 部署生产</text>
+  <text x="1614" y="830" font-size="11" fill="#0d2f5c" text-anchor="middle">滚动打底 · 灰度放量</text>
+
+  <rect x="1732" y="780" width="144" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1804" y="806" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">⑨ 观察</text>
+  <text x="1804" y="830" font-size="11" fill="#123314" text-anchor="middle">指标 · 告警 · 回滚</text>
+
+  <line x1="264" y1="812" x2="284" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="470" y1="812" x2="490" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="676" y1="812" x2="696" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="882" y1="812" x2="902" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1088" y1="812" x2="1108" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1294" y1="812" x2="1314" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1500" y1="812" x2="1520" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1706" y1="812" x2="1726" y2="812" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- 结论块 -->
+  <rect x="60" y="886" width="1840" height="88" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="80" y="916" font-size="15" font-weight="bold" fill="#bf360c">★ 三段对三模块：110 是入口（版本与流水线），120 是中间件（配置与制品），130 是出口（发布与运维）</text>
+  <text x="80" y="942" font-size="12.5" fill="#5d4037">· 交付方向从左到右：提交 → 构建 → 测试 → 制品 → 部署 → 观察，每段产物是下一段唯一输入，不跳段、不旁路</text>
+  <text x="80" y="964" font-size="12.5" fill="#5d4037">· 两条铁律：每段失败停线并通知；失败的流水线不允许跳段通过——门禁的意义在于它是门禁</text>
+
+  <!-- 图例 -->
+  <rect x="60" y="990" width="1840" height="60" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="80" y="1010" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="112" y="1021" font-size="12" fill="#37474f">导览 / 交付段</text>
+  <rect x="386" y="1010" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="418" y="1021" font-size="12" fill="#37474f">能力册</text>
+  <rect x="692" y="1010" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="724" y="1021" font-size="12" fill="#37474f">全例册 ★</text>
+  <rect x="998" y="1010" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="1030" y="1021" font-size="12" fill="#37474f">门禁段（红即停线）</text>
+  <rect x="1304" y="1010" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="1336" y="1021" font-size="12" fill="#37474f">人工节点</text>
+  <rect x="1610" y="1010" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="1642" y="1021" font-size="12" fill="#37474f">术语查阅（最后查）</text>
 </svg>
