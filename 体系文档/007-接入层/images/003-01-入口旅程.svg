@@ -1,65 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 900" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>接入全景：十二册 + 术语表，落到五跳入口旅程</title>
+  <desc>上三行是 007-接入层板块的阅读顺序：总览与查阅 4 册（001-003 与 190）、110 Nginx 核心 6 册（111-116）、120 高可用与扩展 3 册（121-123）。底部五跳是流量入口旅程：DNS 解析、CDN 就近、负载均衡四层分流、网关七层治理、应用集群，每跳有职责与断点。接入层五大职能集中在第四跳网关，110 管日常、120 管出事。</desc>
 
-  <title>一条请求的入口旅程：五跳到应用，每跳的职责与断点</title>
-  <desc>用户在浏览器敲下域名后经过五跳：DNS 把域名解析成 IP，CDN 就近返回静态资源，负载均衡持有公网 IP 做四层分流，网关 Nginx 做七层治理包括 TLS 终止、域名路径路由、限流与灰度，最后到达应用集群。右侧标注每一跳断掉时的现象。接入层的五大职能集中在第四跳。</desc>
-
-  <rect width="680" height="420" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">入口旅程：五跳到应用</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">接入层 = 第 4 跳</text>
+  <rect x="0" y="0" width="1960" height="900" fill="#ffffff"/>
 
   <defs>
-    <marker id="c0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#388e3c"/>
     </marker>
   </defs>
 
-  <!-- ① DNS -->
-  <rect x="40" y="52" width="260" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="70" font-size="9" font-weight="600" fill="#4A4945">① DNS</text>
-  <text x="54" y="85" font-size="7.6" fill="#8C8980">域名 → IP</text>
-  <text x="324" y="70" font-size="7.8" fill="#7A322B">断了：解析不到 / TTL 未过期</text>
-  <text x="324" y="85" font-size="7.4" fill="#8C8980">「网络」003</text>
-  <line x1="170" y1="92" x2="170" y2="108" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+  <!-- 标题 + 数据来源 -->
+  <text x="60" y="50" font-size="20" font-weight="bold" fill="#0f172a">接入全景：十二册 + 术语表，落到五跳入口旅程</text>
+  <text x="60" y="78" font-size="12" fill="#616161">来源：007-接入层 README 体系总览表 · 003 全景图图例表 · 截止 2026-11-26</text>
+  <text x="1900" y="78" font-size="12" fill="#616161" text-anchor="end">三行＝阅读顺序　底部＝流量方向</text>
 
-  <!-- ② CDN -->
-  <rect x="40" y="112" width="260" height="40" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="130" font-size="9" font-weight="600" fill="#4A4945">② CDN</text>
-  <text x="54" y="145" font-size="7.6" fill="#8C8980">就近返回静态；动态回源</text>
-  <text x="324" y="130" font-size="7.8" fill="#7A322B">断了：部分资源慢/失败</text>
-  <text x="324" y="145" font-size="7.4" fill="#8C8980">真实 IP 链从这里开始（005 §5.6）</text>
-  <line x1="170" y1="152" x2="170" y2="168" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+  <!-- 行① 总览与查阅 -->
+  <rect x="60" y="112" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="150" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">总览与查阅</text>
+  <text x="170" y="176" font-size="11.5" fill="#4e6b50" text-anchor="middle">先读 001-003</text>
+  <text x="170" y="196" font-size="11" fill="#4e6b50" text-anchor="middle">190 最后查</text>
 
-  <!-- ③ LB -->
-  <rect x="40" y="172" width="260" height="40" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="54" y="190" font-size="9" font-weight="600" fill="#1F4468">③ 负载均衡（云 LB / LVS）</text>
-  <text x="54" y="205" font-size="7.6" fill="#4A4945">公网 IP 持有者 · 四层分流</text>
-  <text x="324" y="190" font-size="7.8" fill="#7A322B">断了：全站不可达</text>
-  <text x="324" y="205" font-size="7.4" fill="#8C8980">原理「网络」006</text>
-  <line x1="170" y1="212" x2="170" y2="228" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+  <rect x="300" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="485" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 接入层全貌</text>
+  <text x="485" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">五跳旅程 · 职责分界 · 选型</text>
+  <text x="485" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">Nginx vs HAProxy vs 云 LB · 学习路径</text>
 
-  <!-- ④ 网关 -->
-  <rect x="40" y="232" width="260" height="70" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="54" y="252" font-size="9" font-weight="600" fill="#7A4A12">④ 网关（Nginx / HAProxy）★</text>
-  <text x="54" y="268" font-size="7.6" fill="#7A4A12">七层治理：</text>
-  <text x="54" y="284" font-size="7.6" fill="#7A4A12">TLS 终止 · 域名路径路由 · 限流 · 灰度 · 日志</text>
-  <text x="324" y="252" font-size="7.8" fill="#7A322B">断了：全站 502/503</text>
-  <text x="324" y="267" font-size="7.4" fill="#8C8980">高可用：008 双机热备</text>
-  <text x="324" y="282" font-size="7.4" fill="#8C8980">取证：007 手册</text>
-  <line x1="170" y1="302" x2="170" y2="318" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c0Blue)"/>
+  <rect x="710" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="895" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 接入方法论</text>
+  <text x="895" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">可回退 · 可观测 · 可灰度</text>
+  <text x="895" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">入口配置敢上生产的纪律</text>
 
-  <!-- ⑤ 应用 -->
-  <rect x="40" y="322" width="260" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="54" y="340" font-size="9" font-weight="600" fill="#1D5A45">⑤ 应用集群（虚机 / K8s Pod）</text>
-  <text x="54" y="355" font-size="7.6" fill="#1D5A45">业务真正在这跑</text>
-  <text x="324" y="340" font-size="7.8" fill="#7A322B">断了：500 / 单实例错误</text>
-  <text x="324" y="355" font-size="7.4" fill="#8C8980">K8s 场景：「容器」006 六跳图</text>
+  <rect x="1120" y="112" width="370" height="106" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1305" y="150" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">003 接入层全景图</text>
+  <text x="1305" y="178" font-size="11.5" fill="#0d2f5c" text-anchor="middle">一图看清十二册位置</text>
+  <text x="1305" y="200" font-size="11" fill="#0d2f5c" text-anchor="middle">看图定段，再回 001 选册</text>
 
-  <!-- 底部 -->
-  <rect x="40" y="374" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="393" font-size="8.2" fill="#7A4A12">五大职能全在第 ④ 跳：转发（002/003）· TLS 卸载（004）· 防护（005）· 灰度（003 §3.8）· 观测（005/007）</text>
+  <rect x="1530" y="112" width="370" height="106" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1715" y="150" font-size="15" font-weight="bold" fill="#311b92" text-anchor="middle">190 术语表</text>
+  <text x="1715" y="178" font-size="11.5" fill="#311b92" text-anchor="middle">75 术语 · 12 缩写 · 14 易混</text>
+  <text x="1715" y="200" font-size="11" fill="#311b92" text-anchor="middle">16 条症状反查 · 查的不是读的</text>
 
-  </g>
+  <!-- 行①→② -->
+  <line x1="980" y1="222" x2="980" y2="258" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="244" font-size="11" fill="#616161">先读总览，再进两模块能力册</text>
+
+  <!-- 行② 110 Nginx核心 六册 -->
+  <rect x="60" y="266" width="220" height="112" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="306" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">110 Nginx</text>
+  <text x="170" y="332" font-size="11.5" fill="#4e6b50" text-anchor="middle">核心七层入口</text>
+  <text x="170" y="352" font-size="11" fill="#4e6b50" text-anchor="middle">日常治理主线</text>
+
+  <rect x="300" y="266" width="254" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="427" y="304" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">111 配置体系</text>
+  <text x="427" y="334" font-size="11" fill="#123314" text-anchor="middle">指令继承 · location</text>
+  <text x="427" y="358" font-size="11" fill="#123314" text-anchor="middle">nginx -t 与 reload</text>
+
+  <rect x="569" y="266" width="254" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="696" y="304" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">112 反向代理</text>
+  <text x="696" y="334" font-size="11" fill="#123314" text-anchor="middle">proxy_pass · 转发头</text>
+  <text x="696" y="358" font-size="11" fill="#123314" text-anchor="middle">超时三兄弟 · 缓冲</text>
+
+  <rect x="838" y="266" width="254" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="965" y="304" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">113 负载均衡</text>
+  <text x="965" y="334" font-size="11" fill="#123314" text-anchor="middle">upstream · 调度算法</text>
+  <text x="965" y="358" font-size="11" fill="#123314" text-anchor="middle">失败摘除 · 灰度路由</text>
+
+  <rect x="1107" y="266" width="254" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1234" y="304" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">114 HTTPS</text>
+  <text x="1234" y="334" font-size="11" fill="#123314" text-anchor="middle">证书链完整 · SNI</text>
+  <text x="1234" y="358" font-size="11" fill="#123314" text-anchor="middle">续期 · 到期监控</text>
+
+  <rect x="1376" y="266" width="254" height="112" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="1503" y="304" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ 115 日志与限流</text>
+  <text x="1503" y="334" font-size="11" fill="#7f3f00" text-anchor="middle">log_format · limit_req</text>
+  <text x="1503" y="358" font-size="11" fill="#7f3f00" text-anchor="middle">allow/deny · 真实 IP</text>
+
+  <rect x="1645" y="266" width="254" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1772" y="304" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">116 性能调优</text>
+  <text x="1772" y="334" font-size="11" fill="#123314" text-anchor="middle">worker · 连接上限</text>
+  <text x="1772" y="358" font-size="11" fill="#123314" text-anchor="middle">sendfile/gzip · 压测</text>
+
+  <!-- 行②→③ -->
+  <line x1="980" y1="382" x2="980" y2="418" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="404" font-size="11" fill="#616161">入口日常之外，还要备好出事时的查与备</text>
+
+  <!-- 行③ 120 高可用与扩展 三册 -->
+  <rect x="60" y="426" width="220" height="106" rx="8" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="170" y="464" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">120 高可用</text>
+  <text x="170" y="490" font-size="11.5" fill="#4e6b50" text-anchor="middle">与扩展</text>
+  <text x="170" y="510" font-size="11" fill="#4e6b50" text-anchor="middle">出事时查与备</text>
+
+  <rect x="300" y="426" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="550" y="464" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">121 故障排查手册</text>
+  <text x="550" y="492" font-size="11.5" fill="#123314" text-anchor="middle">502/504/413 · error log 判读</text>
+  <text x="550" y="514" font-size="11" fill="#123314" text-anchor="middle">取证总纲 · 改了不生效五种原因</text>
+
+  <rect x="850" y="426" width="500" height="106" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="1100" y="464" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ 122 高可用接入</text>
+  <text x="1100" y="492" font-size="11.5" fill="#7f3f00" text-anchor="middle">Keepalived VIP · 双机热备演练</text>
+  <text x="1100" y="514" font-size="11" fill="#7f3f00" text-anchor="middle">脑裂预防 · 秒级漂移与回切</text>
+
+  <rect x="1400" y="426" width="500" height="106" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1650" y="464" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">123 HAProxy 四层</text>
+  <text x="1650" y="492" font-size="11.5" fill="#123314" text-anchor="middle">四七层分界 · ACL 分流</text>
+  <text x="1650" y="514" font-size="11" fill="#123314" text-anchor="middle">stats 监控口 · 零业务基线切流</text>
+
+  <!-- 行③→④ -->
+  <line x1="980" y1="536" x2="980" y2="572" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1010" y="558" font-size="11" fill="#616161">十二册落到同一条入口链路，每跳有职责与断点</text>
+
+  <!-- 行④ 五跳入口旅程 -->
+  <rect x="60" y="580" width="1840" height="130" rx="12" fill="#f1f8e9" fill-opacity="0.55" stroke="#2e7d32" stroke-width="2"/>
+  <text x="84" y="610" font-size="13" font-weight="bold" fill="#1b5e20">五跳入口旅程</text>
+  <text x="1900" y="610" font-size="11" fill="#4e6b50" text-anchor="end">流量从左到右 · 断点在右边标注 · 接入层职能集中在第④跳</text>
+
+  <rect x="84" y="622" width="330" height="76" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="249" y="642" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">① DNS 解析</text>
+  <text x="249" y="666" font-size="11" fill="#0d2f5c" text-anchor="middle">域名 → IP（「网络」113）</text>
+  <text x="249" y="686" font-size="11" fill="#7f0000" text-anchor="middle">断：解析不到 / TTL 未过期</text>
+
+  <rect x="449" y="622" width="330" height="76" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="614" y="642" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">② CDN 就近</text>
+  <text x="614" y="666" font-size="11" fill="#0d2f5c" text-anchor="middle">静态就近 · 动态回源</text>
+  <text x="614" y="686" font-size="11" fill="#7f0000" text-anchor="middle">断：部分资源慢 / 失败</text>
+
+  <rect x="814" y="622" width="330" height="76" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="979" y="642" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">③ LB 四层分流</text>
+  <text x="979" y="666" font-size="11" fill="#0d2f5c" text-anchor="middle">公网 IP 持有者（「网络」123）</text>
+  <text x="979" y="686" font-size="11" fill="#7f0000" text-anchor="middle">断：全站不可达</text>
+
+  <rect x="1179" y="622" width="330" height="76" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="1344" y="642" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">★ ④ 网关七层治理</text>
+  <text x="1344" y="666" font-size="11" fill="#7f3f00" text-anchor="middle">TLS · 路由 · 限流 · 灰度</text>
+  <text x="1344" y="686" font-size="11" fill="#7f0000" text-anchor="middle">断：全站 502/503</text>
+
+  <rect x="1544" y="622" width="330" height="76" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="1709" y="642" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">⑤ 应用集群</text>
+  <text x="1709" y="666" font-size="11" fill="#123314" text-anchor="middle">虚机 / K8s Pod（「容器」122）</text>
+  <text x="1709" y="686" font-size="11" fill="#7f0000" text-anchor="middle">断：500 / 单实例错误</text>
+
+  <line x1="418" y1="660" x2="443" y2="660" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="783" y1="660" x2="808" y2="660" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1148" y1="660" x2="1173" y2="660" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="1513" y1="660" x2="1538" y2="660" stroke="#388e3c" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- 结论块 -->
+  <rect x="60" y="722" width="1840" height="88" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="80" y="752" font-size="15" font-weight="bold" fill="#bf360c">★ 两面：110 管日常（流量怎么转、怎么加密、怎么限），120 管出事（怎么查、怎么备、怎么迁四层）</text>
+  <text x="80" y="778" font-size="12.5" fill="#5d4037">· 流量方向从左到右：DNS → CDN → LB → 网关 → 应用，接入层五大职能全在第④跳（转发 / TLS / 防护 / 灰度 / 观测）</text>
+  <text x="80" y="800" font-size="12.5" fill="#5d4037">· 取证先于改配置：502/504 先看 error log 原话再动配置；入口变更必须可回退、可观测、可灰度</text>
+
+  <!-- 图例 -->
+  <rect x="60" y="824" width="1840" height="60" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="80" y="844" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="112" y="855" font-size="12" fill="#37474f">导览 / 外部跳</text>
+  <rect x="386" y="844" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="418" y="855" font-size="12" fill="#37474f">能力册 / 应用</text>
+  <rect x="692" y="844" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="724" y="855" font-size="12" fill="#37474f">本板块主线 ★</text>
+  <text x="1004" y="855" font-size="12" fill="#7f0000">红字＝该跳断点，红框＝本板块主线</text>
+  <rect x="1450" y="844" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="1482" y="855" font-size="12" fill="#37474f">术语查阅（最后查）</text>
 </svg>

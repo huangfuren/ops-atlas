@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 705.88" width="1200" height="705.88" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>limit_req 三种写法的行为差异：burst 与 nodelay</title>
-  <desc>限流速率固定为每秒 10 个请求时，三种写法对突发请求的处理完全不同：不加 burst 时超出部分进入漏桶排队，用户感知为卡很久才响应；加 burst=20 允许 20 个排队但依然逐个慢放；加 burst=20 nodelay 让前 20 个突发请求立即通过、第 21 个起立即拒绝。生产默认用第三种，正常突发不受伤，只惩罚持续超速。</desc>
+  <desc>限流速率固定为每秒 10 个请求时，三种写法对突发请求的处理完全不同：不加 burst 时超出部分进入漏桶排队，用户感知为卡很久才响应；加 burst=20 允许 20 个排队但依然逐个慢放；加 burst=20 nodelay 让前 20 个突发请求立即通过、第 21 个起立即拒绝。生产默认用第三种，正常突发不受伤，只惩罚持续超速。单机 zone 限流有天花板，精确全局限流要应用层或分布式网关做。</desc>
 
-  <rect width="680" height="400" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">limit_req：rate=10r/s 固定，差别全在 burst</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">生产默认 nodelay</text>
+  <rect x="0" y="0" width="1200" height="700" fill="#ffffff"/>
 
-  <!-- 行 1：无 burst -->
-  <rect x="40" y="56" width="604" height="86" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="78" font-size="9" font-weight="600" fill="#4A4945">① 只写 rate=10r/s —— 严格匀速</text>
-  <circle cx="240" cy="96" r="6" fill="#7FA6D0"/>
-  <circle cx="270" cy="96" r="6" fill="#7FA6D0"/>
-  <circle cx="300" cy="96" r="6" fill="#D9A458"/>
-  <circle cx="330" cy="102" r="6" fill="#D9A458"/>
-  <circle cx="300" cy="126" r="6" fill="#D9A458" opacity="0.6"/>
-  <text x="360" y="100" font-size="7.8" fill="#4A4945">超速的请求进漏桶排队（黄）</text>
-  <text x="360" y="128" font-size="7.8" fill="#7A322B">用户感知：点了按钮转半天——页面的十几个资源全部被排队</text>
+  <!-- 标题 + 数据来源 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">limit_req：rate=10r/s 固定，差别全在 burst</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：007-接入层 115 §5.4 / §5.6 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">生产默认 nodelay</text>
 
-  <!-- 行 2：burst=20 -->
-  <rect x="40" y="156" width="604" height="86" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="178" font-size="9" font-weight="600" fill="#4A4945">② burst=20 —— 允许 20 个排队，第 21 个起拒绝</text>
-  <circle cx="240" cy="196" r="6" fill="#7FA6D0"/>
-  <circle cx="270" cy="196" r="6" fill="#7FA6D0"/>
-  <circle cx="300" cy="196" r="6" fill="#D9A458"/>
-  <circle cx="330" cy="196" r="6" fill="#D9A458"/>
-  <circle cx="360" cy="196" r="6" fill="#D9A458" opacity="0.6"/>
-  <text x="400" y="200" font-size="7.8" fill="#4A4945">排队的 20 个依然慢放</text>
-  <text x="54" y="226" font-size="7.8" fill="#7A322B">只是把"部分卡住"变成"部分被拒+其余照旧卡"——正常突发没被拯救</text>
+  <!-- 行① 无 burst -->
+  <rect x="40" y="104" width="1120" height="130" rx="6" fill="#fafafa" stroke="#c62828" stroke-width="1.5"/>
+  <text x="60" y="134" font-size="15" font-weight="bold" fill="#7f0000">① 只写 rate=10r/s —— 严格匀速</text>
+  <text x="1140" y="134" font-size="12" fill="#7f0000" text-anchor="end">超出即排队</text>
+  <circle cx="100" cy="176" r="9" fill="#1565c0"/>
+  <circle cx="136" cy="176" r="9" fill="#1565c0"/>
+  <circle cx="172" cy="176" r="9" fill="#e65100"/>
+  <circle cx="208" cy="190" r="9" fill="#e65100"/>
+  <circle cx="244" cy="204" r="9" fill="#e65100"/>
+  <text x="290" y="172" font-size="12.5" fill="#7f0000">超速的请求进漏桶排队（橙），逐个慢放</text>
+  <text x="60" y="222" font-size="12.5" fill="#7f0000">用户感知：点了按钮转半天——页面一次拉十几个资源，全部被排队，页面加载被拖垮</text>
 
-  <!-- 行 3：nodelay -->
-  <rect x="40" y="256" width="604" height="86" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="54" y="278" font-size="9" font-weight="600" fill="#1b5e20">③ burst=20 nodelay —— 前 20 个立即通过，第 21 个起立即 429</text>
-  <circle cx="240" cy="296" r="6" fill="#1D5A45"/>
-  <circle cx="270" cy="296" r="6" fill="#1D5A45"/>
-  <circle cx="300" cy="296" r="6" fill="#1D5A45"/>
-  <circle cx="330" cy="296" r="6" fill="#1D5A45"/>
-  <circle cx="360" cy="296" r="6" fill="#D2948C"/>
-  <text x="400" y="300" font-size="7.8" fill="#1b5e20">突发立即过（绿），超速立即拒（红）</text>
-  <text x="54" y="326" font-size="7.8" fill="#1b5e20">正常用户的突发不受伤，只惩罚持续超速——生产默认写法</text>
+  <!-- 行② burst=20 -->
+  <rect x="40" y="250" width="1120" height="130" rx="6" fill="#fafafa" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="280" font-size="15" font-weight="bold" fill="#7f3f00">② burst=20 —— 允许 20 个排队，第 21 个起拒绝</text>
+  <text x="1140" y="280" font-size="12" fill="#7f3f00" text-anchor="end">排队仍慢放</text>
+  <circle cx="100" cy="322" r="9" fill="#2e7d32"/>
+  <circle cx="136" cy="322" r="9" fill="#2e7d32"/>
+  <circle cx="172" cy="322" r="9" fill="#e65100"/>
+  <circle cx="208" cy="322" r="9" fill="#e65100"/>
+  <circle cx="244" cy="322" r="9" fill="#e65100"/>
+  <circle cx="280" cy="322" r="9" fill="#c62828"/>
+  <text x="320" y="326" font-size="12.5" fill="#7f3f00">排队的 20 个依然慢放，第 21 个起 429</text>
+  <text x="60" y="368" font-size="12.5" fill="#5d4700">只是把「部分卡住」变成「部分被拒 + 其余照旧卡」——正常突发没被拯救</text>
 
-  <rect x="40" y="354" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="373" font-size="8.2" fill="#7A4A12">单机 zone 的天花板：两台 Nginx 各限 10r/s，攻击者经 LB 实际拿到 20r/s——精确全局限流在应用层/网关做（005 §5.10）</text>
+  <!-- 行③ nodelay -->
+  <rect x="40" y="396" width="1120" height="130" rx="6" fill="#fafafa" stroke="#2e7d32" stroke-width="2"/>
+  <text x="60" y="426" font-size="15" font-weight="bold" fill="#123314">③ burst=20 nodelay —— 前 20 个立即通过，第 21 个起立即 429 ★</text>
+  <text x="1140" y="426" font-size="12" fill="#123314" text-anchor="end">生产默认写法</text>
+  <circle cx="100" cy="468" r="9" fill="#2e7d32"/>
+  <circle cx="136" cy="468" r="9" fill="#2e7d32"/>
+  <circle cx="172" cy="468" r="9" fill="#2e7d32"/>
+  <circle cx="208" cy="468" r="9" fill="#2e7d32"/>
+  <circle cx="244" cy="468" r="9" fill="#c62828"/>
+  <text x="286" y="472" font-size="12.5" fill="#123314">突发立即过（绿），持续超速立即拒（红）</text>
+  <text x="60" y="514" font-size="12.5" fill="#123314">正常用户的突发不受伤，只惩罚持续超速——nodelay 让突发不排队，bucket 只用来计数</text>
 
-  </g>
+  <!-- 天花板提示 -->
+  <rect x="40" y="542" width="1120" height="52" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="568" font-size="12.5" fill="#5d4037">· 单机 zone 天花板：两台 Nginx 各限 10r/s，攻击者经 LB 实际拿到 20r/s（115 §5.6）</text>
+  <text x="60" y="586" font-size="12.5" fill="#5d4037">· 精确全局限流在应用层 / 分布式网关做：接入层管粗（按 IP 硬上限），应用层管细（按用户业务额度）</text>
+
+  <!-- 结论块 -->
+  <rect x="40" y="610" width="1120" height="42" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="638" font-size="15" font-weight="bold" fill="#bf360c">★ 生产默认 burst=N nodelay：挡住滥用又不误伤正常突发；zone 只管单机，全局限流交给应用层</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="666" width="1120" height="30" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <circle cx="70" cy="681" r="7" fill="#1565c0"/>
+  <text x="86" y="685" font-size="12" fill="#37474f">匀速通过</text>
+  <circle cx="240" cy="681" r="7" fill="#e65100"/>
+  <text x="256" y="685" font-size="12" fill="#37474f">排队慢放</text>
+  <circle cx="410" cy="681" r="7" fill="#2e7d32"/>
+  <text x="426" y="685" font-size="12" fill="#37474f">立即通过</text>
+  <circle cx="580" cy="681" r="7" fill="#c62828"/>
+  <text x="596" y="685" font-size="12" fill="#37474f">立即拒绝 429</text>
+  <text x="900" y="685" font-size="12" fill="#7f0000">橙框＝顺序敏感，绿框＝生产默认</text>
 </svg>

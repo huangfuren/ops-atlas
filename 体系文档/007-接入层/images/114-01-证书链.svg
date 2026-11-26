@@ -1,62 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670.59" width="1200" height="670.59" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>证书链：服务器必须下发站点证书加中间证书，缺一即部分客户端报错</title>
   <desc>信任链自上而下：根 CA 在客户端的受信任列表里，签发中间 CA，中间 CA 签发站点证书。服务器要下发 fullchain 两张一起。缺中间证书时出现分叉现象：见过这张中间证书的浏览器有缓存能补全链访问正常，新设备与程序化客户端直接报证书错误，测试全过生产半瘫。验证用 openssl s_client 看链长度与返回码。</desc>
 
-  <rect width="680" height="380" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">证书链：少一张中间证书 = 半瘫</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">第一张必须是站点证书</text>
+  <rect x="0" y="0" width="1200" height="700" fill="#ffffff"/>
 
   <defs>
-    <marker id="c4Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="c4Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- 信任链 -->
-  <rect x="40" y="52" width="250" height="42" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="165" y="70" font-size="9" font-weight="600" fill="#1D5A45" text-anchor="middle">根 CA —— 在客户端受信任列表里</text>
-  <text x="165" y="86" font-size="7.4" fill="#1D5A45" text-anchor="middle">信任的起点（系统/浏览器内置）</text>
+  <!-- 标题 + 数据来源 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">证书链：少一张中间证书 = 半瘫</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：007-接入层 114 §4.2 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">第一张必须是站点证书</text>
 
-  <line x1="165" y1="94" x2="165" y2="110" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c4Blue)"/>
-  <text x="175" y="106" font-size="7.4" fill="#8C8980">签发</text>
+  <!-- 左：信任链 -->
+  <text x="40" y="112" font-size="15" font-weight="bold" fill="#263238">信任链：自上而下签发</text>
 
-  <rect x="40" y="114" width="250" height="42" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="165" y="132" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">中间 CA（Intermediate）</text>
-  <text x="165" y="148" font-size="7.4" fill="#4A4945" text-anchor="middle">如 R3 / E1 —— 必须随证书一起下发</text>
+  <rect x="40" y="126" width="520" height="72" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="300" y="154" font-size="15" font-weight="bold" fill="#123314" text-anchor="middle">根 CA</text>
+  <text x="300" y="180" font-size="11.5" fill="#123314" text-anchor="middle">在客户端受信任列表里 · 信任的起点</text>
+  <line x1="300" y1="198" x2="300" y2="216" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="316" y="212" font-size="11" fill="#616161">签发</text>
 
-  <line x1="165" y1="156" x2="165" y2="172" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c4Blue)"/>
-  <text x="175" y="168" font-size="7.4" fill="#8C8980">签发</text>
+  <rect x="40" y="218" width="520" height="72" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="300" y="246" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">中间 CA（Intermediate）</text>
+  <text x="300" y="272" font-size="11.5" fill="#0d2f5c" text-anchor="middle">如 R3 / E1 —— 必须随证书一起下发</text>
+  <line x1="300" y1="290" x2="300" y2="308" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="316" y="304" font-size="11" fill="#616161">签发</text>
 
-  <rect x="40" y="176" width="250" height="42" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
-  <text x="165" y="194" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">站点证书 app.example.com</text>
-  <text x="165" y="210" font-size="7.4" fill="#7A4A12" text-anchor="middle">绑定域名与公钥，Nginx 的 ssl_certificate 指向它</text>
+  <rect x="40" y="310" width="520" height="72" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="300" y="338" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">站点证书 app.example.com</text>
+  <text x="300" y="364" font-size="11.5" fill="#7f3f00" text-anchor="middle">绑定域名与公钥 · ssl_certificate 指向它</text>
 
-  <!-- 右：fullchain 文件结构 -->
-  <text x="356" y="56" font-size="9.5" font-weight="600" fill="#4A4945">fullchain.pem 的正确结构</text>
-  <rect x="372" y="66" width="260" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="502" y="88" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">① 站点证书（第一张）</text>
-  <rect x="372" y="104" width="260" height="34" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="502" y="126" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">② 中间 CA（第二张，必须带）</text>
-  <text x="372" y="160" font-size="7.8" fill="#8C8980">拼接顺序错了同样失败——第一张不是站点证书即无效</text>
+  <!-- 右：fullchain 结构 -->
+  <text x="600" y="112" font-size="15" font-weight="bold" fill="#263238">fullchain.pem 的正确结构</text>
 
-  <!-- 现象分叉 -->
-  <text x="40" y="242" font-size="9.5" font-weight="600" fill="#4A4945">缺中间证书时的分叉现象</text>
-  <rect x="40" y="254" width="294" height="56" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
-  <text x="54" y="274" font-size="8.6" font-weight="600" fill="#1b5e20">浏览器（见过中间证书，有缓存）</text>
-  <text x="54" y="296" font-size="8.6" fill="#1b5e20">能补全链 → 访问正常 ✓（假象）</text>
-  <rect x="350" y="254" width="294" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="364" y="274" font-size="8.6" font-weight="600" fill="#7A322B">新设备 / curl / APP / Java 客户端</text>
-  <text x="364" y="296" font-size="8.6" fill="#7A322B">无缓存可补 → 证书错误 ✗（真实暴露）</text>
+  <rect x="600" y="126" width="560" height="62" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="880" y="152" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">① 站点证书（第一张）</text>
+  <text x="880" y="176" font-size="11.5" fill="#7f3f00" text-anchor="middle">顺序错了同样失败——第一张不是站点证书即无效</text>
 
-  <text x="32" y="342" font-size="9" fill="#8C8980">验证：openssl s_client -connect app.example.com:443 -servername app.example.com —— 看 Chain length 与 verify return code。</text>
-  <text x="32" y="362" font-size="9" fill="#8C8980">「测试全过、生产半瘫」的机制就在分叉里：测试用浏览器有缓存，生产里程序化客户端没有。处置见 004 §4.2。</text>
+  <rect x="600" y="202" width="560" height="62" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="880" y="228" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">② 中间 CA（第二张，必须带）</text>
+  <text x="880" y="252" font-size="11.5" fill="#0d2f5c" text-anchor="middle">根证书不用带——客户端本地有</text>
 
-  </g>
+  <rect x="600" y="282" width="560" height="100" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="620" y="308" font-size="13" font-weight="bold" fill="#37474f">验证命令</text>
+  <text x="620" y="334" font-size="11.5" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">openssl s_client -connect app.example.com:443</text>
+  <text x="620" y="356" font-size="11.5" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">　-servername app.example.com　看 Chain length 与 verify return code</text>
+
+  <!-- 分叉现象 -->
+  <text x="40" y="418" font-size="15" font-weight="bold" fill="#263238">缺中间证书时的分叉现象（测试全过、生产半瘫）</text>
+
+  <rect x="40" y="432" width="550" height="100" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="60" y="460" font-size="13" font-weight="bold" fill="#123314">浏览器（见过这张中间证书，有缓存）</text>
+  <text x="60" y="488" font-size="12.5" fill="#123314">能补全链 → 访问正常</text>
+  <text x="60" y="516" font-size="12.5" font-weight="bold" fill="#7f0000">这是假象，不能当成配置正确</text>
+
+  <rect x="610" y="432" width="550" height="100" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="630" y="460" font-size="13" font-weight="bold" fill="#7f0000">新设备 / curl / APP / Java 客户端</text>
+  <text x="630" y="488" font-size="12.5" fill="#7f0000">无缓存可补 → 证书错误</text>
+  <text x="630" y="516" font-size="12.5" font-weight="bold" fill="#7f0000">真实暴露，程序化客户端先炸</text>
+
+  <!-- 结论块 -->
+  <rect x="40" y="552" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="582" font-size="15" font-weight="bold" fill="#bf360c">★ fullchain 必须站点证书在前 + 中间证书在后，缺一即部分客户端报错（114 §4.2）</text>
+  <text x="60" y="608" font-size="12.5" fill="#5d4037">· 「测试全过、生产半瘫」的机制就在分叉里：测试用浏览器有缓存，生产里程序化客户端没有——验证必须走 openssl，不走浏览器</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="644" width="1120" height="48" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="657" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="92" y="668" font-size="12" fill="#37474f">根 CA / 有缓存正常</text>
+  <rect x="320" y="657" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="352" y="668" font-size="12" fill="#37474f">中间 CA</text>
+  <rect x="540" y="657" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="572" y="668" font-size="12" fill="#37474f">站点证书 ★</text>
+  <rect x="770" y="657" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="802" y="668" font-size="12" fill="#37474f">缺链报错</text>
+  <text x="1000" y="668" font-size="12" fill="#7f0000">橙框＝本册主线</text>
 </svg>

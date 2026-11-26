@@ -1,72 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 741.18" width="1200" height="741.18" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>502 判定树：error log 三句原话对应三种病因</title>
-  <desc>502 表示 Nginx 到后端的链路出问题。error log 里的三句原话直接对应三种病因：Connection refused 是后端进程没起或端口不对，用 ss 查监听；Connection timed out 是防火墙或路由不通，查安全组；upstream prematurely closed 是后端接了单但进程崩了，查应用日志与 OOM。第四种形态是后端返回畸形响应，调 proxy_buffer_size。</desc>
+  <desc>502 表示 Nginx 到后端的链路出问题。error log 里的三句原话直接对应三种病因：Connection refused 是后端进程没起或端口不对，用 ss 查监听；Connection timed out 是防火墙或路由不通，查安全组；upstream prematurely closed 是后端接了单但进程崩了，查应用日志与 OOM。第四种形态是后端返回畸形响应，调 proxy_buffer_size。502 永远指 Nginx 到后端这一段，取证总纲见 121 §7.1。</desc>
 
-  <rect width="680" height="420" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">502 判定树：error log 的三句原话</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">原话在，病因就在三种里</text>
+  <rect x="0" y="0" width="1200" height="760" fill="#ffffff"/>
 
   <defs>
-    <marker id="c7Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
+  <!-- 标题 + 数据来源 -->
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">502 判定树：error log 的三句原话</text>
+  <text x="40" y="76" font-size="12" fill="#616161">来源：007-接入层 121 §7.1 / §7.2 · 取证总纲先于配置 · 截止 2026-11-26</text>
+  <text x="1160" y="76" font-size="12" fill="#616161" text-anchor="end">原话在，病因就在三种里</text>
+
   <!-- 根 -->
-  <rect x="240" y="50" width="200" height="38" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="340" y="67" font-size="9.5" font-weight="600" fill="#7A4A12" text-anchor="middle">全站 / 部分请求 502</text>
-  <text x="340" y="82" font-size="7.6" fill="#7A4A12" text-anchor="middle">第一动作：tail -100 error.log</text>
+  <rect x="360" y="104" width="480" height="64" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="600" y="132" font-size="15" font-weight="bold" fill="#7f3f00" text-anchor="middle">全站 / 部分请求 502</text>
+  <text x="600" y="156" font-size="11.5" fill="#5d4700" text-anchor="middle">第一动作：tail -100 error.log 看原话</text>
 
   <!-- 三分支线 -->
-  <line x1="340" y1="88" x2="340" y2="106" stroke="#7FA6D0" stroke-width="1.2"/>
-  <line x1="122" y1="106" x2="558" y2="106" stroke="#7FA6D0" stroke-width="1.2"/>
-  <line x1="122" y1="106" x2="122" y2="124" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c7Blue)"/>
-  <line x1="340" y1="106" x2="340" y2="124" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c7Blue)"/>
-  <line x1="558" y1="106" x2="558" y2="124" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#c7Blue)"/>
+  <line x1="600" y1="168" x2="600" y2="188" stroke="#607d8b" stroke-width="2"/>
+  <line x1="205" y1="188" x2="995" y2="188" stroke="#607d8b" stroke-width="2"/>
+  <line x1="205" y1="188" x2="205" y2="210" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="600" y1="188" x2="600" y2="210" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="995" y1="188" x2="995" y2="210" stroke="#607d8b" stroke-width="2" marker-end="url(#arrow)"/>
 
   <!-- 分支 1 -->
-  <rect x="40" y="128" width="164" height="130" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="122" y="148" font-size="8" font-weight="600" fill="#7A322B" text-anchor="middle">connect() failed</text>
-  <text x="122" y="162" font-size="8" font-weight="600" fill="#7A322B" text-anchor="middle">(111: Connection refused)</text>
-  <line x1="52" y1="172" x2="192" y2="172" stroke="#D2948C" stroke-width="0.6"/>
-  <text x="52" y="190" font-size="7.8" fill="#7A322B">病因：后端进程没起</text>
-  <text x="52" y="206" font-size="7.8" fill="#7A322B">或端口写错</text>
-  <text x="52" y="226" font-size="7.8" font-weight="600" fill="#1D5A45">动作：上后端</text>
-  <text x="52" y="242" font-size="7.8" fill="#1D5A45">ss -tlnp | grep 端口</text>
+  <rect x="40" y="212" width="330" height="230" rx="6" fill="#fafafa" stroke="#c62828" stroke-width="1.5"/>
+  <text x="205" y="240" font-size="13" font-weight="bold" fill="#7f0000" text-anchor="middle">connect() failed (111: Connection refused)</text>
+  <line x1="60" y1="252" x2="350" y2="252" stroke="#c62828" stroke-width="1"/>
+  <text x="60" y="280" font-size="12.5" fill="#7f0000" font-weight="bold">病因：后端进程没起，或端口写错</text>
+  <text x="60" y="310" font-size="12" fill="#37474f">· upstream 里的 IP/端口和实际监听对不上</text>
+  <text x="60" y="338" font-size="12" fill="#37474f">· 服务崩了 / 没起来 / 容器还没就绪</text>
+  <text x="60" y="374" font-size="12.5" font-weight="bold" fill="#123314">动作：上后端机器查监听</text>
+  <text x="60" y="402" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">ss -tlnp | grep 端口</text>
+  <text x="60" y="428" font-size="11.5" fill="#616161">K8s 场景先 describe 看事件（「容器」125）</text>
 
   <!-- 分支 2 -->
-  <rect x="258" y="128" width="164" height="130" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="340" y="148" font-size="8" font-weight="600" fill="#7A322B" text-anchor="middle">connect() failed</text>
-  <text x="340" y="162" font-size="8" font-weight="600" fill="#7A322B" text-anchor="middle">(110: Connection timed out)</text>
-  <line x1="270" y1="172" x2="410" y2="172" stroke="#D2948C" stroke-width="0.6"/>
-  <text x="270" y="190" font-size="7.8" fill="#7A322B">病因：网络不通——</text>
-  <text x="270" y="206" font-size="7.8" fill="#7A322B">防火墙 / 安全组 / 路由</text>
-  <text x="270" y="226" font-size="7.8" font-weight="600" fill="#1D5A45">动作：查安全组</text>
-  <text x="270" y="242" font-size="7.8" fill="#1D5A45">「网络」007 §7.8 判定法</text>
+  <rect x="435" y="212" width="330" height="230" rx="6" fill="#fafafa" stroke="#c62828" stroke-width="1.5"/>
+  <text x="600" y="240" font-size="13" font-weight="bold" fill="#7f0000" text-anchor="middle">connect() failed (110: Connection timed out)</text>
+  <line x1="455" y1="252" x2="745" y2="252" stroke="#c62828" stroke-width="1"/>
+  <text x="455" y="280" font-size="12.5" fill="#7f0000" font-weight="bold">病因：网络不通——防火墙 / 安全组 / 路由</text>
+  <text x="455" y="310" font-size="12" fill="#37474f">· 连接根本建不起来，包被丢在半路</text>
+  <text x="455" y="338" font-size="12" fill="#37474f">· 与「后端进程活着没」无关，先看通路</text>
+  <text x="455" y="374" font-size="12.5" font-weight="bold" fill="#123314">动作：查安全组 / 防火墙规则</text>
+  <text x="455" y="402" font-size="11.5" fill="#123314">按「网络」124 的连通判定法逐段定位</text>
+  <text x="455" y="428" font-size="11.5" fill="#616161">先确认后端端口从 Nginx 侧 telnet 通不通</text>
 
   <!-- 分支 3 -->
-  <rect x="476" y="128" width="164" height="130" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="558" y="148" font-size="8" font-weight="600" fill="#7A322B" text-anchor="middle">upstream prematurely</text>
-  <text x="558" y="162" font-size="8" font-weight="600" fill="#7A322B" text-anchor="middle">closed connection</text>
-  <line x1="488" y1="172" x2="628" y2="172" stroke="#D2948C" stroke-width="0.6"/>
-  <text x="488" y="190" font-size="7.8" fill="#7A322B">病因：接了单但进程崩</text>
-  <text x="488" y="206" font-size="7.8" fill="#7A322B">——发布窗口或 OOM</text>
-  <text x="488" y="226" font-size="7.8" font-weight="600" fill="#1D5A45">动作：应用日志 +</text>
-  <text x="488" y="242" font-size="7.8" fill="#1D5A45">OOMKilled 检查（容器 009）</text>
+  <rect x="830" y="212" width="330" height="230" rx="6" fill="#fafafa" stroke="#c62828" stroke-width="1.5"/>
+  <text x="995" y="240" font-size="13" font-weight="bold" fill="#7f0000" text-anchor="middle">upstream prematurely closed connection</text>
+  <line x1="850" y1="252" x2="1140" y2="252" stroke="#c62828" stroke-width="1"/>
+  <text x="850" y="280" font-size="12.5" fill="#7f0000" font-weight="bold">病因：接了单但进程崩了</text>
+  <text x="850" y="310" font-size="12" fill="#37474f">· 连接在响应中途被后端关闭</text>
+  <text x="850" y="338" font-size="12" fill="#37474f">· 常见于发布窗口或 OOM 被杀</text>
+  <text x="850" y="374" font-size="12.5" font-weight="bold" fill="#123314">动作：应用日志 + OOMKilled 检查</text>
+  <text x="850" y="402" font-size="11.5" fill="#123314">K8s 看 Last State 与 Events（「容器」125）</text>
+  <text x="850" y="428" font-size="11.5" fill="#616161">找发布记录对齐时间点</text>
 
   <!-- 第四形态 -->
-  <rect x="40" y="278" width="604" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="296" font-size="8.4" font-weight="600" fill="#4A4945">第四形态：error log 干净 + 后端返回畸形响应（头超大 / 协议错）</text>
-  <text x="54" y="312" font-size="7.8" fill="#4A4945">动作：调 proxy_buffer_size（002 §2.6），并查后端为什么产出非法响应</text>
+  <rect x="40" y="462" width="1120" height="72" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="60" y="490" font-size="13" font-weight="bold" fill="#37474f">第四形态：error log 干净 + 后端返回畸形响应（头超大 / 协议错）</text>
+  <text x="60" y="518" font-size="12" fill="#616161">动作：调 proxy_buffer_size（112 §2.6），并查后端为什么产出非法响应——别只看 error log 三句原话</text>
 
-  <rect x="40" y="334" width="604" height="34" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="54" y="355" font-size="8.4" fill="#7A4A12">高频窗口：后端重启（发布时）与内存峰值（OOM 被杀）——前者用优雅发布消除，后者是容量问题</text>
+  <!-- 高频窗口 -->
+  <rect x="40" y="550" width="1120" height="62" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="576" font-size="12.5" font-weight="bold" fill="#bf360c">高频窗口：后端重启（发布时）与内存峰值（OOM 被杀）</text>
+  <text x="60" y="600" font-size="12" fill="#5d4037">前者用优雅发布消除，后者是容量问题——502 反复出现时先对齐发布与告警时间线</text>
 
-  <text x="32" y="396" font-size="9" fill="#8C8980">502 不是应用报错——应用活着但返回 500，那是后端自己的事；502 永远指「Nginx 到后端」这一段。取证总纲见 007 §7.1。</text>
+  <!-- 结论块 -->
+  <rect x="40" y="628" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="658" font-size="15" font-weight="bold" fill="#bf360c">★ 502 永远指「Nginx 到后端」这一段——应用活着但返回 500，那是后端自己的事</text>
+  <text x="60" y="684" font-size="12.5" fill="#5d4037">· 取证总纲（121 §7.1）：先 error log 原话定位病因，再动配置；跳过取证直接改 proxy 参数 = 碰运气</text>
 
-  </g>
+  <!-- 图例 -->
+  <rect x="40" y="720" width="1120" height="34" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="730" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="92" y="741" font-size="12" fill="#37474f">起点（502）</text>
+  <rect x="280" y="730" width="22" height="14" rx="3" fill="#fafafa" stroke="#c62828" stroke-width="1"/>
+  <text x="312" y="741" font-size="12" fill="#37474f">三种原话分支</text>
+  <rect x="540" y="730" width="22" height="14" rx="3" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="572" y="741" font-size="12" fill="#37474f">第四形态</text>
+  <text x="900" y="741" font-size="12" fill="#7f0000">红框＝病因，绿字＝动作</text>
 </svg>
