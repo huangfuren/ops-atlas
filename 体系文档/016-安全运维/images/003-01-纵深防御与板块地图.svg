@@ -1,64 +1,164 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <title>纵深防御模型与安全运维五册地图</title>
-  <desc>纵深防御五层：账号与入口（001）、网络边界（002）、主机合规（003）、合规框架（004）、审计与响应（005），每层标注核心防线与失效后果。左右两侧是与各板块的映射：Linux 003 账号权限基础、网络 007 防火墙机制、Redis 007 ACL、SRE 002/003 响应复盘。底部是最小权限与默认拒绝两个总原则。</desc>
-  <g transform="scale(1.7647058824)">
-  <rect width="680" height="470" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">纵深防御模型与安全运维五册地图</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1040" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>纵深防御五层漏斗与板块地图：五层防线，五册各守一层</title>
+  <desc>左区是纵深防御漏斗：外部攻击自上而下经过五层防线——账号与入口（011）、网络边界（012）、主机基线（013）、等保框架（014）、审计与响应（015），每层标注核心防线与失效后果；任何一层被突破，下一层继续收敛攻击面，漏网情况由应急五步兜底。右区是板块地图：总览三件套、正文五册、附录 190，底部是跨板块分界与两个总原则。数据来源：16-安全运维 板块正文。</desc>
 
-  <!-- 五层阶梯 -->
-  <rect x="30" y="52" width="430" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="44" y="74" font-size="8.8" font-weight="600" fill="#1F4468">第 1 层 · 账号与入口（001）</text>
-  <text x="44" y="90" font-size="7.4" fill="#4A4945">独立账号 · sudo 白名单 · SSH 密钥 · 堡垒机 · 登录审计</text>
-  <text x="44" y="104" font-size="7" fill="#8C8980">失效后果：入口失守，防线全跳过</text>
+  <defs>
+    <marker id="axGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
 
-  <rect x="30" y="120" width="430" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="44" y="142" font-size="8.8" font-weight="600" fill="#1F4468">第 2 层 · 网络边界（002）</text>
-  <text x="44" y="158" font-size="7.4" fill="#4A4945">默认拒绝 · 云安全组+主机防火墙双层 · 策略变更带回滚</text>
-  <text x="44" y="172" font-size="7" fill="#8C8980">失效后果：攻击面全开</text>
+  <rect x="0" y="0" width="1960" height="1040" fill="#ffffff"/>
 
-  <rect x="30" y="188" width="430" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="44" y="210" font-size="8.8" font-weight="600" fill="#1F4468">第 3 层 · 主机合规（003）</text>
-  <text x="44" y="226" font-size="7.4" fill="#4A4945">基线 15 条 · 漏扫闭环 · 补丁灰度 · 新机上线必跑</text>
-  <text x="44" y="240" font-size="7" fill="#8C8980">失效后果：单机弱配置成横向跳板</text>
+  <!-- 标题 -->
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#263238">纵深防御与板块地图：五层防线，五册各守一层</text>
+  <text x="1920" y="52" font-size="11" fill="#757575" text-anchor="end">数据来源：16-安全运维 板块 001 / 002 / 003、011~015、190 册正文 · 2026-11-26</text>
 
-  <rect x="30" y="256" width="430" height="62" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="44" y="278" font-size="8.8" font-weight="600" fill="#1F4468">第 4 层 · 合规框架（004）</text>
-  <text x="44" y="294" font-size="7.4" fill="#4A4945">等保五级 · 年度测评 · 运维义务映射 · 常态化=测评只是复印</text>
-  <text x="44" y="308" font-size="7" fill="#8C8980">失效后果：合规风险与信任损失</text>
+  <!-- ================= 左区：纵深防御漏斗 ================= -->
+  <rect x="40" y="84" width="880" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="64" y="120" font-size="15" font-weight="bold" fill="#263238">纵深防御漏斗：单点突破 ≠ 全面失守</text>
+  <text x="896" y="120" font-size="11" fill="#757575" text-anchor="end">攻击收敛方向自上而下</text>
 
-  <rect x="30" y="324" width="430" height="62" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="44" y="346" font-size="8.8" font-weight="600" fill="#7A4A12">第 5 层 · 审计与响应（005）★ 最后一道</text>
-  <text x="44" y="362" font-size="7.4" fill="#7A4A12">六类审计采集面 · 留存 ≥6 个月 · 应急五步 · 凭据全轮换</text>
-  <text x="44" y="376" font-size="7" fill="#8C8980">失效后果：出了事连"发生了什么"都答不上</text>
+  <!-- 攻击入口 -->
+  <rect x="330" y="138" width="300" height="44" rx="22" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="480" y="166" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">外部攻击 · 风险暴露面</text>
 
-  <!-- 板块映射 -->
-  <rect x="480" y="52" width="170" height="334" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="565" y="74" font-size="8.6" font-weight="600" fill="#2B2A27" text-anchor="middle">与本库其他板块</text>
-  <rect x="492" y="84" width="146" height="44" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
-  <text x="565" y="102" font-size="7.4" fill="#4A4945" text-anchor="middle">Linux 003 · 账号权限基础</text>
-  <text x="565" y="116" font-size="6.8" fill="#8C8980" text-anchor="middle">本板块前置</text>
-  <rect x="492" y="134" width="146" height="44" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
-  <text x="565" y="152" font-size="7.4" fill="#4A4945" text-anchor="middle">网络 007 · 防火墙机制</text>
-  <text x="565" y="166" font-size="6.8" fill="#8C8980" text-anchor="middle">002 讲策略纪律</text>
-  <rect x="492" y="184" width="146" height="44" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
-  <text x="565" y="202" font-size="7.4" fill="#4A4945" text-anchor="middle">Redis 007 · 云 001/002</text>
-  <text x="565" y="216" font-size="6.8" fill="#8C8980" text-anchor="middle">各自对象的安全册</text>
-  <rect x="492" y="234" width="146" height="44" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
-  <text x="565" y="252" font-size="7.4" fill="#4A4945" text-anchor="middle">SRE 002/003 · 响应复盘</text>
-  <text x="565" y="266" font-size="6.8" fill="#8C8980" text-anchor="middle">005 §3 的方法论上游</text>
-  <rect x="492" y="284" width="146" height="44" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
-  <text x="565" y="302" font-size="7.4" fill="#4A4945" text-anchor="middle">云 005 · 操作审计留存</text>
-  <text x="565" y="316" font-size="6.8" fill="#8C8980" text-anchor="middle">云上"谁改了什么"</text>
-  <rect x="492" y="334" width="146" height="44" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="0.8"/>
-  <text x="565" y="352" font-size="7.4" fill="#4A4945" text-anchor="middle">日志 001/005 · 采集治理</text>
-  <text x="565" y="366" font-size="6.8" fill="#8C8980" text-anchor="middle">审计流的技术底座</text>
+  <!-- 第 1 层 -->
+  <rect x="64" y="196" width="832" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="84" y="224" font-size="13" font-weight="bold" fill="#0d2f5c">第 1 层 · 账号与入口（011）</text>
+  <text x="84" y="248" font-size="11.5" fill="#0d2f5c">独立账号 · sudo 白名单 · SSH 密钥 · 堡垒机 · 登录审计</text>
+  <text x="84" y="272" font-size="11" fill="#c62828">失效后果：入口失守，以下防线全被跳过</text>
 
-  <!-- 底部 -->
-  <rect x="20" y="402" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="32" y="419" font-size="7.8" font-weight="600" fill="#7A4A12">★ 两个总原则贯穿五层：最小权限（001/002）· 默认拒绝（002/003）——每条加固措施都要配一条验证命令</text>
+  <line x1="480" y1="284" x2="480" y2="300" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
 
-  <text x="32" y="450" font-size="8.6" fill="#8C8980">防御只写视角不写攻击细节；等保讲框架认知与运维义务，测评咨询不在本板块范围。</text>
-  </g>
+  <!-- 第 2 层 -->
+  <rect x="100" y="304" width="760" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="124" y="332" font-size="13" font-weight="bold" fill="#0d2f5c">第 2 层 · 网络边界（012）</text>
+  <text x="124" y="356" font-size="11.5" fill="#0d2f5c">默认拒绝 · 云安全组 + 主机防火墙双层 · 策略变更带回滚</text>
+  <text x="124" y="380" font-size="11" fill="#c62828">失效后果：攻击面全开</text>
+
+  <line x1="480" y1="392" x2="480" y2="408" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- 第 3 层 -->
+  <rect x="136" y="412" width="688" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="160" y="440" font-size="13" font-weight="bold" fill="#0d2f5c">第 3 层 · 主机基线（013）</text>
+  <text x="160" y="464" font-size="11.5" fill="#0d2f5c">基线 15 条 · 漏扫闭环 · 补丁灰度 · 新机上线必跑</text>
+  <text x="160" y="488" font-size="11" fill="#c62828">失效后果：单机弱配置成横向跳板</text>
+
+  <line x1="480" y1="500" x2="480" y2="516" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- 第 4 层 -->
+  <rect x="172" y="520" width="616" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="196" y="548" font-size="13" font-weight="bold" fill="#0d2f5c">第 4 层 · 合规框架（014）</text>
+  <text x="196" y="572" font-size="11.5" fill="#0d2f5c">等保五级 · 年度测评 · 运维义务映射——常态化 = 测评只是复印</text>
+  <text x="196" y="596" font-size="11" fill="#c62828">失效后果：合规风险与信任损失</text>
+
+  <line x1="480" y1="608" x2="480" y2="624" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- 第 5 层 -->
+  <rect x="208" y="628" width="544" height="88" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="232" y="656" font-size="13" font-weight="bold" fill="#7f3f00">第 5 层 · 审计与响应（015）★ 最后一道</text>
+  <text x="232" y="680" font-size="11.5" fill="#7f3f00">六类审计采集面 · 留存 ≥6 个月 · 应急五步 · 凭据全轮换</text>
+  <text x="232" y="704" font-size="11" fill="#bf360c">失效后果：出了事连「发生了什么」都答不上</text>
+
+  <!-- 兜底块 -->
+  <rect x="64" y="732" width="832" height="56" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="84" y="755" font-size="12" font-weight="bold" fill="#7f0000">漏网兜底：任何一层被突破，015 的应急五步在漏斗底部承接</text>
+  <text x="84" y="778" font-size="11" fill="#7f0000">准备 → 遏制 → 根除 → 恢复 → 复盘——顺序不能乱，每步有产出（015 §3）</text>
+
+  <!-- 总原则 -->
+  <rect x="64" y="802" width="832" height="52" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="84" y="824" font-size="12" font-weight="bold" fill="#bf360c">★ 两个总原则贯穿五层：最小权限（011 / 012）· 默认拒绝（012 / 013）</text>
+  <text x="84" y="846" font-size="11" fill="#7f3f00">每条加固措施都要配一条验证命令——「配了」不算数，「验证过」才算数</text>
+
+  <!-- ================= 右区：板块地图 ================= -->
+  <rect x="960" y="84" width="960" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="984" y="120" font-size="15" font-weight="bold" fill="#263238">板块地图：总览三件套 + 正文五册 + 附录</text>
+  <text x="1896" y="120" font-size="11" fill="#757575" text-anchor="end">五层不是互备冗余，是层层收敛攻击面</text>
+
+  <!-- 总览三件套 -->
+  <text x="984" y="148" font-size="12" font-weight="bold" fill="#37474f">总览三件套</text>
+  <rect x="984" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1132" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 全貌</text>
+  <text x="1132" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">五层防线 · 地图</text>
+  <text x="1132" y="232" font-size="11" fill="#1565c0" text-anchor="middle">分界 · 学习路径</text>
+  <rect x="1292" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 方法论</text>
+  <text x="1440" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">最小权限 · 默认拒绝</text>
+  <text x="1440" y="232" font-size="11" fill="#1565c0" text-anchor="middle">可验证 · 可回滚</text>
+  <rect x="1600" y="158" width="296" height="88" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1748" y="188" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">003 全景图 ★ 本图</text>
+  <text x="1748" y="212" font-size="11" fill="#7f3f00" text-anchor="middle">五层漏斗 + 五册位置</text>
+  <text x="1748" y="232" font-size="11" fill="#bf360c" text-anchor="middle">板块配图唯一持有者</text>
+
+  <!-- 正文五册 -->
+  <text x="984" y="270" font-size="12" font-weight="bold" fill="#37474f">正文五册</text>
+  <rect x="1002" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1084" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">011 账号 SSH</text>
+  <text x="1084" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">账号生命周期</text>
+  <text x="1084" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">sudo 白名单</text>
+  <text x="1084" y="378" font-size="11" fill="#1565c0" text-anchor="middle">SSH 密钥 · 堡垒机</text>
+  <rect x="1180" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1262" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">012 防火墙</text>
+  <text x="1262" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">默认拒绝</text>
+  <text x="1262" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">安全组 + 主机双层</text>
+  <text x="1262" y="378" font-size="11" fill="#1565c0" text-anchor="middle">策略变更带回滚</text>
+  <rect x="1358" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">013 基线漏扫</text>
+  <text x="1440" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">基线 15 条</text>
+  <text x="1440" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">漏扫闭环 · 补丁灰度</text>
+  <text x="1440" y="378" font-size="11" fill="#1565c0" text-anchor="middle">新机上线必跑</text>
+  <rect x="1536" y="280" width="164" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1618" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">014 等保框架</text>
+  <text x="1618" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">等保五级</text>
+  <text x="1618" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">年度测评</text>
+  <text x="1618" y="378" font-size="11" fill="#1565c0" text-anchor="middle">运维义务映射</text>
+  <rect x="1714" y="280" width="164" height="104" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1796" y="308" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">015 审计应急 ★</text>
+  <text x="1796" y="334" font-size="11" fill="#7f3f00" text-anchor="middle">六类审计采集面</text>
+  <text x="1796" y="356" font-size="11" fill="#7f3f00" text-anchor="middle">留存 ≥6 个月</text>
+  <text x="1796" y="378" font-size="11" fill="#bf360c" text-anchor="middle">应急五步兜底</text>
+
+  <!-- 附录 -->
+  <rect x="984" y="404" width="912" height="52" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="1440" y="436" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">190 术语表：词汇 · 缩写 · 易混对 · 症状反查——按症状反查册号</text>
+
+  <!-- 跨板块分界 -->
+  <rect x="984" y="476" width="912" height="170" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1004" y="506" font-size="13" font-weight="bold" fill="#5e35b1">跨板块分界：这些问题不归本板块管</text>
+  <text x="1004" y="534" font-size="11.5" fill="#37474f">账号权限的基础概念（SUID / ACL 细节）→「Linux」113——本板块 011 是运维纪律深化</text>
+  <text x="1004" y="558" font-size="11.5" fill="#37474f">iptables / nftables 的机制原理 →「网络」124；网络设备日志采集 →「网络」125</text>
+  <text x="1004" y="582" font-size="11.5" fill="#37474f">Redis 安全配置 →「Redis」123；云主机安全 →「云平台」011 / 012</text>
+  <text x="1004" y="606" font-size="11.5" fill="#37474f">入侵后的技术复盘 →「SRE」013——本板块 015 只讲应急流程</text>
+  <text x="1004" y="630" font-size="11.5" fill="#37474f">审计采集的技术底座 →「日志」111；资产溯源基础命令 →「网络」131</text>
+
+  <!-- 总原则与范围 -->
+  <rect x="984" y="666" width="912" height="100" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="1004" y="696" font-size="13" font-weight="bold" fill="#bf360c">★ 纪律：从「全拒绝 + 按需放行」开始，不要「全放行 + 事后补堵」</text>
+  <text x="1004" y="722" font-size="12" fill="#5d4037">补堵永远慢于攻击（012）；「禁止 root 登录」要 <tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10">ssh root@host</tspan> 实测被拒才算数（011）</text>
+  <text x="1004" y="746" font-size="11" fill="#616161">范围界定：防御视角，不写攻击细节；等保讲框架认知与运维义务，测评咨询不在本板块范围</text>
+
+  <!-- 右区底注 -->
+  <text x="1004" y="794" font-size="11" fill="#616161">按任务进：账号问题 → 011；端口放行 → 012；新机上线 → 013；等保准备 → 014；出了事 → 015</text>
+  <text x="1004" y="818" font-size="11" fill="#616161">优先级口径：按「可利用性 × 暴露面」排，不为 CVSS 分数跳舞（013）</text>
+
+  <!-- 底部汇总 -->
+  <rect x="40" y="878" width="1880" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="912" font-size="13" font-weight="bold" fill="#bf360c">一句话总结：五层防线层层收敛攻击面——把人管住（011）、把路管住（012）、把底线守住（013）、把义务认清（014）、事后兜底（015）。</text>
+  <text x="64" y="942" font-size="11.5" fill="#7f3f00">安全不是一次加固是一次纪律：每条措施配验证命令，每层防线留原始证据，出了事按五步走，事后按无指责复盘改进。</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="982" width="1880" height="42" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="64" y="996" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="96" y="1008" font-size="11" fill="#37474f">防线层 / 板块册卡</text>
+  <rect x="310" y="996" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="342" y="1008" font-size="11" fill="#37474f">本图 / 审计兜底（枢纽）</text>
+  <rect x="580" y="996" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="612" y="1008" font-size="11" fill="#37474f">漏网兜底 / 失效后果</text>
+  <rect x="840" y="996" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1"/>
+  <text x="872" y="1008" font-size="11" fill="#37474f">外部攻击 / 术语表附录</text>
+  <rect x="1090" y="996" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="1122" y="1008" font-size="11" fill="#37474f">警示与结论块</text>
+  <rect x="1300" y="996" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1332" y="1008" font-size="11" fill="#37474f">分区容器</text>
 </svg>
