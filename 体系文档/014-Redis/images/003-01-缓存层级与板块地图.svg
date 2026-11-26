@@ -1,86 +1,163 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 829.41" width="1200" height="829.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <title>Redis 缓存层级与板块八册地图</title>
-  <desc>请求链路四层：用户请求、应用本地缓存、Redis、数据库，标注命中与未中走向。下半是板块八册地图：000 全貌、001 数据结构与场景、002 持久化、003 主从复制与哨兵、004 Cluster 集群、005 缓存设计三件套、006 运维实战与排错、007 安全与监控衔接。底部提示接手第一步是分清可丢缓存与不可丢主存储。</desc>
-  <g transform="scale(1.7647058824)">
-  <rect width="680" height="470" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">缓存层级与板块八册地图</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">000 全貌 · 配图</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1040" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>缓存层级与板块地图：请求先过缓存再到数据库，正文七册各守一段</title>
+  <desc>左区是缓存层级读路径：用户请求先进应用本地缓存，本地未中再到 Redis，Redis 未中回源数据库，命中率决定数据库死活；接手第一步是分清可丢缓存与不可丢主存储。右区是板块地图：总览三件套 001/002/003，110 组 111/112/113/114 数据立得住，120 组 121/122/123 用得稳救得回，附录 190 术语表；底部是跨板块分界。数据来源：14-Redis 板块正文。</desc>
 
   <defs>
-    <marker id="r0Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
-    </marker>
-    <marker id="r0Red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    <marker id="axGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- 请求链路 -->
-  <rect x="20" y="50" width="640" height="120" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="30" y="68" font-size="8" font-weight="600" fill="#8C8980">请求链路：命中率决定数据库死活</text>
-  <rect x="36" y="80" width="118" height="56" rx="3" fill="#FFFFFF" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="95" y="100" font-size="8.6" font-weight="600" fill="#2B2A27" text-anchor="middle">用户请求</text>
-  <text x="95" y="116" font-size="7" fill="#4A4945" text-anchor="middle">读 / 写流量</text>
-  <rect x="200" y="80" width="140" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="270" y="100" font-size="8.6" font-weight="600" fill="#1F4468" text-anchor="middle">应用 · 本地缓存</text>
-  <text x="270" y="116" font-size="7" fill="#4A4945" text-anchor="middle">进程内存 · 挡最热</text>
-  <text x="270" y="130" font-size="6.8" fill="#8C8980" text-anchor="middle">Caffeine / 本地字典</text>
-  <rect x="386" y="80" width="140" height="56" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="456" y="100" font-size="8.6" font-weight="600" fill="#7A4A12" text-anchor="middle">Redis ★ 本板块</text>
-  <text x="456" y="116" font-size="7" fill="#7A4A12" text-anchor="middle">共享缓存层</text>
-  <text x="456" y="130" font-size="6.8" fill="#7A4A12" text-anchor="middle">单线程 · 原子命令</text>
-  <rect x="566" y="80" width="90" height="56" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="611" y="100" font-size="8.6" font-weight="600" fill="#7A322B" text-anchor="middle">数据库</text>
-  <text x="611" y="116" font-size="7" fill="#7A322B" text-anchor="middle">最后防线</text>
-  <text x="611" y="130" font-size="6.8" fill="#7A322B" text-anchor="middle">数据全量在此</text>
-  <line x1="156" y1="108" x2="196" y2="108" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#r0Blue)"/>
-  <line x1="342" y1="108" x2="382" y2="108" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#r0Blue)"/>
-  <text x="362" y="98" font-size="6.8" fill="#4A4945" text-anchor="middle">本地未中</text>
-  <line x1="528" y1="96" x2="562" y2="96" stroke="#D2948C" stroke-width="1.2" marker-end="url(#r0Red)"/>
-  <text x="545" y="88" font-size="6.8" fill="#7A322B" text-anchor="middle">未中回源</text>
-  <text x="456" y="146" font-size="7" fill="#4A4945" text-anchor="middle">命中率越高，数据库越安全——命中率是缓存体系第一指标（007 §5 接告警）</text>
+  <rect x="0" y="0" width="1960" height="1040" fill="#ffffff"/>
 
-  <!-- 八册地图 -->
-  <rect x="20" y="182" width="640" height="206" rx="3" fill="#FAF9F4" stroke="#E5E2D8" stroke-width="1"/>
-  <text x="30" y="200" font-size="8" font-weight="600" fill="#8C8980">板块八册地图</text>
-  <rect x="30" y="208" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.4"/>
-  <text x="105" y="228" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">000 全貌 ★ 你在这里</text>
-  <text x="105" y="244" font-size="7" fill="#4A4945" text-anchor="middle">层级 · 地图 · 概念</text>
-  <text x="105" y="257" font-size="7" fill="#4A4945" text-anchor="middle">分界 · 学习路径</text>
-  <rect x="186" y="208" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="261" y="228" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">001 数据结构与场景</text>
-  <text x="261" y="244" font-size="7" fill="#4A4945" text-anchor="middle">九种结构 · 场景</text>
-  <text x="261" y="257" font-size="7" fill="#4A4945" text-anchor="middle">编码转换 · 误用</text>
-  <rect x="342" y="208" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="417" y="228" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">002 持久化</text>
-  <text x="417" y="244" font-size="7" fill="#4A4945" text-anchor="middle">RDB · AOF · 混合</text>
-  <text x="417" y="257" font-size="7" fill="#4A4945" text-anchor="middle">fork · 备份≠持久化</text>
-  <rect x="498" y="208" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="573" y="228" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">006 运维实战与排错</text>
-  <text x="573" y="244" font-size="7" fill="#4A4945" text-anchor="middle">内存 · 大 key · 热 key</text>
-  <text x="573" y="257" font-size="7" fill="#4A4945" text-anchor="middle">慢查询 · 延迟 · INFO</text>
-  <rect x="30" y="272" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="105" y="292" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">003 主从复制与哨兵</text>
-  <text x="105" y="308" font-size="7" fill="#4A4945" text-anchor="middle">复制 · 切换时序</text>
-  <text x="105" y="321" font-size="7" fill="#4A4945" text-anchor="middle">脑裂防治</text>
-  <rect x="186" y="272" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="261" y="292" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">004 Cluster 集群</text>
-  <text x="261" y="308" font-size="7" fill="#4A4945" text-anchor="middle">16384 槽 · MOVED</text>
-  <text x="261" y="321" font-size="7" fill="#4A4945" text-anchor="middle">hash tag · 倾斜</text>
-  <rect x="342" y="272" width="150" height="56" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="417" y="292" font-size="8.2" font-weight="600" fill="#7A4A12" text-anchor="middle">005 缓存设计三件套</text>
-  <text x="417" y="308" font-size="7" fill="#7A4A12" text-anchor="middle">穿透 · 击穿 · 雪崩</text>
-  <text x="417" y="321" font-size="7" fill="#7A4A12" text-anchor="middle">一致性 · 淘汰策略</text>
-  <rect x="498" y="272" width="150" height="56" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="573" y="292" font-size="8.2" font-weight="600" fill="#1F4468" text-anchor="middle">007 安全与监控衔接</text>
-  <text x="573" y="308" font-size="7" fill="#4A4945" text-anchor="middle">ACL · 禁命令</text>
-  <text x="573" y="321" font-size="7" fill="#4A4945" text-anchor="middle">指标映射 · 阈值</text>
+  <!-- 标题 -->
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#263238">缓存层级与板块地图：请求先过缓存再到数据库，正文七册各守一段</text>
+  <text x="1920" y="52" font-size="11" fill="#757575" text-anchor="end">数据来源：14-Redis 板块 001 / 002 / 003、111~123、190 册正文 · 2026-11-26</text>
 
-  <!-- 底部 -->
-  <rect x="20" y="400" width="640" height="26" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="32" y="417" font-size="7.8" font-weight="600" fill="#7A4A12">★ 接手第一步：分清 Redis 里存的是「可丢缓存」还是「不可丢主存储」——它决定持久化与高可用的投入（002 / 003）</text>
+  <!-- ================= 左区：缓存层级 ================= -->
+  <rect x="40" y="84" width="760" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="64" y="120" font-size="15" font-weight="bold" fill="#263238">缓存层级：命中率决定数据库死活</text>
+  <text x="776" y="120" font-size="11" fill="#757575" text-anchor="end">读路径自上而下</text>
 
-  <text x="32" y="448" font-size="8.6" fill="#8C8980">分界：选型对比 → 数据库 010/009；消息语义 → 消息队列 004；redis_exporter 配置 → 监控 007；备份方法论 → Linux 010。</text>
-  </g>
+  <!-- 用户请求 -->
+  <rect x="280" y="150" width="280" height="48" rx="24" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="420" y="179" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">用户请求 · 读 / 写流量</text>
+
+  <line x1="420" y1="198" x2="420" y2="228" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- 应用本地缓存 -->
+  <rect x="280" y="232" width="280" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="420" y="262" font-size="14" font-weight="bold" fill="#0d2f5c" text-anchor="middle">应用 · 本地缓存</text>
+  <text x="420" y="288" font-size="12" fill="#0d2f5c" text-anchor="middle">进程内存 · 挡最热流量</text>
+  <text x="420" y="312" font-size="11" fill="#1565c0" text-anchor="middle">Caffeine / 本地字典</text>
+  <rect x="584" y="262" width="104" height="32" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="636" y="282" font-size="11" fill="#388e3c" text-anchor="middle">命中 → 返回</text>
+
+  <line x1="420" y1="328" x2="420" y2="358" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+  <text x="436" y="348" font-size="11" fill="#607d8b">本地未中</text>
+
+  <!-- Redis 枢纽 -->
+  <rect x="280" y="362" width="280" height="116" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="420" y="392" font-size="14" font-weight="bold" fill="#7f3f00" text-anchor="middle">Redis ★ 本板块</text>
+  <text x="420" y="418" font-size="12" fill="#7f3f00" text-anchor="middle">共享缓存层 · 单线程原子命令</text>
+  <text x="420" y="442" font-size="11" fill="#bf360c" text-anchor="middle">可丢缓存，还是不可丢主存储？</text>
+  <text x="420" y="464" font-size="11" fill="#e65100" text-anchor="middle">命中率是体系第一指标</text>
+  <rect x="584" y="398" width="104" height="32" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="636" y="418" font-size="11" fill="#388e3c" text-anchor="middle">命中 → 返回</text>
+
+  <line x1="420" y1="478" x2="420" y2="508" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+  <text x="436" y="498" font-size="11" fill="#607d8b">未中 · 回源</text>
+
+  <!-- 数据库 -->
+  <rect x="280" y="512" width="280" height="96" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="420" y="542" font-size="14" font-weight="bold" fill="#7f0000" text-anchor="middle">数据库 · 最后防线</text>
+  <text x="420" y="568" font-size="12" fill="#7f0000" text-anchor="middle">数据全量在此 · 挡不住就打挂</text>
+  <text x="420" y="592" font-size="11" fill="#c62828" text-anchor="middle">命中率越高，数据库越安全</text>
+
+  <!-- 可丢/不可丢分界 -->
+  <rect x="64" y="632" width="712" height="118" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="84" y="662" font-size="13" font-weight="bold" fill="#bf360c">★ 接手第一步：分清「可丢缓存」与「不可丢主存储」</text>
+  <text x="84" y="690" font-size="12" fill="#5d4037">可丢 → 纯缓存：淘汰策略用 allkeys-*、丢得起（121 §5）</text>
+  <text x="84" y="714" font-size="12" fill="#5d4037">不可丢 → 主存储：持久化 + 高可用 + noeviction（112 / 113）</text>
+  <text x="84" y="738" font-size="11" fill="#616161">把可丢的当主存储是浪费，把不可丢的当纯缓存是事故之源（001）</text>
+
+  <!-- 高可用形态 -->
+  <rect x="64" y="766" width="712" height="72" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="84" y="794" font-size="12" font-weight="bold" fill="#37474f">三种高可用形态，规模决定选型（113 / 114）</text>
+  <text x="84" y="820" font-size="11.5" fill="#37474f">主从（复制不切换）→ 哨兵（自动切换、不解决容量）→ Cluster（切换 + 分片容量）</text>
+
+  <!-- ================= 右区：板块地图 ================= -->
+  <rect x="840" y="84" width="1080" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="864" y="120" font-size="15" font-weight="bold" fill="#263238">板块地图：总览三件套 + 正文七册 + 附录</text>
+  <text x="1896" y="120" font-size="11" fill="#757575" text-anchor="end">主线：先用对 → 存得住 → 挂了有人顶 → 用得稳 → 救得回</text>
+
+  <!-- 总览三件套 -->
+  <text x="864" y="148" font-size="12" font-weight="bold" fill="#37474f">总览三件套</text>
+  <rect x="864" y="158" width="336" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1032" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 全貌</text>
+  <text x="1032" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">层级 · 地图 · 分界</text>
+  <text x="1032" y="232" font-size="11" fill="#1565c0" text-anchor="middle">学习路径 · 误解澄清</text>
+  <rect x="1212" y="158" width="336" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1380" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 方法论</text>
+  <text x="1380" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">可丢判定 · 命中率意识</text>
+  <text x="1380" y="232" font-size="11" fill="#1565c0" text-anchor="middle">淘汰策略 · 一致性权衡</text>
+  <rect x="1560" y="158" width="336" height="88" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1728" y="188" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">003 全景图 ★ 本图</text>
+  <text x="1728" y="212" font-size="11" fill="#7f3f00" text-anchor="middle">缓存层级 + 板块位置</text>
+  <text x="1728" y="232" font-size="11" fill="#bf360c" text-anchor="middle">板块配图唯一持有者</text>
+
+  <!-- 110 组 -->
+  <rect x="864" y="266" width="1032" height="152" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="884" y="294" font-size="13" font-weight="bold" fill="#37474f">110-核心与高可用：数据立得住</text>
+  <text x="1876" y="294" font-size="11" fill="#757575" text-anchor="end">结构 → 持久化 → 复制 → 分片</text>
+  <rect x="882" y="306" width="240" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1002" y="334" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">111 结构选型</text>
+  <text x="1002" y="358" font-size="11" fill="#0d2f5c" text-anchor="middle">九种结构 · 场景与误用</text>
+  <text x="1002" y="380" font-size="11" fill="#1565c0" text-anchor="middle">编码转换 · 单线程</text>
+  <rect x="1134" y="306" width="240" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1254" y="334" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">112 持久化</text>
+  <text x="1254" y="358" font-size="11" fill="#0d2f5c" text-anchor="middle">RDB / AOF / 混合</text>
+  <text x="1254" y="380" font-size="11" fill="#1565c0" text-anchor="middle">fork 代价 · 备份≠持久化</text>
+  <rect x="1386" y="306" width="240" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1506" y="334" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">113 复制与哨兵</text>
+  <text x="1506" y="358" font-size="11" fill="#0d2f5c" text-anchor="middle">复制 · 全量 / 增量</text>
+  <text x="1506" y="380" font-size="11" fill="#1565c0" text-anchor="middle">哨兵切换 · 脑裂防治</text>
+  <rect x="1638" y="306" width="240" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1758" y="334" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">114 Cluster 集群</text>
+  <text x="1758" y="358" font-size="11" fill="#0d2f5c" text-anchor="middle">16384 槽 · MOVED / ASK</text>
+  <text x="1758" y="380" font-size="11" fill="#1565c0" text-anchor="middle">hash tag · 数据倾斜</text>
+
+  <line x1="1380" y1="420" x2="1380" y2="438" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+  <text x="1392" y="435" font-size="11" fill="#607d8b">数据立得住，才谈用得稳</text>
+
+  <!-- 120 组 -->
+  <rect x="864" y="442" width="1032" height="152" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="884" y="470" font-size="13" font-weight="bold" fill="#37474f">120-运维与治理：用得稳、救得回</text>
+  <text x="1876" y="470" font-size="11" fill="#757575" text-anchor="end">防御 → 排错 → 安全与监控</text>
+  <rect x="882" y="482" width="324" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1044" y="510" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">121 三件套防御</text>
+  <text x="1044" y="534" font-size="11" fill="#0d2f5c" text-anchor="middle">穿透 / 击穿 / 雪崩</text>
+  <text x="1044" y="556" font-size="11" fill="#1565c0" text-anchor="middle">一致性 · 淘汰策略</text>
+  <rect x="1218" y="482" width="324" height="96" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1380" y="510" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">122 排错路径 ★ 反查入口</text>
+  <text x="1380" y="534" font-size="11" fill="#7f3f00" text-anchor="middle">内存 · 大 key · 热 key</text>
+  <text x="1380" y="556" font-size="11" fill="#bf360c" text-anchor="middle">慢查询 · 延迟 · INFO</text>
+  <rect x="1554" y="482" width="324" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1716" y="510" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">123 安全与监控衔接</text>
+  <text x="1716" y="534" font-size="11" fill="#0d2f5c" text-anchor="middle">ACL · 禁命令</text>
+  <text x="1716" y="556" font-size="11" fill="#1565c0" text-anchor="middle">指标映射 · 阈值</text>
+
+  <!-- 附录 -->
+  <rect x="864" y="618" width="1032" height="56" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="1380" y="652" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">190 术语表：词汇 · 缩写 · 易混对 · 症状反查——只知道现象不知道翻哪册时从这里进</text>
+
+  <!-- 跨板块分界 -->
+  <rect x="864" y="694" width="1032" height="144" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="884" y="724" font-size="13" font-weight="bold" fill="#5e35b1">跨板块分界：这些问题不归本板块管</text>
+  <text x="884" y="752" font-size="11.5" fill="#37474f">选型对比（Redis vs MongoDB vs 关系型）→「数据库」134 §3 · 133 运维差异</text>
+  <text x="884" y="776" font-size="11.5" fill="#37474f">Redis Stream 当消息队列合不合适 →「消息队列」001 / 014</text>
+  <text x="884" y="800" font-size="11.5" fill="#37474f">备份方法论（RPO / RTO · 3-2-1 · 演练）→「Linux」134 ·「数据库」121（本板块 112 只讲 Redis 工具）</text>
+  <text x="884" y="824" font-size="11.5" fill="#37474f">redis_exporter 配置与告警规则 →「监控」117（本板块 123 §5 给指标映射）；命中率 SLO →「SRE」011</text>
+
+  <!-- 底部汇总 -->
+  <rect x="40" y="878" width="1880" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="912" font-size="13" font-weight="bold" fill="#bf360c">一句话总结：Redis 挡在数据库前面——先用对结构（111）、存得住（112）、挂了有人顶（113 / 114）、用得稳（121）、出事救得回（122 / 123）。</text>
+  <text x="64" y="942" font-size="11.5" fill="#7f3f00">接手任何实例先回答一个问题：这些数据丢了会怎样？——答案决定持久化与高可用的投入（112 / 113）。</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="982" width="1880" height="42" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="64" y="996" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="96" y="1008" font-size="11" fill="#37474f">板块册卡（总览与正文）</text>
+  <rect x="300" y="996" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="332" y="1008" font-size="11" fill="#37474f">本图 / 反查入口（枢纽）</text>
+  <rect x="570" y="996" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="602" y="1008" font-size="11" fill="#37474f">数据库 · 最后防线（风险）</text>
+  <rect x="830" y="996" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="862" y="1008" font-size="11" fill="#37474f">命中返回标签</text>
+  <rect x="1020" y="996" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1"/>
+  <text x="1052" y="1008" font-size="11" fill="#37474f">外部请求 / 术语表附录</text>
+  <rect x="1300" y="996" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="1332" y="1008" font-size="11" fill="#37474f">警示与结论块</text>
+  <rect x="1560" y="996" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1592" y="1008" font-size="11" fill="#37474f">分区容器</text>
 </svg>
