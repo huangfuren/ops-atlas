@@ -1,64 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
   <title>两级 Collector：Agent 就近收，Gateway 承担重活</title>
-  <desc>应用 Pod 的 SDK 把 span 用 OTLP 发给本节点的 Agent Collector（DaemonSet，只做轻处理：脱敏与批量），Agent 再转发给中心 Gateway（Deployment，承担重活：尾部采样、路由、多后端分发），最后写入 Jaeger 或 Tempo。两级部署的理由：应用直发后端有凭据耦合、重试分散、无治理点、尾部采样无处安放四个问题。</desc>
-
-  <rect width="680" height="360" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">两级 Collector：Agent 薄，Gateway 重</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">尾部采样只在 Gateway</text>
+  <desc>应用 Pod 的 SDK 用 OTLP 发给本节点 Agent（DaemonSet，轻处理），Agent 转发中心 Gateway（Deployment，重活：尾部采样、路由、多后端分发），最后写入 Jaeger 或 Tempo。下方是应用直发后端的四个问题、Agent 必配与分工纪律、图例。</desc>
 
   <defs>
-    <marker id="h2Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="axGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
     </marker>
   </defs>
 
-  <!-- 应用 -->
-  <rect x="40" y="66" width="150" height="70" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="115" y="88" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">应用 Pod × N</text>
-  <text x="115" y="106" font-size="7.4" fill="#4A4945" text-anchor="middle">SDK 自动埋点（001 §1.5）</text>
-  <text x="115" y="122" font-size="7.4" fill="#8C8980" text-anchor="middle">OTLP → localhost:4317</text>
+  <rect x="0" y="0" width="1200" height="680" fill="#ffffff"/>
 
-  <line x1="190" y1="101" x2="216" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h2Blue)"/>
-  <text x="203" y="93" font-size="7" fill="#8C8980" text-anchor="middle">OTLP</text>
+  <text x="40" y="48" font-size="20" font-weight="bold" fill="#263238">两级 Collector：Agent 薄，Gateway 重</text>
+  <text x="1160" y="48" font-size="12" fill="#616161" text-anchor="end">尾部采样只在 Gateway</text>
 
-  <!-- Agent -->
-  <rect x="220" y="56" width="180" height="90" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1.2"/>
-  <text x="310" y="78" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">Agent（DaemonSet）</text>
-  <text x="310" y="96" font-size="7.4" fill="#4A4945" text-anchor="middle">轻处理：batch · 脱敏</text>
-  <text x="310" y="112" font-size="7.4" fill="#8C8980" text-anchor="middle">每节点一个 · 故障域小</text>
-  <text x="310" y="130" font-size="7.4" fill="#7A322B" text-anchor="middle">✗ 尾部采样不放这（聚不齐）</text>
+  <!-- 主链 -->
+  <rect x="40" y="80" width="200" height="120" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="140" y="106" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">应用 Pod × N</text>
+  <text x="140" y="130" font-size="11.5" fill="#0d2f5c" text-anchor="middle">SDK 自动埋点（111 §1.5）</text>
+  <text x="140" y="152" font-size="11.5" fill="#0d2f5c" text-anchor="middle">OTLP → localhost:4317</text>
+  <text x="140" y="174" font-size="11.5" fill="#0d2f5c" text-anchor="middle">进程内不加重活</text>
 
-  <line x1="400" y1="101" x2="426" y2="101" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h2Blue)"/>
+  <line x1="244" y1="140" x2="290" y2="140" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+  <text x="267" y="130" font-size="10" fill="#616161" text-anchor="middle">OTLP</text>
 
-  <!-- Gateway -->
-  <rect x="430" y="56" width="214" height="90" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="537" y="78" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">Gateway（Deployment）</text>
-  <text x="537" y="96" font-size="7.4" fill="#7A4A12" text-anchor="middle">重活：尾部采样（005 §5.3）</text>
-  <text x="537" y="112" font-size="7.4" fill="#7A4A12" text-anchor="middle">路由 · 多后端分发 · 租户限流</text>
-  <text x="537" y="130" font-size="7.2" fill="#8C8980" text-anchor="middle">规模大了再拆，起步可合并</text>
+  <rect x="294" y="80" width="240" height="120" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="414" y="104" font-size="13" font-weight="bold" fill="#123314" text-anchor="middle">Agent（DaemonSet）</text>
+  <text x="414" y="128" font-size="11.5" fill="#1b3d1e" text-anchor="middle">轻处理：batch · 脱敏</text>
+  <text x="414" y="150" font-size="11.5" fill="#1b3d1e" text-anchor="middle">每节点一个 · 故障域小</text>
+  <text x="414" y="172" font-size="11.5" fill="#c62828" text-anchor="middle">禁止：尾部采样不放这（聚不齐）</text>
 
-  <line x1="537" y1="146" x2="537" y2="168" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#h2Blue)"/>
-  <text x="545" y="161" font-size="7" fill="#8C8980">OTLP</text>
+  <line x1="538" y1="140" x2="584" y2="140" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+  <text x="561" y="130" font-size="10" fill="#616161" text-anchor="middle">OTLP</text>
 
-  <!-- 后端 -->
-  <rect x="430" y="172" width="214" height="40" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="537" y="190" font-size="8.6" font-weight="600" fill="#1D5A45" text-anchor="middle">Jaeger / Tempo（003）</text>
-  <text x="537" y="205" font-size="7.2" fill="#1D5A45" text-anchor="middle">存储 · 按 trace_id 还原</text>
+  <rect x="588" y="80" width="270" height="120" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="723" y="104" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">Gateway（Deployment）</text>
+  <text x="723" y="128" font-size="11.5" fill="#7f3f00" text-anchor="middle">重活：尾部采样（123 §5.3）</text>
+  <text x="723" y="150" font-size="11.5" fill="#7f3f00" text-anchor="middle">路由 · 多后端分发 · 租户限流</text>
+  <text x="723" y="172" font-size="11.5" fill="#5d4037" text-anchor="middle">规模大了再拆，起步可合并</text>
 
-  <!-- 底部要点 -->
-  <rect x="40" y="228" width="604" height="56" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="248" font-size="8.4" font-weight="600" fill="#4A4945">应用直发后端的四个问题（002 §2.1）</text>
-  <text x="54" y="266" font-size="7.6" fill="#4A4945">① 后端凭据与地址耦合进应用　② 重试逻辑分散不可控　③ 无统一治理点（脱敏/过滤/采样）</text>
-  <text x="54" y="281" font-size="7.6" fill="#4A4945">④ 尾部采样需要中心聚齐 trace——直发模式无处安放</text>
+  <line x1="862" y1="140" x2="908" y2="140" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+  <text x="885" y="130" font-size="10" fill="#616161" text-anchor="middle">OTLP</text>
 
-  <rect x="40" y="296" width="604" height="28" rx="3" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1"/>
-  <text x="52" y="314" font-size="8" fill="#1b5e20">Agent 必配：memory_limiter（自保）+ batch（攒批）——processor 顺序即语义（002 §2.7 第 5 坑）</text>
+  <rect x="912" y="105" width="248" height="70" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1036" y="131" font-size="13" font-weight="bold" fill="#311b92" text-anchor="middle">Jaeger / Tempo（121）</text>
+  <text x="1036" y="155" font-size="11.5" fill="#311b92" text-anchor="middle">存储 · 按 trace_id 还原</text>
 
-  <text x="32" y="348" font-size="9" fill="#8C8980">规模路径：起步一级（单 Collector）→ 尾部采样/多后端时拆两级；K8s 场景 Agent=DaemonSet（002 §2.3）。</text>
+  <!-- 四个问题 -->
+  <rect x="40" y="232" width="1120" height="130" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="258" font-size="13" font-weight="bold" fill="#37474f">应用直发后端的四个问题（112 §2.1）——这就是要有两级的原因</text>
+  <text x="60" y="286" font-size="12" fill="#37474f">① 后端凭据与地址耦合进应用　　② 重试逻辑分散在各应用、不可控</text>
+  <text x="60" y="312" font-size="12" fill="#37474f">③ 无统一治理点（脱敏 / 过滤 / 采样没有落点）</text>
+  <text x="60" y="338" font-size="12" fill="#37474f">④ 尾部采样需要中心聚齐整棵 trace——直发模式下无处安放</text>
 
-  </g>
+  <!-- 必配条 -->
+  <rect x="40" y="386" width="1120" height="44" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="60" y="413" font-size="12.5" fill="#1b5e20">Agent 必配：memory_limiter（自保）+ batch（攒批）——processor 顺序即语义：limiter 最前、batch 最后（112 §2.6 第 4 坑）</text>
+
+  <!-- 分工纪律 -->
+  <rect x="40" y="446" width="1120" height="44" rx="6" fill="#fff8e1" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="60" y="473" font-size="12.5" fill="#7f3f00">分工原则：Agent 尽量薄（网络跳数少、故障域小）· Gateway 承担重活——尾部采样上线时就该拆两级（112 §2.3）</text>
+
+  <!-- 尾注 -->
+  <text x="40" y="524" font-size="11.5" fill="#616161">规模路径：起步一级（单 Collector）→ 出现尾部采样或多后端需求时拆两级；K8s 场景 Agent = DaemonSet（112 §2.3）</text>
+  <text x="40" y="550" font-size="11.5" fill="#616161">常用 processor：batch / memory_limiter / resource / attributes / tail_sampling / filter（112 §2.4）</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="572" width="1120" height="64" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="60" y="596" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="92" y="608" font-size="12" fill="#37474f">应用（数据入口）</text>
+  <rect x="320" y="596" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="352" y="608" font-size="12" fill="#37474f">Agent（主体）</text>
+  <rect x="560" y="596" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="592" y="608" font-size="12" fill="#37474f">Gateway（枢纽）</text>
+  <rect x="800" y="596" width="22" height="14" rx="3" fill="#d1c4e9" stroke="#5e35b1" stroke-width="1"/>
+  <text x="832" y="608" font-size="12" fill="#37474f">后端存储</text>
+  <rect x="1000" y="596" width="22" height="14" rx="3" fill="#e8f5e9" stroke="#388e3c" stroke-width="1"/>
+  <text x="1032" y="608" font-size="12" fill="#37474f">纪律 / 通过条件</text>
 </svg>
