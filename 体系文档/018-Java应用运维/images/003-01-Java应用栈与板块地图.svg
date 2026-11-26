@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1960 1040" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif">
+  <title>Java 应用栈与板块地图：应用形态、JVM 运行时与交付，两册各管一段</title>
+  <desc>左区是 Java 应用栈三层：应用形态层（war 或 fat jar，012 管）、JVM 运行时层（内存四区与 GC，011 管）、操作系统层（归 Linux 板块）；下方是救火与部署入口、容器 137 红线、常见误解。右区是板块地图：总览三件套、正文两册 011/012、附录 190、跨板块分界与接手要点。数据来源：18-Java应用运维 板块正文。</desc>
+
+  <defs>
+    <marker id="axGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#607d8b"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1960" height="1040" fill="#ffffff"/>
+
+  <!-- 标题 -->
+  <text x="40" y="52" font-size="20" font-weight="bold" fill="#263238">Java 应用栈与板块地图：应用形态、JVM 运行时与交付，两册各管一段</text>
+  <text x="1920" y="52" font-size="11" fill="#757575" text-anchor="end">数据来源：18-Java应用运维 板块 001 / 002 / 003、011 / 012、190 册正文 · 2026-11-26</text>
+
+  <!-- ================= 左区：Java 应用栈 ================= -->
+  <rect x="40" y="84" width="880" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="64" y="120" font-size="15" font-weight="bold" fill="#263238">Java 应用栈：你管的是 JVM 这台「机器」</text>
+  <text x="896" y="120" font-size="11" fill="#757575" text-anchor="end">依赖方向自下而上</text>
+
+  <!-- 应用形态层 -->
+  <rect x="64" y="150" width="832" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="84" y="178" font-size="13" font-weight="bold" fill="#0d2f5c">应用形态层（012）：war 或 fat jar</text>
+  <text x="84" y="202" font-size="11.5" fill="#0d2f5c">war 部到外置 Tomcat ｜ fat jar 自带容器 <tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5">java -jar</tspan>（Spring Boot 主流）</text>
+  <text x="84" y="226" font-size="11" fill="#1565c0">部署 / 回滚 / 配置管理——形态决定交付方式（012）</text>
+
+  <line x1="480" y1="246" x2="480" y2="258" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- JVM 层 -->
+  <rect x="64" y="262" width="832" height="110" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2.5"/>
+  <text x="84" y="290" font-size="13" font-weight="bold" fill="#7f3f00">JVM 运行时层 ★ 本板块核心（011）：应用之下的「机器」</text>
+  <text x="84" y="314" font-size="11.5" fill="#7f3f00">堆 / 元空间 / 线程栈 / 直接内存——内存四区分管不同 OOM，报错信息指明区域</text>
+  <text x="84" y="338" font-size="11.5" fill="#7f3f00">GC（STW 抖动）· OOM 四型 · <tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5">jps / jstat / jmap / jstack</tspan> 排障命令族</text>
+  <text x="84" y="362" font-size="11" fill="#bf360c">容器特有坑：堆外叠加超 limit → OOMKilled，退出码 137</text>
+
+  <line x1="480" y1="372" x2="480" y2="384" stroke="#607d8b" stroke-width="2" marker-end="url(#axGray)"/>
+
+  <!-- OS 层 -->
+  <rect x="64" y="388" width="832" height="64" rx="6" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="84" y="414" font-size="13" font-weight="bold" fill="#546e7a">操作系统与硬件 → 归「Linux」板块</text>
+  <text x="84" y="438" font-size="11.5" fill="#546e7a">JVM 只是一个进程——系统资源（CPU / 内存 / 磁盘 / 文件句柄）问题往下走板块查</text>
+
+  <!-- 入口块 -->
+  <rect x="64" y="468" width="832" height="76" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="84" y="494" font-size="13" font-weight="bold" fill="#37474f">两条入口：救火从 011 进，部署从 012 进</text>
+  <text x="84" y="518" font-size="11.5" fill="#37474f">救火：OOM → 011 §4（四型对症）；CPU 高 → 011 §3（jstack 定位线程）；启动失败 → 012 §4</text>
+  <text x="84" y="536" font-size="11.5" fill="#37474f">部署：war / fat jar 双形态对照 → 012；发布与回滚纪律与「CICD」131 握手</text>
+
+  <!-- 容器红线 -->
+  <rect x="64" y="560" width="832" height="88" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="84" y="586" font-size="13" font-weight="bold" fill="#7f0000">★ 容器里的 Java 特有坑：OOMKilled 退出码 137</text>
+  <text x="84" y="610" font-size="11.5" fill="#7f0000"><tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5">-Xmx</tspan> 只管堆——堆外（元空间 + 直接内存 + 线程栈）叠加后超过容器 limit 就会被杀（011 §5）</text>
+  <text x="84" y="634" font-size="11" fill="#c62828">做法：<tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10.5">-Xmx</tspan> 不超过 limit 的 6~7 成，给堆外留余量；内存告警看容器级，不只看堆</text>
+
+  <!-- 常见误解 -->
+  <rect x="64" y="664" width="832" height="88" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="84" y="690" font-size="13" font-weight="bold" fill="#5d4700">两个最贵的误解</text>
+  <text x="84" y="714" font-size="11.5" fill="#5d4700">Java 慢 = 加内存？先分清堆 / 元空间 / 泄漏——盲目加内存只是掩盖泄漏</text>
+  <text x="84" y="738" font-size="11.5" fill="#5d4700">重启解决一切 OOM？泄漏型过几天再来——dump 对比找增长点才治本</text>
+
+  <!-- 左区底注 -->
+  <text x="84" y="786" font-size="11" fill="#616161">GC 日志生产必开（开销极小）——它是判断「慢是不是 GC 引起」的第一证据；正常锯齿回落，只涨不落才是泄漏</text>
+  <text x="84" y="810" font-size="11" fill="#616161">Tomcat 线程不是越多越好：线程切换与数据库连接数才是瓶颈——按压测定（012）</text>
+
+  <!-- ================= 右区：板块地图 ================= -->
+  <rect x="960" y="84" width="960" height="770" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1.5"/>
+  <text x="984" y="120" font-size="15" font-weight="bold" fill="#263238">板块地图：总览三件套 + 正文两册 + 附录</text>
+  <text x="1896" y="120" font-size="11" fill="#757575" text-anchor="end">主线：懂 JVM 这台「机器」（011）→ 管应用的交付（012）</text>
+
+  <!-- 总览三件套 -->
+  <text x="984" y="148" font-size="12" font-weight="bold" fill="#37474f">总览三件套</text>
+  <rect x="984" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1132" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">001 全貌</text>
+  <text x="1132" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">应用栈 · 内存四区速览</text>
+  <text x="1132" y="232" font-size="11" fill="#1565c0" text-anchor="middle">分界 · 学习路径</text>
+  <rect x="1292" y="158" width="296" height="88" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1440" y="188" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">002 方法论</text>
+  <text x="1440" y="212" font-size="11" fill="#0d2f5c" text-anchor="middle">先分区再处理 · 证据链</text>
+  <text x="1440" y="232" font-size="11" fill="#1565c0" text-anchor="middle">形态决定交付 · 对照两国语言</text>
+  <rect x="1600" y="158" width="296" height="88" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1748" y="188" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">003 全景图 ★ 本图</text>
+  <text x="1748" y="212" font-size="11" fill="#7f3f00" text-anchor="middle">应用栈 + 两册位置</text>
+  <text x="1748" y="232" font-size="11" fill="#bf360c" text-anchor="middle">板块配图唯一持有者</text>
+
+  <!-- 正文两册 -->
+  <text x="984" y="270" font-size="12" font-weight="bold" fill="#37474f">正文两册</text>
+  <rect x="984" y="280" width="450" height="104" rx="6" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="1209" y="308" font-size="13" font-weight="bold" fill="#7f3f00" text-anchor="middle">011 JVM 内存与 GC 排障 ★ 配图所在册</text>
+  <text x="1209" y="334" font-size="11" fill="#7f3f00" text-anchor="middle">内存分区 · GC 器 · jps / jstat / jmap / jstack</text>
+  <text x="1209" y="356" font-size="11" fill="#7f3f00" text-anchor="middle">OOM 四型 · dump 分析 · 容器 137 退出码</text>
+  <text x="1209" y="378" font-size="11" fill="#bf360c" text-anchor="middle">救火入口册（011-01 内存映射图）</text>
+  <rect x="1446" y="280" width="450" height="104" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="1671" y="308" font-size="13" font-weight="bold" fill="#0d2f5c" text-anchor="middle">012 Tomcat 与应用交付</text>
+  <text x="1671" y="334" font-size="11" fill="#0d2f5c" text-anchor="middle">war vs fat jar 双形态 · server.xml · 线程池按压测定</text>
+  <text x="1671" y="356" font-size="11" fill="#0d2f5c" text-anchor="middle">部署与回滚纪律 · 日志体系（logback）</text>
+  <text x="1671" y="378" font-size="11" fill="#1565c0" text-anchor="middle">交付入口册</text>
+
+  <!-- 附录 -->
+  <rect x="984" y="404" width="912" height="52" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="1440" y="436" font-size="13" font-weight="bold" fill="#37474f" text-anchor="middle">190 术语表：词汇 · 缩写 · 易混对 · 症状反查——按症状反查册号</text>
+
+  <!-- 跨板块分界 -->
+  <rect x="984" y="476" width="912" height="170" rx="6" fill="#ffffff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="1004" y="506" font-size="13" font-weight="bold" fill="#5e35b1">跨板块分界：这些问题不归本板块管</text>
+  <text x="1004" y="534" font-size="11.5" fill="#37474f">Go 程序的 GC 与 pprof →「Go」132 / 133——GC 是同一问题的两种解法，对照着学</text>
+  <text x="1004" y="558" font-size="11.5" fill="#37474f">JVM 指标进 Prometheus →「监控」117（JMX exporter / Micrometer）——本板块 011 §3 给口径</text>
+  <text x="1004" y="582" font-size="11.5" fill="#37474f">应用日志的采集与治理 →「日志」111 / 123——logback 日志是采集对象</text>
+  <text x="1004" y="606" font-size="11.5" fill="#37474f">部署流水线（war / jar 的 CI 发布）→「CICD」131 / 132——本板块 012 只讲应用侧纪律</text>
+  <text x="1004" y="630" font-size="11.5" fill="#37474f">数据库连接池背后的数据库 →「数据库」板块——连接池只是客户端</text>
+
+  <!-- 接手要点 -->
+  <rect x="984" y="666" width="912" height="100" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="1004" y="696" font-size="13" font-weight="bold" fill="#bf360c">★ 接手 Java 应用第一件事</text>
+  <text x="1004" y="722" font-size="12" fill="#5d4037"><tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10">jps</tspan> 确认进程在，<tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10">jstat -gc</tspan> 看一眼 GC 是否正常锯齿——先看后动（011 §3）</text>
+  <text x="1004" y="746" font-size="11" fill="#616161">配置核对三连：<tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10">-Xmx</tspan> 与容器 limit 的关系、GC 日志是否开着、应用日志路径在哪</text>
+
+  <!-- 右区底注 -->
+  <text x="1004" y="794" font-size="11" fill="#616161">顺序读：001 → 011 → 012；救火直达：OOM → 011 §4；启动失败 → 012 §4</text>
+  <text x="1004" y="818" font-size="11" fill="#616161">误解澄清：dump 文件大打不开别放弃——MAT 支持分块分析，或先用 <tspan font-family="ui-monospace,Menlo,Consolas,monospace" font-size="10">jmap -histo</tspan> 看直方图</text>
+
+  <!-- 底部汇总 -->
+  <rect x="40" y="878" width="1880" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="64" y="912" font-size="13" font-weight="bold" fill="#bf360c">一句话总结：Java 运维 = 管 JVM 这台「机器」（011）+ 管应用的交付（012）——报错信息指明区域，形态决定交付方式。</text>
+  <text x="64" y="942" font-size="11.5" fill="#7f3f00">两条铁律：排障先分区再处理；-Xmx 不等于容器 limit——堆外叠加会 137。</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="982" width="1880" height="42" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="64" y="996" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1"/>
+  <text x="96" y="1008" font-size="11" fill="#37474f">应用层 / 交付册卡</text>
+  <rect x="290" y="996" width="22" height="14" rx="3" fill="#ffcc80" stroke="#e65100" stroke-width="1"/>
+  <text x="322" y="1008" font-size="11" fill="#37474f">JVM 核心 / 本图 / 011 册（枢纽）</text>
+  <rect x="590" y="996" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1"/>
+  <text x="622" y="1008" font-size="11" fill="#37474f">容器红线 / 风险</text>
+  <rect x="810" y="996" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="842" y="1008" font-size="11" fill="#37474f">误解提示</text>
+  <rect x="990" y="996" width="22" height="14" rx="3" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1022" y="1008" font-size="11" fill="#37474f">OS 层（归其他板块）</text>
+  <rect x="1220" y="996" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1"/>
+  <text x="1252" y="1008" font-size="11" fill="#37474f">术语表附录</text>
+  <rect x="1420" y="996" width="22" height="14" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="1452" y="1008" font-size="11" fill="#37474f">警示与结论块</text>
+  <rect x="1630" y="996" width="22" height="14" rx="3" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
+  <text x="1662" y="1008" font-size="11" fill="#37474f">分区容器</text>
+</svg>
