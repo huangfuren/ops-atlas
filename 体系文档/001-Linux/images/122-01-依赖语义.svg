@@ -32,10 +32,10 @@
   <text x="50" y="194" font-size="11.5" fill="#7f3f00">不管对方有没有起来</text>
 
   <rect x="360" y="121" width="200" height="26" rx="4" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="374" y="139" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">db 启动失败 ✗</text>
+  <text x="374" y="139" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">db <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">启动失败</tspan></text>
 
   <rect x="360" y="159" width="200" height="26" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
-  <text x="374" y="177" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app 照样被拉起</text>
+  <text x="374" y="177" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">照样被拉起</tspan></text>
 
   <text x="580" y="139" font-size="11" fill="#616161">两者同时开始</text>
 
@@ -51,10 +51,10 @@
   <text x="50" y="314" font-size="11.5" fill="#7f3f00">不管谁先谁后</text>
 
   <rect x="360" y="241" width="420" height="26" rx="4" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="374" y="259" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">db 还在启动中，没就绪</text>
+  <text x="374" y="259" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">db <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">还在启动中，没就绪</tspan></text>
 
   <rect x="360" y="279" width="200" height="26" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
-  <text x="374" y="297" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app 先就绪</text>
+  <text x="374" y="297" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">先就绪</tspan></text>
 
   <text x="794" y="259" font-size="11" fill="#616161">同时开始</text>
 
@@ -69,10 +69,10 @@
   <text x="50" y="434" font-size="11.5" fill="#123314">这才是正确写法</text>
 
   <rect x="360" y="361" width="300" height="26" rx="4" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-  <text x="374" y="379" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">db 启动并就绪 ✓</text>
+  <text x="374" y="379" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">db <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">启动并就绪</tspan></text>
 
   <rect x="660" y="399" width="200" height="26" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="2"/>
-  <text x="674" y="417" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app 才开始起</text>
+  <text x="674" y="417" font-size="11" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">app <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">才开始起</tspan></text>
 
   <line x1="660" y1="374" x2="660" y2="395" stroke="#388e3c" stroke-width="2" marker-end="url(#arrow)"/>
 

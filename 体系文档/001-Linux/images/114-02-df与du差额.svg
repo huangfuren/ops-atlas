@@ -38,7 +38,7 @@
 
   <rect x="270" y="76" width="180" height="90" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
   <text x="286" y="102" font-size="13" font-weight="bold" fill="#7f3f00">inode</text>
-  <text x="286" y="124" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">nlink 归 0</text>
+  <text x="286" y="124" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">nlink <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">归</tspan> 0</text>
   <text x="286" y="146" font-size="11" fill="#7f3f00">还开着 fd，引用不清零</text>
 
   <line x1="454" y1="121" x2="502" y2="121" stroke="#c62828" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrowRed)"/>
@@ -63,7 +63,7 @@
   <rect x="710" y="76" width="460" height="166" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
   <text x="730" y="102" font-size="14" font-weight="bold" fill="#5d4037">怎么找出来：lsof +L1</text>
   <text x="730" y="126" font-size="11.5" fill="#5d4037">NLINK 是 0、文件名后面带</text>
-  <text x="730" y="146" font-size="11.5" fill="#5d4037" font-family="ui-monospace,Menlo,Consolas,monospace">(deleted) 的那几行</text>
+  <text x="730" y="146" font-size="11.5" fill="#5d4037" font-family="ui-monospace,Menlo,Consolas,monospace">(deleted) <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">的那几行</tspan></text>
   <text x="730" y="172" font-size="11.5" fill="#5d4037">把它们加起来，往往正好等于差额。</text>
   <line x1="730" y1="188" x2="1150" y2="188" stroke="#ffcc80" stroke-width="1"/>
   <text x="730" y="208" font-size="11.5" fill="#5d4037">处置：重启对应进程（如 reload 日志），</text>

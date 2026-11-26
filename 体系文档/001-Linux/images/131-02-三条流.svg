@@ -52,7 +52,7 @@
   <text x="30" y="318" font-size="12" fill="#616161">② 2&gt;&amp;1 是「复制 1 此刻的指向」，写在 &gt; 前还是后，结果不同</text>
 
   <rect x="30" y="336" width="560" height="164" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5"/>
-  <text x="50" y="362" font-size="13" font-weight="bold" fill="#1b5e20" font-family="ui-monospace,Menlo,Consolas,monospace">对：cmd &gt; out.log 2&gt;&amp;1</text>
+  <text x="50" y="362" font-size="13" font-weight="bold" fill="#1b5e20" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">对：</tspan>cmd &gt; out.log 2&gt;&amp;1</text>
   <text x="50" y="388" font-size="11.5" fill="#1b3d1e">第一步：把 1 指向文件　→　1 = out.log</text>
   <text x="50" y="410" font-size="11.5" fill="#1b3d1e">第二步：把 2 指向「1 现在指的地方」→ 2 = out.log</text>
   <text x="50" y="432" font-size="11.5" fill="#1b3d1e">结果：两条流都进 out.log，屏幕干净</text>
@@ -60,7 +60,7 @@
   <text x="64" y="471" font-size="11" fill="#1b3d1e">顺序记法：先把 1 安顿好，再让 2 复制 1</text>
 
   <rect x="610" y="336" width="560" height="164" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="630" y="362" font-size="13" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">错：cmd 2&gt;&amp;1 &gt; out.log</text>
+  <text x="630" y="362" font-size="13" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">错：</tspan>cmd 2&gt;&amp;1 &gt; out.log</text>
   <text x="630" y="388" font-size="11.5" fill="#7f0000">第一步：把 2 指向「1 现在指的地方」—— 此时还是终端</text>
   <text x="630" y="410" font-size="11.5" fill="#7f0000">第二步：把 1 指向文件 —— 2 已经定型，仍指着终端</text>
   <text x="630" y="432" font-size="11.5" fill="#7f0000">结果：stderr 留在屏幕，stdout 进了文件</text>

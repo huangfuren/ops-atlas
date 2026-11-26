@@ -60,7 +60,7 @@
 
   <rect x="30" y="398" width="1140" height="72" rx="6" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
   <text x="50" y="422" font-size="13" font-weight="bold" fill="#0d2f5c" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">段耗时公式（后一个减前一个）</text>
-  <text x="50" y="448" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">dns = namelookup　　tcp = connect − dns　　tls = appconnect − tcp　　ttfb = starttransfer − tls　　down = total − ttfb</text>
+  <text x="50" y="448" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">dns = namelookup<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　　</tspan>tcp = connect <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">−</tspan> dns<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　　</tspan>tls = appconnect <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">−</tspan> tcp<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　　</tspan>ttfb = starttransfer <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">−</tspan> tls<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　　</tspan>down = total <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">−</tspan> ttfb</text>
 
   <rect x="30" y="486" width="1140" height="72" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
   <text x="50" y="510" font-size="15" font-weight="bold" fill="#e65100" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">判读顺序：两步排除，第三步定位</text>

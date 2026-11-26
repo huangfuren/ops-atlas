@@ -52,7 +52,7 @@
   <rect x="30" y="216" width="1140" height="56" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
   <text x="50" y="240" font-size="12.5" font-weight="bold" fill="#0d2f5c">第二步 · 30 秒抓现场（一屏清单）</text>
   <text x="50" y="262" font-size="11.5" fill="#0d2f5c">重启能解决 90% 的故障，也能销毁 100% 的现场 —— 动手之前，数先落地。</text>
-  <text x="700" y="262" font-size="11" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">uptime · free · vmstat 1 5 · iostat -x · ss -s</text>
+  <text x="700" y="262" font-size="11" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">uptime <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> free <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> vmstat 1 5 <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> iostat -x <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> ss -s</text>
 
   <!-- ============ 第三步 ============ -->
   <text x="30" y="292" font-size="12" font-weight="bold" fill="#1565c0">第三步 · 看 vmstat 三行，定维度</text>
@@ -63,22 +63,22 @@
   <text x="740" y="321" font-size="11.5" font-weight="bold" fill="#37474f">接着看哪一节 / 哪张图</text>
 
   <rect x="30" y="330" width="1140" height="30" fill="#ffffff"/>
-  <text x="50" y="350" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">r 持续 &gt; 核数</text>
+  <text x="50" y="350" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">r <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">持续</tspan> &gt; <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">核数</tspan></text>
   <text x="460" y="350" font-size="11.5" fill="#37474f">CPU 维度</text>
   <text x="740" y="350" font-size="11.5" fill="#616161">CPU 那张图：从 us/sy 拆到单核</text>
 
   <rect x="30" y="360" width="1140" height="30" fill="#fafafa"/>
-  <text x="50" y="380" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">b 持续 &gt; 0，wa 高</text>
+  <text x="50" y="380" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">b <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">持续</tspan> &gt; 0<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">，</tspan>wa <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">高</tspan></text>
   <text x="460" y="380" font-size="11.5" fill="#37474f">磁盘 / IO 维度</text>
   <text x="740" y="380" font-size="11.5" fill="#616161">iostat -x 看 await 与 %util，再查是慢盘还是队列</text>
 
   <rect x="30" y="390" width="1140" height="30" fill="#ffffff"/>
-  <text x="50" y="410" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">b 持续 &gt; 0，wa 不高</text>
+  <text x="50" y="410" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">b <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">持续</tspan> &gt; 0<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">，</tspan>wa <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">不高</tspan></text>
   <text x="460" y="410" font-size="11.5" fill="#37474f">锁 / NFS / 内存回收</text>
   <text x="740" y="410" font-size="11.5" fill="#616161">看 D 状态进程的 wchan，不要只看磁盘</text>
 
   <rect x="30" y="420" width="1140" height="30" fill="#fafafa"/>
-  <text x="50" y="440" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">si / so 非 0</text>
+  <text x="50" y="440" font-size="11" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">si / so <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">非</tspan> 0</text>
   <text x="460" y="440" font-size="11.5" fill="#37474f">内存维度</text>
   <text x="740" y="440" font-size="11.5" fill="#616161">已经换页了，看 available 与 OOM 日志</text>
 

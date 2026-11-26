@@ -121,7 +121,7 @@
   </g>
   <rect x="334" y="712" width="260" height="72" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
   <g>
-    <text x="464" y="741" font-size="13" text-anchor="middle" font-weight="bold" fill="#5d4700" font-family="ui-monospace,Menlo,Consolas,monospace">ibdata1 · redo</text>
+    <text x="464" y="741" font-size="13" text-anchor="middle" font-weight="bold" fill="#5d4700" font-family="ui-monospace,Menlo,Consolas,monospace">ibdata1 <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> redo</text>
     <text x="464" y="763" font-size="11.5" text-anchor="middle" fill="#5d4700">系统表空间 · redo 日志</text>
   </g>
   <rect x="606" y="712" width="260" height="72" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
@@ -131,7 +131,7 @@
   </g>
   <rect x="878" y="712" width="260" height="72" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
   <g>
-    <text x="1008" y="741" font-size="13" text-anchor="middle" font-weight="bold" fill="#5d4700" font-family="ui-monospace,Menlo,Consolas,monospace">error · slow.log</text>
+    <text x="1008" y="741" font-size="13" text-anchor="middle" font-weight="bold" fill="#5d4700" font-family="ui-monospace,Menlo,Consolas,monospace">error <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> slow.log</text>
     <text x="1008" y="763" font-size="11.5" text-anchor="middle" fill="#5d4700">诊断日志</text>
   </g>
 

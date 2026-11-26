@@ -36,7 +36,7 @@
   <text x="60" y="310" font-size="12" fill="#37474f">· upstream 里的 IP/端口和实际监听对不上</text>
   <text x="60" y="338" font-size="12" fill="#37474f">· 服务崩了 / 没起来 / 容器还没就绪</text>
   <text x="60" y="374" font-size="12.5" font-weight="bold" fill="#123314">动作：上后端机器查监听</text>
-  <text x="60" y="402" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">ss -tlnp | grep 端口</text>
+  <text x="60" y="402" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">ss -tlnp | grep <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">端口</tspan></text>
   <text x="60" y="428" font-size="11.5" fill="#616161">K8s 场景先 describe 看事件（「容器」125）</text>
 
   <!-- 分支 2 -->

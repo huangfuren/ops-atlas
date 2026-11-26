@@ -49,7 +49,7 @@
   <rect x="600" y="282" width="560" height="100" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
   <text x="620" y="308" font-size="13" font-weight="bold" fill="#37474f">验证命令</text>
   <text x="620" y="334" font-size="11.5" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">openssl s_client -connect app.example.com:443</text>
-  <text x="620" y="356" font-size="11.5" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">　-servername app.example.com　看 Chain length 与 verify return code</text>
+  <text x="620" y="356" font-size="11.5" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　</tspan>-servername app.example.com<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　看</tspan> Chain length <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">与</tspan> verify return code</text>
 
   <!-- 分叉现象 -->
   <text x="40" y="418" font-size="15" font-weight="bold" fill="#263238">缺中间证书时的分叉现象（测试全过、生产半瘫）</text>

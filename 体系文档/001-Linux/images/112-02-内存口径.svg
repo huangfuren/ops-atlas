@@ -15,22 +15,22 @@
   <text x="30" y="62" font-size="12" fill="#616161">① free -h 的几列，是同一块内存的三种身份</text>
 
   <rect x="30" y="76" width="360" height="100" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="46" y="104" font-size="15" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">used　3.2G</text>
+  <text x="46" y="104" font-size="15" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">used<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　</tspan>3.2G</text>
   <text x="46" y="130" font-size="11.5" fill="#7f0000">进程真拿走的</text>
   <text x="46" y="152" font-size="11" fill="#7f0000">单看它没有意义 —— 它不含缓存</text>
 
   <rect x="420" y="76" width="360" height="100" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
-  <text x="436" y="104" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">buff/cache　11G</text>
+  <text x="436" y="104" font-size="15" font-weight="bold" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">buff/cache<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　</tspan>11G</text>
   <text x="436" y="130" font-size="11.5" fill="#0d2f5c">内核拿去当读写缓存</text>
   <text x="436" y="152" font-size="11" fill="#0d2f5c">内存紧张时立刻让出，高不是浪费</text>
 
   <rect x="810" y="76" width="360" height="100" rx="6" fill="#eceff1" stroke="#90a4ae" stroke-width="1.5"/>
-  <text x="826" y="104" font-size="15" font-weight="bold" fill="#546e7a" font-family="ui-monospace,Menlo,Consolas,monospace">free　1.1G</text>
+  <text x="826" y="104" font-size="15" font-weight="bold" fill="#546e7a" font-family="ui-monospace,Menlo,Consolas,monospace">free<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　</tspan>1.1G</text>
   <text x="826" y="130" font-size="11.5" fill="#546e7a">完全没碰过的</text>
   <text x="826" y="152" font-size="11" fill="#546e7a">接近 0 也健康，不用去「释放」它</text>
 
   <rect x="30" y="192" width="1140" height="52" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
-  <text x="50" y="214" font-size="14" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">available　11G</text>
+  <text x="50" y="214" font-size="14" font-weight="bold" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">available<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">　</tspan>11G</text>
   <text x="270" y="214" font-size="12" fill="#123314">＝ free ＋ 能回收的 cache − 不可回收的 shared 与 slab</text>
   <text x="50" y="234" font-size="11" fill="#2e5230">只有它是「还能再给新进程多少」的答案；上面三列都是推导它的材料。</text>
 

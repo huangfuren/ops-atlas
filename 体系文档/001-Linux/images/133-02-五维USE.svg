@@ -24,20 +24,20 @@
   <text x="50" y="152" font-size="10" fill="#2e5230">（占满不等于不够）</text>
   <text x="210" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">us + sy</text>
   <text x="210" y="152" font-size="10" fill="#123314">用户态加内核态，不含 idle 与 wa</text>
-  <text x="540" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">r 队列 / runq-sz</text>
+  <text x="540" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">r <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">队列</tspan> / runq-sz</text>
   <text x="540" y="152" font-size="10" fill="#123314">可运行但没抢到核的进程数</text>
-  <text x="870" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">%st · MCE</text>
+  <text x="870" y="130" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">%st <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> MCE</text>
   <text x="870" y="152" font-size="10" fill="#123314">被宿主机抢走的、硬件报错</text>
 
   <!-- ============ 内存 ============ -->
   <rect x="30" y="168" width="1140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
   <text x="50" y="196" font-size="14" font-weight="bold" fill="#123314">内存</text>
   <text x="50" y="216" font-size="10" fill="#2e5230">（只看 available）</text>
-  <text x="210" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">available 剩多少</text>
+  <text x="210" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">available <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">剩多少</tspan></text>
   <text x="210" y="216" font-size="10" fill="#123314">不是 free，也不是 used</text>
-  <text x="540" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">si / so · majflt/s</text>
+  <text x="540" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">si / so <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> majflt/s</text>
   <text x="540" y="216" font-size="10" fill="#123314">一旦换页就已经在排队了</text>
-  <text x="870" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">OOM 日志</text>
+  <text x="870" y="194" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">OOM <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">日志</tspan></text>
   <text x="870" y="216" font-size="10" fill="#123314">dmesg 搜 Out of memory</text>
 
   <!-- ============ 磁盘 ============ -->
@@ -46,7 +46,7 @@
   <text x="50" y="280" font-size="10" fill="#2e5230">（%util 会骗人）</text>
   <text x="210" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">%util</text>
   <text x="210" y="280" font-size="10" fill="#123314">RAID / SSD 上到 100% 也可能还有余量</text>
-  <text x="540" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">await · aqu-sz</text>
+  <text x="540" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">await <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> aqu-sz</text>
   <text x="540" y="280" font-size="10" fill="#123314">单次等多久、队列里堆了几个</text>
   <text x="870" y="258" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">IO error</text>
   <text x="870" y="280" font-size="10" fill="#123314">dmesg 里的介质错误，先换盘</text>
@@ -55,22 +55,22 @@
   <rect x="30" y="296" width="1140" height="64" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
   <text x="50" y="324" font-size="14" font-weight="bold" fill="#123314">网络</text>
   <text x="50" y="344" font-size="10" fill="#2e5230">（带宽与 pps 分开看）</text>
-  <text x="210" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">带宽占比 · pps</text>
+  <text x="210" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">带宽占比</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> pps</text>
   <text x="210" y="344" font-size="10" fill="#123314">小包打满 pps 时，带宽数字还很低</text>
-  <text x="540" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">Recv-Q · 重传率</text>
+  <text x="540" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">Recv-Q <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">重传率</tspan></text>
   <text x="540" y="344" font-size="10" fill="#123314">应用读得慢、链路在重传</text>
-  <text x="870" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">drops · conntrack full</text>
+  <text x="870" y="322" font-size="11.5" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">drops <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> conntrack full</text>
   <text x="870" y="344" font-size="10" fill="#123314">丢包计数、连接表打满</text>
 
   <!-- ============ 进程状态 ============ -->
   <rect x="30" y="360" width="1140" height="64" rx="6" fill="#d1c4e9" stroke="#5e35b1" stroke-width="2"/>
   <text x="50" y="388" font-size="14" font-weight="bold" fill="#311b92">进程状态</text>
   <text x="50" y="408" font-size="10" fill="#311b92">（前四维的结果）</text>
-  <text x="210" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">进程 / 线程总数</text>
+  <text x="210" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">进程</tspan> / <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">线程总数</tspan></text>
   <text x="210" y="408" font-size="10" fill="#311b92">突增多半是 fork 风暴或泄漏</text>
-  <text x="540" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">D 状态个数 · 僵尸个数</text>
+  <text x="540" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">D <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">状态个数</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">僵尸个数</tspan></text>
   <text x="540" y="408" font-size="10" fill="#311b92">D 堆积指向前四维，僵尸指向父进程</text>
-  <text x="870" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">fork 失败 · fd 耗尽</text>
+  <text x="870" y="386" font-size="11.5" fill="#311b92" font-family="ui-monospace,Menlo,Consolas,monospace">fork <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">失败</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> fd <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">耗尽</tspan></text>
   <text x="870" y="408" font-size="10" fill="#311b92">Too many open files 就是它</text>
 
   <!-- ============ 结论块 ============ -->

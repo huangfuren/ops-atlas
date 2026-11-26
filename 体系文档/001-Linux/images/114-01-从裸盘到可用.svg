@@ -69,7 +69,7 @@
   <rect x="30" y="220" width="560" height="90" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
   <text x="50" y="244" font-size="13" font-weight="bold" fill="#7f0000">断在 ② 与 ③ 之间：有分区，没 mkfs</text>
   <text x="50" y="268" font-size="11.5" fill="#7f0000">mount 报 unknown filesystem type</text>
-  <text x="50" y="290" font-size="11.5" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">lsblk -f 里 FSTYPE 一列是空的</text>
+  <text x="50" y="290" font-size="11.5" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">lsblk -f <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">里</tspan> FSTYPE <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">一列是空的</tspan></text>
   <text x="50" y="306" font-size="11" fill="#7f0000">新手最容易在这卡住：还以为盘坏了，其实是没建文件系统</text>
 
   <rect x="610" y="220" width="560" height="90" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>

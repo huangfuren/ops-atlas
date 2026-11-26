@@ -34,7 +34,7 @@
 
   <!-- ============ 行 2 引导器 ============ -->
   <rect x="30" y="220" width="400" height="104" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
-  <text x="46" y="248" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">grub&gt; 或 grub rescue&gt;</text>
+  <text x="46" y="248" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">grub&gt; <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">或</tspan> grub rescue&gt;</text>
   <text x="46" y="270" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">error: unknown filesystem</text>
   <text x="46" y="292" font-size="11.5" fill="#7f0000">连启动菜单都不出</text>
 
@@ -50,7 +50,7 @@
   <!-- ============ 行 3 内核 ============ -->
   <rect x="30" y="336" width="400" height="104" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
   <text x="46" y="364" font-size="11.5" fill="#7f0000">滚屏后停住不动</text>
-  <text x="46" y="386" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">停在 dracut:/#</text>
+  <text x="46" y="386" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">停在</tspan> dracut:/#</text>
   <text x="46" y="408" font-size="11.5" fill="#7f0000">内核报错后 panic</text>
 
   <rect x="440" y="336" width="250" height="104" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>

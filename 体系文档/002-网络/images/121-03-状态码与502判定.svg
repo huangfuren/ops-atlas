@@ -46,7 +46,7 @@
 
   <rect x="30" y="388" width="370" height="136" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
   <text x="50" y="414" font-size="15" font-weight="bold" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">502 / 503</text>
-  <text x="50" y="436" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">us 为空 且 urt 为空</text>
+  <text x="50" y="436" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">us <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">为空</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">且</tspan> urt <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">为空</tspan></text>
   <line x1="50" y1="446" x2="380" y2="446" stroke="#c62828" stroke-width="1"/>
   <text x="50" y="468" font-size="11.5" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">根本没连上：上游不在、端口不通，或</text>
   <text x="50" y="488" font-size="11.5" fill="#7f0000" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连上就被关掉（上游崩溃 / OOM）。</text>
@@ -54,7 +54,7 @@
 
   <rect x="415" y="388" width="370" height="136" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
   <text x="435" y="414" font-size="15" font-weight="bold" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">上游自己 5xx</text>
-  <text x="435" y="436" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">us 有值 且 它也是 5xx</text>
+  <text x="435" y="436" font-size="11" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">us <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">有值</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">且</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">它也是</tspan> 5xx</text>
   <line x1="435" y1="446" x2="765" y2="446" stroke="#f9a825" stroke-width="1"/>
   <text x="435" y="468" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">请求确实到达了后端，是应用自己出错。</text>
   <text x="435" y="488" font-size="11.5" fill="#7f3f00" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">这不是网关的问题。</text>
@@ -62,7 +62,7 @@
 
   <rect x="800" y="388" width="370" height="136" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
   <text x="820" y="414" font-size="15" font-weight="bold" fill="#e65100" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">504</text>
-  <text x="820" y="436" font-size="11" fill="#e65100" font-family="ui-monospace,Menlo,Consolas,monospace">addr 有值 · us 为空 · urt 有值</text>
+  <text x="820" y="436" font-size="11" fill="#e65100" font-family="ui-monospace,Menlo,Consolas,monospace">addr <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">有值</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> us <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">为空</tspan> <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">·</tspan> urt <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">有值</tspan></text>
   <line x1="820" y1="446" x2="1150" y2="446" stroke="#e65100" stroke-width="1"/>
   <text x="820" y="468" font-size="11.5" fill="#5d4037" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">连上了、请求发出去了、没等到应答。</text>
   <text x="820" y="488" font-size="11.5" fill="#5d4037" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">上游在忙或卡住。</text>

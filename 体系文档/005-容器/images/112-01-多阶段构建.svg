@@ -17,7 +17,7 @@
 
   <rect x="40" y="150" width="520" height="190" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
   <text x="60" y="180" font-size="15" font-weight="bold" fill="#0d2f5c">阶段 1 · build</text>
-  <text x="60" y="208" font-size="12" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">FROM golang:1.22-alpine（约 250MB）</text>
+  <text x="60" y="208" font-size="12" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">FROM golang:1.22-alpine<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">（约</tspan> 250MB<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">）</tspan></text>
   <text x="60" y="238" font-size="12.5" fill="#37474f">内容：源码 + 工具链 + 构建缓存</text>
   <text x="60" y="266" font-size="12.5" fill="#37474f">使命：产出 /bin/app —— 仅此而已</text>
   <text x="60" y="294" font-size="12.5" fill="#37474f">怎么脏都行：测试依赖、调试符号都留下</text>
@@ -27,7 +27,7 @@
 
   <rect x="640" y="150" width="520" height="190" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
   <text x="660" y="180" font-size="15" font-weight="bold" fill="#123314">阶段 2 · runtime</text>
-  <text x="660" y="208" font-size="12" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">FROM alpine:3.19（约 7MB）</text>
+  <text x="660" y="208" font-size="12" fill="#123314" font-family="ui-monospace,Menlo,Consolas,monospace">FROM alpine:3.19<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">（约</tspan> 7MB<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">）</tspan></text>
   <text x="660" y="238" font-size="12.5" fill="#37474f">内容：/bin/app + CA 证书（如需出站）</text>
   <text x="660" y="266" font-size="12.5" fill="#37474f">没有：工具链 · 源码 · 构建缓存</text>
   <text x="660" y="294" font-size="12.5" fill="#37474f">攻击面与分发成本同步下降</text>
@@ -45,7 +45,7 @@
 
   <rect x="40" y="496" width="1120" height="86" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
   <text x="60" y="524" font-size="15" font-weight="bold" fill="#bf360c">★ 编译阶段怎么脏都行，运行阶段只带产物</text>
-  <text x="60" y="550" font-size="12.5" fill="#5d4037">· CI 里的测试阶段可以作为第三段插在中间（CICD 008 §8.4）</text>
+  <text x="60" y="550" font-size="12.5" fill="#5d4037">· CI 里的测试阶段可以作为第三段插在中间（CICD 132 §8.4）</text>
   <text x="60" y="572" font-size="12.5" fill="#5d4037">· 静态二进制可再 FROM scratch：没有 sh、没有 CA 证书，需自带（112 §2.6）</text>
 
   <rect x="40" y="606" width="1120" height="65" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>

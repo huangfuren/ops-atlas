@@ -39,19 +39,19 @@
   <text x="30" y="300" font-size="12" fill="#616161">② -e 的三个漏网：失败是「正常答案」的地方</text>
 
   <rect x="30" y="314" width="360" height="100" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="50" y="340" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">if / while 条件</text>
+  <text x="50" y="340" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">if / while <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">条件</tspan></text>
   <text x="50" y="364" font-size="11.5" fill="#7f3f00">if false 不会退出</text>
   <text x="50" y="386" font-size="11" fill="#7f3f00">失败正是 if 在问「成不成」的正常答案</text>
   <text x="50" y="404" font-size="11" fill="#7f3f00">条件里要自己判返回码</text>
 
   <rect x="420" y="314" width="360" height="100" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="440" y="340" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">|| 与 &amp;&amp; 的左边</text>
+  <text x="440" y="340" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">|| <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">与</tspan> &amp;&amp; <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">的左边</tspan></text>
   <text x="440" y="364" font-size="11.5" fill="#7f3f00">false || echo 照样执行</text>
   <text x="440" y="386" font-size="11" fill="#7f3f00">cmd || true 是「明确忽略错误」的写法</text>
   <text x="440" y="404" font-size="11" fill="#7f3f00">既然你写了兜底，就不该再被 -e 打断</text>
 
   <rect x="810" y="314" width="360" height="100" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
-  <text x="830" y="340" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">! 取反</text>
+  <text x="830" y="340" font-size="13" font-weight="bold" fill="#7f3f00" font-family="ui-monospace,Menlo,Consolas,monospace">! <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">取反</tspan></text>
   <text x="830" y="364" font-size="11.5" fill="#7f3f00">! true 变成失败，不触发退出</text>
   <text x="830" y="386" font-size="11" fill="#7f3f00">取反本身就是「我要处理这个失败」</text>
   <text x="830" y="404" font-size="11" fill="#7f3f00">但 x=$(false) 不取反，照样退出 —— 见 ③</text>
@@ -60,13 +60,13 @@
   <text x="30" y="434" font-size="12" fill="#616161">③ 最隐蔽的洞：local 把命令替换的失败吞掉</text>
 
   <rect x="30" y="448" width="560" height="100" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="2"/>
-  <text x="50" y="474" font-size="13" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">错：local v=$(false)</text>
+  <text x="50" y="474" font-size="13" font-weight="bold" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">错：</tspan>local v=$(false)</text>
   <text x="50" y="496" font-size="11.5" fill="#7f0000">失败被吞，脚本 exit 0 照常往下跑。</text>
   <text x="50" y="518" font-size="11" fill="#7f0000">这行的退出码是 local 自己的，恒 0，</text>
   <text x="50" y="538" font-size="11" fill="#7f0000">命令替换的 1 被盖掉；declare / export 同理。</text>
 
   <rect x="610" y="448" width="560" height="100" rx="6" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5"/>
-  <text x="630" y="474" font-size="13" font-weight="bold" fill="#1b5e20" font-family="ui-monospace,Menlo,Consolas,monospace">对：local v; v=$(false)</text>
+  <text x="630" y="474" font-size="13" font-weight="bold" fill="#1b5e20" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">对：</tspan>local v; v=$(false)</text>
   <text x="630" y="496" font-size="11.5" fill="#1b3d1e">先单独声明，下一行再赋值 —— 失败就拦得住。</text>
   <text x="630" y="518" font-size="11" fill="#1b3d1e">函数里每一个 $( ) 赋值都值得这么拆开写。</text>
   <text x="630" y="538" font-size="11" fill="#1b3d1e">这行很短，但漏一次就是数据事故。</text>

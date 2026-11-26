@@ -42,15 +42,15 @@
   <line x1="40" y1="374" x2="1160" y2="374" stroke="#cfd8dc" stroke-width="1"/>
   <text x="64" y="338" font-size="13" font-weight="bold" fill="#7f3f00">帧 · 目的 MAC</text>
   <text x="64" y="358" font-size="11" fill="#e65100">逐跳重写</text>
-  <text x="404" y="348" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">网关的 MAC</text>
-  <text x="804" y="348" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">B 的 MAC</text>
+  <text x="404" y="348" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">网关的</tspan> MAC</text>
+  <text x="804" y="348" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">B <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">的</tspan> MAC</text>
 
   <rect x="40" y="374" width="4" height="60" fill="#f9a825"/>
   <line x1="40" y1="434" x2="1160" y2="434" stroke="#cfd8dc" stroke-width="1"/>
   <text x="64" y="398" font-size="13" font-weight="bold" fill="#7f3f00">帧 · 源 MAC</text>
   <text x="64" y="418" font-size="11" fill="#e65100">逐跳重写</text>
-  <text x="404" y="408" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">A 的 MAC</text>
-  <text x="804" y="408" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">网关的 MAC</text>
+  <text x="404" y="408" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">A <tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">的</tspan> MAC</text>
+  <text x="804" y="408" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace"><tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">网关的</tspan> MAC</text>
 
   <rect x="40" y="434" width="4" height="60" fill="#2e7d32"/>
   <line x1="40" y1="494" x2="1160" y2="494" stroke="#cfd8dc" stroke-width="1"/>

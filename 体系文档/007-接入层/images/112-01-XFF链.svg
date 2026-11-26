@@ -45,7 +45,7 @@
   <text x="40" y="224" font-size="15" font-weight="bold" fill="#263238">XFF 链的演变（每跳追加收包来源）</text>
   <rect x="40" y="238" width="1120" height="96" rx="6" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
   <text x="60" y="264" font-size="12" fill="#7f0000" font-weight="bold">攻击者发出</text>
-  <text x="200" y="264" font-size="12" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">X-Forwarded-For: 1.2.3.4（伪造）</text>
+  <text x="200" y="264" font-size="12" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">X-Forwarded-For: 1.2.3.4<tspan font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">（伪造）</tspan></text>
   <text x="60" y="292" font-size="12" fill="#37474f" font-weight="bold">经 CDN 后</text>
   <text x="200" y="292" font-size="12" fill="#37474f" font-family="ui-monospace,Menlo,Consolas,monospace">1.2.3.4, 203.0.113.5</text>
   <text x="60" y="320" font-size="12" fill="#37474f" font-weight="bold">经 LB 后</text>
