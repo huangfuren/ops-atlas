@@ -1,62 +1,86 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 635.29" width="1200" height="635.29" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>Filebeat 采集架构：input → harvester → spooler → output，registry 记账</title>
-  <desc>采集流水线四段：input 定义盯哪些文件，harvester 每个文件一个协程逐行读，spooler 攒批发送，output 写到 ES 或 Loki。registry 是偏移账本，与 harvester 双向读写——重启后从账本继续，保证至少一次。多行合并在 harvester 层完成，异常栈才能并成一条。</desc>
-
-  <rect width="680" height="360" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">Filebeat 架构：流水线四段 + 一本账</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">至少一次靠 registry</text>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="820" fill="#ffffff"/>
   <defs>
-    <marker id="g1Blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
     </marker>
   </defs>
 
-  <!-- input -->
-  <rect x="40" y="52" width="300" height="44" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1"/>
-  <text x="54" y="71" font-size="9" font-weight="600" fill="#4A4945">① input —— 盯哪里</text>
-  <text x="54" y="87" font-size="7.6" fill="#8C8980">filestream 类型 · paths · 显式 id（改名不重采）</text>
+  <text x="40" y="42" font-size="20" font-weight="bold" fill="#0d47a1">Filebeat 架构：流水线四段 + 一本账</text>
+  <text x="1160" y="42" font-size="12" fill="#616161" text-anchor="end">至少一次靠 registry</text>
 
-  <line x1="190" y1="96" x2="190" y2="112" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g1Blue)"/>
+  <!-- 左：四段流水线 -->
+  <rect x="40" y="66" width="700" height="620" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="94" font-size="14" font-weight="bold" fill="#0d47a1">主线：input → harvester → spooler → output</text>
 
-  <!-- harvester -->
-  <rect x="40" y="116" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="54" y="135" font-size="9" font-weight="600" fill="#1F4468">② harvester —— 每文件一个收割协程</text>
-  <text x="54" y="151" font-size="7.6" fill="#4A4945">逐行读 · 多行合并在此（Java 栈四件套）</text>
+  <rect x="60" y="110" width="660" height="112" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+  <text x="80" y="138" font-size="15" font-weight="bold" fill="#37474f">① input —— 盯哪里</text>
+  <text x="80" y="166" font-size="12" fill="#37474f">filestream 类型 · paths 通配 · 显式 id（文件改名不重采）</text>
+  <text x="80" y="194" font-size="11" fill="#616161">采集端只负责搬，字段与级别规范在源头（123 §5.1）</text>
 
-  <line x1="190" y1="160" x2="190" y2="176" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g1Blue)"/>
+  <line x1="390" y1="222" x2="390" y2="242" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
 
-  <!-- spooler -->
-  <rect x="40" y="180" width="300" height="44" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="54" y="199" font-size="9" font-weight="600" fill="#1F4468">③ spooler —— 攒批发送</text>
-  <text x="54" y="215" font-size="7.6" fill="#4A4945">默认一批约 2048 事件 · 下游慢时背压</text>
+  <rect x="60" y="246" width="660" height="112" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="80" y="274" font-size="15" font-weight="bold" fill="#0d2f5c">② harvester —— 每文件一个收割协程</text>
+  <text x="80" y="302" font-size="12" fill="#0d2f5c">逐行读 · 多行合并在此完成（Java 栈四件套）</text>
+  <text x="80" y="330" font-size="11" fill="#37474f">合并配置见 111 §1.4，pattern 按"新日志开头"写</text>
 
-  <line x1="190" y1="224" x2="190" y2="240" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g1Blue)"/>
+  <line x1="390" y1="358" x2="390" y2="378" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
 
-  <!-- output -->
-  <rect x="40" y="244" width="300" height="44" rx="3" fill="#DFF3EC" stroke="#6BAF95" stroke-width="1.2"/>
-  <text x="54" y="263" font-size="9" font-weight="600" fill="#1D5A45">④ output —— 写到哪</text>
-  <text x="54" y="279" font-size="7.6" fill="#1D5A45">Elasticsearch（主线）/ Loki（对照）</text>
+  <rect x="60" y="382" width="660" height="96" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="80" y="410" font-size="15" font-weight="bold" fill="#0d2f5c">③ spooler —— 攒批发送</text>
+  <text x="80" y="438" font-size="12" fill="#0d2f5c">默认一批约 2048 事件 · 下游慢时背压</text>
+  <text x="80" y="462" font-size="11" fill="#37474f">批量是吞吐与延迟的权衡，不是越大越好</text>
 
-  <!-- registry 右侧 -->
-  <rect x="400" y="116" width="244" height="76" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.4"/>
-  <text x="414" y="139" font-size="9" font-weight="600" fill="#7A4A12">registry —— 偏移账本 ★</text>
-  <text x="414" y="157" font-size="7.6" fill="#7A4A12">每文件的读取位置持久化</text>
-  <text x="414" y="175" font-size="7.6" fill="#7A4A12">重启从账本继续 = 至少一次</text>
+  <line x1="390" y1="478" x2="390" y2="498" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
 
-  <line x1="400" y1="150" x2="344" y2="142" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g1Blue)"/>
-  <line x1="344" y1="156" x2="400" y2="164" stroke="#D9A458" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#g1Blue)"/>
-  <text x="372" y="140" font-size="6.8" fill="#7A4A12" text-anchor="middle">记/读</text>
+  <rect x="60" y="502" width="660" height="112" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="80" y="530" font-size="15" font-weight="bold" fill="#1b5e20">④ output —— 写到哪</text>
+  <text x="80" y="558" font-size="12" fill="#1b5e20">Elasticsearch（主线）/ Loki（对照）</text>
+  <text x="80" y="586" font-size="11" fill="#2e5230">写失败重试与背压在这里收口</text>
 
-  <!-- 底部 -->
-  <rect x="40" y="304" width="604" height="30" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="323" font-size="8.2" fill="#7A4A12">静默失败四步取证：filebeat test output → 看 registry offset 在不在动 → 查索引/模板 → 查数据视图（006 §6.2）</text>
+  <rect x="60" y="638" width="660" height="34" rx="6" fill="#fff8e1" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="80" y="660" font-size="11.5" fill="#5d4700">采集器的职责边界：搬得全、记得住、可重放——不做字段治理，那是 123 的事</text>
 
-  <text x="32" y="352" font-size="9" fill="#8C8980">至少一次的代价是可能重复：发出后账本未落盘即崩溃 → 重启重发——下游要可幂等去重（001 §1.8）。</text>
+  <!-- 右：registry 账本 -->
+  <rect x="760" y="66" width="400" height="280" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="780" y="94" font-size="14" font-weight="bold" fill="#8d6e00">一本账：registry</text>
+  <rect x="780" y="110" width="360" height="212" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <text x="800" y="142" font-size="15" font-weight="bold" fill="#5d4700">registry · 偏移账本 ★</text>
+  <text x="800" y="174" font-size="12" fill="#5d4700">每个文件的读取位置持久化</text>
+  <text x="800" y="202" font-size="12" fill="#5d4700">harvester 写、重启读</text>
+  <text x="800" y="230" font-size="12" fill="#5d4700">重启从账本继续 = 至少一次</text>
+  <text x="800" y="264" font-size="11" fill="#7f3f00">代价：发出后账本未落盘即崩 → 重发</text>
+  <text x="800" y="296" font-size="11" fill="#7f3f00">下游要可幂等去重（111 §1.8）</text>
 
-  </g>
+  <line x1="764" y1="200" x2="726" y2="200" stroke="#e65100" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrowOrange)"/>
+  <line x1="726" y1="284" x2="764" y2="284" stroke="#e65100" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrowOrange)"/>
+  <text x="745" y="190" font-size="11" fill="#bf360c" text-anchor="middle">记</text>
+  <text x="745" y="306" font-size="11" fill="#bf360c" text-anchor="middle">读</text>
+
+  <!-- 右：静默失败取证 -->
+  <rect x="760" y="366" width="400" height="320" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="780" y="394" font-size="14" font-weight="bold" fill="#8d6e00">静默失败四步取证</text>
+  <rect x="780" y="410" width="360" height="256" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="800" y="442" font-size="12" fill="#7f3f00">① filebeat test output —— 验连通</text>
+  <text x="800" y="480" font-size="12" fill="#7f3f00">② 看 registry offset 在不在动</text>
+  <text x="800" y="518" font-size="12" fill="#7f3f00">③ 查索引与模板在不在</text>
+  <text x="800" y="556" font-size="12" fill="#7f3f00">④ 查数据视图与时间字段</text>
+  <text x="800" y="598" font-size="11" fill="#5d4037">顺序执行，不跳步——最常见是 ② 不动</text>
+  <text x="800" y="636" font-size="11" fill="#5d4037">完整流程见 124 §6.2 采集断流</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="704" width="1120" height="92" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="722" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="92" y="733" font-size="12" fill="#37474f">数据源侧（外部输入）</text>
+  <rect x="300" y="722" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="332" y="733" font-size="12" fill="#37474f">采集内部阶段</text>
+  <rect x="540" y="722" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="572" y="733" font-size="12" fill="#37474f">输出端</text>
+  <rect x="760" y="722" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="792" y="733" font-size="12" fill="#37474f">账本 / 关键机制</text>
+  <text x="60" y="772" font-size="12" fill="#37474f">蓝实线箭头 = 流水线推进；橙虚线箭头 = registry 与 harvester 双向记账 / 读取</text>
 </svg>

@@ -1,43 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 582.35" width="1200" height="582.35" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="800" fill="#ffffff"/>
+  <defs>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
+    </marker>
+  </defs>
 
-  <title>多行合并：把异常栈并回一条事件的四件套</title>
-  <desc>左侧是没配 multiline 的下场：一条 Java 异常栈被按行拆成四条独立事件，上下文全毁。右侧是配好后的效果：四行并成一条完整事件。四件套的语义：pattern 定义什么样子是一條新日志的开头（日期开头），negate 取反表示不匹配的就是续行，match after 把续行并入上一条之后，timeout 五秒防止最后一条悬空不发。</desc>
-
-  <rect width="680" height="330" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">multiline：一条异常栈 = 一条事件</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">四件套缺一不可</text>
+  <text x="40" y="42" font-size="20" font-weight="bold" fill="#1b5e20">multiline：一条异常栈 = 一条事件</text>
+  <text x="1160" y="42" font-size="12" fill="#616161" text-anchor="end">四件套缺一不可</text>
 
   <!-- 左：未配 -->
-  <text x="40" y="56" font-size="9.5" font-weight="600" fill="#7A322B">✗ 没配 multiline：栈被拆碎</text>
-  <rect x="40" y="66" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="52" y="83" font-size="7.6" fill="#7A322B">事件1：2026-11-01 ERROR 下单失败</text>
-  <rect x="40" y="96" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="52" y="113" font-size="7.6" fill="#7A322B">事件2：java.lang.RuntimeException: 库存不足</text>
-  <rect x="40" y="126" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="52" y="143" font-size="7.6" fill="#7A322B">事件3：  at com.shop.OrderService.run(Order.java:42)</text>
-  <rect x="40" y="156" width="270" height="26" rx="2" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="52" y="173" font-size="7.6" fill="#7A322B">事件4：  at …（上下文全毁）</text>
+  <rect x="40" y="70" width="540" height="360" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="100" font-size="15" font-weight="bold" fill="#c62828">没配 multiline：栈被拆碎</text>
+  <text x="60" y="126" font-size="12" fill="#5d4037">一条 Java 异常栈被按行拆成四条独立事件</text>
+
+  <rect x="60" y="144" width="500" height="52" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="76" y="164" font-size="11.5" fill="#7f0000">事件 1：2026-11-01 ERROR 下单失败</text>
+  <text x="76" y="184" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">2026-11-01 ERROR</text>
+
+  <rect x="60" y="206" width="500" height="52" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="76" y="226" font-size="11.5" fill="#7f0000">事件 2：java.lang.RuntimeException: 库存不足</text>
+  <text x="76" y="246" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">RuntimeException</text>
+
+  <rect x="60" y="268" width="500" height="52" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="76" y="288" font-size="11.5" fill="#7f0000">事件 3：  at com.shop.OrderService.run(...)</text>
+  <text x="76" y="308" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">at com.shop...</text>
+
+  <rect x="60" y="330" width="500" height="52" rx="6" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="76" y="350" font-size="11.5" fill="#7f0000">事件 4：  at …（上下文全毁）</text>
+  <text x="76" y="370" font-size="11" fill="#7f0000" font-family="ui-monospace,Menlo,Consolas,monospace">at ...</text>
+
+  <text x="60" y="408" font-size="11.5" font-weight="bold" fill="#c62828">结果：四条各自孤立，异常栈的因果链断了</text>
 
   <!-- 右：配好 -->
-  <text x="370" y="56" font-size="9.5" font-weight="600" fill="#1D5A45">✓ 配好四件套：并成一条</text>
-  <rect x="370" y="66" width="274" height="116" rx="2" fill="#E8F5E9" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="382" y="86" font-size="7.6" fill="#1b5e20">事件1：2026-11-01 ERROR 下单失败</text>
-  <text x="382" y="104" font-size="7.6" fill="#1b5e20">  java.lang.RuntimeException: 库存不足</text>
-  <text x="382" y="122" font-size="7.6" fill="#1b5e20">    at com.shop.OrderService.run(…:42)</text>
-  <text x="382" y="140" font-size="7.6" fill="#1b5e20">    at …（完整栈，可搜可读）</text>
-  <text x="382" y="164" font-size="7.4" fill="#8C8980">1 条事件 —— 上下文完好</text>
+  <rect x="620" y="70" width="540" height="360" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="640" y="100" font-size="15" font-weight="bold" fill="#1b5e20">配好四件套：并成一条</text>
+  <text x="640" y="126" font-size="12" fill="#5d4037">续行并入上一条之后，上下文完好</text>
+
+  <rect x="640" y="144" width="500" height="212" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="656" y="170" font-size="11.5" fill="#123314">事件 1：2026-11-01 ERROR 下单失败</text>
+  <text x="656" y="196" font-size="11.5" fill="#123314">  java.lang.RuntimeException: 库存不足</text>
+  <text x="656" y="222" font-size="11.5" fill="#123314">    at com.shop.OrderService.run(...)</text>
+  <text x="656" y="248" font-size="11.5" fill="#123314">    at ...（完整栈，可搜可读）</text>
+  <text x="656" y="286" font-size="12" font-weight="bold" fill="#1b5e20">1 条事件 —— 栈的因果链完整</text>
+  <text x="656" y="326" font-size="11" fill="#2e5230">按"新日志开头"切分，而不是按异常长相</text>
+
+  <text x="640" y="408" font-size="11.5" font-weight="bold" fill="#1b5e20">结果：一次查询看到完整错误现场</text>
 
   <!-- 四件套 -->
-  <rect x="40" y="196" width="604" height="72" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1"/>
-  <text x="54" y="216" font-size="8.6" font-weight="600" fill="#1F4468">四件套语义（yml）</text>
-  <text x="54" y="234" font-size="7.8" fill="#1F4468">pattern: '^\d{4}-\d{2}-\d{2}'　定义「新日志的开头」长什么样（按新事件思考，别按续行思考）</text>
-  <text x="54" y="250" font-size="7.8" fill="#1F4468">negate: true + match: after　不匹配 pattern 的行 → 并入上一条之后；timeout: 5s 防最后一条悬空</text>
+  <rect x="40" y="454" width="1120" height="196" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="484" font-size="15" font-weight="bold" fill="#0d47a1">四件套语义（filestream multiline）</text>
+  <rect x="60" y="500" width="1080" height="60" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="78" y="524" font-size="12" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">pattern: '^\d{4}-\d{2}-\d{2}'</text>
+  <text x="560" y="524" font-size="12" fill="#0d2f5c">定义"新日志开头"长什么样</text>
+  <text x="78" y="548" font-size="11" fill="#37474f">按新事件思考，别按续行思考——日期开头即新事件</text>
 
-  <rect x="40" y="280" width="604" height="28" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1"/>
-  <text x="52" y="298" font-size="8" fill="#7A322B">反模式：按「异常的样子」写 pattern（如 ^\s+at）——换一种栈格式就漏，按「新事件开头」写才稳</text>
+  <rect x="60" y="568" width="1080" height="66" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="78" y="592" font-size="12" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">negate: true</text>
+  <text x="230" y="592" font-size="12" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">match: after</text>
+  <text x="440" y="592" font-size="12" fill="#0d2f5c" font-family="ui-monospace,Menlo,Consolas,monospace">timeout: 5s</text>
+  <text x="78" y="618" font-size="11" fill="#37474f">不匹配 pattern 的行并入上一条之后；timeout 防止最后一条悬空不发</text>
 
-  </g>
+  <!-- 反模式 -->
+  <rect x="40" y="670" width="1120" height="76" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="60" y="698" font-size="12" font-weight="bold" fill="#bf360c">反模式：按"异常的样子"写 pattern（如 ^\s+at）</text>
+  <text x="60" y="726" font-size="11.5" fill="#7f3f00">换一种栈格式就漏——按"新事件开头"写才稳。配置细节见 111 §1.4</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="762" width="1120" height="30" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="770" width="22" height="14" rx="3" fill="#ffcdd2" stroke="#c62828" stroke-width="1.5"/>
+  <text x="92" y="781" font-size="12" fill="#37474f">拆碎（反例）</text>
+  <rect x="300" y="770" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="332" y="781" font-size="12" fill="#37474f">合并成功（正例）</text>
+  <rect x="540" y="770" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="572" y="781" font-size="12" fill="#37474f">配置项</text>
 </svg>

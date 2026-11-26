@@ -1,67 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 529.41" width="1200" height="529.41" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
-  <!-- 1200 宽大尺寸版：整体等比 scale(1.764706)，内部 680 坐标系未改动 -->
-  <g transform="scale(1.7647058824)">
-
-  <title>ILM 索引生命周期：hot 滚动、warm 降盘、delete 到期清理</title>
-  <desc>索引从创建进入 hot 阶段：接收写入与高频查询，满一天或单分片三十吉字节就 rollover 出新索引；七天后进入 warm 阶段，挪到慢盘、缩副本；三十天后进入 delete 阶段由 ILM 自动删除。保留期的天数是业务方签过字的数字，卡住的阶段用 ILM explain 排查。</desc>
-
-  <rect width="680" height="300" fill="#FFFFFF"/>
-  <text x="32" y="30" font-size="13.5" font-weight="600" fill="#2B2A27">ILM：索引的一生自动流转</text>
-  <text x="648" y="30" font-size="9" fill="#8C8980" text-anchor="end">保留期 = 业务签字的数</text>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 840" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="840" fill="#ffffff"/>
   <defs>
-    <marker id="g2bBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#7FA6D0"/>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1565c0"/>
     </marker>
-    <marker id="g2bRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0,0 L10,5 L0,10 z" fill="#D2948C"/>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
     </marker>
   </defs>
 
-  <!-- hot -->
-  <rect x="40" y="56" width="150" height="88" rx="3" fill="#FAE6E4" stroke="#D2948C" stroke-width="1.2"/>
-  <text x="115" y="78" font-size="9" font-weight="600" fill="#7A322B" text-anchor="middle">hot（热）</text>
-  <text x="115" y="96" font-size="7.4" fill="#7A322B" text-anchor="middle">接收写入 + 高频查询</text>
-  <text x="115" y="112" font-size="7.4" fill="#7A322B" text-anchor="middle">快盘 · 副本齐全</text>
-  <text x="115" y="132" font-size="7" fill="#8C8980" text-anchor="middle">rollover：满 1 天或单分片 30GB</text>
+  <text x="40" y="42" font-size="20" font-weight="bold" fill="#1b5e20">ILM：索引的一生自动流转</text>
+  <text x="1160" y="42" font-size="12" fill="#616161" text-anchor="end">保留期 = 业务签字的数</text>
 
-  <!-- warm -->
-  <rect x="220" y="56" width="150" height="88" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1.2"/>
-  <text x="295" y="78" font-size="9" font-weight="600" fill="#7A4A12" text-anchor="middle">warm（温）</text>
-  <text x="295" y="96" font-size="7.4" fill="#7A4A12" text-anchor="middle">只读 · 挪慢盘</text>
-  <text x="295" y="112" font-size="7.4" fill="#7A4A12" text-anchor="middle">可缩副本（有 HA 意识）</text>
-  <text x="295" y="132" font-size="7" fill="#8C8980" text-anchor="middle">min_age: 7d</text>
+  <rect x="40" y="66" width="1120" height="280" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="96" font-size="14" font-weight="bold" fill="#1b5e20">四个阶段：hot 滚动 → warm 降盘 → cold 可选 → delete 清理</text>
 
-  <!-- cold -->
-  <rect x="400" y="56" width="120" height="88" rx="3" fill="#E4EEF9" stroke="#7FA6D0" stroke-width="1.2"/>
-  <text x="460" y="78" font-size="9" font-weight="600" fill="#1F4468" text-anchor="middle">cold（冷）</text>
-  <text x="460" y="96" font-size="7.4" fill="#4A4945" text-anchor="middle">偶查 · 可冻结</text>
-  <text x="460" y="112" font-size="7.4" fill="#4A4945" text-anchor="middle"> searchable snapshot</text>
-  <text x="460" y="132" font-size="7" fill="#8C8980" text-anchor="middle">min_age: 30d（可选阶段）</text>
+  <rect x="60" y="112" width="250" height="210" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="185" y="144" font-size="15" font-weight="bold" fill="#1b5e20" text-anchor="middle">hot（热）</text>
+  <text x="185" y="176" font-size="12" fill="#1b5e20" text-anchor="middle">接收写入 + 高频查询</text>
+  <text x="185" y="204" font-size="12" fill="#1b5e20" text-anchor="middle">快盘 · 副本齐全</text>
+  <text x="185" y="240" font-size="11" fill="#2e5230" text-anchor="middle">rollover 条件：</text>
+  <text x="185" y="264" font-size="11" fill="#2e5230" text-anchor="middle">满 1 天 或 单分片 30GB</text>
+  <text x="185" y="300" font-size="11" fill="#616161" text-anchor="middle">滚动粒度决定分片总量</text>
 
-  <!-- delete -->
-  <rect x="550" y="56" width="94" height="88" rx="3" fill="#F4F2EC" stroke="#CFCCC2" stroke-width="1.2"/>
-  <text x="597" y="78" font-size="9" font-weight="600" fill="#4A4945" text-anchor="middle">delete</text>
-  <text x="597" y="96" font-size="7.4" fill="#4A4945" text-anchor="middle">自动删除</text>
-  <text x="597" y="112" font-size="7.4" fill="#4A4945" text-anchor="middle">空间释放</text>
-  <text x="597" y="132" font-size="7" fill="#8C8980" text-anchor="middle">min_age: 30d</text>
+  <rect x="350" y="112" width="250" height="210" rx="6" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="475" y="144" font-size="15" font-weight="bold" fill="#5d4700" text-anchor="middle">warm（温）</text>
+  <text x="475" y="176" font-size="12" fill="#5d4700" text-anchor="middle">只读 · 挪慢盘</text>
+  <text x="475" y="204" font-size="12" fill="#5d4700" text-anchor="middle">可缩副本（要有 HA 意识）</text>
+  <text x="475" y="248" font-size="11" fill="#7f3f00" text-anchor="middle">min_age: 7d</text>
+  <text x="475" y="284" font-size="11" fill="#616161" text-anchor="middle">成本杠杆：慢盘更便宜</text>
 
-  <line x1="190" y1="100" x2="216" y2="100" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g2bBlue)"/>
-  <line x1="370" y1="100" x2="396" y2="100" stroke="#7FA6D0" stroke-width="1.2" marker-end="url(#g2bBlue)"/>
-  <line x1="520" y1="100" x2="546" y2="100" stroke="#D2948C" stroke-width="1.2" marker-end="url(#g2bRed)"/>
-  <text x="203" y="92" font-size="6.8" fill="#8C8980" text-anchor="middle">age</text>
-  <text x="383" y="92" font-size="6.8" fill="#8C8980" text-anchor="middle">age</text>
-  <text x="533" y="92" font-size="6.8" fill="#8C8980" text-anchor="middle">到期</text>
+  <rect x="640" y="112" width="250" height="210" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="765" y="144" font-size="15" font-weight="bold" fill="#0d2f5c" text-anchor="middle">cold（冷 · 可选）</text>
+  <text x="765" y="176" font-size="12" fill="#0d2f5c" text-anchor="middle">偶查 · 可冻结</text>
+  <text x="765" y="204" font-size="12" fill="#0d2f5c" text-anchor="middle">searchable snapshot</text>
+  <text x="765" y="248" font-size="11" fill="#37474f" text-anchor="middle">min_age: 30d</text>
+  <text x="765" y="284" font-size="11" fill="#616161" text-anchor="middle">冷数据出集群进对象存储</text>
 
-  <!-- 底部要点 -->
-  <rect x="40" y="160" width="604" height="44" rx="3" fill="#FBEEDA" stroke="#D9A458" stroke-width="1"/>
-  <text x="52" y="180" font-size="8.4" font-weight="600" fill="#7A4A12">运维三件事：模板先建（mapping 不踩坑）→ 策略挂上每个模板 → 定期 GET logs-*/_ilm/explain 看卡住的阶段</text>
-  <text x="52" y="196" font-size="7.8" fill="#7A4A12">数字（1d/30GB/30d）是示例——保留期必须业务方签字，滚动粒度决定分片总量（002 §2.9 第 4 坑）</text>
+  <rect x="930" y="112" width="210" height="210" rx="6" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="1035" y="144" font-size="15" font-weight="bold" fill="#37474f" text-anchor="middle">delete</text>
+  <text x="1035" y="176" font-size="12" fill="#37474f" text-anchor="middle">自动删除</text>
+  <text x="1035" y="204" font-size="12" fill="#37474f" text-anchor="middle">空间释放</text>
+  <text x="1035" y="248" font-size="11" fill="#546e7a" text-anchor="middle">min_age: 30d</text>
+  <text x="1035" y="284" font-size="11" fill="#616161" text-anchor="middle">根治磁盘满了的落点</text>
 
-  <text x="32" y="240" font-size="9" fill="#8C8980">成本杠杆按级递增：关 DEBUG（005）→ 缩保留期 → warm 挪慢盘 → 冷数据出集群进对象存储——扩容永远最后（000 §0.6）。</text>
-  <text x="32" y="264" font-size="9" fill="#8C8980">磁盘 95% 只读锁的根因治理也落在这里：临时解锁（002 §2.7）之后，把 ILM 的 delete 阶段收紧才是根治。</text>
-  <text x="32" y="288" font-size="9" fill="#8C8980">Loki 对照：等价机制是 compactor 的 retention（004 §4.7）——两条路线都要有「到期自动清」的执行器。</text>
+  <line x1="314" y1="217" x2="344" y2="217" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <line x1="604" y1="217" x2="634" y2="217" stroke="#1565c0" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <line x1="894" y1="217" x2="924" y2="217" stroke="#e65100" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrowOrange)"/>
+  <text x="329" y="205" font-size="11" fill="#0d47a1" text-anchor="middle">age</text>
+  <text x="619" y="205" font-size="11" fill="#0d47a1" text-anchor="middle">age</text>
+  <text x="909" y="205" font-size="11" fill="#bf360c" text-anchor="middle">到期</text>
 
-  </g>
+  <!-- 运维三件事 -->
+  <rect x="40" y="366" width="1120" height="145" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <rect x="60" y="382" width="1080" height="113" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="80" y="412" font-size="13" font-weight="bold" fill="#bf360c">运维三件事</text>
+  <text x="80" y="440" font-size="12" fill="#7f3f00">① 模板先建（mapping 不踩坑） → ② 策略挂上每个模板 → ③ 定期 GET logs-*/_ilm/explain 看卡住的阶段</text>
+  <text x="80" y="474" font-size="11.5" fill="#5d4037">数字（1d / 30GB / 30d）是示例——保留期必须业务方签字（112 §2.9）</text>
+
+  <!-- 成本与对照 -->
+  <rect x="40" y="531" width="1120" height="185" rx="12" fill="#ffffff" stroke="#cfd8dc" stroke-width="1"/>
+  <text x="60" y="561" font-size="14" font-weight="bold" fill="#1b5e20">成本杠杆按级递增，扩容永远最后</text>
+  <rect x="60" y="578" width="1080" height="56" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="80" y="600" font-size="12" fill="#123314">关 DEBUG（123 §5.5） → 缩保留期 → warm 挪慢盘 → 冷数据出集群进对象存储 → 最后才扩容</text>
+  <text x="80" y="624" font-size="11" fill="#2e5230">001 §0.6 的三铁律：保留期业务签字 · 级别纪律换算成钱 · 先降量再扩容</text>
+
+  <rect x="60" y="646" width="1080" height="54" rx="6" fill="#fff8e1" stroke="#ef6c00" stroke-width="1.5"/>
+  <text x="80" y="668" font-size="11.5" fill="#5d4037">磁盘 95% 只读锁的根因治理：临时解锁（112 §2.7）之后，把 ILM 的 delete 阶段收紧才是根治</text>
+  <text x="80" y="690" font-size="11.5" fill="#5d4037">Loki 对照：等价机制是 compactor 的 retention（121 §4.7）——两条路线都要有"到期自动清"的执行器</text>
+
+  <!-- 图例 -->
+  <rect x="40" y="736" width="1120" height="84" fill="#ffffff" stroke="#bdbdbd" stroke-width="1"/>
+  <rect x="60" y="754" width="22" height="14" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="92" y="765" font-size="12" fill="#37474f">hot · 读写主场</text>
+  <rect x="300" y="754" width="22" height="14" rx="3" fill="#fff9c4" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="332" y="765" font-size="12" fill="#37474f">warm · 只读降盘</text>
+  <rect x="540" y="754" width="22" height="14" rx="3" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="572" y="765" font-size="12" fill="#37474f">cold · 可选</text>
+  <rect x="760" y="754" width="22" height="14" rx="3" fill="#eceff1" stroke="#607d8b" stroke-width="1.5"/>
+  <text x="792" y="765" font-size="12" fill="#37474f">delete · 清理</text>
+  <text x="60" y="802" font-size="12" fill="#37474f">蓝实线 = 阶段推进；橙虚线 = 到期待清理。数字仅为示例，保留期必须由业务方签字确认</text>
 </svg>
